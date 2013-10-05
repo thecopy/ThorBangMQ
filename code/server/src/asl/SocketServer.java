@@ -9,6 +9,7 @@ import java.nio.channels.SocketChannel;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
 
 import asl.ASLServerSettings;
 
@@ -20,13 +21,15 @@ public class SocketServer {
 	private Selector selector = null;
 	private ServerSocketChannel serverChannel = null;
 	private HashMap pendingData = new HashMap();
+	private ExecutorService executor;
 	
 	// Allocate 4 MB for incoming text.
 	// I Think it might be faster to allocate this once, instead of doing so before each message read.
 	private ByteBuffer readBuffer = ByteBuffer.allocate(4096);
 	
-	public SocketServer() throws IOException {
+	public SocketServer(ExecutorService executor) throws IOException {
 		this.selector = Selector.open();
+		this.executor = executor;
 	}
 	
 	public void start() throws IOException {
@@ -92,7 +95,8 @@ public class SocketServer {
 			conn.cancel();
 			return;
 		}
-//		pass off interpretation of text to worker thread
+		
+		this.executor.execute(new ClientRequestWorker(this, readBuffer.toString(), conn));
 	}
 	
 	private void write(SelectionKey conn) {
