@@ -13,7 +13,9 @@ public class Main {
 		ExecutorService threadpool = Executors.newFixedThreadPool(ASLServerSettings.NUM_CLIENTREQUESTWORKER_THREADS);
 		// Do stuff
 		try {
-			SocketServer socketServer = new SocketServer();
+			System.out.println("Starting socketServer");
+			ASLSocketServer socketServer = new ASLSocketServer(threadpool);
+			socketServer.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,8 @@
 package asl;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+
 public final class Message {
 	public String content;
 	public long recieverId;
@@ -15,6 +18,16 @@ public final class Message {
 		this.context = context;
 		this.timestamp = timestamp;
 		this.queueId = queueId;
+	}
+	
+	public Message(String str) {
+		// Interpret string
+	}
+	
+	public ByteBuffer toByteBuffer() {
+		Charset charset = Charset.forName("US-ASCII");
+		// use data from object to generate a bytebuffer
+		return charset.encode("dummy string");
 	}
 	
 }
