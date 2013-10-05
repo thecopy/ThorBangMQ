@@ -29,8 +29,8 @@ public class SocketTransport {
 		
 		byte[] buffer = new byte[1024];
 		while(inputStream.read(buffer) > 0){
-			String s = Charset.forName("ASCII").decode(ByteBuffer.wrap(buffer));
-			builder.append();
+			String s = new String(buffer, "ASCII");
+			builder.append(s);
 		}
 		
 		return builder.toString();
