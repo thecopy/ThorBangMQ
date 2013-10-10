@@ -2,13 +2,11 @@ package asl;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,13 +46,17 @@ public class ASLSocketServer {
 			 * We're alternating between looking for READ and WRITE operations from client sockets.
 			 * In the following, we're using in the pendingWrite 'queue' to set connection's operation to WRITE. 
 			 */
-			Iterator<SelectionKey> itsc = pendingWriteChannels.iterator();
-			SocketChannel pendingWriteConn;
-			while (itsc.hasNext()) {
-				pendingWriteConn = (SocketChannel)itsc.next().channel();
-				itsc.remove();
-				SelectionKey key = pendingWriteConn.keyFor(this.selector);
-				key.interestOps(SelectionKey.OP_WRITE);
+			synchronized(this.pendingWriteChannels) {
+				Iterator<SelectionKey> itsc = pendingWriteChannels.iterator();
+				SocketChannel pendingWriteConn;
+				while (itsc.hasNext()) {
+					pendingWriteConn = (SocketChannel)itsc.next().channel();
+					itsc.remove();
+					SelectionKey key = pendingWriteConn.keyFor(this.selector);
+					if (key.isValid()) {
+						key.interestOps(SelectionKey.OP_WRITE);
+					}
+				}
 			}
 			
 			// Go through connections that require actions to be made.
@@ -114,8 +116,8 @@ public class ASLSocketServer {
 			conn.cancel();
 			return;
 		}
-		
-		this.executor.execute(new ASLClientRequestWorker(this, bb_to_str(readBuffer), conn));
+		String v = new String(readBuffer.array(), Charset.forName("UTF-8"));
+		this.executor.execute(new ASLClientRequestWorker(this, v, conn));
 	}
 	
 	private void write(SelectionKey conn) throws IOException {
@@ -146,20 +148,4 @@ public class ASLSocketServer {
 		// Should wake up the selector in case it is sleeping, so that the message can be processed ASAP.
 		this.selector.wakeup();
 	}
-	
-	public static String bb_to_str(ByteBuffer buffer){
-		  String data = "";
-		  Charset charset = Charset.forName("US-ASCII");
-		  CharsetDecoder decoder = charset.newDecoder();
-		  try{
-		    int old_position = buffer.position();
-		    data = decoder.decode(buffer).toString();
-		    // reset buffer's position to its original so it is not altered:
-		    buffer.position(old_position);  
-		  }catch (Exception e){
-		    e.printStackTrace();
-		    return "";
-		  }
-		  return data;
-		}
 }
