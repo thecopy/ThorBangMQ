@@ -6,7 +6,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,7 +22,7 @@ public class ASLSocketServer {
 	private Selector selector;
 	private ServerSocketChannel serverChannel;
 	private ExecutorService executor;
-	private ByteBuffer readBuffer = ByteBuffer.allocate(4096);
+	private ByteBuffer readBuffer = ByteBuffer.allocate(ASLServerSettings.MESSAGE_MAX_LENGTH);
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
 	private HashMap<SelectionKey, Message> pendingWriteMessages = new HashMap<SelectionKey, Message>();
 	
@@ -97,6 +96,7 @@ public class ASLSocketServer {
 
 	private void read(SelectionKey conn) throws IOException {
 		this.readBuffer.clear();
+		this.readBuffer.limit(ASLServerSettings.MESSAGE_MAX_LENGTH);
 		SocketChannel clientChannel = (SocketChannel)conn.channel();
 		
 		int bytesRead = 0; 
@@ -116,8 +116,8 @@ public class ASLSocketServer {
 			conn.cancel();
 			return;
 		}
-		String v = new String(readBuffer.array(), Charset.forName("UTF-8"));
-		this.executor.execute(new ASLClientRequestWorker(this, v, conn));
+		
+		this.executor.execute(new ASLClientRequestWorker(this, bufferToString(bytesRead), conn));
 	}
 	
 	private void write(SelectionKey conn) throws IOException {
@@ -147,5 +147,13 @@ public class ASLSocketServer {
 		}
 		// Should wake up the selector in case it is sleeping, so that the message can be processed ASAP.
 		this.selector.wakeup();
+	}
+	
+	private String bufferToString(int bytesRead) {
+		byte[] buff = new byte[bytesRead];
+		for (int i = 0; i < bytesRead; i += 1) {
+			buff[i] = this.readBuffer.get(i);
+		}
+		return new String(buff, ASLServerSettings.CHARSET);
 	}
 }
