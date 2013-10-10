@@ -26,7 +26,7 @@ public final class Message {
 	
 	public ByteBuffer toByteBuffer() {
 		// use data from object to generate a bytebuffer
-		return ASLServerSettings.charset.encode("dummy string");
+		return ASLServerSettings.CHARSET.encode("dummy string");
 	}
 	
 }
