@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Logger;
 
 import asl.ASLServerSettings;
+import asl.Persistence.IPersistence;
 
 /*
  * With inspiration from http://www.onjava.com/pub/a/onjava/2002/09/04/nio.html?page=2
@@ -28,10 +30,14 @@ public class ASLSocketServer {
 	private ByteBuffer readBuffer = ByteBuffer.allocate(4096);
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
 	private HashMap<SelectionKey, Message> pendingWriteMessages = new HashMap<SelectionKey, Message>();
+	private Logger logger;
+	private IPersistence persistence;
 	
 	
-	public ASLSocketServer(ExecutorService executor) throws IOException {
+	public ASLSocketServer(ExecutorService executor, Logger logger, IPersistence persistence) throws IOException {
 		this.executor = executor;
+		this.logger = logger;
+		this.persistence = persistence;
 		
 		// Initialize server socket and the selector to accept connections.
 		this.serverChannel = ServerSocketChannel.open();
@@ -115,7 +121,7 @@ public class ASLSocketServer {
 			return;
 		}
 		
-		this.executor.execute(new ASLClientRequestWorker(this, bb_to_str(readBuffer), conn));
+		this.executor.execute(new ClientRequestWorker(this, bb_to_str(readBuffer), conn));
 	}
 	
 	private void write(SelectionKey conn) throws IOException {
