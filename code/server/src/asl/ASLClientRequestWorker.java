@@ -65,11 +65,11 @@ public class ASLClientRequestWorker implements Runnable{
 		long receiver = Long.parseLong(args[0]);
 		long sender = Long.parseLong(args[1]);
 		long queue = Long.parseLong(args[2]);
-		String context = args[3];
+		long context = Long.parseLong(args[3]);
 		int priority = Integer.parseInt(args[4]);
 		String content = args[5];
 
-		Message message = new Message(receiver, sender, 0, queue, 0, priority, content, context);
+		Message message = new Message(receiver, sender, 0, queue, 0, priority, context, content);
 
 		persistence.storeMessage(message);
 	}
