@@ -11,7 +11,7 @@ public final class Message {
 	public long timestamp;
 	public long queueId;
 	public long id;
-	private int priority;
+	public int priority;
 	
 	public Message(long recieverId, long senderId, long timestamp, long queueId, long id, int priority, String content, String context){
 		this.content = content;
@@ -29,8 +29,9 @@ public final class Message {
 	}
 	
 	public ByteBuffer toByteBuffer() {
+		Charset charset = Charset.forName("US-ASCII");
 		// use data from object to generate a bytebuffer
-		return ASLServerSettings.CHARSET.encode("dummy string");
+		return charset.encode("dummy string");
 	}
 	
 }

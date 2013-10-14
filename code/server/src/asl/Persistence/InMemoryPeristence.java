@@ -16,6 +16,10 @@ public class InMemoryPeristence implements IPersistence {
 		messages = new ArrayList<Message>();
 	}
 	
+	public InMemoryPeristence(ArrayList<Message> messages){
+		this.messages = messages;
+	}
+	
 	@Override
 	public void deleteMessage(long messageId) {
 		for(int i = 0; i < messages.size(); i++)
@@ -104,6 +108,17 @@ public class InMemoryPeristence implements IPersistence {
 	@Override
 	public Enumeration<Client> getAllClients() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Message getMessageById(long id) {
+		for(int i = 0; i < messages.size(); i++){
+			Message m = messages.get(i);
+			if(m.id == id)
+				return m;
+		}
+		
 		return null;
 	}
 

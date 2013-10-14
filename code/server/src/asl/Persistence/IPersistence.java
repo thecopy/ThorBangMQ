@@ -12,6 +12,7 @@ public interface IPersistence {
 	Message getMessageByPriority(long queueId, long recieverId);
 	Message getMessageByTimestamp(long queueId, long recieverId);
 	Message getMessageBySender(long queueId, long recierId, long senderId);
+	Message getMessageById(long id);
 	
 	long createQueue(String name);
 	void removeQueue(long queueId);
