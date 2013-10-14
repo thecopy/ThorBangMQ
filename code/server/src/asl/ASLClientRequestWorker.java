@@ -2,6 +2,8 @@ package asl;
 
 import java.nio.channels.SelectionKey;
 
+import asl.Persistence.PersistenceImpl;
+
 public class ASLClientRequestWorker implements Runnable{
 
 	ASLSocketServer server = null;
@@ -18,8 +20,9 @@ public class ASLClientRequestWorker implements Runnable{
 	@Override
 	public void run() {
 		// Interpret message
-		// Call database layer
-		Message response = new Message(0, 0, 0, 0, "0", "0");
+		PersistenceImpl persistence = new PersistenceImpl();
+		// Use persistence to query the database
+		Message response = new Message(0, 0, 0, 0, 0, 0, "0");
 		this.server.send(this.conn, response);
 	}
 }

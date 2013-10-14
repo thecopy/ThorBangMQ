@@ -5,19 +5,34 @@ import java.nio.charset.Charset;
 
 public final class Message {
 	public String content;
-	public long recieverId;
+	public long receiverId;
 	public long senderId;
-	public String context;
+	public long contextId;
 	public long timestamp;
 	public long queueId;
+	public int priority;
 	
-	public Message(long recieverId, long senderId, long timestamp, long queueId, String content, String context){
+	public Message(long receiverId, long senderId, long timestamp, long queueId, long contextId, int priority, String content){
 		this.content = content;
-		this.recieverId = recieverId;
+		this.receiverId = receiverId;
 		this.senderId = senderId;
-		this.context = context;
+		this.contextId = contextId;
 		this.timestamp = timestamp;
 		this.queueId = queueId;
+		this.priority = priority;
+	}
+	
+	public Message(long queueId, long contextId, int priority, String content){
+		this.content = content;
+		this.contextId = contextId;
+		this.queueId = queueId;
+		this.priority = priority;
+	}
+	
+	public Message(long queueId, int priority, String content){
+		this.content = content;
+		this.queueId = queueId;
+		this.priority = priority;
 	}
 	
 	public Message(String str) {

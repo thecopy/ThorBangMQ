@@ -13,6 +13,11 @@ public interface IPersistence {
 	Message getMessageByTimestamp(long queueId, long recieverId);
 	Message getMessageBySender(long queueId, long recierId, long senderId);
 	
+	/**
+	 * Create a queue.
+	 * @param name Name of the queue
+	 * @return Id of queue on success, -1 on failure.
+	 */
 	long createQueue(String name);
 	void removeQueue(long queueId);
 	
