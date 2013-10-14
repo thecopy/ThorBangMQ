@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 package asl;
 
 import java.nio.charset.Charset;
@@ -7,6 +8,12 @@ public class ASLServerSettings {
 	public static final int NUM_CLIENTREQUESTWORKER_THREADS = 20;
 	public static final Charset CHARSET = Charset.forName("UTF-8");
 	public static final int MESSAGE_MAX_LENGTH = 4096;
-	
-	public static boolean UseInMemoryPersister;
 }
+=======
+package asl;
+
+public class ASLServerSettings {
+	public static final int SOCKET_PORT = 8123;
+	public static final int NUM_CLIENTREQUESTWORKER_THREADS = 10;
+}
+>>>>>>> Stashed changes

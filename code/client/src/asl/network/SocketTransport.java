@@ -19,16 +19,22 @@ public class SocketTransport implements ITransport {
 	}
 	
 	public void Send(String data) throws IOException{
-		outputStream.write(data.getBytes());
+		outputStream.write(data.getBytes("UTF-8"));
 	}
 	
 	public String Read() throws IOException{
 		StringBuilder builder = new StringBuilder();
 		
 		byte[] buffer = new byte[1024];
-		while(inputStream.read(buffer) > 0){
-			String s = new String(buffer, "ASCII");
-			builder.append(s);
+		int readBytes = 0;
+		while((readBytes = inputStream.read(buffer)) > 0){
+			
+			if(buffer[readBytes-1] == 0){ // EoF token
+				builder.append(new String(buffer, 0, readBytes-1, "UTF-8"));
+				break;
+			}
+			else
+				builder.append(new String(buffer, "UTF-8"));
 		}
 		
 		return builder.toString();

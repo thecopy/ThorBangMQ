@@ -15,6 +15,13 @@ public class ThorBangMQ {
 		this.userId = userId;
 	}
 	
+	public void init() throws Exception{
+		String response = this.transport.SendAndGetResponse("HELLO");
+		
+		if(!response.equals("OK"))
+			throw new Exception("Connection failed! Expected server to respond with OK (server full?). Got: " + response);
+	}
+	
 	public void SendMessage(long recieverId, long queueId, String context, String content) throws IOException {
 		transport.Send(String.format(SendMessageStringFormat, 
 				recieverId,

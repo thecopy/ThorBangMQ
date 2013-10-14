@@ -6,6 +6,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 
 import asl.ASLServerSettings;
 import asl.Persistence.IPersistence;
+import asl.network.DefaultTransport;
 
 /*
  * With inspiration from http://www.onjava.com/pub/a/onjava/2002/09/04/nio.html?page=2
@@ -26,7 +28,7 @@ public class ASLSocketServer {
 	private ExecutorService executor;
 	private ByteBuffer readBuffer = ByteBuffer.allocate(ASLServerSettings.MESSAGE_MAX_LENGTH);
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
-	private HashMap<SelectionKey, Message> pendingWriteMessages = new HashMap<SelectionKey, Message>();
+	private HashMap<SelectionKey, String> pendingWrites = new HashMap<SelectionKey, String>();
 	private Logger logger;
 	private IPersistence persistence;
 	
@@ -123,19 +125,24 @@ public class ASLSocketServer {
 			return;
 		}
 		
-		this.executor.execute(new ASLClientRequestWorker(this, bufferToString(bytesRead), conn));
+		this.executor.execute(
+				new ASLClientRequestWorker(
+						logger, 
+						persistence, 
+						new DefaultTransport(this, conn), 
+						bufferToString(bytesRead)));
 	}
 	
 	private void write(SelectionKey conn) throws IOException {
 		// SocketChannel to write reply to.
 		SocketChannel channel = (SocketChannel)conn.channel();
-		System.out.printf("Replying to %s\n", ((SocketChannel)conn.channel()).getRemoteAddress().toString());
 		// write pending messages to client
-		Message reply;
+		String reply;
 		synchronized(this.pendingWriteChannels) {
-			reply = this.pendingWriteMessages.get(conn);
-			channel.write(reply.toByteBuffer());
-			this.pendingWriteMessages.remove(conn);
+			reply = this.pendingWrites.get(conn);
+			System.out.printf("Replying to %s with:%s\n", ((SocketChannel)conn.channel()).getRemoteAddress().toString(),reply);
+			channel.write(stringToByteBuffer(reply));
+			this.pendingWrites.remove(conn);
 		}
 		
 		// Done writing -- tell selector to listen for reads instead.
@@ -146,10 +153,10 @@ public class ASLSocketServer {
 	 * Used by worker threads to put a message into the message queue,
 	 * so that I/O will be handled by the selection-thread.
 	 */
-	public void send(SelectionKey conn, Message response) {
+	public void send(SelectionKey conn, String str) {
 		synchronized(this.pendingWriteChannels) {
 			this.pendingWriteChannels.add(conn);
-			this.pendingWriteMessages.put(conn, response);
+			this.pendingWrites.put(conn, str);
 		}
 		// Should wake up the selector in case it is sleeping, so that the message can be processed ASAP.
 		this.selector.wakeup();
@@ -161,5 +168,10 @@ public class ASLSocketServer {
 			buff[i] = this.readBuffer.get(i);
 		}
 		return new String(buff, ASLServerSettings.CHARSET);
+	}
+	
+	public ByteBuffer stringToByteBuffer(String str) {
+		Charset charset = ASLServerSettings.CHARSET;
+		return charset.encode(str);
 	}
 }
