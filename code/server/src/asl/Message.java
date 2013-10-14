@@ -10,14 +10,18 @@ public final class Message {
 	public String context;
 	public long timestamp;
 	public long queueId;
+	public long id;
+	private int priority;
 	
-	public Message(long recieverId, long senderId, long timestamp, long queueId, String content, String context){
+	public Message(long recieverId, long senderId, long timestamp, long queueId, long id, int priority, String content, String context){
 		this.content = content;
 		this.recieverId = recieverId;
 		this.senderId = senderId;
 		this.context = context;
 		this.timestamp = timestamp;
 		this.queueId = queueId;
+		this.id = id;
+		this.priority = priority;
 	}
 	
 	public Message(String str) {
