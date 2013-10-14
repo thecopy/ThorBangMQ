@@ -2,7 +2,6 @@ package asl.Persistence;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 import asl.Client;
 import asl.Message;
@@ -43,7 +42,7 @@ public class InMemoryPersistence implements IPersistence {
 		
 		for(int i = 0; i < messages.size(); i++){
 			Message m = messages.get(i);
-			if(m.recieverId == recieverId && m.queueId == queueId)
+			if(m.receiverId == recieverId && m.queueId == queueId)
 			{
 				if(message == null){	
 					message = m;
@@ -63,7 +62,7 @@ public class InMemoryPersistence implements IPersistence {
 		
 		for(int i = 0; i < messages.size(); i++){
 			Message m = messages.get(i);
-			if(m.recieverId == recieverId && m.queueId == queueId)
+			if(m.receiverId == recieverId && m.queueId == queueId)
 			{
 				if(message == null){	
 					message = m;
@@ -82,7 +81,7 @@ public class InMemoryPersistence implements IPersistence {
 		
 		for(int i = 0; i < messages.size(); i++){
 			Message m = messages.get(i);
-			if(m.recieverId == recieverId && m.queueId == queueId && m.senderId == senderId)
+			if(m.receiverId == recieverId && m.queueId == queueId && m.senderId == senderId)
 			{
 				if(message == null){	
 					message = m;

@@ -190,4 +190,10 @@ public class PersistenceImpl implements IPersistence {
 		PersistenceImpl.connectionPool.close();
 	}
 
+	@Override
+	public Message getMessageById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

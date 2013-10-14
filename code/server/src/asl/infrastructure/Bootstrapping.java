@@ -2,7 +2,6 @@ package asl.infrastructure;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,11 +25,11 @@ public class Bootstrapping {
 	
 	public static void StrapTheBoot(Logger logger){
 		
-		if((!new File(configurationFile).exists())){
+		if (!new File(configurationFile).exists()){
 			logger.log(Level.CONFIG, "Configuration file not found. Defaulting to in memory persistence.");
 			ASLServerSettings.UseInMemoryPersister = true;
 			SaveTheStrapping(logger);
-		}else
+		} else
 		try {
 			// Read configuration file
 			String[] settings = readFile(configurationFile).split("\n");
@@ -41,7 +40,6 @@ public class Bootstrapping {
 						ASLServerSettings.UseInMemoryPersister = true;
 				}
 			}
-			
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Could not read from configuration." + e);
 		}

@@ -13,8 +13,7 @@ public final class Message {
 	public long id;
 	public int priority;
 
-	public Message(long recieverId, long senderId, long timestamp, long queueId, long id, int priority, long contextId, String content){
-
+	public Message(long receiverId, long senderId, long timestamp, long queueId, long id, int priority, long contextId, String content){
 		this.content = content;
 		this.receiverId = receiverId;
 		this.senderId = senderId;
