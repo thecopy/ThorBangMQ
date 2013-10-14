@@ -29,9 +29,8 @@ public final class Message {
 	}
 	
 	public ByteBuffer toByteBuffer() {
-		Charset charset = Charset.forName("US-ASCII");
 		// use data from object to generate a bytebuffer
-		return charset.encode("dummy string");
+		return ASLServerSettings.CHARSET.encode("dummy string");
 	}
 	
 }

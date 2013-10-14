@@ -2,13 +2,10 @@ package asl;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,7 +24,7 @@ public class ASLSocketServer {
 	private Selector selector;
 	private ServerSocketChannel serverChannel;
 	private ExecutorService executor;
-	private ByteBuffer readBuffer = ByteBuffer.allocate(4096);
+	private ByteBuffer readBuffer = ByteBuffer.allocate(ASLServerSettings.MESSAGE_MAX_LENGTH);
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
 	private HashMap<SelectionKey, Message> pendingWriteMessages = new HashMap<SelectionKey, Message>();
 	private Logger logger;
@@ -54,13 +51,17 @@ public class ASLSocketServer {
 			 * We're alternating between looking for READ and WRITE operations from client sockets.
 			 * In the following, we're using in the pendingWrite 'queue' to set connection's operation to WRITE. 
 			 */
-			Iterator<SelectionKey> itsc = pendingWriteChannels.iterator();
-			SocketChannel pendingWriteConn;
-			while (itsc.hasNext()) {
-				pendingWriteConn = (SocketChannel)itsc.next().channel();
-				itsc.remove();
-				SelectionKey key = pendingWriteConn.keyFor(this.selector);
-				key.interestOps(SelectionKey.OP_WRITE);
+			synchronized(this.pendingWriteChannels) {
+				Iterator<SelectionKey> itsc = pendingWriteChannels.iterator();
+				SocketChannel pendingWriteConn;
+				while (itsc.hasNext()) {
+					pendingWriteConn = (SocketChannel)itsc.next().channel();
+					itsc.remove();
+					SelectionKey key = pendingWriteConn.keyFor(this.selector);
+					if (key.isValid()) {
+						key.interestOps(SelectionKey.OP_WRITE);
+					}
+				}
 			}
 			
 			// Go through connections that require actions to be made.
@@ -101,6 +102,7 @@ public class ASLSocketServer {
 
 	private void read(SelectionKey conn) throws IOException {
 		this.readBuffer.clear();
+		this.readBuffer.limit(ASLServerSettings.MESSAGE_MAX_LENGTH);
 		SocketChannel clientChannel = (SocketChannel)conn.channel();
 		
 		int bytesRead = 0; 
@@ -121,7 +123,7 @@ public class ASLSocketServer {
 			return;
 		}
 		
-		this.executor.execute(new ClientRequestWorker(this, bb_to_str(readBuffer), conn));
+		this.executor.execute(new ASLClientRequestWorker(this, bufferToString(bytesRead), conn));
 	}
 	
 	private void write(SelectionKey conn) throws IOException {
@@ -153,19 +155,11 @@ public class ASLSocketServer {
 		this.selector.wakeup();
 	}
 	
-	public static String bb_to_str(ByteBuffer buffer){
-		  String data = "";
-		  Charset charset = Charset.forName("US-ASCII");
-		  CharsetDecoder decoder = charset.newDecoder();
-		  try{
-		    int old_position = buffer.position();
-		    data = decoder.decode(buffer).toString();
-		    // reset buffer's position to its original so it is not altered:
-		    buffer.position(old_position);  
-		  }catch (Exception e){
-		    e.printStackTrace();
-		    return "";
-		  }
-		  return data;
+	private String bufferToString(int bytesRead) {
+		byte[] buff = new byte[bytesRead];
+		for (int i = 0; i < bytesRead; i += 1) {
+			buff[i] = this.readBuffer.get(i);
 		}
+		return new String(buff, ASLServerSettings.CHARSET);
+	}
 }
