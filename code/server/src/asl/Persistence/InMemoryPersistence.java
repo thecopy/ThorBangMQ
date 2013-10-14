@@ -7,16 +7,16 @@ import java.util.List;
 import asl.Client;
 import asl.Message;
 
-public class InMemoryPeristence implements IPersistence {
+public class InMemoryPersistence implements IPersistence {
 	private long id = 0;
 	private int queues = 0;
 	private ArrayList<Message> messages;
 	
-	public InMemoryPeristence(){
+	public InMemoryPersistence(){
 		messages = new ArrayList<Message>();
 	}
 	
-	public InMemoryPeristence(ArrayList<Message> messages){
+	public InMemoryPersistence(ArrayList<Message> messages){
 		this.messages = messages;
 	}
 	

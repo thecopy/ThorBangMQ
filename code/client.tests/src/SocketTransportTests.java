@@ -1,3 +1,5 @@
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -23,6 +25,6 @@ public class SocketTransportTests {
     	String result = transport.SendAndGetResponse(stringToSend);
     	
     	// Assert
-    	Assert.assertTrue(result.contains("200 OK"));
+    	assertTrue(result.contains("200 OK"));
     }
 }
