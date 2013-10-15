@@ -7,8 +7,15 @@ import asl.network.ITransport;
 public class ThorBangMQ {
 	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
 	private final static String SendMessageStringFormat = "MSG,%d,%d,%d,%d,%d,%s";
+	
 	private final static String PeekQueueStringFormat = "PEEKQ,%d,%d,%d";
 	private final static String PeekQueueWithSenderStringFormat = "PEEKS,%d,%d,%d,%d";
+	
+	private final static String PopQueueStringFormat = "POPQ,%d,%d,%d";
+	private final static String PopQueueWithSenderStringFormat = "POPS,%d,%d,%d,%d";
+	
+	private final static String CreateQueueStringFormat = "CREATEQUEUE,%s";
+	private final static String RemoveQueueStringFormat = "REMOVEQUEUE,%d";
 	
 	private ITransport transport;
 	private long userId;
@@ -44,6 +51,59 @@ public class ThorBangMQ {
 		if(msg.startsWith("MSG0"))
 			return null;
 		
+		return parseMessage(msg);
+	}
+	
+	public Message peekMessageFromSender(long queueId, long sender, Boolean getByTime) throws IOException {
+		String msg = transport.SendAndGetResponse(String.format(PeekQueueWithSenderStringFormat, 
+						userId,
+						queueId,
+						sender,
+						getByTime ? 1 : 0));
+		
+		if(msg.startsWith("MSG0"))
+			return null;
+		
+		return parseMessage(msg);
+	}
+	
+	public Message PopMessage(long queueId, Boolean getByTime) throws IOException {
+		String msg = transport.SendAndGetResponse(String.format(PopQueueStringFormat, 
+						userId,
+						queueId,
+						getByTime ? 1 : 0));
+		
+		if(msg.startsWith("MSG0"))
+			return null;
+		
+		return parseMessage(msg);
+	}
+	
+	public Message popMessageFromSender(long queueId, long sender, Boolean getByTime) throws IOException {
+		String msg = transport.SendAndGetResponse(String.format(PopQueueWithSenderStringFormat, 
+						userId,
+						queueId,
+						sender,
+						getByTime ? 1 : 0));
+		
+		if(msg.startsWith("MSG0"))
+			return null;
+		
+		return parseMessage(msg);
+	}
+	
+	public Long createQueue(String name) throws IOException {
+		String queueId = transport.SendAndGetResponse(String.format(CreateQueueStringFormat, name));
+		
+		return Long.parseLong(queueId);
+	}
+	
+	public void removeQueue(long id) throws IOException {
+		String response = transport.SendAndGetResponse(String.format(RemoveQueueStringFormat, id));
+		// TODO: throw exception or log if respone is FAIL
+	}
+	
+	private Message parseMessage(String msg){
 		String[] msgParts = msg.split(",", 5);
 		
 		long sender = Long.parseLong(msgParts[1]);
