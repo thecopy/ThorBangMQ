@@ -32,7 +32,7 @@ public class Main {
 		System.out.println("Init successfull!");
 
 		System.out.println("Sending msg to self...");
-		client.SendMessage(123, 1, "", "HEJ");
+		client.SendMessage(123, 1, 1, 0, "HEJ");
 		
 		System.out.println("OK! Peeking...");
 		Message msg  = client.PeekMessage(1, true);
