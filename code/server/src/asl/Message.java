@@ -27,4 +27,8 @@ public final class Message {
 	public Message(String str) {
 		// Interpret string
 	}
+
+	public Message() {
+		// TODO Auto-generated constructor stub
+	}
 }
