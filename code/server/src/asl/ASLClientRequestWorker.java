@@ -43,25 +43,25 @@ public class ASLClientRequestWorker implements Runnable{
 			transport.Send("OK");
 			break;
 		case "MSG":
-			ps.storeMessage(methodWithArgs[1]);
+			this.ps.storeMessage(methodWithArgs[1]);
 			break;
 		case "PEEKQ":
-			ps.sendMessage(ps.peekQueue(methodWithArgs[1]));
+			this.ps.sendMessage(this.ps.peekQueue(methodWithArgs[1]));
 			break;
 		case "PEEKS":
-			ps.sendMessage(ps.peekQueueWithSender(methodWithArgs[1]));
+			this.ps.sendMessage(this.ps.peekQueueWithSender(methodWithArgs[1]));
 			break;
 		case "POPQ":
-			ps.sendMessage(ps.popQueue(methodWithArgs[1]));
+			this.ps.sendMessage(this.ps.popQueue(methodWithArgs[1]));
 			break;
 		case "POPS":
-			ps.sendMessage(ps.popQueueWithSender(methodWithArgs[1]));
+			this.ps.sendMessage(this.ps.popQueueWithSender(methodWithArgs[1]));
 			break;
 		case "CREATEQUEUE":
-			transport.Send(String.valueOf(ps.createQueue(methodWithArgs[1])));
+			transport.Send(String.valueOf(this.ps.createQueue(methodWithArgs[1])));
 			break;
 		case "REMOVEQUEUE":
-			ps.removeQueue(Long.parseLong(methodWithArgs[1]));
+			this.ps.removeQueue(Long.parseLong(methodWithArgs[1]));
 			transport.Send("OK");
 			break;
 		default:

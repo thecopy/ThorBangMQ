@@ -131,7 +131,7 @@ public class ASLSocketServer {
 		this.executor.execute(
 				new ASLClientRequestWorker(
 						logger,
-						new ProtocolService(persistence, transport, logger),
+						new ProtocolService(this.persistence, transport, logger),
 						transport,
 						bufferToString(bytesRead)));
 	}
