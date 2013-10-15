@@ -16,7 +16,9 @@ import java.util.logging.Logger;
 
 import asl.ASLServerSettings;
 import asl.Persistence.IPersistence;
+import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
+import asl.network.ITransport;
 
 /*
  * With inspiration from http://www.onjava.com/pub/a/onjava/2002/09/04/nio.html?page=2
@@ -125,11 +127,12 @@ public class ASLSocketServer {
 			return;
 		}
 
+		ITransport transport = new DefaultTransport(this, conn);
 		this.executor.execute(
 				new ASLClientRequestWorker(
 						logger,
-						persistence,
-						new DefaultTransport(this, conn),
+						new ProtocolService(persistence, transport, logger),
+						transport,
 						bufferToString(bytesRead)));
 	}
 
