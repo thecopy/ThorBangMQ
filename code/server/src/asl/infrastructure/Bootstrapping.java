@@ -13,7 +13,7 @@ import asl.ASLServerSettings;
 public class Bootstrapping {
 	private static String useMemoryPersistenceSetting = "useinmemorypersistence";
 	private static String configurationFile = "conf.txt";
-		
+
 	public static ASLServerSettings StrapTheBoot(Logger logger){
 		ASLServerSettings serverSettings = new ASLServerSettings();
 		if (!new File(configurationFile).exists()){
@@ -34,44 +34,44 @@ public class Bootstrapping {
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Could not read from configuration." + e);
 		}
-		
+
 		return serverSettings;
 	}
-	
+
 	public static void SaveTheStrapping(Logger logger, ASLServerSettings settings){
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(useMemoryPersistenceSetting + "\t" + (settings.UseInMemoryPersister ? "1" : "0"));
 		sb.append("\n");
-		
+
 		try {
 			saveFile(configurationFile, sb.toString());
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Could not save configuration file: " + e);
 		}
 	}
-	
+
 	private static String readFile(String path) throws IOException{
 	    BufferedReader br = new BufferedReader(new FileReader(path));
 	    try {
 	        String line = br.readLine();
 	        StringBuilder sb = new StringBuilder();
-	        
+
 	        while (line != null) {
 	            sb.append(line);
 	            sb.append('\n');
 	            line = br.readLine();
 	        }
 	        return sb.toString();
-	    } finally { 
+	    } finally {
 	        br.close();
 	    }
 	}
-	
+
 	private static void saveFile(String path, String content) throws IOException{
 		PrintWriter out = new PrintWriter(path);
 		out.print(content);
 		out.close();
 	}
-	
+
 }
