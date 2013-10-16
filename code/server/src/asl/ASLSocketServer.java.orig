@@ -36,15 +36,25 @@ public class ASLSocketServer {
 	private HashMap<SelectionKey, String> pendingWrites = new HashMap<SelectionKey, String>();
 	private Logger logger;
 	private IPersistence persistence;
+<<<<<<< HEAD
+=======
 	private int connectedClients;
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 	private ASLServerSettings settings;
 
 	public static ASLSocketServer build(ASLServerSettings settings, Logger logger) throws IOException{
 
+<<<<<<< HEAD
+		IPersistence persistence = settings.UseInMemoryPersister 
+				? new InMemoryPersistence() 
+				: new DbPersistence(settings,logger);
+		
+=======
 		IPersistence persistence = settings.UseInMemoryPersister
 				? new InMemoryPersistence()
 				: new DbPersistence(settings,logger);
 
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
 
 		return new ASLSocketServer(settings, threadpool, logger, persistence);
@@ -63,11 +73,18 @@ public class ASLSocketServer {
 		this.serverChannel.socket().bind(new InetSocketAddress(ASLServerSettings.SOCKET_PORT));  // listen for connections on SOCKET_PORT
 		this.selector = Selector.open();
 		this.serverChannel.register(this.selector, SelectionKey.OP_ACCEPT);
+<<<<<<< HEAD
+	}
+
+	public void start() throws IOException {
+		System.out.println("Waiting for connections");
+=======
 		this.connectedClients = 0;
 	}
 
 	public void start() {
 		logger.info("Waiting for connections..");
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 		while (true) {
 			/*
 			 * We're alternating between looking for READ and WRITE operations from client sockets.
@@ -87,12 +104,16 @@ public class ASLSocketServer {
 			}
 
 			// Go through connections that require actions to be made.
+<<<<<<< HEAD
+			this.selector.select();
+=======
 			try {
 				this.selector.select();
 			} catch (IOException e) {
 				logger.severe("Selector gave IO error!");
 				e.printStackTrace();
 			}
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 			Iterator<SelectionKey> itsk = this.selector.selectedKeys().iterator();
 			SelectionKey conn;
 			while (itsk.hasNext()) {
@@ -116,6 +137,20 @@ public class ASLSocketServer {
 		}
 	}
 
+<<<<<<< HEAD
+	private void accept(SelectionKey conn) throws IOException {
+		// Only the server channel is listening for connections, so it'll be the channel of conn here.
+		ServerSocketChannel serverChannel = (ServerSocketChannel)conn.channel();
+
+		// Accept connections and put a READ
+		SocketChannel client = serverChannel.accept();
+		System.out.printf("Accepting connection from %s\n", client.getRemoteAddress().toString());
+		client.configureBlocking(false);
+		client.register(this.selector, SelectionKey.OP_READ);
+	}
+
+	private void read(SelectionKey conn) throws IOException {
+=======
 	private void accept(SelectionKey conn) {
 		// Only the server channel is listening for connections, so it'll be the channel of conn here.
 		ServerSocketChannel serverChannel = (ServerSocketChannel)conn.channel();
@@ -140,11 +175,21 @@ public class ASLSocketServer {
 	 * @param conn
 	 */
 	private void read(SelectionKey conn) {
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 		this.readBuffer.clear();
 		this.readBuffer.limit(settings.MESSAGE_MAX_LENGTH);
 		SocketChannel clientChannel = (SocketChannel)conn.channel();
 
 		int bytesRead = 0;
+<<<<<<< HEAD
+		try {
+			bytesRead = clientChannel.read(this.readBuffer);
+		}
+		catch (IOException e) {
+			// Connection unexpectedly closed.
+			conn.cancel();
+			conn.channel().close();
+=======
 		String clientAddress = "NO_CLIENT";  // Initialize such that variable can be used if there is an exception.
 		try {
 			clientAddress = clientChannel.getRemoteAddress().toString();
@@ -152,12 +197,18 @@ public class ASLSocketServer {
 		}
 		catch (IOException e) {
 			this.unexpectedDisconnect(conn, clientAddress);
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 			return;
 		}
 
 		// End of stream reached. Close connection.
 		if (bytesRead == -1) {
+<<<<<<< HEAD
+			conn.channel().close();
+			conn.cancel();
+=======
 			this.disconnect(conn, clientAddress);
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 			return;
 		}
 
@@ -170,6 +221,18 @@ public class ASLSocketServer {
 						bufferToString(bytesRead)));
 	}
 
+<<<<<<< HEAD
+	private void write(SelectionKey conn) throws IOException {
+		// SocketChannel to write reply to.
+		SocketChannel channel = (SocketChannel)conn.channel();
+		// write pending messages to client
+		String reply;
+		synchronized(this.pendingWriteChannels) {
+			reply = this.pendingWrites.get(conn);
+			System.out.printf("Replying to %s with:%s\n", ((SocketChannel)conn.channel()).getRemoteAddress().toString(),reply);
+			channel.write(stringToByteBuffer(reply));
+			this.pendingWrites.remove(conn);
+=======
 	/**
 	 * Write data back on a client socket.
 	 * @param conn
@@ -190,17 +253,24 @@ public class ASLSocketServer {
 			}
 			this.pendingWrites.remove(conn);
 			logger.info(String.format("Replied to %s with:%s\n", clientAddress, reply));
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 		}
 
 		// Done writing -- tell selector to listen for reads instead.
 		conn.interestOps(SelectionKey.OP_READ);
 	}
 
+<<<<<<< HEAD
+	/*
+	 * Used by worker threads to put a message into the message queue,
+	 * so that I/O will be handled by the selection-thread.
+=======
 	/**
 	 * Used by worker threads to put messages into a pendingMessages queue, which will be sent in the future.
 	 * This makes sure that all network IO stays in the same thread as the selector.
 	 * @param conn
 	 * @param str
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 	 */
 	public void send(SelectionKey conn, String str) {
 		synchronized(this.pendingWriteChannels) {
@@ -219,6 +289,12 @@ public class ASLSocketServer {
 		return new String(buff, ASLServerSettings.CHARSET);
 	}
 
+<<<<<<< HEAD
+	public ByteBuffer stringToByteBuffer(String str) {
+		Charset charset = ASLServerSettings.CHARSET;
+		return charset.encode(str);
+	}
+=======
 	private ByteBuffer stringToByteBuffer(String str) {
 		Charset charset = ASLServerSettings.CHARSET;
 		return charset.encode(str);
@@ -259,4 +335,5 @@ public class ASLSocketServer {
 		}
 		this.clientDisconnect();
 	}
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 }

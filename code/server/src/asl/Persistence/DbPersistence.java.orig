@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Enumeration;
+<<<<<<< HEAD
+import java.util.HashMap;
+=======
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 import java.util.logging.Logger;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
@@ -43,7 +47,7 @@ public class DbPersistence implements IPersistence {
 		final String query = "INSERT INTO messages (sender_id, receiver_id, queue_id, context_id, priority, message) " + 
 		        			 " VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 		
-		return (long)executeScalar(query, logger,
+		return executeScalar(query, logger,
 				message.senderId,
 				message.receiverId,
 				message.queueId,
@@ -191,7 +195,11 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageById(long id) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub 
+=======
 		// TODO Auto-generated method stub
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 		return null;
 	}
 
@@ -199,7 +207,7 @@ public class DbPersistence implements IPersistence {
 	public long createUser(String name) {
 		final String query = "INSERT INTO clients(name) VALUES(?) RETURNING id";
 		
-		return (long)executeScalar(query, logger, name);
+		return executeScalar(query, logger, name);
 	}
 	
 	private static void executeStatement(String sql, Logger logger, Object... params){
@@ -214,7 +222,7 @@ public class DbPersistence implements IPersistence {
 			stmt = con.prepareStatement(sql);
 			for(int i = 1; i <= params.length; i ++)
 				stmt.setObject(i, params[i-1]);
- 
+
 			stmt.execute();
 			
 			con.commit();
@@ -267,11 +275,11 @@ public class DbPersistence implements IPersistence {
 		return null;
 	}
 	
-	private static Object executeScalar(String sql, Logger logger, Object... params){
+	private static long executeScalar(String sql, Logger logger, Object... params){
 		ArrayList<Object[]> r = executeQuery(sql, logger, params);
 		
 		if(r.size() > 0)
-			return r.get(0)[0];
+			return (long)r.get(0)[0];
 		
 		return -1;
 	}
@@ -345,7 +353,7 @@ public class DbPersistence implements IPersistence {
 		String sql = " "+
 				"CREATE TABLE clients "+
 				"( "+
-				  "id bigserial NOT NULL, "+
+				  "id serial NOT NULL, "+
 				  "name character varying(25), "+
 				  "CONSTRAINT id PRIMARY KEY (id ) "+
 				") "+
@@ -358,7 +366,7 @@ public class DbPersistence implements IPersistence {
 				" "+
 				"CREATE TABLE queues "+
 				"( "+
-				  "id bigserial NOT NULL, "+
+				  "id serial NOT NULL, "+
 				  "name character varying(25), "+
 				  "CONSTRAINT queues_id PRIMARY KEY (id ) "+
 				") "+
@@ -372,7 +380,7 @@ public class DbPersistence implements IPersistence {
 				" "+
 				"CREATE TABLE messages "+
 				"( "+
-				  "id bigserial NOT NULL, "+
+				  "id serial NOT NULL, "+
 				  "sender_id bigint, "+
 				  "receiver_id bigint, "+
 				  "queue_id bigint NOT NULL, "+

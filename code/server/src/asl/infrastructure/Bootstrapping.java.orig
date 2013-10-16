@@ -9,6 +9,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import asl.ASLServerSettings;
+<<<<<<< HEAD
+import asl.Persistence.IPersistence;
+import asl.Persistence.InMemoryPersistence;
+=======
+>>>>>>> cded844543008ec04b75517d7d4c93f8d01ed50c
 
 public class Bootstrapping {
 	private static String useMemoryPersistenceSetting = "useinmemorypersistence";
