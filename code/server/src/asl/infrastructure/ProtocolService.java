@@ -5,7 +5,7 @@ import asl.Persistence.IPersistence;
 import asl.network.ITransport;
 
 public class ProtocolService implements IProtocolService {
-	private static String SendMessageStringFormat = "MSG,%d,%s,%d,%s";
+	private static String SendMessageStringFormat = "MSG,%d,%d,%d,%s";
 	
 	private IPersistence persistence;
 	private ITransport transport;
@@ -27,10 +27,11 @@ public class ProtocolService implements IProtocolService {
 		long context = Long.parseLong(args[4]);
 		String content = args[5];
 
-		Message message = new Message(receiver, sender, 0, queue, 0, priority,
-				context, content);
+		Message message = new Message(receiver, sender, 0L, queue, 0L, priority, context, content);
 
 		persistence.storeMessage(message);
+		
+		transport.Send("OK");
 	}
 
 	// PEEKQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
@@ -113,7 +114,7 @@ public class ProtocolService implements IProtocolService {
 	
 	@Override
 	public String formatMessage(Message m) {
-		return String.format(SendMessageStringFormat, m.senderId, m.content,
+		return String.format(SendMessageStringFormat, m.senderId, m.contextId,
 				m.id, m.content);
 	}
 }

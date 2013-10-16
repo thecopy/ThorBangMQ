@@ -47,7 +47,7 @@ public class ThorBangMQ {
 	}
 	
 	public void SendMessage(long recieverId, long queueId, long priority, long context, String content) throws IOException {
-		transport.Send(String.format(SendMessageStringFormat, 
+		transport.SendAndGetResponse(String.format(SendMessageStringFormat, 
 				recieverId,
 				userId,
 				queueId,
