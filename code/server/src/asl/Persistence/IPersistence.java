@@ -1,5 +1,6 @@
 package asl.Persistence;
 
+import java.sql.SQLException;
 import java.util.Enumeration;
 
 import asl.Client;
@@ -7,7 +8,7 @@ import asl.Message;
 
 public interface IPersistence {
 	void deleteMessage(long messageId);
-	void storeMessage(Message message);
+	long storeMessage(Message message);
 
 	Message getMessageByPriority(long queueId, long recieverId);
 	Message getMessageByTimestamp(long queueId, long recieverId);
@@ -21,6 +22,8 @@ public interface IPersistence {
      */
 	long createQueue(String name);
 	void removeQueue(long queueId);
+	
+	long createUser(String name);
 
 	Enumeration<Client> getAllClients();
 }

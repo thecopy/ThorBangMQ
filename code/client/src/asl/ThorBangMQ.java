@@ -1,8 +1,11 @@
 package asl;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import asl.network.ITransport;
+import asl.network.SocketTransport;
 
 public class ThorBangMQ {
 	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
@@ -19,11 +22,22 @@ public class ThorBangMQ {
 	
 	private ITransport transport;
 	private long userId;
+	private long pollingInterval = 2000;
 	
 	public ThorBangMQ(ITransport transport, long userId){
 		this.transport = transport;
 		this.userId = userId;
 	}
+	
+	public static ThorBangMQ build(String hostname, int port, long userId) throws UnknownHostException, IOException{
+		Socket socket = new Socket(hostname, port);
+		ITransport transport = new SocketTransport(socket);
+		
+		return new ThorBangMQ(transport, userId);
+	}
+	
+	public void setPollingInterval(long milliseconds){ pollingInterval = milliseconds;}
+	public long getPollingInterval() 				 { return pollingInterval; }
 	
 	public void init() throws Exception{
 		String response = this.transport.SendAndGetResponse("HELLO");
