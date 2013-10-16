@@ -2,6 +2,7 @@ package server.tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import org.junit.Test;
@@ -197,5 +198,17 @@ public class DbPersistenceTests {
 		
 		// Assert
 		assertNull(loaded);
+	}
+
+	@Test(expected = Exception.class)
+	public void shouldBeAbleToRemoveQueue() {
+		// Arrange
+		DbPersistence persistence = getTestablePersistence();
+		
+		// Act
+		persistence.removeQueue(1); // this is created in getTestablePersistence()
+		
+		// Assert
+		persistence.storeMessage(new Message(1,1,0,1 /* JUST REMOVED THIS QUEUE */, 0, 1, 0, ""));
 	}
 }

@@ -91,107 +91,16 @@ public class DbPersistence implements IPersistence {
 	 */
 	@Override
 	public long createQueue(String name) {
-		// TODO: Insert logging
-		System.out.println("Creating queue");
-		Connection con = null;
-		PreparedStatement stmt = null;
-		try {
-			con = connectionPool.getConnection();
-			con.setAutoCommit(false);
-			// Set up prepared statement
-			stmt = con.prepareStatement("INSERT INTO queues (name) VALUES (?)",
-					Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, name);
-
-			// Check if insert statement succeeded
-			int affectedRows = stmt.executeUpdate();
-			if (affectedRows == 0) {
-				// TODO: Insert logging
-				System.out
-						.println("0 rows affected on insert in createQueue. BAD!");
-			}
-
-			// Retrieve id from created queue.
-			ResultSet createdRow = stmt.getGeneratedKeys();
-			if (createdRow.next()) {
-				return createdRow.getLong(1); // Return newly created queue id.
-			} else {
-				// TODO: Insert logging
-				System.out.println("Couldn't get id from created queue. BAD!");
-			}
-
-			return -1; // Error code.
-
-		} catch (SQLException e) {
-			// TODO: Insert logging
-			e.printStackTrace();
-		} finally {
-
-			if (stmt != null) {
-				// TODO: Insert logging
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (con != null) {
-				// TODO: Insert logging
-				try {
-					con.commit();
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return -1; // Error code.
+		final String query = "INSERT INTO queues(name) VALUES(?) RETURNING id";
+		
+		return (long)executeScalar(query, logger, name);
 	}
 
 	@Override
 	public void removeQueue(long queueId) {
-		// TODO: Insert logging
-		System.out.println("Creating queue");
-		Connection con = null;
-		PreparedStatement stmt = null;
-		try {
-			con = connectionPool.getConnection();
-			con.setAutoCommit(false);
-			// Set up prepared statement
-			stmt = con.prepareStatement("DELETE FROM queues WHERE id=?");
-			stmt.setLong(1, queueId);
-
-			// Check if insert statement succeeded
-			int affectedRows = stmt.executeUpdate();
-			if (affectedRows == 0) {
-				// TODO: Insert logging
-				System.out
-						.println("0 rows affected on delete in createQueue. BAD!");
-			}
-
-		} catch (SQLException e) {
-			// TODO: Insert logging
-			e.printStackTrace();
-		} finally {
-
-			if (stmt != null) {
-				// TODO: Insert logging
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (con != null) {
-				// TODO: Insert logging
-				try {
-					con.commit();
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		final String query = "DELETE FROM queues WHERE id = ?";
+		
+		executeStatement(query, logger, queueId);
 	}
 
 	@Override
