@@ -17,7 +17,7 @@ public class Main {
 		ASLServerSettings settings = Bootstrapping.StrapTheBoot(logger);
 
 		try {
-			System.out.println("Starting socketServer");
+			System.out.println("Starting ThorBang MQ Server");
 
 			ASLSocketServer socketServer = ASLSocketServer.build(settings, logger);
 			socketServer.start();

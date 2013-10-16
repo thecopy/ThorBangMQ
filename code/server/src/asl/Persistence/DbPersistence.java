@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Logger;
@@ -54,7 +55,7 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageByPriority(long queueId, long recieverId) {
-		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context, content"
+		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, content"
 							+"FROM messages WHERE receiver_id = ? AND queue_id = ? ORDER BY priority DESC LIMIT 1";
 		
 		ArrayList<Object[]> s = executeQuery(query, logger, recieverId, queueId);
@@ -67,7 +68,7 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageByTimestamp(long queueId, long recieverId) {
-		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context, content"
+		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, content"
 				+"FROM messages WHERE receiver_id = ? AND queue_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
 
 		ArrayList<Object[]> s = executeQuery(query, logger, recieverId, queueId);
@@ -80,7 +81,7 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageBySender(long queueId, long recierId, long senderId) {
-		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context, content"
+		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, content"
 							+"FROM messages WHERE receiver_id = ? AND queue_id = ? AND sender_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
 
 		ArrayList<Object[]> s = executeQuery(query, logger, recierId, queueId, senderId);
@@ -191,8 +192,9 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageById(long id) {
-		final String query = "SELECT m.receiver_id, m.sender_id, m.time_of_arrival, m.queue_id, id, m.priority, m.context_id, m.message"
-							+"FROM messages m WHERE id = ?";
+		final String query = "SELECT receiver_id, \"sender_id\", \"time_of_arrival\", \"queue_id\","
+							+"id, priority, \"context_id\", message "
+							+"FROM messages WHERE id = ?";
 		
 		ArrayList<Object[]> s = executeQuery(query, logger, id);
 
@@ -266,6 +268,8 @@ public class DbPersistence implements IPersistence {
 			
 		} catch (SQLException e) {
 			// TODO: Insert logging
+			logger.severe(e.getMessage());
+			// TODO: Insert logging
 			e.printStackTrace();
 		} finally {
 			close(set, stmt, con, logger);
@@ -286,7 +290,7 @@ public class DbPersistence implements IPersistence {
 	private Message getMessage(Object[] cols){
 		long receiver = (long)cols[0];
 		long sender = (long)cols[1];
-		long timestamp = (long)cols[2];
+		long timestamp = ((Timestamp)cols[2]).getTime();
 		long queueId = (long)cols[3];
 		long id = (long)cols[4];
 		int prio = (int)cols[5];
@@ -349,60 +353,60 @@ public class DbPersistence implements IPersistence {
 	}
 	
 	public void buildSchema(){
-		String sql = " "+
-				"CREATE TABLE clients "+
-				"( "+
-				  "id bigserial NOT NULL, "+
-				  "name character varying(25), "+
-				  "CONSTRAINT id PRIMARY KEY (id ) "+
-				") "+
-				"WITH ( "+
-				  "OIDS=FALSE "+
-				"); "+
-				"ALTER TABLE clients "+
-				  "OWNER TO asl; "+
-				" "+
-				" "+
-				"CREATE TABLE queues "+
-				"( "+
-				  "id bigserial NOT NULL, "+
-				  "name character varying(25), "+
-				  "CONSTRAINT queues_id PRIMARY KEY (id ) "+
-				") "+
-				"WITH ( "+
-				  "OIDS=FALSE "+
-				"); "+
-				"ALTER TABLE queues "+
-				  "OWNER TO asl; "+
-				" "+
-				" "+
-				" "+
-				"CREATE TABLE messages "+
-				"( "+
-				  "id bigserial NOT NULL, "+
-				  "sender_id bigint, "+
-				  "receiver_id bigint, "+
-				  "queue_id bigint NOT NULL, "+
-				  "time_of_arrival timestamp without time zone NOT NULL DEFAULT now(), "+
-				  "priority integer NOT NULL, "+
-				  "context_id bigint, "+
-				  "message text NOT NULL, "+
-				  "CONSTRAINT messages_id PRIMARY KEY (id ), "+
-				  "CONSTRAINT client_id FOREIGN KEY (sender_id) "+
-				  	"REFERENCES clients (id) MATCH SIMPLE "+
-				  	"ON UPDATE NO ACTION ON DELETE NO ACTION, "+
-				  "CONSTRAINT queue_id FOREIGN KEY (queue_id) "+
-				  	"REFERENCES queues (id) MATCH SIMPLE "+
-				  	"ON UPDATE NO ACTION ON DELETE NO ACTION, "+
-				  "CONSTRAINT sender_id FOREIGN KEY (sender_id) "+
-				  	"REFERENCES clients (id) MATCH SIMPLE "+
-				  	"ON UPDATE NO ACTION ON DELETE NO ACTION "+
-				") "+
-				"WITH ( "+
-				  "OIDS=FALSE\n"+
-				"); "+
-				"ALTER TABLE messages "+
-				  "OWNER TO asl; ";
+		String sql = "CREATE TABLE clients "+
+						"( "+
+						  "id bigserial NOT NULL, "+
+						  "name character varying(25), "+
+						  "CONSTRAINT id PRIMARY KEY (id ) "+
+						") "+
+						"WITH ( "+
+						  "OIDS=FALSE "+
+						"); "+
+						"ALTER TABLE clients "+
+						  "OWNER TO asl; "+
+						" "+
+						" "+
+						" "+
+					"CREATE TABLE queues "+
+						"( "+
+						  "id bigserial NOT NULL, "+
+						  "name character varying(25), "+
+						  "CONSTRAINT queues_id PRIMARY KEY (id ) "+
+						") "+
+						"WITH ( "+
+						  "OIDS=FALSE "+
+						"); "+
+						"ALTER TABLE queues "+
+						  "OWNER TO asl; "+
+						" "+
+						" "+
+					"CREATE TABLE messages "+
+						"( "+
+						  "id bigserial NOT NULL, "+
+						  "sender_id bigint, "+
+						  "receiver_id bigint, "+
+						  "queue_id bigint NOT NULL, "+
+						  "time_of_arrival timestamp without time zone NOT NULL DEFAULT now(), "+
+						  "priority integer NOT NULL, "+
+						  "context_id bigint, "+
+						  "message text NOT NULL, "+
+						  "CONSTRAINT messages_id PRIMARY KEY (id ), "+
+						  "CONSTRAINT client_id FOREIGN KEY (sender_id) "+
+						  	"REFERENCES clients (id) MATCH SIMPLE "+
+						  	"ON UPDATE NO ACTION ON DELETE NO ACTION, "+
+						  "CONSTRAINT queue_id FOREIGN KEY (queue_id) "+
+						  	"REFERENCES queues (id) MATCH SIMPLE "+
+						  	"ON UPDATE NO ACTION ON DELETE NO ACTION, "+
+						  "CONSTRAINT sender_id FOREIGN KEY (sender_id) "+
+						  	"REFERENCES clients (id) MATCH SIMPLE "+
+						  	"ON UPDATE NO ACTION ON DELETE NO ACTION "+
+						") "+
+						"WITH ( "+
+						  "OIDS=FALSE "+
+						"); "+
+						"ALTER TABLE messages "+
+						  "OWNER TO asl; "+
+						" ";
 			
 		executeStatement(sql, logger);
 	}
