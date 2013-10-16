@@ -66,5 +66,114 @@ public class DbPersistenceTests {
 		assertEquals(messageToStore.priority, messageLoaded.priority);
 		assertNotEquals(0, messageLoaded.timestamp);
 	}
+	
+	public void shouldBeAbleToPeekQueueByPriority() {
+		// Arrange
+		DbPersistence persistence = getTestablePersistence();
+		
+		long sender = 1;
+		long receiver = 2;
+		long queue = 1;
+		long context = 4;
+		String content = "content";
+		int priority = 1;
+		Message first = new Message(receiver, sender, 0, queue, 0, priority, context, content);
+		persistence.storeMessage(first);
+		Message second = new Message(receiver, sender, 0, queue, 0, priority+1, context, content);
+		persistence.storeMessage(second);
+		
+		// Act
+		Message loaded = persistence.getMessageByPriority(queue, receiver);
+		
+		// Assert
+		assertNotNull(loaded);
+		assertEquals(second.content, loaded.content);
+		assertEquals(second.contextId, loaded.contextId);
+		assertEquals(second.senderId, loaded.senderId);
+		assertEquals(second.receiverId, loaded.receiverId);
+		assertEquals(second.queueId, loaded.queueId);
+		assertEquals(second.priority, loaded.priority);
+	}
+	
+	public void shouldBeAbleToPeekQueueByTimestamp() {
+		// Arrange
+		DbPersistence persistence = getTestablePersistence();
+		
+		long sender = 1;
+		long receiver = 2;
+		long queue = 1;
+		long context = 4;
+		String content = "content";
+		int priority = 1;
+		Message first = new Message(receiver, sender, 0, queue, 0, priority, context, content);
+		long id = persistence.storeMessage(first);
+		Message second = new Message(receiver, sender, 0, queue, 0, priority+1, context, content);
+		persistence.storeMessage(second);
+		
+		// Act
+		Message loaded = persistence.getMessageByPriority(queue, receiver);
+		
+		// Assert
+		assertNotNull(loaded);
+		assertEquals(id, loaded.id);
+		assertEquals(first.content, loaded.content);
+		assertEquals(first.contextId, loaded.contextId);
+		assertEquals(first.senderId, loaded.senderId);
+		assertEquals(first.receiverId, loaded.receiverId);
+		assertEquals(first.queueId, loaded.queueId);
+		assertEquals(first.priority, loaded.priority);
+	}
 
+	public void shouldBeAbleToPeekQueueBySender() {
+		// Arrange
+		DbPersistence persistence = getTestablePersistence();
+		
+		long sender = 1;
+		long receiver = 2;
+		long queue = 1;
+		long context = 4;
+		String content = "content";
+		int priority = 1;
+		Message first = new Message(receiver, sender, 0, queue, 0, priority, context, content);
+			persistence.storeMessage(first);
+		Message second = new Message(receiver, sender+1, 0, queue, 0, priority+1, context, content);
+			long id = persistence.storeMessage(second);
+		Message third = new Message(receiver, sender+2, 0, queue, 0, priority+2, context, content);
+			persistence.storeMessage(third);
+		
+		// Act
+		Message loaded = persistence.getMessageBySender(queue, receiver, sender+1);
+		
+		// Assert
+		assertNotNull(loaded);
+		assertEquals(id, loaded.id);
+		assertEquals(second.content, loaded.content);
+		assertEquals(second.contextId, loaded.contextId);
+		assertEquals(second.senderId, loaded.senderId);
+		assertEquals(second.receiverId, loaded.receiverId);
+		assertEquals(second.queueId, loaded.queueId);
+		assertEquals(second.priority, loaded.priority);
+	}
+
+
+	public void shouldBeAbleToRemoveMessage() {
+		// Arrange
+		DbPersistence persistence = getTestablePersistence();
+		
+		long sender = 1;
+		long receiver = 2;
+		long queue = 1;
+		long context = 4;
+		String content = "content";
+		int priority = 1;
+		Message msg = new Message(receiver, sender, 0, queue, 0, priority, context, content);
+		long id = persistence.storeMessage(msg);
+		
+		// Act
+		persistence.deleteMessage(id);
+		Message loaded = persistence.getMessageById(id);
+		
+		// Assert
+		assertNull(loaded);
+	}
 }
