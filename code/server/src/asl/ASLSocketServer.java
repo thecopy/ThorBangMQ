@@ -141,7 +141,7 @@ public class ASLSocketServer {
 
 		// End of stream reached. Close connection.
 		if (bytesRead == -1) {
-			this.unexpectedDisconnect(conn, clientAddress);
+			this.disconnect(conn, clientAddress);
 			return;
 		}
 
@@ -231,6 +231,10 @@ public class ASLSocketServer {
 	 */
 	private void unexpectedDisconnect(SelectionKey conn, String clientAddress) {
 		logger.warning(String.format("Connection from %s was unexpectedly closed!", clientAddress));
+		this.disconnect(conn, clientAddress);
+	}
+	
+	private void disconnect(SelectionKey conn, String clientAddress) {
 		try {
 			conn.channel().close();
 		} catch (IOException e) { } // Ignore error. We're closing the connection anyway.
