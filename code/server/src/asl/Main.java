@@ -1,11 +1,7 @@
 package asl;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Logger;
-
-import asl.Persistence.IPersistence;
 import asl.infrastructure.Bootstrapping;
 
 public class Main {
