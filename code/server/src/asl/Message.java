@@ -1,8 +1,5 @@
 package asl;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-
 public final class Message {
 	public String content;
 	public long receiverId;
@@ -28,7 +25,5 @@ public final class Message {
 		// Interpret string
 	}
 
-	public Message() {
-		// TODO Auto-generated constructor stub
-	}
+	public Message() { }
 }

@@ -1,10 +1,6 @@
 package asl;
 
 import java.io.IOException;
-import java.net.Socket;
-
-import asl.network.ITransport;
-import asl.network.SocketTransport;
 
 public class Main {
 
@@ -15,10 +11,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		System.out.println("Starting ThorBangMQ Client...");
 		
-		Socket socket = new Socket("127.0.0.1", 8123);
-		ITransport transport = new SocketTransport(socket);
-		
-		ThorBangMQ client = new ThorBangMQ(transport, 123);
+		ThorBangMQ client = ThorBangMQ.build("127.0.0.1", 8123, 123);
 
 		System.out.println("Initializing connection...");
 		

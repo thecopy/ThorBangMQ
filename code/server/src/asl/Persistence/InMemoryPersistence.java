@@ -31,9 +31,11 @@ public class InMemoryPersistence implements IPersistence {
 	}
 
 	@Override
-	public void storeMessage(Message message) {
+	public long storeMessage(Message message) {
 		message.id = ++id;
 		messages.add(message);
+		
+		return message.id;
 	}
 
 	@Override
@@ -119,6 +121,12 @@ public class InMemoryPersistence implements IPersistence {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public long createUser(String name) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
