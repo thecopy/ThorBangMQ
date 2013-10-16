@@ -23,7 +23,7 @@ public class DbPersistence implements IPersistence {
 
 	public DbPersistence(ASLServerSettings settings, Logger logger) {
 		this.logger = logger;
-
+		
 		connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
 		connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
 		connectionPool.setUser(settings.DB_USERNAME);
@@ -40,10 +40,10 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public long storeMessage(Message message) {
-		final String query = "INSERT INTO messages (sender_id, receiver_id, queue_id, context_id, priority, message) " +
+		final String query = "INSERT INTO messages (sender_id, receiver_id, queue_id, context_id, priority, message) " + 
 		        			 " VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
-
-		return executeScalar(query, logger,
+		
+		return (long)executeScalar(query, logger,
 				message.senderId,
 				message.receiverId,
 				message.queueId,
@@ -56,12 +56,12 @@ public class DbPersistence implements IPersistence {
 	public Message getMessageByPriority(long queueId, long recieverId) {
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context, content"
 							+"FROM messages WHERE receiver_id = ? AND queue_id = ? ORDER BY priority DESC LIMIT 1";
-
+		
 		ArrayList<Object[]> s = executeQuery(query, logger, recieverId, queueId);
-
+		
 		if(s.size() > 0)
 			return getMessage(s.get(0));
-
+		
 		return null;
 	}
 
@@ -74,7 +74,7 @@ public class DbPersistence implements IPersistence {
 
 		if(s.size() > 0)
 			return getMessage(s.get(0));
-
+		
 		return null;
 	}
 
@@ -87,7 +87,7 @@ public class DbPersistence implements IPersistence {
 
 		if(s.size() > 0)
 			return getMessage(s.get(0));
-
+		
 		return null;
 	}
 
@@ -133,7 +133,7 @@ public class DbPersistence implements IPersistence {
 
 			if (stmt != null) {
 				// TODO: Insert logging
-				try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+				try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); } 
 			}
 			if (con != null) {
 				// TODO: Insert logging
@@ -170,13 +170,13 @@ public class DbPersistence implements IPersistence {
 
 			if (stmt != null) {
 				// TODO: Insert logging
-				try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+				try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); } 
 			}
 			if (con != null) {
 				// TODO: Insert logging
 				try { con.commit(); con.close(); } catch (SQLException e) { e.printStackTrace(); }
 			}
-		}
+		}		
 	}
 
 	@Override
@@ -191,21 +191,29 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageById(long id) {
+		final String query = "SELECT m.receiver_id, m.sender_id, m.time_of_arrival, m.queue_id, id, m.priority, m.context_id, m.message"
+							+"FROM messages m WHERE id = ?";
+		
+		ArrayList<Object[]> s = executeQuery(query, logger, id);
+
+		if(s.size() > 0)
+			return getMessage(s.get(0));
+		
 		return null;
 	}
 
 	@Override
 	public long createUser(String name) {
 		final String query = "INSERT INTO clients(name) VALUES(?) RETURNING id";
-
-		return executeScalar(query, logger, name);
+		
+		return (long)executeScalar(query, logger, name);
 	}
-
+	
 	private static void executeStatement(String sql, Logger logger, Object... params){
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
-
+		
 		try {
 			con = DbPersistence.connectionPool.getConnection();
 			con.setAutoCommit(false);
@@ -213,9 +221,9 @@ public class DbPersistence implements IPersistence {
 			stmt = con.prepareStatement(sql);
 			for(int i = 1; i <= params.length; i ++)
 				stmt.setObject(i, params[i-1]);
-
+ 
 			stmt.execute();
-
+			
 			con.commit();
 
 		} catch (SQLException e) {
@@ -223,14 +231,14 @@ public class DbPersistence implements IPersistence {
 			e.printStackTrace();
 		} finally {
 			close(set, stmt, con, logger);
-		}
+		}	
 	}
-
+	
 	private static ArrayList<Object[]>  executeQuery(String sql, Logger logger, Object... params){
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
-
+		
 		try {
 			con = DbPersistence.connectionPool.getConnection();
 			con.setAutoCommit(false);
@@ -241,7 +249,7 @@ public class DbPersistence implements IPersistence {
 
 			set = stmt.executeQuery();
 			con.commit();
-
+			
 			ResultSetMetaData rsmd = set.getMetaData();
 			ArrayList<Object[]> rows = new ArrayList<>();
 			int columnCount = rsmd.getColumnCount();
@@ -250,31 +258,31 @@ public class DbPersistence implements IPersistence {
 				Object[] cols = new Object[columnCount];
 				for(int c = 1; c<=columnCount;c++)
 					cols[c-1] = (set.getObject(c));
-
+				
 				rows.add(cols);
 			}
-
+			
 			return rows;
-
+			
 		} catch (SQLException e) {
 			// TODO: Insert logging
 			e.printStackTrace();
 		} finally {
 			close(set, stmt, con, logger);
-		}
-
+		}	
+		
 		return null;
 	}
-
-	private static long executeScalar(String sql, Logger logger, Object... params){
+	
+	private static Object executeScalar(String sql, Logger logger, Object... params){
 		ArrayList<Object[]> r = executeQuery(sql, logger, params);
-
+		
 		if(r.size() > 0)
-			return (long)r.get(0)[0];
-
+			return r.get(0)[0];
+		
 		return -1;
 	}
-
+	
 	private Message getMessage(Object[] cols){
 		long receiver = (long)cols[0];
 		long sender = (long)cols[1];
@@ -284,11 +292,11 @@ public class DbPersistence implements IPersistence {
 		int prio = (int)cols[5];
 		long context = (long)cols[6];
 		String content = (String)cols[7];
-
-
+		
+		
 		return new Message(receiver, sender, timestamp, queueId, id, prio, context, content);
 	}
-
+	
 	private static void close(ResultSet rs, Statement ps, Connection conn, Logger logger)
 	{
 	    if (rs!=null)
@@ -328,23 +336,23 @@ public class DbPersistence implements IPersistence {
 
 	public void deleteSchema(){
 		String sql = "DROP SCHEMA asl CASCADE;";
-
+		
 		executeStatement(sql, logger);
 	}
-
+	
 	public void createSchema(){
 		String sql = "CREATE SCHEMA asl "
 					+"AUTHORIZATION asl;"
 					+"GRANT ALL ON SCHEMA asl TO asl;";
-
+		
 		executeStatement(sql, logger);
 	}
-
+	
 	public void buildSchema(){
 		String sql = " "+
 				"CREATE TABLE clients "+
 				"( "+
-				  "id serial NOT NULL, "+
+				  "id bigserial NOT NULL, "+
 				  "name character varying(25), "+
 				  "CONSTRAINT id PRIMARY KEY (id ) "+
 				") "+
@@ -357,7 +365,7 @@ public class DbPersistence implements IPersistence {
 				" "+
 				"CREATE TABLE queues "+
 				"( "+
-				  "id serial NOT NULL, "+
+				  "id bigserial NOT NULL, "+
 				  "name character varying(25), "+
 				  "CONSTRAINT queues_id PRIMARY KEY (id ) "+
 				") "+
@@ -371,7 +379,7 @@ public class DbPersistence implements IPersistence {
 				" "+
 				"CREATE TABLE messages "+
 				"( "+
-				  "id serial NOT NULL, "+
+				  "id bigserial NOT NULL, "+
 				  "sender_id bigint, "+
 				  "receiver_id bigint, "+
 				  "queue_id bigint NOT NULL, "+
@@ -395,7 +403,7 @@ public class DbPersistence implements IPersistence {
 				"); "+
 				"ALTER TABLE messages "+
 				  "OWNER TO asl; ";
-
+			
 		executeStatement(sql, logger);
 	}
 }
