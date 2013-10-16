@@ -15,7 +15,7 @@ public class Main {
 
 		// Read configuration file
 		ASLServerSettings settings = Bootstrapping.StrapTheBoot(logger);
-		
+
 		try {
 			System.out.println("Starting ThorBang MQ Server");
 
