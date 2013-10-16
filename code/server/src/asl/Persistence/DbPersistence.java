@@ -191,11 +191,6 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageById(long id) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
-		// TODO Auto-generated method stub
->>>>>>> 1d5b7bd3381d766b4f02e61408e031df2534f3be
 		return null;
 	}
 

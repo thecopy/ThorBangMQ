@@ -68,7 +68,6 @@ public class ASLSocketServer {
 
 	public void start() {
 		logger.info("Waiting for connections..");
-	}
 		while (true) {
 			/*
 			 * We're alternating between looking for READ and WRITE operations from client sockets.
