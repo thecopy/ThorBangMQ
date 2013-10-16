@@ -4,7 +4,7 @@ DROP TABLE clients;
 
 CREATE TABLE clients
 (
-  id serial NOT NULL,
+  id bigserial NOT NULL,
   name character varying(25),
   CONSTRAINT id PRIMARY KEY (id )
 )
@@ -21,7 +21,7 @@ DROP TABLE queues;
 
 CREATE TABLE queues
 (
-  id serial NOT NULL,
+  id bigserial NOT NULL,
   name character varying(25),
   CONSTRAINT queues_id PRIMARY KEY (id )
 )
@@ -39,7 +39,7 @@ DROP TABLE messages;
 
 CREATE TABLE messages
 (
-  id serial NOT NULL,
+  id bigserial NOT NULL,
   sender_id bigint,
   receiver_id bigint,
   queue_id bigint NOT NULL,
