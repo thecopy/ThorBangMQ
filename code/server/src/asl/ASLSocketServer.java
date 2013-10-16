@@ -33,6 +33,7 @@ public class ASLSocketServer {
 	private HashMap<SelectionKey, String> pendingWrites = new HashMap<SelectionKey, String>();
 	private Logger logger;
 	private IPersistence persistence;
+	private int connectedClients;
 
 
 	public ASLSocketServer(ExecutorService executor, Logger logger, IPersistence persistence) throws IOException {
@@ -46,10 +47,11 @@ public class ASLSocketServer {
 		this.serverChannel.socket().bind(new InetSocketAddress(ASLServerSettings.SOCKET_PORT));  // listen for connections on SOCKET_PORT
 		this.selector = Selector.open();
 		this.serverChannel.register(this.selector, SelectionKey.OP_ACCEPT);
+		this.connectedClients = 0;
 	}
 
-	public void start() throws IOException {
-		System.out.println("Waiting for connections");
+	public void start() {
+		logger.info("Waiting for connections..");
 		while (true) {
 			/*
 			 * We're alternating between looking for READ and WRITE operations from client sockets.
@@ -69,7 +71,12 @@ public class ASLSocketServer {
 			}
 
 			// Go through connections that require actions to be made.
-			this.selector.select();
+			try {
+				this.selector.select();
+			} catch (IOException e) {
+				logger.severe("Selector gave IO error!");
+				e.printStackTrace();
+			}
 			Iterator<SelectionKey> itsk = this.selector.selectedKeys().iterator();
 			SelectionKey conn;
 			while (itsk.hasNext()) {
@@ -93,37 +100,48 @@ public class ASLSocketServer {
 		}
 	}
 
-	private void accept(SelectionKey conn) throws IOException {
+	private void accept(SelectionKey conn) {
 		// Only the server channel is listening for connections, so it'll be the channel of conn here.
 		ServerSocketChannel serverChannel = (ServerSocketChannel)conn.channel();
 
-		// Accept connections and put a READ
-		SocketChannel client = serverChannel.accept();
-		System.out.printf("Accepting connection from %s\n", client.getRemoteAddress().toString());
-		client.configureBlocking(false);
-		client.register(this.selector, SelectionKey.OP_READ);
+		String clientAddress;
+		// Accept connections and attach a READ selector
+		try {
+			SocketChannel client = serverChannel.accept();
+			this.clientConnect();
+			client.configureBlocking(false);
+			client.register(this.selector, SelectionKey.OP_READ);
+			clientAddress = client.getRemoteAddress().toString();
+		} catch (IOException e) {
+			// Connection wasn't made. Skip!
+			return;
+		}
+		logger.info(String.format("Accepted connection from %s\n", clientAddress));
 	}
 
-	private void read(SelectionKey conn) throws IOException {
+	/**
+	 * Read data from a client socket. Pass the data on to a worker thread which acts upon it.
+	 * @param conn
+	 */
+	private void read(SelectionKey conn) {
 		this.readBuffer.clear();
 		this.readBuffer.limit(ASLServerSettings.MESSAGE_MAX_LENGTH);
 		SocketChannel clientChannel = (SocketChannel)conn.channel();
 
 		int bytesRead = 0;
+		String clientAddress = "NO_CLIENT";  // Initialize such that variable can be used if there is an exception.
 		try {
+			clientAddress = clientChannel.getRemoteAddress().toString();
 			bytesRead = clientChannel.read(this.readBuffer);
 		}
 		catch (IOException e) {
-			// Connection unexpectedly closed.
-			conn.cancel();
-			conn.channel().close();
+			this.unexpectedDisconnect(conn, clientAddress);
 			return;
 		}
 
 		// End of stream reached. Close connection.
 		if (bytesRead == -1) {
-			conn.channel().close();
-			conn.cancel();
+			this.unexpectedDisconnect(conn, clientAddress);
 			return;
 		}
 
@@ -136,25 +154,37 @@ public class ASLSocketServer {
 						bufferToString(bytesRead)));
 	}
 
-	private void write(SelectionKey conn) throws IOException {
-		// SocketChannel to write reply to.
+	/**
+	 * Write data back on a client socket.
+	 * @param conn
+	 */
+	private void write(SelectionKey conn) {
+		// Client's SocketChannel.
 		SocketChannel channel = (SocketChannel)conn.channel();
-		// write pending messages to client
-		String reply;
+		
+		// Write pending message to client.
+		String reply, clientAddress = "NO_CLIENT";  // Initialize such that variable can be used if there is an exception.
 		synchronized(this.pendingWriteChannels) {
 			reply = this.pendingWrites.get(conn);
-			System.out.printf("Replying to %s with:%s\n", ((SocketChannel)conn.channel()).getRemoteAddress().toString(),reply);
-			channel.write(stringToByteBuffer(reply));
+			try {
+				clientAddress = ((SocketChannel)conn.channel()).getRemoteAddress().toString();
+				channel.write(stringToByteBuffer(reply));
+			} catch (IOException e) {
+				this.unexpectedDisconnect(conn, clientAddress);
+			}
 			this.pendingWrites.remove(conn);
+			logger.info(String.format("Replied to %s with:%s\n", clientAddress, reply));
 		}
 
 		// Done writing -- tell selector to listen for reads instead.
 		conn.interestOps(SelectionKey.OP_READ);
 	}
 
-	/*
-	 * Used by worker threads to put a message into the message queue,
-	 * so that I/O will be handled by the selection-thread.
+	/**
+	 * Used by worker threads to put messages into a pendingMessages queue, which will be sent in the future.
+	 * This makes sure that all network IO stays in the same thread as the selector.
+	 * @param conn
+	 * @param str
 	 */
 	public void send(SelectionKey conn, String str) {
 		synchronized(this.pendingWriteChannels) {
@@ -173,8 +203,40 @@ public class ASLSocketServer {
 		return new String(buff, ASLServerSettings.CHARSET);
 	}
 
-	public ByteBuffer stringToByteBuffer(String str) {
+	private ByteBuffer stringToByteBuffer(String str) {
 		Charset charset = ASLServerSettings.CHARSET;
 		return charset.encode(str);
+	}
+	
+	/**
+	 * Call every time a client disconnects.
+	 */
+	private void clientDisconnect() {
+		connectedClients -= 1;
+		logger.info(String.format("Client disconnect. There are now %d clients connected.", connectedClients));
+	}
+	
+	/**
+	 * Call every time a client connects.
+	 */
+	private void clientConnect() {
+		connectedClients += 1;
+		logger.info(String.format("Client connect. There are now %d clients connected.", connectedClients));
+	}
+	
+	/**
+	 * Handle client socket when an unexpected disconnect happens.
+	 * @param conn
+	 * @param clientAddress
+	 */
+	private void unexpectedDisconnect(SelectionKey conn, String clientAddress) {
+		logger.warning(String.format("Connection from %s was unexpectedly closed!", clientAddress));
+		try {
+			conn.channel().close();
+		} catch (IOException e) { } // Ignore error. We're closing the connection anyway.
+		finally {
+			conn.cancel();
+		}
+		this.clientDisconnect();
 	}
 }
