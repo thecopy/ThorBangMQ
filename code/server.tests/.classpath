@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/client.tests/junit-4.11.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/server"/>
 	<classpathentry kind="lib" path="mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="/server/jars/postgresql-9.2-1003.jdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
