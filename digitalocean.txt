@@ -1,4 +1,0 @@
-mbang@student.ethz.ch/thorbang2013
-client id: c33fdf61a12a71f5dc6ce2ef7ef0e3c4
-api key: 7922eb43e51089239541575346320a80
-
