@@ -1,11 +1,9 @@
 package asl;
 
 import java.io.IOException;
-import java.nio.channels.SelectionKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import asl.Persistence.IPersistence;
 import asl.infrastructure.IProtocolService;
 import asl.network.ITransport;
 

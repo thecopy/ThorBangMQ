@@ -12,10 +12,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import asl.ASLServerSettings;
+import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
+import asl.Persistence.InMemoryPersistence;
 import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
 import asl.network.ITransport;
@@ -28,17 +31,30 @@ public class ASLSocketServer {
 	private Selector selector;
 	private ServerSocketChannel serverChannel;
 	private ExecutorService executor;
-	private ByteBuffer readBuffer = ByteBuffer.allocate(ASLServerSettings.MESSAGE_MAX_LENGTH);
+	private ByteBuffer readBuffer;
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
 	private HashMap<SelectionKey, String> pendingWrites = new HashMap<SelectionKey, String>();
 	private Logger logger;
 	private IPersistence persistence;
+	private ASLServerSettings settings;
 
+	public static ASLSocketServer build(ASLServerSettings settings, Logger logger) throws IOException{
 
-	public ASLSocketServer(ExecutorService executor, Logger logger, IPersistence persistence) throws IOException {
+		IPersistence persistence = settings.UseInMemoryPersister 
+				? new InMemoryPersistence() 
+				: new DbPersistence(settings,logger);
+		
+		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
+
+		return new ASLSocketServer(settings, threadpool, logger, persistence);
+	}
+
+	public ASLSocketServer(ASLServerSettings settings, ExecutorService executor, Logger logger, IPersistence persistence) throws IOException {
 		this.executor = executor;
 		this.logger = logger;
 		this.persistence = persistence;
+		this.settings = settings;
+		this.readBuffer = ByteBuffer.allocate(settings.MESSAGE_MAX_LENGTH);
 
 		// Initialize server socket and the selector to accept connections.
 		this.serverChannel = ServerSocketChannel.open();
@@ -106,7 +122,7 @@ public class ASLSocketServer {
 
 	private void read(SelectionKey conn) throws IOException {
 		this.readBuffer.clear();
-		this.readBuffer.limit(ASLServerSettings.MESSAGE_MAX_LENGTH);
+		this.readBuffer.limit(settings.MESSAGE_MAX_LENGTH);
 		SocketChannel clientChannel = (SocketChannel)conn.channel();
 
 		int bytesRead = 0;
@@ -131,7 +147,7 @@ public class ASLSocketServer {
 		this.executor.execute(
 				new ASLClientRequestWorker(
 						logger,
-						new ProtocolService(this.persistence, transport, logger),
+						new ProtocolService(this.persistence, transport),
 						transport,
 						bufferToString(bytesRead)));
 	}

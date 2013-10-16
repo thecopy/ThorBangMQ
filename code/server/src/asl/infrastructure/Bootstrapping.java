@@ -15,20 +15,13 @@ import asl.Persistence.InMemoryPersistence;
 public class Bootstrapping {
 	private static String useMemoryPersistenceSetting = "useinmemorypersistence";
 	private static String configurationFile = "conf.txt";
-	
-	public static IPersistence GetPersister() throws Exception{
-		if(ASLServerSettings.UseInMemoryPersister)
-			return new InMemoryPersistence();
 		
-		throw new Exception("No persister available!");
-	}
-	
-	public static void StrapTheBoot(Logger logger){
-		
+	public static ASLServerSettings StrapTheBoot(Logger logger){
+		ASLServerSettings serverSettings = new ASLServerSettings();
 		if (!new File(configurationFile).exists()){
 			logger.log(Level.CONFIG, "Configuration file not found. Defaulting to in memory persistence.");
-			ASLServerSettings.UseInMemoryPersister = true;
-			SaveTheStrapping(logger);
+			serverSettings.UseInMemoryPersister = true;
+			SaveTheStrapping(logger, serverSettings);
 		} else
 		try {
 			// Read configuration file
@@ -37,18 +30,20 @@ public class Bootstrapping {
 			for (String line : settings) {
 				if(line.toLowerCase().startsWith(useMemoryPersistenceSetting)){
 					if(line.split("\t")[1].equals("1"))
-						ASLServerSettings.UseInMemoryPersister = true;
+						serverSettings.UseInMemoryPersister = true;
 				}
 			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Could not read from configuration." + e);
 		}
+		
+		return serverSettings;
 	}
 	
-	public static void SaveTheStrapping(Logger logger){
+	public static void SaveTheStrapping(Logger logger, ASLServerSettings settings){
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(useMemoryPersistenceSetting + "\t" + (ASLServerSettings.UseInMemoryPersister ? "1" : "0"));
+		sb.append(useMemoryPersistenceSetting + "\t" + (settings.UseInMemoryPersister ? "1" : "0"));
 		sb.append("\n");
 		
 		try {

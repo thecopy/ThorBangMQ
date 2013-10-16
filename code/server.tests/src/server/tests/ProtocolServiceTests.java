@@ -18,8 +18,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "1,2,1"; // ReceiverId,QueueId,OrderByTimestampInsteadPriorit
 		Message returnThisMessage = new Message();
 		when(persistence.getMessageByTimestamp(2, 1)).thenReturn(returnThisMessage);
@@ -37,8 +36,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "1,2,3,1"; // ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriorit
 		Message returnThisMessage = new Message();
 		when(persistence.getMessageBySender(2, 1, 3)).thenReturn(returnThisMessage);
@@ -56,8 +54,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "1,2,0"; // ReceiverId,QueueId,OrderByTimestampInsteadPriority
 		Message returnThisMessage = new Message();
 		when(persistence.getMessageByPriority(2, 1)).thenReturn(returnThisMessage);
@@ -75,8 +72,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "1,2,0"; // ReceiverId,QueueId,OrderByTimestampInsteadPriority
 		Message returnThisMessage = new Message();
 		when(persistence.getMessageByPriority(2, 1)).thenReturn(returnThisMessage);
@@ -94,8 +90,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "1,2,3,0"; // ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority
 		Message returnThisMessage = new Message();
 		when(persistence.getMessageBySender(2, 1,3)).thenReturn(returnThisMessage);
@@ -113,8 +108,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "1,2,0"; // ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority
 		Message returnThisMessage = new Message();
 		when(persistence.getMessageByPriority(2, 1)).thenReturn(returnThisMessage);
@@ -132,8 +126,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		String args = "apa"; // QueueName
 		when(persistence.createQueue("apa")).thenReturn(123L);
 		// Act
@@ -149,8 +142,7 @@ public class ProtocolServiceTests {
 		// Arrange
 		ITransport transport = mock(ITransport.class);
 		IPersistence persistence = mock(IPersistence.class);
-		Logger logger = Logger.getAnonymousLogger();
-		ProtocolService ps = new ProtocolService(persistence, transport, logger);
+		ProtocolService ps = new ProtocolService(persistence, transport);
 		// Act
 		ps.removeQueue(123);
 		

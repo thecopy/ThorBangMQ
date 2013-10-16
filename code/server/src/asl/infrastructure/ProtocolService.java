@@ -1,7 +1,5 @@
 package asl.infrastructure;
 
-import java.util.logging.Logger;
-
 import asl.Message;
 import asl.Persistence.IPersistence;
 import asl.network.ITransport;
@@ -10,16 +8,14 @@ public class ProtocolService implements IProtocolService {
 	private static String SendMessageStringFormat = "MSG,%d,%s,%d,%s";
 	
 	private IPersistence persistence;
-	private Logger logger;
 	private ITransport transport;
 	
-	public ProtocolService(IPersistence persistence, ITransport transport, Logger logger){
+	public ProtocolService(IPersistence persistence, ITransport transport){
 		this.persistence = persistence;
-		this.logger = logger;
 		this.transport = transport;
 	}
 
-	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Conten
+	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
 	@Override
 	public void storeMessage(String argsConcat) {
 		String[] args = argsConcat.split(",", 6);
