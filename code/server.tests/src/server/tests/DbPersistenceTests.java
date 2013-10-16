@@ -2,9 +2,11 @@ package server.tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import org.junit.Test;
+import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.ASLServerSettings;
 import asl.Message;
@@ -23,9 +25,25 @@ public class DbPersistenceTests {
 		return settings;
 	}
 	
+	private static PoolingDataSource connectionPool = null;
+	
 	private DbPersistence getTestablePersistence(){
 		ASLServerSettings settings = getSettings();
-		DbPersistence db = new DbPersistence(settings, Logger.getAnonymousLogger());
+		
+		if(connectionPool == null)
+		{
+			connectionPool = new PoolingDataSource();
+			
+			connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
+			connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
+			connectionPool.setUser(settings.DB_USERNAME);
+			connectionPool.setServerName(settings.DB_SERVER_NAME);
+			connectionPool.setPassword(settings.DB_PASSWORD);
+			connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
+			
+		}
+		
+		DbPersistence db = new DbPersistence(connectionPool, Logger.getAnonymousLogger());
 		
 		db.deleteSchema();
 		db.createSchema();
@@ -67,6 +85,7 @@ public class DbPersistenceTests {
 		assertNotEquals(0, messageLoaded.timestamp);
 	}
 	
+	@Test
 	public void shouldBeAbleToPeekQueueByPriority() {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
@@ -95,6 +114,7 @@ public class DbPersistenceTests {
 		assertEquals(second.priority, loaded.priority);
 	}
 	
+	@Test
 	public void shouldBeAbleToPeekQueueByTimestamp() {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
@@ -111,7 +131,7 @@ public class DbPersistenceTests {
 		persistence.storeMessage(second);
 		
 		// Act
-		Message loaded = persistence.getMessageByPriority(queue, receiver);
+		Message loaded = persistence.getMessageByTimestamp(queue, receiver);
 		
 		// Assert
 		assertNotNull(loaded);
@@ -124,6 +144,8 @@ public class DbPersistenceTests {
 		assertEquals(first.priority, loaded.priority);
 	}
 
+	
+	@Test
 	public void shouldBeAbleToPeekQueueBySender() {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
@@ -138,7 +160,7 @@ public class DbPersistenceTests {
 			persistence.storeMessage(first);
 		Message second = new Message(receiver, sender+1, 0, queue, 0, priority+1, context, content);
 			long id = persistence.storeMessage(second);
-		Message third = new Message(receiver, sender+2, 0, queue, 0, priority+2, context, content);
+		Message third = new Message(receiver, sender, 0, queue, 0, priority+2, context, content);
 			persistence.storeMessage(third);
 		
 		// Act
@@ -155,7 +177,8 @@ public class DbPersistenceTests {
 		assertEquals(second.priority, loaded.priority);
 	}
 
-
+	
+	@Test
 	public void shouldBeAbleToRemoveMessage() {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
@@ -175,5 +198,17 @@ public class DbPersistenceTests {
 		
 		// Assert
 		assertNull(loaded);
+	}
+
+	@Test(expected = Exception.class)
+	public void shouldBeAbleToRemoveQueue() {
+		// Arrange
+		DbPersistence persistence = getTestablePersistence();
+		
+		// Act
+		persistence.removeQueue(1); // this is created in getTestablePersistence()
+		
+		// Assert
+		persistence.storeMessage(new Message(1,1,0,1 /* JUST REMOVED THIS QUEUE */, 0, 1, 0, ""));
 	}
 }

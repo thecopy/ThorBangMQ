@@ -15,6 +15,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
+import org.postgresql.jdbc2.optional.PoolingDataSource;
+
 import asl.ASLServerSettings;
 import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
@@ -38,12 +40,19 @@ public class ASLSocketServer {
 	private IPersistence persistence;
 	private int connectedClients;
 	private ASLServerSettings settings;
-
+	
 	public static ASLSocketServer build(ASLServerSettings settings, Logger logger) throws IOException{
-
+		PoolingDataSource connectionPool = new PoolingDataSource();
+		connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
+		connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
+		connectionPool.setUser(settings.DB_USERNAME);
+		connectionPool.setServerName(settings.DB_SERVER_NAME);
+		connectionPool.setPassword(settings.DB_PASSWORD);
+		connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
+		
 		IPersistence persistence = settings.UseInMemoryPersister
 				? new InMemoryPersistence()
-				: new DbPersistence(settings,logger);
+				: new DbPersistence(connectionPool,logger);
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
 
