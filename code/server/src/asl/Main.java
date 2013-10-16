@@ -18,23 +18,16 @@ public class Main {
 		Logger logger = Logger.getLogger("ThorBangMQ");
 
 		// Read configuration file
-		Bootstrapping.StrapTheBoot(logger);
-
-		IPersistence persistence = Bootstrapping.GetPersister();
-		ExecutorService threadpool = Executors.newFixedThreadPool(ASLServerSettings.NUM_CLIENTREQUESTWORKER_THREADS);
-
-		// Do stuff
+		ASLServerSettings settings = Bootstrapping.StrapTheBoot(logger);
+		
 		try {
 			System.out.println("Starting socketServer");
 
-			ASLSocketServer socketServer = new ASLSocketServer(threadpool, logger, persistence);
+			ASLSocketServer socketServer = ASLSocketServer.build(settings, logger);
 			socketServer.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// Close threads gracefully.
-		threadpool.shutdown();
 	}
 
 }
