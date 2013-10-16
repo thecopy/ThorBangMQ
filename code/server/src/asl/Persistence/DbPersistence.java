@@ -191,7 +191,14 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageById(long id) {
-		// TODO Auto-generated method stub
+		final String query = "SELECT m.receiver_id, m.sender_id, m.time_of_arrival, m.queue_id, id, m.priority, m.context_id, m.message"
+							+"FROM messages m WHERE id = ?";
+		
+		ArrayList<Object[]> s = executeQuery(query, logger, id);
+
+		if(s.size() > 0)
+			return getMessage(s.get(0));
+		
 		return null;
 	}
 
