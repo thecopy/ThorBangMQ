@@ -46,6 +46,15 @@ public class ThorBangMQ {
 			throw new Exception("Connection failed! Expected server to respond with OK (server full?). Got: " + response);
 	}
 	
+	public void stop(){
+		try {
+			transport.disconnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void SendMessage(long recieverId, long queueId, long priority, long context, String content) throws IOException {
 		transport.SendAndGetResponse(String.format(SendMessageStringFormat, 
 				recieverId,

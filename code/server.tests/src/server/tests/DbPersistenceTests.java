@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 import org.junit.Test;
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
-import asl.ASLServerSettings;
+import asl.ServerSettings;
 import asl.Message;
 import asl.Persistence.DbPersistence;
 
 public class DbPersistenceTests {
 
-	private ASLServerSettings getSettings(){
-		ASLServerSettings settings = new ASLServerSettings();
+	private ServerSettings getSettings(){
+		ServerSettings settings = new ServerSettings();
 		settings.DB_DATABASE_NAME = "asl-test";
 		settings.DB_DATA_SOURCE_NAME = "asl";
 		settings.DB_PASSWORD = "";
@@ -28,7 +28,7 @@ public class DbPersistenceTests {
 	private static PoolingDataSource connectionPool = null;
 	
 	private DbPersistence getTestablePersistence(){
-		ASLServerSettings settings = getSettings();
+		ServerSettings settings = getSettings();
 		
 		if(connectionPool == null)
 		{
@@ -177,7 +177,6 @@ public class DbPersistenceTests {
 		assertEquals(second.priority, loaded.priority);
 	}
 
-	
 	@Test
 	public void shouldBeAbleToRemoveMessage() {
 		// Arrange

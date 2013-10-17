@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.junit.Test;
 
+import asl.ClientRequestWorker;
 import asl.Message;
 import asl.Persistence.IPersistence;
 import asl.infrastructure.ProtocolService;
@@ -119,6 +120,24 @@ public class ProtocolServiceTests {
 		// Assert
 		verify(persistence).deleteMessage(returnThisMessage.id);
 		assertEquals(returnThisMessage, m);
+	}
+	
+	@Test
+	public void shouldSendOkAndStoreMessage(){
+		// Arrange
+		ITransport transport = mock(ITransport.class);
+		IPersistence persistence = mock(IPersistence.class);
+		ProtocolService ps = new ProtocolService(persistence, transport);
+		when(persistence.createQueue("apa")).thenReturn(123L);
+		
+		ClientRequestWorker r = new ClientRequestWorker(Logger.getAnonymousLogger(), ps, transport, "MSG,1,1,1,1,0,HEY");
+		
+		// Act
+		r.run();
+				
+		// Assert
+		verify(persistence).storeMessage(any(Message.class));
+		verify(transport).Send("OK");
 	}
 	
 	@Test

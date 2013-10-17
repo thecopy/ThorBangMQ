@@ -2,13 +2,13 @@ package asl.network;
 
 import java.nio.channels.SelectionKey;
 
-import asl.ASLSocketServer;
+import asl.ThorBangMQServer;
 
 public class DefaultTransport implements ITransport {
-	private ASLSocketServer server;
+	private ThorBangMQServer server;
 	private SelectionKey conn;
 
-	public DefaultTransport(ASLSocketServer server, SelectionKey conn){
+	public DefaultTransport(ThorBangMQServer server, SelectionKey conn){
 		this.server = server;
 		this.conn = conn;
 		

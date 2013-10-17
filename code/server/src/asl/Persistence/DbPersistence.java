@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
-import asl.ASLServerSettings;
+import asl.ServerSettings;
 import asl.Client;
 import asl.Message;
 

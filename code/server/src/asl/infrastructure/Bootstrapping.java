@@ -8,14 +8,14 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import asl.ASLServerSettings;
+import asl.ServerSettings;
 
 public class Bootstrapping {
 	private static String useMemoryPersistenceSetting = "useinmemorypersistence";
 	private static String configurationFile = "conf.txt";
 
-	public static ASLServerSettings StrapTheBoot(Logger logger){
-		ASLServerSettings serverSettings = new ASLServerSettings();
+	public static ServerSettings StrapTheBoot(Logger logger){
+		ServerSettings serverSettings = new ServerSettings();
 		if (!new File(configurationFile).exists()){
 			logger.log(Level.CONFIG, "Configuration file not found. Defaulting to in memory persistence.");
 			serverSettings.UseInMemoryPersister = true;
@@ -38,7 +38,7 @@ public class Bootstrapping {
 		return serverSettings;
 	}
 
-	public static void SaveTheStrapping(Logger logger, ASLServerSettings settings){
+	public static void SaveTheStrapping(Logger logger, ServerSettings settings){
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(useMemoryPersistenceSetting + "\t" + (settings.UseInMemoryPersister ? "1" : "0"));

@@ -48,4 +48,9 @@ public class SocketTransport implements ITransport {
 	public Socket getSocket() {
 		return socket;
 	}
+
+	@Override
+	public void disconnect() throws IOException {
+		socket.close();
+	}
 }
