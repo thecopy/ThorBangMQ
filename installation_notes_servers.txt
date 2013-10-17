@@ -1,0 +1,15 @@
+Server
+========================
+
+Install
+---------
+- Postgres
+    1. Create user asl
+    2. Set up tcp listening in /etc/postgresql/9.1/main/postgresql.conf
+    3. Allow ip addresses access in /etc/postgresql/9.1/main/pg_hba.conf
+    4. Create schema asl
+    5. Create tables
+- Oracle java (http://www.webupd8.org/2013/09/oracle-java-7-update-40-7u40-released.html)
+- git
+- htop
+- Fetch ThorBangMQ.java from github
