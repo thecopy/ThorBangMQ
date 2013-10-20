@@ -72,7 +72,6 @@ public class ThorBangMQServer {
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
 
-		
 		return new ThorBangMQServer(settings, threadpool, logger, persistence);
 	}
 
