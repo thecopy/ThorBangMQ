@@ -25,7 +25,6 @@ public class main {
 		}
 		
 		int port = 8123;
-		float totalMessages = (float) (numberOfClients * numberOfMessagesPerClient);
 		int queue = 1;
 		
 		System.out.println("Connecting " + numberOfClients + " clients to " + hostname + ":" + port + "...");
@@ -53,17 +52,20 @@ public class main {
 
 		w.stop();
 		
+		float totalMessages = (float) (numberOfClients * numberOfMessagesPerClient);
+		float totalTimeInMs = w.getNanoTime()/1000/1000;
+		
 		System.out.println("OK Done!");
 		System.out.println("-------------------------------------------");
 
 		System.out.println("Number of Clients:\t" + numberOfClients+ "");
 		System.out.println("Messages per Client:\t" + numberOfMessagesPerClient + "");
-		System.out.println("Total Messages:\t\t" + numberOfClients*numberOfMessagesPerClient+ "");
+		System.out.println("Total Messages:\t\t" + totalMessages + "");
 		System.out.println("");
-		System.out.println("Total Time:\t\t" + w.getNanoTime()/1000/1000 + "ms");
-		System.out.println("Per Message:\t\t" + w.getNanoTime()/1000/1000/(float)numberOfMessagesPerClient/numberOfClients + "ms");
-		System.out.println("Messages per second:\t\t" + totalMessages/w.getNanoTime()/1000/1000/1000);
-		System.out.println("MS per message:\t\t" + w.getNanoTime()/1000/1000/totalMessages + "ms");
+		System.out.println("Total Time:\t\t" + totalTimeInMs + "ms");
+		System.out.println("Per Message:\t\t" + totalTimeInMs/numberOfMessagesPerClient/numberOfClients + "ms");
+		System.out.println("Messages/second:\t" + totalMessages/totalTimeInMs * 1000);
+		System.out.println("Time/message:\t\t" + totalTimeInMs/totalMessages + "ms");
 		
 		System.in.read();
 	}

@@ -4,3 +4,4 @@ digitalocean.txt
 .DS_Store
 dispatcher/
 *.pyc
+*.jar

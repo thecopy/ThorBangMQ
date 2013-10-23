@@ -13,8 +13,6 @@ LOCAL_CLIENT_FILE = path.join(ROOT, 'client', CLIENT_FILE)
 REMOTE_SERVER_FILE = path.join(ROOT, '/root/', SERVER_FILE)
 REMOTE_CLIENT_FILE = path.join(ROOT, '/root/', CLIENT_FILE)
 
-SCP_COMMAND = "scp {} root@{}:{}"
-
 CLIENTS = getclients()  # [('162.243.49.79', '10.128.19.42')]
 SERVERS = getservers()  # [('162.243.49.78', '10.128.18.8')]
 DATABASE = getdatabase()  # ('162.243.49.79', '10.128.19.42')
@@ -29,15 +27,18 @@ def build():
     chdir(path.dirname(LOCAL_CLIENT_FILE))
     call(['ant'])
 
+    chdir(ROOT)
+
 
 def distribute(clients, servers):
+    scp_command = "scp {} root@{}:{}"
     for cglobal, clocal in clients:
-        scpcommand = SCP_COMMAND.format(LOCAL_CLIENT_FILE, cglobal, REMOTE_CLIENT_FILE)
-        call(scpcommand.split(' '))
+        scpclient = scp_command.format(LOCAL_CLIENT_FILE, cglobal, REMOTE_CLIENT_FILE)
+        call(scpclient.split(' '))
 
     for sglobal, slocal in servers:
-        scpcommand = SCP_COMMAND.format(LOCAL_SERVER_FILE, sglobal, REMOTE_SERVER_FILE)
-        call(scpcommand.split(' '))
+        scpserver = scp_command.format(LOCAL_SERVER_FILE, sglobal, REMOTE_SERVER_FILE)
+        call(scpserver.split(' '))
 
 
 def startservers(servers, database, db_connections=5, worker_threads=10):
