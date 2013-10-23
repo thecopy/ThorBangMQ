@@ -2,3 +2,4 @@ digitalocean.txt
 .~lock*
 .fuse_hidden*
 .DS_Store
+dispatcher/
