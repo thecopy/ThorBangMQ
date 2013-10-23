@@ -7,17 +7,15 @@ import java.util.logging.Logger;
 import asl.infrastructure.Bootstrapping;
 
 public class Main {
-
-	/**
-	 * @param args
-	 * @throws Exception
-	 */
+	static Logger logger = Logger.getLogger("ThorBangMQ");
+	
 	public static void main(String[] args) throws Exception {
-		Logger logger = Logger.getLogger("ThorBangMQ");
 		logger.setLevel(Level.OFF); // performance, yay
 		
 		// Read configuration file
 		ServerSettings settings = Bootstrapping.StrapTheBoot(logger);
+		
+		logger.info(String.format("Using in memory persister: %s", settings.UseInMemoryPersister));
 
 		try {
 			System.out.println("Starting ThorBang MQ Server");
@@ -27,6 +25,18 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private ServerSettings parseArgs(String[] args, ServerSettings settings) {
+		if (args.length < 3) {
+			logger.severe("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS>");
+			System.exit(-1);
+		}
+		settings.DB_SERVER_NAME = args[0];
+		settings.UseInMemoryPersister = false;
+		settings.DB_MAX_CONNECTIONS = Integer.parseInt(args[1]);
+		settings.NUM_CLIENTREQUESTWORKER_THREADS = Integer.parseInt(args[2]);
+		return settings;
 	}
 
 }
