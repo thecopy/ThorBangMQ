@@ -56,7 +56,7 @@ public class ThorBangMQServer {
 		this.serverChannel.register(this.selector, SelectionKey.OP_ACCEPT);
 		this.connectedClients = 0;
 	}
-	
+
 	public static ThorBangMQServer build(ServerSettings settings, Logger logger) throws IOException{
 		PoolingDataSource connectionPool = new PoolingDataSource();
 		connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
@@ -65,14 +65,13 @@ public class ThorBangMQServer {
 		connectionPool.setServerName(settings.DB_SERVER_NAME);
 		connectionPool.setPassword(settings.DB_PASSWORD);
 		connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
-		
 		IPersistence persistence = settings.UseInMemoryPersister
 				? new InMemoryPersistence()
 				: new DbPersistence(connectionPool,logger);
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
 
-		
+
 		return new ThorBangMQServer(settings, threadpool, logger, persistence);
 	}
 
@@ -172,7 +171,7 @@ public class ThorBangMQServer {
 		}
 
 		ITransport transport = new DefaultTransport(this, conn);
-		
+
 		this.executor.execute(
 				new ClientRequestWorker(
 						logger,

@@ -16,9 +16,9 @@ public class DbPersistenceTests {
 
 	private ServerSettings getSettings(){
 		ServerSettings settings = new ServerSettings();
-		settings.DB_DATABASE_NAME = "asl-test";
+		settings.DB_DATABASE_NAME = "asl";
 		settings.DB_DATA_SOURCE_NAME = "asl";
-		settings.DB_PASSWORD = "";
+		settings.DB_PASSWORD = "asl2013";
 		settings.DB_SERVER_NAME = "localhost";
 		settings.DB_USERNAME = "asl";
 		

@@ -1,6 +1,6 @@
 -- Table: clients
 
-DROP TABLE clients;
+-- DROP TABLE clients;
 
 CREATE TABLE clients
 (
@@ -17,7 +17,7 @@ ALTER TABLE clients
 
 -- Table: queues
 
-DROP TABLE queues;
+-- DROP TABLE queues;
 
 CREATE TABLE queues
 (
@@ -35,7 +35,7 @@ ALTER TABLE queues
 
 -- Table: messages
 
-DROP TABLE messages;
+-- DROP TABLE messages;
 
 CREATE TABLE messages
 (

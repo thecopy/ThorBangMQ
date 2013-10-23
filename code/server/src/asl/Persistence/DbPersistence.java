@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
-import asl.ServerSettings;
 import asl.Client;
 import asl.Message;
 
@@ -161,7 +160,6 @@ public class DbPersistence implements IPersistence {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
-
 		try {
 			con = connectionPool.getConnection();
 			con.setAutoCommit(false);
