@@ -13,11 +13,18 @@ public class main {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-
+		
 		String hostname = "localhost";
-		int port = 8123;
 		int numberOfClients = 5;
-		int numberOfMessagesPerClient = 10000;
+		int numberOfMessagesPerClient = 5000;
+		
+		if (args.length == 3) {
+			hostname = args[0];
+			numberOfClients = Integer.parseInt(args[1]);
+			numberOfMessagesPerClient = Integer.parseInt(args[2]);
+		}
+		
+		int port = 8123;
 		float totalMessages = (float) (numberOfClients * numberOfMessagesPerClient);
 		int queue = 1;
 		
@@ -55,7 +62,7 @@ public class main {
 		System.out.println("");
 		System.out.println("Total Time:\t\t" + w.getNanoTime()/1000/1000 + "ms");
 		System.out.println("Per Message:\t\t" + w.getNanoTime()/1000/1000/(float)numberOfMessagesPerClient/numberOfClients + "ms");
-		System.out.println("Messages per ms:\t\t" + totalMessages/w.getNanoTime()/1000/1000 + "ms");
+		System.out.println("Messages per second:\t\t" + totalMessages/w.getNanoTime()/1000/1000/1000);
 		System.out.println("MS per message:\t\t" + w.getNanoTime()/1000/1000/totalMessages + "ms");
 		
 		System.in.read();

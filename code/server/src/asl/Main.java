@@ -10,13 +10,13 @@ public class Main {
 	static Logger logger = Logger.getLogger("ThorBangMQ");
 	
 	public static void main(String[] args) throws Exception {
-		logger.setLevel(Level.OFF); // performance, yay
+		logger.setLevel(Level.ALL); // performance, yay
 		
 		// Read configuration file
 		ServerSettings settings = Bootstrapping.StrapTheBoot(logger);
-		
+		settings = parseArgs(args, settings);
 		logger.info(String.format("Using in memory persister: %s", settings.UseInMemoryPersister));
-
+		
 		try {
 			System.out.println("Starting ThorBang MQ Server");
 
@@ -27,7 +27,7 @@ public class Main {
 		}
 	}
 	
-	private ServerSettings parseArgs(String[] args, ServerSettings settings) {
+	private static ServerSettings parseArgs(String[] args, ServerSettings settings) {
 		if (args.length < 3) {
 			logger.severe("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS>");
 			System.exit(-1);
@@ -36,6 +36,11 @@ public class Main {
 		settings.UseInMemoryPersister = false;
 		settings.DB_MAX_CONNECTIONS = Integer.parseInt(args[1]);
 		settings.NUM_CLIENTREQUESTWORKER_THREADS = Integer.parseInt(args[2]);
+		if (args.length >= 4 && args[3] == "ALL") {
+			logger.setLevel(Level.ALL);
+		} else {
+			logger.setLevel(Level.OFF);
+		}
 		return settings;
 	}
 

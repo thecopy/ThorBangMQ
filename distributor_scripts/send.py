@@ -1,5 +1,7 @@
 from os import path, chdir
 from subprocess import call
+
+from droplets import getclients, getservers, getdatabase
 ROOT = path.dirname(path.realpath(__file__))
 
 SERVER_FILE = 'asl_server.jar'
@@ -13,10 +15,9 @@ REMOTE_CLIENT_FILE = path.join(ROOT, '/root/', CLIENT_FILE)
 
 SCP_COMMAND = "scp {} root@{}:{}"
 
-
-CLIENTS = [('162.243.49.79', '10.128.19.42')]
-SERVERS = [('162.243.49.78', '10.128.18.8')]
-DATABASE = ('162.243.49.79', '10.128.19.42')
+CLIENTS = getclients()  # [('162.243.49.79', '10.128.19.42')]
+SERVERS = getservers()  # [('162.243.49.78', '10.128.18.8')]
+DATABASE = getdatabase()  # ('162.243.49.79', '10.128.19.42')
 
 
 def build():
@@ -39,20 +40,28 @@ def distribute(clients, servers):
         call(scpcommand.split(' '))
 
 
-def startservers(servers, database):
+def startservers(servers, database, db_connections=5, worker_threads=10):
     for sglobal, slocal in servers:
-        # java -jar REMOTE_SERVER_FILE database[0] DB_CONNECTIONS WORKER_THREADS
-        pass
+        cmd = ("screen -d -m -S server java -jar {file} "
+               "{db_ip} {db_threads} {worker_threads}".format(file=REMOTE_SERVER_FILE,
+                                                              db_ip=database[1],
+                                                              db_threads=db_connections,
+                                                              worker_threads=worker_threads))
+        print cmd
 
 
-def startclients(clients, servers):
-    for cglobal, clocal in servers:
-        # java -jar REMOTE_CLIENT_FILE args
-        pass
+def startclients(clients, server_ip, worker_threads=5, msgs_per_client=10000):
+    for cglobal, clocal in clients:
+        cmd = ("screen -d -m -S client java -jar {file} {server_ip} "
+               "{worker_threads} {msgs_per_client}".format(file=REMOTE_CLIENT_FILE,
+                                                           server_ip=server_ip,
+                                                           worker_threads=worker_threads,
+                                                           msgs_per_client=msgs_per_client))
+        print cmd
 
 
 if __name__ == '__main__':
     build()
     distribute(clients=CLIENTS, servers=SERVERS)
     startservers(servers=SERVERS, database=DATABASE)
-    startclients(clients=CLIENTS, servers=SERVERS)
+    startclients(clients=CLIENTS, server_ip=SERVERS[0][1])

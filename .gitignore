@@ -3,3 +3,4 @@ digitalocean.txt
 .fuse_hidden*
 .DS_Store
 dispatcher/
+*.pyc
