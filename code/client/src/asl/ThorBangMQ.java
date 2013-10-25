@@ -20,6 +20,8 @@ public class ThorBangMQ {
 	private final static String CreateQueueStringFormat = "CREATEQUEUE,%s";
 	private final static String RemoveQueueStringFormat = "REMOVEQUEUE,%d";
 	
+	private final static String CreateClientStringFormat = "CREATECLIENT,%s";
+	
 	private ITransport transport;
 	private long userId;
 	private long pollingInterval = 2000;
@@ -135,5 +137,11 @@ public class ThorBangMQ {
 		String content = msgParts[4];
 		
 		return new Message(sender, context, id, content);
+	}
+	
+	public Long createClient(String name) throws IOException {
+		String clientId = transport.SendAndGetResponse(String.format(CreateClientStringFormat, name));
+		
+		return Long.parseLong(clientId);
 	}
 }
