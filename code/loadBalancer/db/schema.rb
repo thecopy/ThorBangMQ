@@ -13,7 +13,11 @@
 
 ActiveRecord::Schema.define(version: 20131025075938) do
 
-# Could not dump table "log_entries" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "log_entries", force: true do |t|
+    t.integer "session_id"
+    t.string  "msg"
+    t.integer "timestamp"
+    t.string  "name"
+  end
 
 end
