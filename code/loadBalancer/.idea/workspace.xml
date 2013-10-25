@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/loadBalancer.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/log_controller.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/javascripts/moment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/log/show.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../server/src/asl/ASLClientRequestWorker.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
     </list>
     <ignored path="loadBalancer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,7 +49,7 @@
       <file leaf-file-name="log_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/log_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="0" selection-start="632" selection-end="632" vertical-scroll-proportion="1.3439306">
+            <state line="6" column="5" selection-start="199" selection-end="199" vertical-scroll-proportion="0.2601156">
               <folding />
             </state>
           </provider>
@@ -823,7 +810,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/log_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="0" selection-start="632" selection-end="632" vertical-scroll-proportion="1.3439306">
+        <state line="6" column="5" selection-start="199" selection-end="199" vertical-scroll-proportion="0.2601156">
           <folding />
         </state>
       </provider>
