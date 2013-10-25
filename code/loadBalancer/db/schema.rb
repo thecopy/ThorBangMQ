@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131024190945) do
+ActiveRecord::Schema.define(version: 20131025075938) do
 
 # Could not dump table "log_entries" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
