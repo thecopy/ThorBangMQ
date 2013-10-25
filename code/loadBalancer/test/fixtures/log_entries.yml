@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  [log_session_id: 1
+  log_timestamp: 2013-10-23 21:30:03
+  log_msg: 
+
+two:
+  [log_session_id: 1
+  log_timestamp: 2013-10-23 21:30:03
+  log_msg: 

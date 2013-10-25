@@ -1,0 +1,53 @@
+<%= button_to 'Clear Log Entries', {:controller => :log, :action => 'delete_all'}, :method => :delete %>
+
+
+
+<table>
+  <tr>
+    <th>
+      Message
+    </th>
+    <th>
+      Timestamp
+    </th>
+    <th>
+      Name
+    </th>
+    <th>
+      Session
+    </th>
+    <th>
+      Timeago
+    </th>
+    <th>
+    </th>
+    <th>
+    </th>
+  </tr>
+
+
+  <% @logs.order('timestamp DESC').each do |l| %>
+      <tr>
+        <td><%=l.msg%></td>
+        <td><%=l.timestamp%></td>
+        <td><%= link_to l.name, {:controller => :log, :action => 'get_session_by_name', :name => l.name || 'no-name'} %></td>
+
+        <td><%= link_to l.session_id, {:controller => :log, :action => 'get_session_by_id', :id => l.session_id} %></td>
+
+        <td><script>document.write(moment(<%=l.timestamp%>).fromNow())</script></td>
+
+
+        <td><%= link_to "Download Session Id #{l.session_id}",
+                        {:controller => :log, :action => 'get_session_by_id', :id => l.session_id, :download => 'yes'}%>
+        </td>
+
+
+
+        <td><%= link_to "Download Name #{l.name}",
+                        {:controller => :log, :action => 'get_session_by_name', :name => l.name, :download => 'yes'}%>
+        </td>
+      </tr>
+  <% end %>
+
+
+</table>
