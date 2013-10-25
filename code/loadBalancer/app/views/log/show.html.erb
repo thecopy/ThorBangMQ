@@ -11,10 +11,17 @@
       Timestamp
     </th>
     <th>
+      Name
+    </th>
+    <th>
       Session
     </th>
     <th>
       Timeago
+    </th>
+    <th>
+    </th>
+    <th>
     </th>
   </tr>
 
@@ -23,8 +30,22 @@
       <tr>
         <td><%=l.log_msg%></td>
         <td><%=l.timestamp%></td>
-        <td><%= link_to l.log_session_id, {:controller => :log, :action => 'get_session', :id => l.log_session_id} %></td>
+        <td><%= link_to l.name, {:controller => :log, :action => 'get_session_by_name', :name => l.name || 'no-name'} %></td>
+
+        <td><%= link_to l.log_session_id, {:controller => :log, :action => 'get_session_by_id', :id => l.log_session_id} %></td>
+
         <td><script>document.write(moment(<%=l.timestamp%>).fromNow())</script></td>
+
+
+        <td><%= link_to "Download Session Id #{l.log_session_id}",
+                        {:controller => :log, :action => 'get_session_by_id', :id => l.log_session_id, :download => 'yes'}%>
+        </td>
+
+
+
+        <td><%= link_to "Download Name #{l.name}",
+                        {:controller => :log, :action => 'get_session_by_name', :name => l.name, :download => 'yes'}%>
+        </td>
       </tr>
   <% end %>
 
