@@ -1,7 +1,6 @@
 package clientManager;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import asl.ThorBangMQ;
 

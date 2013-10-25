@@ -4,7 +4,8 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.time.StopWatch;
 
-import asl.ThorBangMQ;
+import clientTests.ClientTest;
+import clientTests.writeTest;
 
 public class main {
 
@@ -13,61 +14,30 @@ public class main {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		
-		String hostname = "localhost";
-		int numberOfClients = 5;
-		int numberOfMessagesPerClient = 5000;
-		
-		if (args.length == 3) {
-			hostname = args[0];
-			numberOfClients = Integer.parseInt(args[1]);
-			numberOfMessagesPerClient = Integer.parseInt(args[2]);
+		if (args.length != 4) {
+			System.out.println("Arguments are: <hostname> <number of clients> <messages per client> <test name>");
+			System.exit(-1);
 		}
 		
 		int port = 8123;
-		int queue = 1;
+		String hostName = args[0];
+		int numClients = Integer.parseInt(args[1]);
+		int numMessagesPerClient = Integer.parseInt(args[2]);
+		String testName = args[3];
 		
-		System.out.println("Connecting " + numberOfClients + " clients to " + hostname + ":" + port + "...");
-		
-		Thread[] clients = new Thread[numberOfClients];
-		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(hostname, port, numberOfMessagesPerClient, i+1, queue, i));
+		ClientTest test = null;
+		switch (testName.toLowerCase()) {
+			case "writetest":
+				test = new writeTest(hostName, port, numClients, numMessagesPerClient);
+				break;
+			default:
+				System.out.printf("Test '%s' doesn't exist!", testName);
+				System.exit(0);
 		}
-		
-		System.out.println("OK Done! Sending " + numberOfMessagesPerClient + " messages sequentially to queue 1 per client...");
-		
-		StopWatch w = new StopWatch();
-		
-		w.start();
-		
-		//Start client threads
-		for(int i = 0; i < numberOfClients;i++){
-			clients[i].start();
-		}
-		
-		//Wait for clients to finish
-		for (Thread client : clients) {
-			client.join();
-		}
-
-		w.stop();
-		
-		float totalMessages = (float) (numberOfClients * numberOfMessagesPerClient);
-		float totalTimeInMs = w.getNanoTime()/1000/1000;
-		
-		System.out.println("OK Done!");
-		System.out.println("-------------------------------------------");
-
-		System.out.println("Number of Clients:\t" + numberOfClients+ "");
-		System.out.println("Messages per Client:\t" + numberOfMessagesPerClient + "");
-		System.out.println("Total Messages:\t\t" + totalMessages + "");
-		System.out.println("");
-		System.out.println("Total Time:\t\t" + totalTimeInMs + "ms");
-		System.out.println("Per Message:\t\t" + totalTimeInMs/numberOfMessagesPerClient/numberOfClients + "ms");
-		System.out.println("Messages/second:\t" + totalMessages/totalTimeInMs * 1000);
-		System.out.println("Time/message:\t\t" + totalTimeInMs/totalMessages + "ms");
-		
-		System.in.read();
+		System.out.printf("Starting test '%s'", testName);
+		test.prepare();
+		test.start();
+		test.cleanUp();
 	}
 		
 
