@@ -1,3 +1,4 @@
+import logging
 from os import environ
 
 import digitalocean
@@ -91,3 +92,4 @@ def _createdroplet(name, image_id, size='512mb'):
 def destroyalldroplets():
     for droplet in droplets:
         droplet.destroy()
+
