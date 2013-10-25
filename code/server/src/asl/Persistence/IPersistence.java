@@ -22,7 +22,7 @@ public interface IPersistence {
 	long createQueue(String name);
 	void removeQueue(long queueId);
 
-	long createUser(String name);
+	long createClient(String name);
 
 	Enumeration<Client> getAllClients();
 }

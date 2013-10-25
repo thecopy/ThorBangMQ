@@ -36,7 +36,7 @@ public class Main {
 		settings.UseInMemoryPersister = false;
 		settings.DB_MAX_CONNECTIONS = Integer.parseInt(args[1]);
 		settings.NUM_CLIENTREQUESTWORKER_THREADS = Integer.parseInt(args[2]);
-		if (args.length >= 4 && args[3] == "ALL") {
+		if (args.length >= 3 && args[3].equals("ALL")) {
 			logger.setLevel(Level.ALL);
 		} else {
 			logger.setLevel(Level.OFF);

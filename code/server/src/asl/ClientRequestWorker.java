@@ -62,6 +62,9 @@ public class ClientRequestWorker implements Runnable{
 			this.ps.removeQueue(Long.parseLong(methodWithArgs[1]));
 			transport.Send("OK");
 			break;
+		case "CREATECLIENT":
+			transport.Send(String.valueOf(this.ps.createClient(methodWithArgs[1])));
+			break;
 		default:
 			logger.log(Level.WARNING, "Failed to interpert client message: " + msg);
 			break;

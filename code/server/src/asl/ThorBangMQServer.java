@@ -70,11 +70,6 @@ public class ThorBangMQServer {
 				: new DbPersistence(connectionPool,logger);
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
-
-<<<<<<< HEAD
-
-=======
->>>>>>> fd940f182f11b0f251324241a4327c8122416ea8
 		return new ThorBangMQServer(settings, threadpool, logger, persistence);
 	}
 

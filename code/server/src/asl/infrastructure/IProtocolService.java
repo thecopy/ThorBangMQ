@@ -10,6 +10,7 @@ public interface IProtocolService {
 	Message popQueueWithSender(String argsConcat);
 	long createQueue(String name);
 	void removeQueue(long id);
+	long createClient(String name);
 	void sendMessage(Message m);
 	String formatMessage(Message m);
 }

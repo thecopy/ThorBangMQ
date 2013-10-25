@@ -124,7 +124,7 @@ public class InMemoryPersistence implements IPersistence {
 	}
 
 	@Override
-	public long createUser(String name) {
+	public long createClient(String name) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
