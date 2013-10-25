@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/../server/src/asl/ASLClientRequestWorker.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20131024190945_add_timestamp_to_log_entry.rb" afterPath="$PROJECT_DIR$/db/migrate/20131024190945_add_timestamp_to_log_entry.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/src/asl/ThorBangMQServer.java" afterPath="$PROJECT_DIR$/../server/src/asl/ThorBangMQServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/log/show.html.erb" afterPath="$PROJECT_DIR$/app/views/log/show.html.erb" />
     </list>
     <ignored path="loadBalancer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,19 +68,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="schema.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="schema.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/schema.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="3" selection-start="951" selection-end="951" vertical-scroll-proportion="0.4029304">
+            <state line="11" column="86" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="show.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/log/show.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="0" selection-start="1012" selection-end="1012" vertical-scroll-proportion="-26.25">
+            <state line="44" column="0" selection-start="994" selection-end="994" vertical-scroll-proportion="0.7735849">
               <folding />
             </state>
           </provider>
@@ -166,9 +165,9 @@
         <option value="$PROJECT_DIR$/config/application.rb" />
         <option value="$PROJECT_DIR$/app/views/log/get_session.erb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/views/log/show.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/log_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20131024190945_add_timestamp_to_log_entry.rb" />
+        <option value="$PROJECT_DIR$/app/views/log/show.html.erb" />
       </list>
     </option>
   </component>
@@ -802,13 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/log/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1012" selection-end="1012" vertical-scroll-proportion="-26.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/log_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="0" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0">
@@ -860,7 +852,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db/schema.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="3" selection-start="951" selection-end="951" vertical-scroll-proportion="0.4029304">
+        <state line="11" column="86" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/log/show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="0" selection-start="994" selection-end="994" vertical-scroll-proportion="0.7735849">
           <folding />
         </state>
       </provider>
