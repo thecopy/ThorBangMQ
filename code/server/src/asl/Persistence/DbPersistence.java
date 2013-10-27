@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.logging.Logger;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
+import org.postgresql.util.PSQLException;
 
 import asl.Client;
 import asl.Message;
@@ -123,7 +124,7 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public long createUser(String name) {
+	public long createClient(String name) {
 		final String query = "INSERT INTO clients(name) VALUES(?) RETURNING id";
 
 		return (long) executeScalar(query, logger, name);
@@ -167,7 +168,7 @@ public class DbPersistence implements IPersistence {
 			stmt = con.prepareStatement(sql);
 			for (int i = 1; i <= params.length; i++)
 				stmt.setObject(i, params[i - 1]);
-
+			
 			set = stmt.executeQuery();
 			con.commit();
 
@@ -184,7 +185,11 @@ public class DbPersistence implements IPersistence {
 
 			return rows;
 
-		} catch (SQLException e) {
+		} catch (PSQLException e) {
+			logger.severe("Couldn't fulfill request:");
+			logger.severe(e.getMessage());
+		}
+		catch (SQLException e) {
 			// TODO: Insert logging
 			logger.severe(e.getMessage());
 			// TODO: Insert logging
@@ -198,11 +203,14 @@ public class DbPersistence implements IPersistence {
 
 	private Object executeScalar(String sql, Logger logger, Object... params) {
 		ArrayList<Object[]> r = executeQuery(sql, logger, params);
-
+		if (r == null) {			
+			return -1L;
+		}
+		
 		if (r.size() > 0)
 			return r.get(0)[0];
 
-		return -1;
+		return -1L;
 	}
 
 	private Message getMessage(Object[] cols) {

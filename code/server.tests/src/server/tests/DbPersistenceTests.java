@@ -51,8 +51,8 @@ public class DbPersistenceTests {
 		
 		db.createQueue("some_queue");
 		
-		db.createUser("user1");
-		db.createUser("user2");
+		db.createClient("user1");
+		db.createClient("user2");
 		
 		return db;
 	}

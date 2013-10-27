@@ -103,6 +103,11 @@ public class ProtocolService implements IProtocolService {
 		persistence.removeQueue(id);
 	}
 	
+	// CREATECLIENT,NameOfClient
+	@Override
+	public long createClient(String name) {
+		return persistence.createClient(name);
+	}
 	
 	@Override
 	public void sendMessage(Message m) {
