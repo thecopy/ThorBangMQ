@@ -54,7 +54,7 @@ public class ThorBangMQServer {
 		// Initialize server socket and the selector to accept connections.
 		this.serverChannel = ServerSocketChannel.open();
 		this.serverChannel.configureBlocking(false);
-		this.serverChannel.socket().bind(new InetSocketAddress(ServerSettings.SOCKET_PORT));  // listen for connections on SOCKET_PORT
+		this.serverChannel.socket().bind(new InetSocketAddress(settings.LISTENING_PORT));  // listen for connections on SOCKET_PORT
 		this.selector = Selector.open();
 		this.serverChannel.register(this.selector, SelectionKey.OP_ACCEPT);
 		this.connectedClients = 0;
@@ -68,7 +68,7 @@ public class ThorBangMQServer {
 		connectionPool.setServerName(settings.DB_SERVER_NAME);
 		connectionPool.setPassword(settings.DB_PASSWORD);
 		connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
-		IPersistence persistence = settings.UseInMemoryPersister
+		IPersistence persistence = settings.USE_MEMORY_PERSISTANCE
 				? new InMemoryPersistence()
 				: new DbPersistence(connectionPool,logger);
 
@@ -249,11 +249,11 @@ public class ThorBangMQServer {
 		for (int i = 0; i < bytesRead; i += 1) {
 			buff[i] = this.readBuffer.get(i);
 		}
-		return new String(buff, ServerSettings.CHARSET);
+		return new String(buff, settings.getCharset());
 	}
 
 	private ByteBuffer stringToByteBuffer(String str) {
-		Charset charset = ServerSettings.CHARSET;
+		Charset charset = settings.getCharset();
 		return charset.encode(str);
 	}
 

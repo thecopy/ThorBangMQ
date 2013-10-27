@@ -5,31 +5,42 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import asl.ServerSettings;
 
-public class Bootstrapping {
-	private static String useMemoryPersistenceSetting = "useinmemorypersistence";
+public class Bootstrapper2 {
 	private static String configurationFile = "conf.txt";
 
-	public static ServerSettings StrapTheBoot(Logger logger){
+	public static ServerSettings StrapTheBoot(Logger logger) throws Exception{
 		ServerSettings serverSettings = new ServerSettings();
 		if (!new File(configurationFile).exists()){
 			logger.log(Level.CONFIG, "Configuration file not found. Defaulting to in memory persistence.");
-			serverSettings.UseInMemoryPersister = true;
+			serverSettings.USE_MEMORY_PERSISTANCE = true;
 			SaveTheStrapping(logger, serverSettings);
 		} else
 		try {
 			// Read configuration file
+			
 			String[] settings = readFile(configurationFile).split("\n");
-
+			Class<ServerSettings> serverSettingClass = ServerSettings.class;
 			for (String line : settings) {
-				if(line.toLowerCase().startsWith(useMemoryPersistenceSetting)){
-					if(line.split("\t")[1].equals("1"))
-						serverSettings.UseInMemoryPersister = true;
-				}
+				String[] setting = line.split("\t");
+				Field field = serverSettingClass.getDeclaredField(setting[0]);
+				Class<?> type = field.getType();
+				
+				if(type.equals(Integer.TYPE))
+					field.setInt(serverSettings, Integer.parseInt(setting[1]));
+				else if(type.equals(Boolean.TYPE))
+					field.setBoolean(serverSettings, Boolean.parseBoolean(setting[1]));
+				else if(type.equals(String.class))
+					field.set(serverSettings, setting[1]);
+				else
+					logger.severe("Error while checking type of field " 
+									+ field.getName() + ". Not int, boolean or String");
+					
 			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Could not read from configuration." + e);
@@ -38,11 +49,12 @@ public class Bootstrapping {
 		return serverSettings;
 	}
 
-	public static void SaveTheStrapping(Logger logger, ServerSettings settings){
+	public static void SaveTheStrapping(Logger logger, ServerSettings settings) throws IllegalArgumentException, IllegalAccessException{
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(useMemoryPersistenceSetting + "\t" + (settings.UseInMemoryPersister ? "1" : "0"));
-		sb.append("\n");
+		for(Field field : ServerSettings.class.getDeclaredFields()){
+			sb.append(field.getName() + "\t" + field.get(settings) + "\n");
+		}
 
 		try {
 			saveFile(configurationFile, sb.toString());

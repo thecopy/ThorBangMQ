@@ -12,11 +12,13 @@ public class MemoryLogger extends Logger {
 	String format = "%d\t%s";
 	
 	List<String> entries;
+
+	private Boolean outputToConsole;
 		
-	public MemoryLogger() {
+	public MemoryLogger(Boolean outputToConsole) {
 		super("MemoryLogger",null);
-		
-		entries = new ArrayList<String>(256);
+		this.outputToConsole = outputToConsole;
+		entries = new ArrayList<String>(1024);
 	}
 
 	@Override
@@ -34,10 +36,16 @@ public class MemoryLogger extends Logger {
 		this.log(Level.WARNING, msg);
 	}
 	
+	public void log(String msg) {
+		log(Level.INFO, msg);
+	}
+	
 	@Override
 	public void log(Level level, String msg) {
 		String dataToPost = String.format(format, System.currentTimeMillis(), msg);
 		entries.add(dataToPost);
+		if(outputToConsole)
+			System.out.println(dataToPost);
 	}
 	
 	public void dumpToFile(String path) throws FileNotFoundException{

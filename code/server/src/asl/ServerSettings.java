@@ -3,10 +3,14 @@ package asl;
 import java.nio.charset.Charset;
 
 public class ServerSettings {
-	public static final int SOCKET_PORT = 8123;
-	public static final Charset CHARSET = Charset.forName("UTF-8");
 
-	public boolean UseInMemoryPersister;
+	public Charset getCharset() {
+		return Charset.forName("UTF-8");
+	}
+
+	public int LISTENING_PORT = 8123;
+	
+	public boolean USE_MEMORY_PERSISTANCE;
 	public int MESSAGE_MAX_LENGTH = 4096;
 	public int NUM_CLIENTREQUESTWORKER_THREADS = 10;
 

@@ -7,20 +7,20 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import asl.infrastructure.Bootstrapping;
+import asl.infrastructure.Bootstrapper2;
 import asl.infrastructure.HttpLogger;
 import asl.infrastructure.MemoryLogger;
 
 public class Main {
-	static Logger logger = new MemoryLogger();
+	static Logger logger = new MemoryLogger(true /*output to console*/);
 	
 	public static void main(String[] args) throws Exception {
 		logger.setLevel(Level.ALL);
 		
 		// Read configuration file
-		ServerSettings settings = Bootstrapping.StrapTheBoot(logger);
+		ServerSettings settings = Bootstrapper2.StrapTheBoot(logger);
 		settings = parseArgs(args, settings);
-		logger.info(String.format("Using in memory persister: %s", settings.UseInMemoryPersister));
+		logger.info(String.format("Using in memory persister: %s", settings.USE_MEMORY_PERSISTANCE));
 		
 		try {
 			System.out.println("Starting ThorBang MQ Server");
@@ -73,14 +73,15 @@ public class Main {
 	
 	private static ServerSettings parseArgs(String[] args, ServerSettings settings) {
 		if (args.length < 3) {
-			logger.severe("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS> <LOG_PATH> <LOG_LEVEL (ALL or OFF)>");
+			logger.severe("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS> <LOG_PATH> <LOG_LEVEL>");
 			return settings;
 		}
 		settings.DB_SERVER_NAME = args[0];
-		settings.UseInMemoryPersister = false;
+		settings.USE_MEMORY_PERSISTANCE = false;
 		settings.DB_MAX_CONNECTIONS = Integer.parseInt(args[1]);
 		settings.NUM_CLIENTREQUESTWORKER_THREADS = Integer.parseInt(args[2]);
 		settings.LOG_PATH = args[3];
+		
 		if (args.length >= 5) {
 			logger.setLevel(Level.parse(args[4]));
 		} else {
