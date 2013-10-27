@@ -1,5 +1,6 @@
 package asl;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -21,6 +22,7 @@ import asl.ServerSettings;
 import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
+import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
 import asl.network.ITransport;
@@ -40,7 +42,8 @@ public class ThorBangMQServer {
 	private IPersistence persistence;
 	private int connectedClients;
 	private ServerSettings settings;
-
+	private Boolean stopped = false;
+	
 	public ThorBangMQServer(ServerSettings settings, ExecutorService executor, Logger logger, IPersistence persistence) throws IOException {
 		this.executor = executor;
 		this.logger = logger;
@@ -71,16 +74,19 @@ public class ThorBangMQServer {
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fd940f182f11b0f251324241a4327c8122416ea8
 		return new ThorBangMQServer(settings, threadpool, logger, persistence);
+	}
+	
+	public void stop(){
+		executor.shutdownNow(); // shut down all request worker threads
+		stopped = true;
+		selector.wakeup(); // unblock this.selector.select(); in start()-method
 	}
 
 	public void start() {
 		logger.info("Waiting for connections..");
-		while (true) {
+		while (!stopped) {
+			
 			/*
 			 * We're alternating between looking for READ and WRITE operations from client sockets.
 			 * In the following, we're using in the pendingWrite 'queue' to set connection's operation to WRITE.
@@ -126,6 +132,20 @@ public class ThorBangMQServer {
 				}
 			}
 		}
+		
+		logger.info("Stopping server; stopped = " + stopped);
+		if(settings.LOG_PATH != null)			
+		{
+			logger.info("LOG_PATH supplied. Dumping log file to " + settings.LOG_PATH);
+		    if(logger instanceof MemoryLogger)
+		    {
+		    	try {
+					((MemoryLogger)logger).dumpToFile(settings.LOG_PATH);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+		    }
+		}
 	}
 
 	private void accept(SelectionKey conn) {
@@ -144,7 +164,7 @@ public class ThorBangMQServer {
 			// Connection wasn't made. Skip!
 			return;
 		}
-		logger.info(String.format("Accepted connection from %s\n", clientAddress));
+		logger.info(String.format("Accepted connection from %s", clientAddress));
 	}
 
 	/**
@@ -202,7 +222,7 @@ public class ThorBangMQServer {
 				this.unexpectedDisconnect(conn, clientAddress);
 			}
 			this.pendingWrites.remove(conn);
-			logger.info(String.format("Replied to %s with:%s\n", clientAddress, reply));
+			logger.info(String.format("Replied to %s with:%s", clientAddress, reply));
 		}
 
 		// Done writing -- tell selector to listen for reads instead.

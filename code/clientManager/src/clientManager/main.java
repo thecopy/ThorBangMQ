@@ -1,10 +1,6 @@
 package clientManager;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.time.StopWatch;
-
-import asl.ThorBangMQ;
 
 public class main {
 
@@ -12,7 +8,7 @@ public class main {
 	 * @param args
 	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(final String[] args) throws Exception {
 		
 		String hostname = "localhost";
 		int numberOfClients = 5;

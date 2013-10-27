@@ -18,5 +18,6 @@ public class ServerSettings {
 	public String DB_PASSWORD = "asl2013";
 	public int DB_MAX_CONNECTIONS = 5;
 	public boolean DB_DEFAULT_AUTO_COMMIT = false;
+	public String LOG_PATH;
 
 }

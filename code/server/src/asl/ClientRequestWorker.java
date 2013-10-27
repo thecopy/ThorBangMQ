@@ -20,7 +20,7 @@ public class ClientRequestWorker implements Runnable{
 		this.transport = transport;
 		this.ps = protocolService;
 
-		logger.info(String.format("Processing Request: %s\n", requestString));
+		logger.info(String.format("Processing Request: %s", requestString));
 	}
 
 	@Override

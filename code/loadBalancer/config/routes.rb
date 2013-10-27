@@ -5,8 +5,8 @@ LoadBalancer::Application.routes.draw do
   resources :log
 
   delete '/log' => 'log#delete_all'
-  get '/session/show/id/:id' => 'log#get_session_by_id'
-  get '/session/show/name/:name' => 'log#get_session_by_name'
+  get '/log/session/show/id/:id' => 'log#get_session_by_id'
+  get '/log/session/show/name/:name' => 'log#get_session_by_name'
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

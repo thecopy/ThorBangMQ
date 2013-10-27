@@ -4,6 +4,8 @@
     <list default="true" id="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/../server/src/asl/ASLClientRequestWorker.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/src/asl/ThorBangMQServer.java" afterPath="$PROJECT_DIR$/../server/src/asl/ThorBangMQServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/log_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/log_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/log/show.html.erb" afterPath="$PROJECT_DIR$/app/views/log/show.html.erb" />
     </list>
     <ignored path="loadBalancer.iws" />
@@ -12,10 +14,10 @@
     <file path="/index.html.erb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382554118196" ignored="false" />
     <file path="/logging_controller.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382555612296" ignored="false" />
     <file path="/application_controller.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382639416192" ignored="false" />
-    <file path="/log_controller.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382692510977" ignored="false" />
-    <file path="/routes.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382690465320" ignored="false" />
+    <file path="/log_controller.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382698265263" ignored="false" />
+    <file path="/routes.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382698302785" ignored="false" />
     <file path="/show.html.erb.html" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382558100242" ignored="false" />
-    <file path="/show.html.erb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382692448550" ignored="false" />
+    <file path="/show.html.erb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382698464244" ignored="false" />
     <file path="/20131023193003_create_log_entries.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382559295214" ignored="false" />
     <file path="/log.css.scss" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382642827201" ignored="false" />
     <file path="/application.rb" changelist="e05c4a57-6b40-424e-b0d4-a79948c8dbd1" time="1382689034226" ignored="false" />
@@ -41,64 +43,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="242" selection-end="242" vertical-scroll-proportion="-67.5">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="log_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/log_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0">
+            <state line="73" column="0" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/application.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="38" selection-start="978" selection-end="978" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="schema.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="schema.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/db/schema.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="86" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="show.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/log/show.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="994" selection-end="994" vertical-scroll-proportion="0.7735849">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="seeds.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/seeds.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20131023193003_create_log_entries.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20131023193003_create_log_entries.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="21" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0">
+            <state line="23" column="0" selection-start="952" selection-end="952" vertical-scroll-proportion="1.1386138">
               <folding />
             </state>
           </provider>
@@ -107,25 +64,7 @@
       <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/routes.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="67" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20131025075938_add_name_to_log_entry.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20131025075938_add_name_to_log_entry.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20131024190945_add_timestamp_to_log_entry.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20131024190945_add_timestamp_to_log_entry.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0">
+            <state line="17" column="22" selection-start="625" selection-end="625" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -164,9 +103,9 @@
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/config/application.rb" />
         <option value="$PROJECT_DIR$/app/views/log/get_session.erb" />
-        <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/log_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20131024190945_add_timestamp_to_log_entry.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/log_controller.rb" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/log/show.html.erb" />
       </list>
     </option>
@@ -180,8 +119,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
-    <option name="width" value="1483" />
-    <option name="height" value="1347" />
+    <option name="width" value="1440" />
+    <option name="height" value="808" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -665,18 +604,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1483" height="1347" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="808" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24913013" sideWeight="0.2328" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26791927" sideWeight="0.4856" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27618363" sideWeight="0.32348806" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26791927" sideWeight="0.2104" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27618363" sideWeight="0.14064698" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.304" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5344585" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -801,37 +740,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/log_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="0" selection-start="242" selection-end="242" vertical-scroll-proportion="-67.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="67" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20131023193003_create_log_entries.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="21" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -850,16 +761,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/schema.rb">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20131023193003_create_log_entries.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="86" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
+        <state line="4" column="21" selection-start="150" selection-end="150" vertical-scroll-proportion="0.07326008">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/log_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="22" selection-start="625" selection-end="625" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/log/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="994" selection-end="994" vertical-scroll-proportion="0.7735849">
+        <state line="42" column="89" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.32330826">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/schema.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="952" selection-end="952" vertical-scroll-proportion="1.1386138">
           <folding />
         </state>
       </provider>

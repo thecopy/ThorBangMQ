@@ -1,1 +1,1 @@
-useinmemorypersistence	0
+useinmemorypersistence	1

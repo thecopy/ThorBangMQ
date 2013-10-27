@@ -21,14 +21,14 @@ class LogController < ApplicationController
   ## This stuff below here is not so nice, but it works :^)
 
   def get_session_by_id
-    where_clause = "log_session_id = #{params[:id]}"
+    where_clause = "session_id = #{params[:id]}"
 
     @logs = LogEntry.where(where_clause).order('timestamp desc')
 
     if params[:download]
       result = ''
       @logs.each do |l|
-        result += "#{l.timestamp} #{l.log_msg}"
+        result += "#{l.timestamp} #{l.msg}\n"
       end
       send_data(result, :filename => "ThorBangMQ_session-#{params[:name]}.log")
       return
@@ -40,7 +40,7 @@ class LogController < ApplicationController
 
         result = ''
         @logs.each do |l|
-          result += "#{l.timestamp} #{l.log_msg}"
+          result += "#{l.timestamp} #{l.msg}\n"
         end
         send_data(result, :filename => "ThorBangMQ_session-#{params[:id]}.log")
 
@@ -56,7 +56,7 @@ class LogController < ApplicationController
     if params[:download]
       result = ''
       @logs.each do |l|
-        result += "#{l.timestamp} #{l.log_msg}"
+        result += "#{l.timestamp} #{l.msg}\n"
       end
       send_data(result, :filename => "ThorBangMQ_session-#{params[:name]}.log")
       return
@@ -68,7 +68,7 @@ class LogController < ApplicationController
 
         result = ''
         @logs.each do |l|
-          result += "#{l.timestamp} #{l.log_msg}"
+          result += "#{l.timestamp} #{l.msg}\n"
         end
         send_data(result, :filename => "ThorBangMQ_session-#{params[:name]}.log")
 
@@ -78,6 +78,6 @@ class LogController < ApplicationController
 
   private
     def log_params
-      params.require(:log_entry).permit(:log_msg, :log_session_id, :timestamp, :name)
+      params.require(:log_entry).permit(:msg, :session_id, :timestamp, :name)
     end
 end
