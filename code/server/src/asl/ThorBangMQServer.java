@@ -134,7 +134,7 @@ public class ThorBangMQServer {
 		}
 		
 		logger.info("Stopping server; stopped = " + stopped);
-		if(settings.LOG_PATH != null)			
+		if(settings.LOG_PATH != null)	// Should this be the servers responsibility?	
 		{
 			logger.info("LOG_PATH supplied. Dumping log file to " + settings.LOG_PATH);
 		    if(logger instanceof MemoryLogger)

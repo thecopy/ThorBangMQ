@@ -15,15 +15,9 @@ public abstract class ClientTest {
 		this.numMessagesPerClient = numMessagesPerClient;
 	}
 	
-	public void start() throws IOException {
-		
-	}
+	public abstract void start() throws IOException;
 	
-	public void prepare() throws IOException {
-		
-	}
+	public abstract void prepare() throws IOException;
 	
-	public void cleanUp() throws IOException {
-		
-	}
+	public abstract void cleanUp() throws IOException;
 }
