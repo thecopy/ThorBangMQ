@@ -139,7 +139,7 @@ public class ThorBangMQ {
 		return new Message(sender, context, id, content);
 	}
 	
-	public Long createClient(String name) throws IOException {
+	public long createClient(String name) throws IOException {
 		String clientId = transport.SendAndGetResponse(String.format(CreateClientStringFormat, name));
 		
 		return Long.parseLong(clientId);
