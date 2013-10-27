@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.commons.lang3.time.StopWatch;
 
 import clientTests.ClientTest;
-import clientTests.writeTest;
+import clientTests.WriteTest;
 
 public class main {
 
@@ -28,7 +28,7 @@ public class main {
 		ClientTest test = null;
 		switch (testName.toLowerCase()) {
 			case "writetest":
-				test = new writeTest(hostName, port, numClients, numMessagesPerClient);
+				test = new WriteTest(hostName, port, numClients, numMessagesPerClient);
 				break;
 			default:
 				System.out.printf("Test '%s' doesn't exist!", testName);

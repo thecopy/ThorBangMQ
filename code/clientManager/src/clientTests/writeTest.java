@@ -8,11 +8,11 @@ import org.apache.commons.lang3.time.StopWatch;
 import asl.ThorBangMQ;
 import clientManager.clientRunner;
 
-public class writeTest extends ClientTest {
+public class WriteTest extends ClientTest {
 	private ArrayList<Long> clients;
 	private long queueId;
 	
-	public writeTest(String hostName, int port, int numClients, int numMessagesPerClient) {
+	public WriteTest(String hostName, int port, int numClients, int numMessagesPerClient) {
 		super(hostName, port, numClients, numMessagesPerClient);
 		clients = new ArrayList<Long>();
 	}
