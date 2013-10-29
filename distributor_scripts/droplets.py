@@ -1,4 +1,3 @@
-import logging
 from os import environ
 
 import digitalocean
@@ -6,13 +5,18 @@ import digitalocean
 API_KEY = environ['ASL_DIGITAL_OCEAN_API_KEY']
 CLIENT_ID = environ['ASL_DIGITAL_OCEAN_CLIENT_ID']
 
-do = digitalocean.Manager(client_id=CLIENT_ID,
-                          api_key=API_KEY)
+do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
 droplets = do.get_all_droplets()
 
 CLIENT_NUMBER = 1
 SERVER_NUMBER = 1
+
+
+def main():
+    global CLIENT_NUMBER, SERVER_NUMBER
+    CLIENT_NUMBER = len(getclients()) + 1
+    SERVER_NUMBER = len(getservers()) + 1
 
 
 def getclients():
@@ -67,6 +71,7 @@ def createdatabase(size='512mb'):
 
 
 def _createdroplet(name, image_id, size='512mb'):
+    size = size.lower()
     if size == '512mb':
         size_id = 66
     elif size == '1gb':
@@ -93,3 +98,5 @@ def destroyalldroplets():
     for droplet in droplets:
         droplet.destroy()
 
+if __name__ == '__main__':
+    main()
