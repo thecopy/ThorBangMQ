@@ -91,7 +91,7 @@ def _createdroplet(name, image_id, size='512mb'):
                                    region_id=4,
                                    image_id=image_id,
                                    size_id=size_id)
-    droplet.create(ssh_key_ids=[41180, 41181], private_networking=True)
+    droplet.create(ssh_key_ids=[41180, 46980, 46997], private_networking=True)
 
 
 def destroyalldroplets():
