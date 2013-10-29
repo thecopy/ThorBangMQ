@@ -10,7 +10,7 @@
             </manifest>
             <fileset dir="../../code/clientManager/bin"/>
             <fileset dir="../../code/client/bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="/media/storage/Dropbox/eth/asl/asl_share/code/clientManager/commons-lang3-3.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="../../code/clientManager/commons-lang3-3.1.jar"/>
         </jar>
     </target>
 </project>
