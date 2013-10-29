@@ -84,7 +84,6 @@ public class ThorBangMQServer {
 	}
 
 	public void start() {
-		logger.info("Waiting for connections..");
 		while (!stopped) {
 			
 			/*
@@ -222,7 +221,6 @@ public class ThorBangMQServer {
 				this.unexpectedDisconnect(conn, clientAddress);
 			}
 			this.pendingWrites.remove(conn);
-			logger.info(String.format("Replied to %s with:%s", clientAddress, reply));
 		}
 
 		// Done writing -- tell selector to listen for reads instead.
@@ -279,7 +277,7 @@ public class ThorBangMQServer {
 	 * @param clientAddress
 	 */
 	private void unexpectedDisconnect(SelectionKey conn, String clientAddress) {
-		logger.warning(String.format("Connection from %s was unexpectedly closed!", clientAddress));
+		logger.info(String.format("Connection from %s was unexpectedly closed!", clientAddress));
 		this.disconnect(conn, clientAddress);
 	}
 

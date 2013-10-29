@@ -104,3 +104,6 @@ if __name__ == '__main__':
                  db_connections=15, worker_threads=15)
     startclients(clients=CLIENTS, server_ip=SERVERS[0][1],
                  test_name="writetest", client_threads=15, msgs_per_client=10000)
+
+# gets the logs
+# put them i a folder

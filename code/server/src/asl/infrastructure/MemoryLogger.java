@@ -28,6 +28,7 @@ public class MemoryLogger extends Logger {
 
 	@Override
 	public void info(String msg) {
+		
 		this.log(Level.INFO, msg);
 	}
 	
@@ -42,6 +43,8 @@ public class MemoryLogger extends Logger {
 	
 	@Override
 	public void log(Level level, String msg) {
+		if(level.intValue() < super.getLevel().intValue()) return;
+		
 		String dataToPost = String.format(format, System.currentTimeMillis(), msg);
 		entries.add(dataToPost);
 		if(outputToConsole)

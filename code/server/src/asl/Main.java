@@ -12,20 +12,21 @@ import asl.infrastructure.HttpLogger;
 import asl.infrastructure.MemoryLogger;
 
 public class Main {
-	static Logger logger = new MemoryLogger(true /*output to console*/);
+	static final Logger logger = new MemoryLogger(false /*output to console*/);
 	
-	public static void main(String[] args) throws Exception {
-		logger.setLevel(Level.ALL);
+	public static void main(String[] args) throws Exception {		
+		logger.setLevel(Level.SEVERE);
 		
 		// Read configuration file
 		ServerSettings settings = Bootstrapper2.StrapTheBoot(logger);
 		settings = parseArgs(args, settings);
-		logger.info(String.format("Using in memory persister: %s", settings.USE_MEMORY_PERSISTANCE));
 		
 		try {
 			System.out.println("Starting ThorBang MQ Server");
 
 			final ThorBangMQServer socketServer = ThorBangMQServer.build(settings, logger);
+			final IntervalLogger intervalLogger = new IntervalLogger(10000, logger, Level.SEVERE);
+			
 			Thread t = new Thread(new Runnable() {
 				
 				@Override
@@ -34,7 +35,11 @@ public class Main {
 					
 				}
 			});
+			Thread intervalLoggerThread = new Thread(intervalLogger);
+			
 			t.start();
+			intervalLoggerThread.start();
+			
 			System.out.println("ThorBangMQ Server Started.");
 			System.out.println("Commands:");
 			System.out.println("  d <file>\tDump logfile into specified file");
@@ -51,12 +56,12 @@ public class Main {
 				}
 				else if(input.startsWith("qd")){
 					dumpLog(input.substring(3));
-					stopServer(socketServer, t);
+					stopServer(socketServer, intervalLogger, t, intervalLoggerThread);
 					System.out.println("Bye :)");
 					break;
 				}
 				else if(input.equals("q")){
-					stopServer(socketServer, t);
+					stopServer(socketServer, intervalLogger, t, intervalLoggerThread);
 					System.out.println("Bye :)");
 					break;
 				}
@@ -73,7 +78,7 @@ public class Main {
 	
 	private static ServerSettings parseArgs(String[] args, ServerSettings settings) {
 		if (args.length < 3) {
-			logger.severe("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS> <LOG_PATH> <LOG_LEVEL>");
+			System.out.println("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS> <LOG_PATH> <LOG_LEVEL>");
 			return settings;
 		}
 		settings.DB_SERVER_NAME = args[0];
@@ -84,18 +89,21 @@ public class Main {
 		
 		if (args.length >= 5) {
 			logger.setLevel(Level.parse(args[4]));
-		} else {
-			logger.setLevel(Level.OFF);
 		}
 		
 		return settings;
 	}
 	
-	private static void stopServer(ThorBangMQServer server, Thread t) throws InterruptedException{
+	private static void stopServer(ThorBangMQServer server, IntervalLogger logger, Thread serverThread, Thread intervalLoggerThread) throws InterruptedException{
+		System.out.println("Shutting interval logger...");
+		logger.stop();
+		
 		System.out.println("Shutting down server...");
 		server.stop();
+		
 		System.out.println("Waiting for server to stop...");
-		t.join();	
+		serverThread.join();	
+		intervalLoggerThread.join();
 	}
 	
 	private static void dumpLog(String path) throws FileNotFoundException{
