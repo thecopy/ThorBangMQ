@@ -2,6 +2,8 @@ package asl;
 
 import java.nio.charset.Charset;
 
+import asl.infrastructure.PersistenceType;
+
 public class ServerSettings {
 
 	public Charset getCharset() {
@@ -10,7 +12,7 @@ public class ServerSettings {
 
 	public int LISTENING_PORT = 8123;
 	
-	public boolean USE_MEMORY_PERSISTANCE;
+	public PersistenceType PERSISTENCE_TYPE;
 	public int MESSAGE_MAX_LENGTH = 4096;
 	public int NUM_CLIENTREQUESTWORKER_THREADS = 10;
 

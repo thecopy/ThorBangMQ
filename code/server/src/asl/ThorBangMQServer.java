@@ -23,6 +23,7 @@ import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
 import asl.infrastructure.MemoryLogger;
+import asl.infrastructure.PersistenceType;
 import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
 import asl.network.ITransport;
@@ -68,8 +69,10 @@ public class ThorBangMQServer {
 		connectionPool.setServerName(settings.DB_SERVER_NAME);
 		connectionPool.setPassword(settings.DB_PASSWORD);
 		connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
-		IPersistence persistence = settings.USE_MEMORY_PERSISTANCE
+		IPersistence persistence = settings.PERSISTENCE_TYPE.equals(PersistenceType.MEMORY)
 				? new InMemoryPersistence()
+				: settings.PERSISTENCE_TYPE.equals(PersistenceType.POSTGRES)
+				? new DbPersistence(connectionPool,logger)
 				: new DbPersistence(connectionPool,logger);
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);

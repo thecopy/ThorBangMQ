@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import asl.infrastructure.Bootstrapper2;
 import asl.infrastructure.HttpLogger;
 import asl.infrastructure.MemoryLogger;
+import asl.infrastructure.PersistenceType;
 
 public class Main {
 	static final Logger logger = new MemoryLogger(false /*output to console*/);
@@ -82,7 +83,7 @@ public class Main {
 			return settings;
 		}
 		settings.DB_SERVER_NAME = args[0];
-		settings.USE_MEMORY_PERSISTANCE = false;
+		settings.PERSISTENCE_TYPE = PersistenceType.POSTGRES;
 		settings.DB_MAX_CONNECTIONS = Integer.parseInt(args[1]);
 		settings.NUM_CLIENTREQUESTWORKER_THREADS = Integer.parseInt(args[2]);
 		settings.LOG_PATH = args[3];
