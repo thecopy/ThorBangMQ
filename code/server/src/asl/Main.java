@@ -27,7 +27,7 @@ public class Main {
 			System.out.println("Starting ThorBang MQ Server");
 
 			final ThorBangMQServer socketServer = ThorBangMQServer.build(settings, logger);
-			final IntervalLogger intervalLogger = new IntervalLogger(10000, logger, Level.SEVERE);
+			final IntervalLogger intervalLogger = new IntervalLogger(5000, logger, Level.SEVERE);
 			
 			Thread t = new Thread(new Runnable() {
 				
