@@ -9,8 +9,10 @@ do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
 
 def getdroplets():
-    return [(droplet.ip_address, droplet.private_ip_address) for droplet in do.get_all_droplets()]
+    return [droplet for droplet in do.get_all_droplets()]
 
+
+print getdroplets()
 
 def getclients():
     """ Get a list of 2-tuples where the first element is the droplet's global ip,
