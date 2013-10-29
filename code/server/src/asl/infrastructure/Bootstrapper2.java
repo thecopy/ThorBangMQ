@@ -18,7 +18,7 @@ public class Bootstrapper2 {
 		ServerSettings serverSettings = new ServerSettings();
 		if (!new File(configurationFile).exists()){
 			logger.log(Level.CONFIG, "Configuration file not found. Defaulting to in memory persistence.");
-			serverSettings.USE_MEMORY_PERSISTANCE = true;
+			serverSettings.PERSISTENCE_TYPE = PersistenceType.MEMORY;
 			SaveTheStrapping(logger, serverSettings);
 		} else
 		try {
@@ -37,6 +37,8 @@ public class Bootstrapper2 {
 					field.setBoolean(serverSettings, Boolean.parseBoolean(setting[1]));
 				else if(type.equals(String.class))
 					field.set(serverSettings, setting[1]);
+				else if(type.equals(PersistenceType.class))
+					field.set(serverSettings, PersistenceType.valueOf(setting[1]));
 				else
 					logger.severe("Error while checking type of field " 
 									+ field.getName() + ". Not int, boolean or String");

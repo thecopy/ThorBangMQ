@@ -19,8 +19,6 @@ public class ClientRequestWorker implements Runnable{
 		this.logger = logger;
 		this.transport = transport;
 		this.ps = protocolService;
-
-		logger.info(String.format("Processing Request: %s", requestString));
 	}
 
 	@Override
@@ -66,7 +64,7 @@ public class ClientRequestWorker implements Runnable{
 			transport.Send(String.valueOf(this.ps.createClient(methodWithArgs[1])));
 			break;
 		default:
-			logger.log(Level.WARNING, "Failed to interpert client message: " + msg);
+			logger.log(Level.INFO, "Failed to interpert client message: " + msg);
 			break;
 		}
 	}

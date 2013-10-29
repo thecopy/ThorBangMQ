@@ -1,5 +1,6 @@
 package asl.infrastructure;
 
+import asl.GlobalCounters;
 import asl.Message;
 import asl.Persistence.IPersistence;
 import asl.network.ITransport;
@@ -32,6 +33,8 @@ public class ProtocolService implements IProtocolService {
 		persistence.storeMessage(message);
 		
 		transport.Send("OK");
+		
+		GlobalCounters.numberOfMessagesPersisted.incrementAndGet();
 	}
 
 	// PEEKQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
@@ -49,6 +52,8 @@ public class ProtocolService implements IProtocolService {
 		else
 			m = persistence.getMessageByPriority(queue, receiver);
 
+		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
+		
 		return m;
 	}
 
@@ -66,6 +71,7 @@ public class ProtocolService implements IProtocolService {
 		Message m = null;
 		m = persistence.getMessageBySender(queue, receiver, sender);
 
+		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		return m;
 	}
 
@@ -77,6 +83,7 @@ public class ProtocolService implements IProtocolService {
 		if (m != null)
 			persistence.deleteMessage(m.id);
 
+		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		return m;
 	}
 
@@ -88,6 +95,7 @@ public class ProtocolService implements IProtocolService {
 		if (m != null)
 			persistence.deleteMessage(m.id);
 
+		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		return m;
 	}
 
