@@ -7,7 +7,9 @@ CLIENT_ID = environ['ASL_DIGITAL_OCEAN_CLIENT_ID']
 
 do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
-droplets = do.get_all_droplets()
+
+def getdroplets():
+    return [(droplet.ip_address, droplet.private_ip_address) for droplet in do.get_all_droplets()]
 
 
 def getclients():
@@ -15,7 +17,7 @@ def getclients():
     and the second element is the droplet's local ip.
     """
     clients = []
-    for droplet in droplets:
+    for droplet in getdroplets():
         if 'client' in droplet.name:
             clients.append((droplet.ip_address, droplet.private_ip_address))
     return clients
@@ -26,7 +28,7 @@ def getservers():
     and the second element is the droplet's local ip.
     """
     servers = []
-    for droplet in droplets:
+    for droplet in getdroplets():
         if 'server' in droplet.name:
             servers.append((droplet.ip_address, droplet.private_ip_address))
     return servers
@@ -37,7 +39,7 @@ def getdatabase():
     and the second element is the droplet's local ip.
     It is assumed that there can be only one database.
     """
-    for droplet in droplets:
+    for droplet in getdroplets():
         if 'database' in droplet.name:
             return (droplet.ip_address, droplet.private_ip_address)
     return []
