@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.postgresql.jdbc2.optional.PoolingDataSource;
+
+import asl.Persistence.DbPersistence;
 import asl.infrastructure.Bootstrapper2;
 import asl.infrastructure.HttpLogger;
 import asl.infrastructure.MemoryLogger;
@@ -78,18 +81,19 @@ public class Main {
 	}
 	
 	private static ServerSettings parseArgs(String[] args, ServerSettings settings) {
-		if (args.length < 3) {
-			System.out.println("Arguments are: <DB_IP> <DB_MAX_CONNECTIONS> <NUM_WORKERTHREADS> <LOG_PATH> <LOG_LEVEL>");
+		if (args.length < 0) {
+			System.out.println("Optional argument: cleardb=true");
 			return settings;
 		}
-		settings.DB_SERVER_NAME = args[0];
-		settings.PERSISTENCE_TYPE = PersistenceType.POSTGRES;
-		settings.DB_MAX_CONNECTIONS = Integer.parseInt(args[1]);
-		settings.NUM_CLIENTREQUESTWORKER_THREADS = Integer.parseInt(args[2]);
-		settings.LOG_PATH = args[3];
-		
-		if (args.length >= 5) {
-			logger.setLevel(Level.parse(args[4]));
+
+		if(args[1].equals("cleardb=true")){
+			DbPersistence dbPersistence = new DbPersistence(new PoolingDataSource(), null);
+			dbPersistence.deleteSchema();
+			dbPersistence.createSchema();
+			dbPersistence.buildSchema();
+		}
+		else{
+			System.out.println("Unkown argument " + args[1]);
 		}
 		
 		return settings;
