@@ -82,21 +82,32 @@ public class Main {
 	
 	private static ServerSettings parseArgs(String[] args, ServerSettings settings) {
 		if (args.length < 0) {
-			System.out.println("Optional argument: cleardb=true");
+			System.out.println("Optional argument: cleardb=true logpath=path");
 			return settings;
 		}
 
-		if(args[1].equals("cleardb=true")){
+		for(String arg : args)
+			parseArgument(arg, settings);
+		
+		return settings;
+	}
+	
+	private static void parseArgument(String arg, ServerSettings s){
+		if(arg.equals("cleardb=true"))
+		{
+			System.out.println("Clearing db...");
 			DbPersistence dbPersistence = new DbPersistence(new PoolingDataSource(), null);
 			dbPersistence.deleteSchema();
 			dbPersistence.createSchema();
 			dbPersistence.buildSchema();
+			System.out.println("Db clean!");
+		}else if(arg.startsWith("logpath=")){
+			System.out.println("Setting log path to: " + arg.substring(8));
+			s.LOG_PATH = arg.substring(8);
 		}
 		else{
-			System.out.println("Unkown argument " + args[1]);
+			System.out.println("Unkown argument " + arg);
 		}
-		
-		return settings;
 	}
 	
 	private static void stopServer(ThorBangMQServer server, IntervalLogger logger, Thread serverThread, Thread intervalLoggerThread) throws InterruptedException{
