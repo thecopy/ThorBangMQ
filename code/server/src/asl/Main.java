@@ -11,9 +11,7 @@ import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.Persistence.DbPersistence;
 import asl.infrastructure.Bootstrapper2;
-import asl.infrastructure.HttpLogger;
 import asl.infrastructure.MemoryLogger;
-import asl.infrastructure.PersistenceType;
 
 public class Main {
 	static final Logger logger = new MemoryLogger(false /*output to console*/);
@@ -40,7 +38,7 @@ public class Main {
 				}
 			});
 			Thread intervalLoggerThread = new Thread(intervalLogger);
-			
+			addShutdownHookForSavingLog((MemoryLogger) logger, settings.LOG_PATH);
 			t.start();
 			intervalLoggerThread.start();
 			
@@ -129,6 +127,22 @@ public class Main {
 		}
 		((MemoryLogger)logger).dumpToFile(path);
 		System.out.println("Log file dumped to " + System.getProperty("user.dir") + "/" + path);
+	}
+	
+	private static void addShutdownHookForSavingLog(final MemoryLogger logger, final String pathToStoreLog){
+		Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try {
+					logger.dumpToFile(pathToStoreLog);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
 	}
 
 }
