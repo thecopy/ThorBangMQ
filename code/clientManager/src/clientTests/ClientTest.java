@@ -1,5 +1,8 @@
 package clientTests;
 
+import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.ServerException;
+
 import java.io.IOException;
 
 public abstract class ClientTest {
@@ -17,7 +20,7 @@ public abstract class ClientTest {
 	
 	public abstract void start() throws IOException;
 	
-	public abstract void prepare() throws IOException;
+	public abstract void prepare() throws IOException, ServerException;
 	
-	public abstract void cleanUp() throws IOException;
+	public abstract void cleanUp() throws IOException, NumberFormatException, ServerException, InvalidQueueException;
 }

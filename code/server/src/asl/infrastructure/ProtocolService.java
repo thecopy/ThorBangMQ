@@ -200,9 +200,22 @@ public class ProtocolService implements IProtocolService {
 		try {
 			clientId = persistence.createClient(name);
 		} catch (PersistenceException e) {
-			return String.format(this.persistenceFailMessage);
+			return this.persistenceFailMessage;
 		}
 		return clientId.toString();
+	}
+	
+	//REMOVECLIENT,id
+	public String removeClient(long clientId) {
+		
+		try {
+			persistence.removeClient(clientId);
+		} catch (PersistenceException e) {
+			return this.persistenceFailMessage;
+		} catch (InvalidClientException e) {
+			return String.format(this.clientFailMessage, e.id);
+		}
+		return this.okMessage;
 	}
 	
 	private String formatMessage(Message m) {

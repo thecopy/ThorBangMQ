@@ -1,5 +1,9 @@
 package clientManager;
 
+import infrastructure.exceptions.InvalidClientException;
+import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.ServerException;
+
 import java.io.IOException;
 
 import asl.ThorBangMQ;
@@ -33,7 +37,16 @@ public class clientRunner implements Runnable{
 	public void run() {
 		try {
 			for (int i = 0; i < messagesToSend; i++) {
-				client.SendMessage(userId, queue, 1, 0, "message no #" + i + " from " + userId + " to " + userId);
+				try {
+					client.SendMessage(userId, queue, 5, 0, "message no #" + i + " from " + userId + " to " + userId);
+				} catch (InvalidClientException e) {
+					System.out.println(String.format("Invalid client id: %d", e.id));
+				} catch (NumberFormatException | InvalidQueueException
+						| ServerException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			System.out.println("#" + id + " : Finished");
 		} catch (IOException e) {

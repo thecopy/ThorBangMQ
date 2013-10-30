@@ -1,5 +1,9 @@
 package asl;
 
+import infrastructure.exceptions.InvalidClientException;
+import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.ServerException;
+
 import java.io.IOException;
 
 public class Main {
@@ -27,14 +31,25 @@ public class Main {
 
 		System.out.println("Sending msg to self...");
 		
-		client.SendMessage(1, 1, 1, 0, "HEJ");
+		try {
+			client.SendMessage(1, 1, 1, 0, "HEJ");
+		} catch (NumberFormatException | InvalidQueueException
+				| InvalidClientException | ServerException e1) {
+			e1.printStackTrace();
+		}
 		
 		System.out.println("OK! Peeking...");
-		Message msg  = client.PopMessage(1, true);
+		Message msg = null;
+		try {
+			msg = client.PopMessage(1, true);
+		} catch (NumberFormatException | InvalidQueueException
+				| ServerException e) {
+			e.printStackTrace();
+		}
 		
-		if(msg != null){
+		if (msg != null) {
 			System.out.println("OK! Got message: " + msg.content);
-		}else{
+		} else{
 			System.out.println("Did not get msg :(");
 		}
 	}

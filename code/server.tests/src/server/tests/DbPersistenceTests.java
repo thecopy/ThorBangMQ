@@ -2,7 +2,6 @@ package server.tests;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import org.junit.Test;
