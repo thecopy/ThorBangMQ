@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
-import org.postgresql.util.PSQLException;
 
 import asl.Client;
 import asl.Message;
@@ -45,8 +44,9 @@ public class DbPersistence implements IPersistence {
 		try {
 			executeStatement(query, logger, messageId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.messageExceptionString)) {
-				throw new InvalidMessageException("");
+				throw new InvalidMessageException(id);
 			} else {
 				throw new PersistenceException(e);
 			}
@@ -65,9 +65,9 @@ public class DbPersistence implements IPersistence {
 		} catch (SQLException e) {
 			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.clientExceptionString)) {
-				throw new InvalidClientException("");
+				throw new InvalidClientException(id);
 			} else if (e.getMessage().contains(this.queueExceptionString)) {
-				throw new InvalidQueueException("");
+				throw new InvalidQueueException(id);
 			} else {
 				throw new PersistenceException(e);
 			}
@@ -84,9 +84,9 @@ public class DbPersistence implements IPersistence {
 		try {
 			s = executeQuery(query, logger, recieverId, queueId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
-				// queue doesn't exist
-				throw new InvalidQueueException("");
+				throw new InvalidQueueException(id);
 			} else {
 				throw new PersistenceException(e);
 			}
@@ -107,8 +107,9 @@ public class DbPersistence implements IPersistence {
 		try {
 			s = executeQuery(query, logger, recieverId, queueId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
-				throw new InvalidQueueException("");
+				throw new InvalidQueueException(id);
 			} else {
 				throw new PersistenceException(e);
 			}
@@ -129,10 +130,11 @@ public class DbPersistence implements IPersistence {
 		try {
 			s = executeQuery(query, logger, receiverId, queueId, senderId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
-				throw new InvalidQueueException("");
+				throw new InvalidQueueException(id);
 			} else if(e.getMessage().contains(this.clientExceptionString)) {
-				throw new InvalidClientException("");
+				throw new InvalidClientException(id);
 			}
 			else {
 				throw new PersistenceException(e);
@@ -163,8 +165,9 @@ public class DbPersistence implements IPersistence {
 		try {
 			executeStatement(query, logger, queueId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
-				throw new InvalidQueueException("");
+				throw new InvalidQueueException(id);
 			} else {
 				throw new PersistenceException(e);
 			}
@@ -178,17 +181,18 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public Message getMessageById(long id) throws PersistenceException, InvalidMessageException {
+	public Message getMessageById(long messageId) throws PersistenceException, InvalidMessageException {
 		final String query = "SELECT receiver_id, \"sender_id\", \"time_of_arrival\", \"queue_id\","
 				+ "id, priority, \"context_id\", message "
 				+ " FROM messages WHERE id = ?";
 
 		ArrayList<Object[]> s;
 		try {
-			s = executeQuery(query, logger, id);
+			s = executeQuery(query, logger, messageId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.messageExceptionString)) {
-				throw new InvalidMessageException("");
+				throw new InvalidMessageException(id);
 			} else {
 				throw new PersistenceException(e);
 			}
@@ -218,8 +222,9 @@ public class DbPersistence implements IPersistence {
 		try {
 			executeStatement(query, logger, clientId);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.clientExceptionString)) {
-				throw new InvalidClientException("");
+				throw new InvalidClientException(id);
 			} else {
 				throw new PersistenceException(e);
 			}

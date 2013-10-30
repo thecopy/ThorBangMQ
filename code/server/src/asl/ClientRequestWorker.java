@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import asl.infrastructure.IProtocolService;
-import asl.infrastructure.exceptions.InvalidClientException;
 import asl.network.ITransport;
 
 public class ClientRequestWorker implements Runnable{
@@ -40,30 +39,28 @@ public class ClientRequestWorker implements Runnable{
 				transport.Send("OK");
 				break;
 			case "MSG":
-				this.ps.storeMessage(methodWithArgs[1]);
-				transport.Send("OK");
+				transport.Send(this.ps.storeMessage(methodWithArgs[1]));
 				break;
 			case "PEEKQ":
-				transport.Send(this.ps.formatMessage(this.ps.peekQueue(methodWithArgs[1])));
+				transport.Send(this.ps.peekQueue(methodWithArgs[1]));
 				break;
 			case "PEEKS":
-				transport.Send(this.ps.formatMessage(this.ps.peekQueueWithSender(methodWithArgs[1])));
+				transport.Send(this.ps.peekQueueWithSender(methodWithArgs[1]));
 				break;
 			case "POPQ":
-				transport.Send(this.ps.formatMessage(this.ps.popQueue(methodWithArgs[1])));
+				transport.Send(this.ps.popQueue(methodWithArgs[1]));
 				break;
 			case "POPS":
-				transport.Send(this.ps.formatMessage(this.ps.popQueueWithSender(methodWithArgs[1])));
+				transport.Send(this.ps.popQueueWithSender(methodWithArgs[1]));
 				break;
 			case "CREATEQUEUE":
-				transport.Send(String.valueOf(this.ps.createQueue(methodWithArgs[1])));
+				transport.Send(this.ps.createQueue(methodWithArgs[1]));
 				break;
 			case "REMOVEQUEUE":
-				this.ps.removeQueue(Long.parseLong(methodWithArgs[1]));
-				transport.Send("OK");
+				transport.Send(this.ps.removeQueue(Long.parseLong(methodWithArgs[1])));
 				break;
 			case "CREATECLIENT":
-				transport.Send(String.valueOf(this.ps.createClient(methodWithArgs[1])));
+				transport.Send(this.ps.createClient(methodWithArgs[1]));
 				break;
 			default:
 				logger.log(Level.INFO, "Failed to interpert client message: " + msg);

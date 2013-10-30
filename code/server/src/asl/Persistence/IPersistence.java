@@ -1,6 +1,5 @@
 package asl.Persistence;
 
-import java.sql.SQLException;
 import java.util.Enumeration;
 
 import asl.Client;

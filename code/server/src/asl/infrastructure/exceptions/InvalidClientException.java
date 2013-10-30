@@ -1,11 +1,16 @@
 package asl.infrastructure.exceptions;
 
+@SuppressWarnings("serial")
 public class InvalidClientException extends Exception {
-	public InvalidClientException(String message) {
-        super(message);
+	public long id;
+	
+	public InvalidClientException(long id) {
+        super();
+        this.id = id;
     }
 
-    public InvalidClientException(String message, Throwable throwable) {
-        super(message, throwable);
+    public InvalidClientException(long id, Throwable throwable) {
+        super(throwable);
+        this.id = id;
     }
 }
