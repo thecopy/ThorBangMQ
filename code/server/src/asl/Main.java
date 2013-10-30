@@ -15,20 +15,22 @@ import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.exceptions.PersistenceException;
 
 public class Main {
-	static final Logger logger = new MemoryLogger(false /*output to console*/);
-	
+	static final Logger testLogger = new MemoryLogger(false /*output to console*/);
+	static final Logger applicationLogger = new MemoryLogger(false /*output to console*/);
+
 	public static void main(String[] args) throws Exception {		
-		logger.setLevel(Level.SEVERE);
-		
+		testLogger.setLevel(Level.ALL);
+		applicationLogger.setLevel(Level.WARNING);
+
 		// Read configuration file
-		ServerSettings settings = Bootstrapper2.StrapTheBoot(logger);
+		ServerSettings settings = Bootstrapper2.StrapTheBoot(applicationLogger);
 		settings = parseArgs(args, settings);
 		
 		try {
 			System.out.println("Starting ThorBang MQ Server");
 
-			final ThorBangMQServer socketServer = ThorBangMQServer.build(settings, logger);
-			final IntervalLogger intervalLogger = new IntervalLogger(5000, logger, Level.SEVERE);
+			final ThorBangMQServer socketServer = ThorBangMQServer.build(settings, applicationLogger);
+			final IntervalLogger intervalLogger = new IntervalLogger(5000, testLogger, Level.SEVERE);
 			
 			Thread t = new Thread(new Runnable() {
 				
@@ -39,15 +41,17 @@ public class Main {
 				}
 			});
 			Thread intervalLoggerThread = new Thread(intervalLogger);
-			addShutdownHookForSavingLog((MemoryLogger) logger, settings.LOG_PATH);
+			addShutdownHookForSavingLog((MemoryLogger) testLogger, settings.TEST_LOG_PATH);
+			addShutdownHookForSavingLog((MemoryLogger) applicationLogger, settings.APPLICATION_LOG_PATH);
+			
 			t.start();
 			intervalLoggerThread.start();
 			
 			System.out.println("ThorBangMQ Server Started.");
 			System.out.println("Commands:");
-			System.out.println("  d <file>\tDump logfile into specified file");
+			System.out.println("  d\t\tDump logfiles");
 			System.out.println("  q\t\tQuit");
-			System.out.println("  qd <file>\tQuit and dump logfile into specified file");
+			System.out.println("  qd\t\tQuit and dump logfiles");
 			
 	        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	        String input = null;
@@ -55,11 +59,12 @@ public class Main {
 	        
 			while((input = br.readLine()) != null){
 				if(input.startsWith("d ")){
-					dumpLog(input.substring(2));
+					dumpLog(settings.TEST_LOG_PATH, (MemoryLogger)testLogger);
+					dumpLog(settings.APPLICATION_LOG_PATH, (MemoryLogger)applicationLogger);
 				}
 				else if(input.startsWith("qd")){
-					dumpLog(input.substring(3));
-					stopServer(socketServer, intervalLogger, t, intervalLoggerThread);
+					dumpLog(settings.TEST_LOG_PATH, (MemoryLogger)testLogger);
+					dumpLog(settings.APPLICATION_LOG_PATH, (MemoryLogger)applicationLogger);					stopServer(socketServer, intervalLogger, t, intervalLoggerThread);
 					System.out.println("Bye :)");
 					break;
 				}
@@ -104,9 +109,6 @@ public class Main {
 				e.printStackTrace();
 			}
 			System.out.println("Db clean!");
-		}else if(arg.startsWith("logpath=")){
-			System.out.println("Setting log path to: " + arg.substring(8));
-			s.LOG_PATH = arg.substring(8);
 		}
 		else{
 			System.out.println("Unkown argument " + arg);
@@ -125,11 +127,7 @@ public class Main {
 		intervalLoggerThread.join();
 	}
 	
-	private static void dumpLog(String path) throws FileNotFoundException{
-		if(!(logger instanceof MemoryLogger)){
-			System.out.println("Current logger (" + logger.getClass() + ") does not support dumping");
-			return;
-		}
+	private static void dumpLog(String path, MemoryLogger logger) throws FileNotFoundException{
 		((MemoryLogger)logger).dumpToFile(path);
 		System.out.println("Log file dumped to " + System.getProperty("user.dir") + "/" + path);
 	}
