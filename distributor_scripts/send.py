@@ -14,6 +14,7 @@ while(True):
     print "5) start test <testname>"
     print "6) list available tests"
     print "7) list running droplets"
+    print "999) destroy all droplets"
 
     choice = raw_input()
 
@@ -32,7 +33,8 @@ while(True):
     elif choice == "7":
         for droplet in getdroplets():
             logging.info('{name}: ({globalip}, {localip})'.format(name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))
-
+    elif choice == "999":
+        destroyalldroplets()
 
     print ""
     print "----------------"
