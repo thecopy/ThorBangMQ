@@ -3,7 +3,7 @@ import logging
 from utils import buildjavafiles, distributefiles, startservers, startclients
 from droplets import getdroplets, getclients, getservers, getdatabase, createclient, createserver, destroyalldroplets
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
 
 while(True):
     print "Choose an option"

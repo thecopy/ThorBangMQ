@@ -9,29 +9,23 @@ do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
 
 def getdroplets():
-    return [droplet for droplet in do.get_all_droplets()]
+    return do.get_all_droplets()
 
 
 def getclients():
     """ Get a list of 2-tuples where the first element is the droplet's global ip,
     and the second element is the droplet's local ip.
     """
-    clients = []
-    for droplet in getdroplets():
-        if 'client' in droplet.name:
-            clients.append((droplet.ip_address, droplet.private_ip_address))
-    return clients
+    return [(droplet.ip_address, droplet.private_ip_address)
+            for droplet in getdroplets() if 'client' in droplet.name]
 
 
 def getservers():
     """ Get a list of 2-tuples where the first element is the droplet's global ip,
     and the second element is the droplet's local ip.
     """
-    servers = []
-    for droplet in getdroplets():
-        if 'server' in droplet.name:
-            servers.append((droplet.ip_address, droplet.private_ip_address))
-    return servers
+    return [(droplet.ip_address, droplet.private_ip_address)
+            for droplet in getdroplets() if 'server' in droplet.name]
 
 
 def getdatabase():
@@ -39,24 +33,20 @@ def getdatabase():
     and the second element is the droplet's local ip.
     It is assumed that there can be only one database.
     """
-    for droplet in getdroplets():
-        if 'database' in droplet.name:
-            return (droplet.ip_address, droplet.private_ip_address)
-    return []
+    return [(droplet.ip_address, droplet.private_ip_address)
+            for droplet in getdroplets() if 'database' in droplet.name]
 
 
 def createclient(size='512mb'):
-    global CLIENT_NUMBER
-    name = 'asl-client-{}'.format(CLIENT_NUMBER)
+    clientnumber = len(getclients()) + 1
+    name = 'asl-client-{}'.format(clientnumber)
     _createdroplet(name=name, image_id=1001057, size=size)
-    CLIENT_NUMBER += 1
 
 
 def createserver(size='512mb'):
-    global SERVER_NUMBER
-    name = 'asl-server-{}'.format(SERVER_NUMBER)
+    servernumber = len(getservers()) + 1
+    name = 'asl-server-{}'.format(servernumber)
     _createdroplet(name=name, image_id=1001057, size=size)
-    SERVER_NUMBER += 1
 
 
 def createdatabase(size='512mb'):
@@ -88,9 +78,6 @@ def _createdroplet(name, image_id, size='512mb'):
 
 
 def destroyalldroplets():
-    for droplet in droplets:
-        droplet.destroy()
+    map(lambda droplet: droplet.destroy(), getdroplets())
 
-
-CLIENT_NUMBER = len(getclients()) + 1
-SERVER_NUMBER = len(getservers()) + 1
+destroyalldroplets()
