@@ -1,5 +1,8 @@
 package clientTests;
 
+import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.ServerException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,7 +21,7 @@ public class WriteTest extends ClientTest {
 	}
 	
 	@Override
-	public void prepare() throws IOException {
+	public void prepare() throws IOException, ServerException {
 		ThorBangMQ api = ThorBangMQ.build(this.hostName, this.port, 1);
 		
 		for(int i = 0; i < this.numClients; i += 1) {
@@ -30,7 +33,7 @@ public class WriteTest extends ClientTest {
 	}
 	
 	@Override
-	public void cleanUp() throws IOException {
+	public void cleanUp() throws IOException, NumberFormatException, ServerException, InvalidQueueException {
 		ThorBangMQ api = ThorBangMQ.build(this.hostName, this.port, 1);
 		for (long clientId: this.clients) {
 //			api.removeClient(clientId);
@@ -44,7 +47,7 @@ public class WriteTest extends ClientTest {
 		
 		Thread[] clients = new Thread[this.numClients];
 		for(int i = 0; i < this.numClients;i++){
-			clients[i] = new Thread(new clientRunner(this.hostName, port, this.numMessagesPerClient, 5, 99999, i));
+			clients[i] = new Thread(new clientRunner(this.hostName, port, this.numMessagesPerClient, 5, (int)this.queueId, i));
 		}
 		
 		System.out.println("OK Done! Sending " + this.numMessagesPerClient + " messages sequentially to queue 1 per client...");

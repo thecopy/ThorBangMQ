@@ -9,4 +9,5 @@ public interface IProtocolService {
 	String createQueue(String name);
 	String removeQueue(long id);
 	String createClient(String name);
+	String removeClient(long id);
 }
