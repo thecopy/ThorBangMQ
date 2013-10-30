@@ -1,6 +1,5 @@
 package asl;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -22,7 +21,6 @@ import asl.ServerSettings;
 import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
-import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.PersistenceType;
 import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
@@ -186,7 +184,7 @@ public class ThorBangMQServer {
 		this.executor.execute(
 				new ClientRequestWorker(
 						logger,
-						new ProtocolService(this.persistence, transport),
+						new ProtocolService(this.persistence),
 						transport,
 						bufferToString(bytesRead)));
 	}

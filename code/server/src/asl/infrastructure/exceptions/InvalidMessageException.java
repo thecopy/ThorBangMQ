@@ -1,11 +1,16 @@
 package asl.infrastructure.exceptions;
 
+@SuppressWarnings("serial")
 public class InvalidMessageException extends Exception {
-	public InvalidMessageException(String message) {
-        super(message);
+	public long id;
+	
+	public InvalidMessageException(long id) {
+        super();
+        this.id = id;
     }
 
-    public InvalidMessageException(String message, Throwable throwable) {
-        super(message, throwable);
+    public InvalidMessageException(long id, Throwable throwable) {
+        super(throwable);
+        this.id = id;
     }
 }

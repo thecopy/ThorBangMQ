@@ -11,6 +11,10 @@ import org.postgresql.jdbc2.optional.PoolingDataSource;
 import asl.ServerSettings;
 import asl.Message;
 import asl.Persistence.DbPersistence;
+import asl.infrastructure.exceptions.InvalidClientException;
+import asl.infrastructure.exceptions.InvalidMessageException;
+import asl.infrastructure.exceptions.InvalidQueueException;
+import asl.infrastructure.exceptions.PersistenceException;
 
 public class DbPersistenceTests {
 
@@ -27,7 +31,7 @@ public class DbPersistenceTests {
 	
 	private static PoolingDataSource connectionPool = null;
 	
-	private DbPersistence getTestablePersistence(){
+	private DbPersistence getTestablePersistence() throws PersistenceException{
 		ServerSettings settings = getSettings();
 		
 		if(connectionPool == null)
@@ -58,7 +62,7 @@ public class DbPersistenceTests {
 	}
 	
 	@Test
-	public void shouldBeAbleToPersistMessage() {
+	public void shouldBeAbleToPersistMessage() throws PersistenceException, InvalidQueueException, InvalidClientException, InvalidMessageException {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
 		
@@ -86,7 +90,7 @@ public class DbPersistenceTests {
 	}
 	
 	@Test
-	public void shouldBeAbleToPeekQueueByPriority() {
+	public void shouldBeAbleToPeekQueueByPriority() throws PersistenceException, InvalidQueueException, InvalidClientException {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
 		
@@ -115,7 +119,7 @@ public class DbPersistenceTests {
 	}
 	
 	@Test
-	public void shouldBeAbleToPeekQueueByTimestamp() {
+	public void shouldBeAbleToPeekQueueByTimestamp() throws PersistenceException, InvalidQueueException, InvalidClientException, InvalidMessageException {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
 		
@@ -146,7 +150,7 @@ public class DbPersistenceTests {
 
 	
 	@Test
-	public void shouldBeAbleToPeekQueueBySender() {
+	public void shouldBeAbleToPeekQueueBySender() throws PersistenceException, InvalidQueueException, InvalidClientException {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
 		
@@ -178,7 +182,7 @@ public class DbPersistenceTests {
 	}
 
 	@Test
-	public void shouldBeAbleToRemoveMessage() {
+	public void shouldBeAbleToRemoveMessage() throws PersistenceException, InvalidQueueException, InvalidClientException, InvalidMessageException {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
 		
@@ -200,7 +204,7 @@ public class DbPersistenceTests {
 	}
 
 	@Test(expected = Exception.class)
-	public void shouldBeAbleToRemoveQueue() {
+	public void shouldBeAbleToRemoveQueue() throws PersistenceException, InvalidQueueException, InvalidClientException {
 		// Arrange
 		DbPersistence persistence = getTestablePersistence();
 		

@@ -7,22 +7,26 @@ import asl.infrastructure.exceptions.InvalidClientException;
 import asl.infrastructure.exceptions.InvalidMessageException;
 import asl.infrastructure.exceptions.InvalidQueueException;
 import asl.infrastructure.exceptions.PersistenceException;
-import asl.network.ITransport;
 
 public class ProtocolService implements IProtocolService {
 	private static String SendMessageStringFormat = "MSG,%d,%d,%d,%s";
+	private final String okMessage = "OK";
+	private final String queueFailMessage = "FAIL QUEUE %d";
+	private final String clientFailMessage = "FAIL CLIENT %d";
+	private final String messageFailMessage = "FAIL MESSAGE %d";
+	private final String persistenceFailMessage = "FAIL UNKNOWN -1";
+	
 	
 	private IPersistence persistence;
-	private ITransport transport;
+
 	
-	public ProtocolService(IPersistence persistence, ITransport transport){
+	public ProtocolService(IPersistence persistence){
 		this.persistence = persistence;
-		this.transport = transport;
 	}
 
 	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
 	@Override
-	public void storeMessage(String argsConcat) {
+	public String storeMessage(String argsConcat) {
 		String[] args = argsConcat.split(",", 6);
 
 		long receiver = Long.parseLong(args[0]);
@@ -37,165 +41,172 @@ public class ProtocolService implements IProtocolService {
 		try {
 			persistence.storeMessage(message);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			return this.persistenceFailMessage;
 		} catch (InvalidQueueException e) {
-			e.printStackTrace();
+			return String.format(this.queueFailMessage, e.id);
 		} catch (InvalidClientException e) {
-			e.printStackTrace();
+			return String.format(this.clientFailMessage, e.id);
 		}
 		
 		GlobalCounters.numberOfMessagesPersisted.incrementAndGet();
+		return this.okMessage;
 	}
 
 	// PEEKQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
 	@Override
-	public Message peekQueue(String argsConcat) {
+	public String peekQueue(String argsConcat) {
 		String[] args = argsConcat.split(",", 3);
 
 		long receiver = Long.parseLong(args[0]);
 		long queue = Long.parseLong(args[1]);
 		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[2]) == 1;
 
-		Message m = null;
-		if (getByTimestampInsteadOfPriority)
-			try {
+		Message m;
+		try {
+			if (getByTimestampInsteadOfPriority) {
 				m = persistence.getMessageByTimestamp(queue, receiver);
-			} catch (InvalidQueueException e) {
-				e.printStackTrace();
-			} catch (PersistenceException e) {
-				e.printStackTrace();
-			} catch (InvalidMessageException e) {
-				e.printStackTrace();
-			}
-		else
-			try {
+			} else {
 				m = persistence.getMessageByPriority(queue, receiver);
-			} catch (InvalidQueueException e) {
-				e.printStackTrace();
-			} catch (PersistenceException e) {
-				e.printStackTrace();
 			}
-
+		}  catch (InvalidQueueException e) {
+			return String.format(this.queueFailMessage, e.id);
+		} catch (PersistenceException e) {
+			return String.format(this.persistenceFailMessage);
+		} catch (InvalidMessageException e) {
+			return String.format(this.messageFailMessage, e.id);
+		}
+		
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		
-		return m;
+		return this.formatMessage(m);
 	}
 
 	// PEEKS,ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority
 	@Override
-	public Message peekQueueWithSender(String argsConcat) {
+	public String peekQueueWithSender(String argsConcat) {
 		String[] args = argsConcat.split(",", 4);
 
 		long receiver = Long.parseLong(args[0]);
 		long queue = Long.parseLong(args[1]);
 		long sender = Long.parseLong(args[2]);
-		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[3]) == 1;
+//		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[3]) == 1;
 
 		// TODO: Differentiate on getByTimestampInsteadOfPriority
-		Message m = null;
+		Message m;
 		try {
 			m = persistence.getMessageBySender(queue, receiver, sender);
 		} catch (InvalidClientException e) {
-			e.printStackTrace();
+			return String.format(this.clientFailMessage, e.id);
 		} catch (InvalidQueueException e) {
-			e.printStackTrace();
+			return String.format(this.queueFailMessage, e.id);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			return String.format(this.persistenceFailMessage);
 		}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
-		return m;
+		return this.formatMessage(m);
 	}
 
 	// POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
 	@Override
-	public Message popQueue(String argsConcat) {
-		Message m = peekQueue(argsConcat);
+	public String popQueue(String argsConcat) {
+		
+		String[] args = argsConcat.split(",", 3);
 
-		if (m != null) {
-			try {
-				persistence.deleteMessage(m.id);
-			} catch (InvalidMessageException e) {
-				e.printStackTrace();
-			} catch (PersistenceException e) {
-				e.printStackTrace();
+		long receiverId = Long.parseLong(args[0]);
+		long queueId = Long.parseLong(args[1]);
+		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[2]) == 1;
+		
+		Message m;
+		try {
+			// TODO: make this a single call.
+			if (getByTimestampInsteadOfPriority) {
+				m = persistence.getMessageByTimestamp(queueId, receiverId);
+			} else {
+				m = persistence.getMessageByPriority(queueId, receiverId);
 			}
+			persistence.deleteMessage(m.id);
+		} catch (InvalidMessageException e) {
+			return String.format(this.messageFailMessage, e.id);
+		} catch (PersistenceException e) {
+			return String.format(this.persistenceFailMessage);
+		} catch (InvalidQueueException e) {
+			return String.format(this.queueFailMessage, e.id);
 		}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
-		return m;
+		return this.formatMessage(m);
 	}
 
 	// POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
 	@Override
-	public Message popQueueWithSender(String argsConcat) {
-		Message m = peekQueueWithSender(argsConcat);
+	public String popQueueWithSender(String argsConcat) {	
+		String[] args = argsConcat.split(",", 4);
 
-		if (m != null) {
-			try {
-				persistence.deleteMessage(m.id);
-			} catch (InvalidMessageException e) {
-				e.printStackTrace();
-			} catch (PersistenceException e) {
-				e.printStackTrace();
-			}
+		long receiverId = Long.parseLong(args[0]);
+		long queueId = Long.parseLong(args[1]);
+		long senderId = Long.parseLong(args[2]);
+//		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[3]) == 1;
+		
+		Message m;
+		try {
+			m = persistence.getMessageBySender(queueId, receiverId, senderId);
+			persistence.deleteMessage(m.id);
+		} catch (InvalidMessageException e) {
+			return String.format(this.messageFailMessage, e.id);
+		} catch (PersistenceException e) {
+			return String.format(this.persistenceFailMessage);
+		} catch (InvalidClientException e) {
+			return String.format(this.clientFailMessage, e.id);
+		} catch (InvalidQueueException e) {
+			return String.format(this.queueFailMessage, e.id);
 		}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
-		return m;
+		return this.formatMessage(m);
 	}
 
 	// CREATEQUEUE,NameOfQueue
 	@Override
-	public long createQueue(String name) {
+	public String createQueue(String name) {
 		// TODO: unspecified that this will return -1.
-		long queueId = -1;
+		Long queueId;
 		try {
 			queueId = persistence.createQueue(name);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			return String.format(this.persistenceFailMessage);
 		}
-		return queueId;
+		return queueId.toString();
 	}
 
 	// REMOVEQUEUE,QueueId
 	@Override
-	public void removeQueue(long id) {
+	public String removeQueue(long id) {
 		try {
 			persistence.removeQueue(id);
 		} catch (InvalidQueueException e) {
-			e.printStackTrace();
+			return String.format(this.queueFailMessage, e.id);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			return String.format(this.persistenceFailMessage);
 		}
+		return this.okMessage;
 	}
 	
 	// CREATECLIENT,NameOfClient
 	@Override
-	public long createClient(String name) {
+	public String createClient(String name) {
 		// TODO: Unspecified that this could return -1.
-		long clientId = -1;
+		Long clientId;
 		try {
 			clientId = persistence.createClient(name);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			return String.format(this.persistenceFailMessage);
 		}
-		return clientId;
+		return clientId.toString();
 	}
 	
-	@Override
-	public void sendMessage(Message m) {
-		if (m == null) {
-			transport.Send("MSG0");
-		}
-		else {
-			transport.Send(formatMessage(m));
-		}
-	}
-	
-	@Override
-	public String formatMessage(Message m) {
+	private String formatMessage(Message m) {
 		return String.format(SendMessageStringFormat, m.senderId, m.contextId,
-				m.id, m.content);
+				              m.id, m.content);
 	}
 }
