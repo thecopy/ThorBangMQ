@@ -153,6 +153,7 @@ public class ProtocolService implements IProtocolService {
 		try {
 			queueId = persistence.createQueue(name);
 		} catch (PersistenceException e) {
+			e.printStackTrace();
 		}
 		return queueId;
 	}
@@ -163,7 +164,9 @@ public class ProtocolService implements IProtocolService {
 		try {
 			persistence.removeQueue(id);
 		} catch (InvalidQueueException e) {
+			e.printStackTrace();
 		} catch (PersistenceException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -175,6 +178,7 @@ public class ProtocolService implements IProtocolService {
 		try {
 			clientId = persistence.createClient(name);
 		} catch (PersistenceException e) {
+			e.printStackTrace();
 		}
 		return clientId;
 	}

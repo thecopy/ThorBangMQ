@@ -30,7 +30,7 @@ public class DbPersistence implements IPersistence {
 	private final String messageExceptionString = "is not present in table \"messages\"";
 	private final String clientExceptionString = "is not present in table \"clients\"";
 	private final String queueExceptionString = "is not present in table \"queues\"";
-	private Pattern idRegex = Pattern.compile("Key \\((\\w+)\\)=\\((\\d+)\\)");
+	private Pattern readExceptionStringPattern = Pattern.compile("Key \\((?<name>[\\w_-]+)\\)=\\((?<id>\\d+)\\)");
 	
 
 	public DbPersistence(PoolingDataSource connectionPool, Logger logger) {
@@ -63,6 +63,7 @@ public class DbPersistence implements IPersistence {
 					message.receiverId, message.queueId, message.contextId,
 					message.priority, message.content);
 		} catch (SQLException e) {
+			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.clientExceptionString)) {
 				throw new InvalidClientException("");
 			} else if (e.getMessage().contains(this.queueExceptionString)) {
@@ -412,7 +413,11 @@ public class DbPersistence implements IPersistence {
 	}
 	
 	private long getIdOfExceptionString(String exceptionString) {
-		Matcher match = this.idRegex.matcher(exceptionString);
-		return Long.parseLong(match.group(1));
+		Matcher match = this.readExceptionStringPattern.matcher(exceptionString);
+		if (match.find()) {
+			logger.severe(String.format("Invalid id: %s: %s", match.group("name"), match.group("id")));
+			return Long.parseLong(match.group("id"));
+		}
+		return -1;
 	}
 }
