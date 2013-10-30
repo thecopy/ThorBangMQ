@@ -3,6 +3,10 @@ package asl.infrastructure;
 import asl.GlobalCounters;
 import asl.Message;
 import asl.Persistence.IPersistence;
+import asl.infrastructure.exceptions.InvalidClientException;
+import asl.infrastructure.exceptions.InvalidMessageException;
+import asl.infrastructure.exceptions.InvalidQueueException;
+import asl.infrastructure.exceptions.PersistenceException;
 import asl.network.ITransport;
 
 public class ProtocolService implements IProtocolService {
@@ -30,9 +34,15 @@ public class ProtocolService implements IProtocolService {
 
 		Message message = new Message(receiver, sender, 0L, queue, 0L, priority, context, content);
 
-		persistence.storeMessage(message);
-		
-		transport.Send("OK");
+		try {
+			persistence.storeMessage(message);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		} catch (InvalidQueueException e) {
+			e.printStackTrace();
+		} catch (InvalidClientException e) {
+			e.printStackTrace();
+		}
 		
 		GlobalCounters.numberOfMessagesPersisted.incrementAndGet();
 	}
@@ -48,9 +58,23 @@ public class ProtocolService implements IProtocolService {
 
 		Message m = null;
 		if (getByTimestampInsteadOfPriority)
-			m = persistence.getMessageByTimestamp(queue, receiver);
+			try {
+				m = persistence.getMessageByTimestamp(queue, receiver);
+			} catch (InvalidQueueException e) {
+				e.printStackTrace();
+			} catch (PersistenceException e) {
+				e.printStackTrace();
+			} catch (InvalidMessageException e) {
+				e.printStackTrace();
+			}
 		else
-			m = persistence.getMessageByPriority(queue, receiver);
+			try {
+				m = persistence.getMessageByPriority(queue, receiver);
+			} catch (InvalidQueueException e) {
+				e.printStackTrace();
+			} catch (PersistenceException e) {
+				e.printStackTrace();
+			}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		
@@ -69,7 +93,15 @@ public class ProtocolService implements IProtocolService {
 
 		// TODO: Differentiate on getByTimestampInsteadOfPriority
 		Message m = null;
-		m = persistence.getMessageBySender(queue, receiver, sender);
+		try {
+			m = persistence.getMessageBySender(queue, receiver, sender);
+		} catch (InvalidClientException e) {
+			e.printStackTrace();
+		} catch (InvalidQueueException e) {
+			e.printStackTrace();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		return m;
@@ -80,8 +112,15 @@ public class ProtocolService implements IProtocolService {
 	public Message popQueue(String argsConcat) {
 		Message m = peekQueue(argsConcat);
 
-		if (m != null)
-			persistence.deleteMessage(m.id);
+		if (m != null) {
+			try {
+				persistence.deleteMessage(m.id);
+			} catch (InvalidMessageException e) {
+				e.printStackTrace();
+			} catch (PersistenceException e) {
+				e.printStackTrace();
+			}
+		}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		return m;
@@ -92,8 +131,15 @@ public class ProtocolService implements IProtocolService {
 	public Message popQueueWithSender(String argsConcat) {
 		Message m = peekQueueWithSender(argsConcat);
 
-		if (m != null)
-			persistence.deleteMessage(m.id);
+		if (m != null) {
+			try {
+				persistence.deleteMessage(m.id);
+			} catch (InvalidMessageException e) {
+				e.printStackTrace();
+			} catch (PersistenceException e) {
+				e.printStackTrace();
+			}
+		}
 
 		GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 		return m;
@@ -102,27 +148,45 @@ public class ProtocolService implements IProtocolService {
 	// CREATEQUEUE,NameOfQueue
 	@Override
 	public long createQueue(String name) {
-		return persistence.createQueue(name);
+		// TODO: unspecified that this will return -1.
+		long queueId = -1;
+		try {
+			queueId = persistence.createQueue(name);
+		} catch (PersistenceException e) {
+		}
+		return queueId;
 	}
 
 	// REMOVEQUEUE,QueueId
 	@Override
 	public void removeQueue(long id) {
-		persistence.removeQueue(id);
+		try {
+			persistence.removeQueue(id);
+		} catch (InvalidQueueException e) {
+		} catch (PersistenceException e) {
+		}
 	}
 	
 	// CREATECLIENT,NameOfClient
 	@Override
 	public long createClient(String name) {
-		return persistence.createClient(name);
+		// TODO: Unspecified that this could return -1.
+		long clientId = -1;
+		try {
+			clientId = persistence.createClient(name);
+		} catch (PersistenceException e) {
+		}
+		return clientId;
 	}
 	
 	@Override
 	public void sendMessage(Message m) {
-		if (m == null)
+		if (m == null) {
 			transport.Send("MSG0");
-		else
+		}
+		else {
 			transport.Send(formatMessage(m));
+		}
 	}
 	
 	@Override

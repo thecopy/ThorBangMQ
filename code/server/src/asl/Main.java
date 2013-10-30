@@ -12,6 +12,7 @@ import org.postgresql.jdbc2.optional.PoolingDataSource;
 import asl.Persistence.DbPersistence;
 import asl.infrastructure.Bootstrapper2;
 import asl.infrastructure.MemoryLogger;
+import asl.infrastructure.exceptions.PersistenceException;
 
 public class Main {
 	static final Logger logger = new MemoryLogger(false /*output to console*/);
@@ -95,9 +96,13 @@ public class Main {
 		{
 			System.out.println("Clearing db...");
 			DbPersistence dbPersistence = new DbPersistence(new PoolingDataSource(), null);
-			dbPersistence.deleteSchema();
-			dbPersistence.createSchema();
-			dbPersistence.buildSchema();
+			try {
+				dbPersistence.deleteSchema();
+				dbPersistence.createSchema();
+				dbPersistence.buildSchema();
+			} catch (PersistenceException e) {
+				e.printStackTrace();
+			}
 			System.out.println("Db clean!");
 		}else if(arg.startsWith("logpath=")){
 			System.out.println("Setting log path to: " + arg.substring(8));

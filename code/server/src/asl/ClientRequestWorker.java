@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import asl.infrastructure.IProtocolService;
+import asl.infrastructure.exceptions.InvalidClientException;
 import asl.network.ITransport;
 
 public class ClientRequestWorker implements Runnable{
@@ -31,41 +32,42 @@ public class ClientRequestWorker implements Runnable{
 	}
 
 	// TODO handle exceptions
-	private void interpreter(String msg) throws IOException{
+	private void interpreter(String msg) throws IOException {
 		String[] methodWithArgs = msg.split(",", 2);
 
 		switch(methodWithArgs[0]){
-		case "HELLO":
-			transport.Send("OK");
-			break;
-		case "MSG":
-			this.ps.storeMessage(methodWithArgs[1]);
-			break;
-		case "PEEKQ":
-			this.ps.sendMessage(this.ps.peekQueue(methodWithArgs[1]));
-			break;
-		case "PEEKS":
-			this.ps.sendMessage(this.ps.peekQueueWithSender(methodWithArgs[1]));
-			break;
-		case "POPQ":
-			this.ps.sendMessage(this.ps.popQueue(methodWithArgs[1]));
-			break;
-		case "POPS":
-			this.ps.sendMessage(this.ps.popQueueWithSender(methodWithArgs[1]));
-			break;
-		case "CREATEQUEUE":
-			transport.Send(String.valueOf(this.ps.createQueue(methodWithArgs[1])));
-			break;
-		case "REMOVEQUEUE":
-			this.ps.removeQueue(Long.parseLong(methodWithArgs[1]));
-			transport.Send("OK");
-			break;
-		case "CREATECLIENT":
-			transport.Send(String.valueOf(this.ps.createClient(methodWithArgs[1])));
-			break;
-		default:
-			logger.log(Level.INFO, "Failed to interpert client message: " + msg);
-			break;
+			case "HELLO":
+				transport.Send("OK");
+				break;
+			case "MSG":
+				this.ps.storeMessage(methodWithArgs[1]);
+				transport.Send("OK");
+				break;
+			case "PEEKQ":
+				transport.Send(this.ps.formatMessage(this.ps.peekQueue(methodWithArgs[1])));
+				break;
+			case "PEEKS":
+				transport.Send(this.ps.formatMessage(this.ps.peekQueueWithSender(methodWithArgs[1])));
+				break;
+			case "POPQ":
+				transport.Send(this.ps.formatMessage(this.ps.popQueue(methodWithArgs[1])));
+				break;
+			case "POPS":
+				transport.Send(this.ps.formatMessage(this.ps.popQueueWithSender(methodWithArgs[1])));
+				break;
+			case "CREATEQUEUE":
+				transport.Send(String.valueOf(this.ps.createQueue(methodWithArgs[1])));
+				break;
+			case "REMOVEQUEUE":
+				this.ps.removeQueue(Long.parseLong(methodWithArgs[1]));
+				transport.Send("OK");
+				break;
+			case "CREATECLIENT":
+				transport.Send(String.valueOf(this.ps.createClient(methodWithArgs[1])));
+				break;
+			default:
+				logger.log(Level.INFO, "Failed to interpert client message: " + msg);
+				break;
 		}
 	}
 }

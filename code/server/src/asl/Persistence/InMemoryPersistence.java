@@ -5,6 +5,8 @@ import java.util.Enumeration;
 
 import asl.Client;
 import asl.Message;
+import asl.infrastructure.exceptions.InvalidClientException;
+import asl.infrastructure.exceptions.PersistenceException;
 
 public class InMemoryPersistence implements IPersistence {
 	private long id = 0;
@@ -127,6 +129,13 @@ public class InMemoryPersistence implements IPersistence {
 	public long createClient(String name) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void removeClient(long clientId) throws PersistenceException,
+			InvalidClientException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

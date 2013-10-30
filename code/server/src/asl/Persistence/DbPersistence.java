@@ -10,17 +10,28 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 import org.postgresql.util.PSQLException;
 
 import asl.Client;
 import asl.Message;
+import asl.infrastructure.exceptions.InvalidClientException;
+import asl.infrastructure.exceptions.InvalidMessageException;
+import asl.infrastructure.exceptions.InvalidQueueException;
+import asl.infrastructure.exceptions.PersistenceException;
 
 public class DbPersistence implements IPersistence {
 
 	private PoolingDataSource connectionPool = new PoolingDataSource();
 	private Logger logger;
+	private final String messageExceptionString = "is not present in table \"messages\"";
+	private final String clientExceptionString = "is not present in table \"clients\"";
+	private final String queueExceptionString = "is not present in table \"queues\"";
+	private Pattern idRegex = Pattern.compile("Key \\((\\w+)\\)=\\((\\d+)\\)");
+	
 
 	public DbPersistence(PoolingDataSource connectionPool, Logger logger) {
 		this.logger = logger;
@@ -28,28 +39,57 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public void deleteMessage(long messageId) {
+	public void deleteMessage(long messageId) throws PersistenceException, InvalidMessageException {
 		final String query = "DELETE FROM messages WHERE id = ?";
 		
-		executeStatement(query, logger, messageId);
+		try {
+			executeStatement(query, logger, messageId);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.messageExceptionString)) {
+				throw new InvalidMessageException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 	}
 
 	@Override
-	public long storeMessage(Message message) {
+	public long storeMessage(Message message) throws PersistenceException, InvalidQueueException, InvalidClientException {
 		final String query = "INSERT INTO messages (sender_id, receiver_id, queue_id, context_id, priority, message) "
 				+ " VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 
-		return (long) executeScalar(query, logger, message.senderId,
-				message.receiverId, message.queueId, message.contextId,
-				message.priority, message.content);
+		try {
+			return (long) executeScalar(query, logger, message.senderId,
+					message.receiverId, message.queueId, message.contextId,
+					message.priority, message.content);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.clientExceptionString)) {
+				throw new InvalidClientException("");
+			} else if (e.getMessage().contains(this.queueExceptionString)) {
+				throw new InvalidQueueException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 	}
 
 	@Override
-	public Message getMessageByPriority(long queueId, long recieverId) {
+	public Message getMessageByPriority(long queueId, long recieverId) throws InvalidQueueException, PersistenceException {
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
 				+ " FROM messages WHERE receiver_id = ? AND queue_id = ? ORDER BY priority DESC LIMIT 1";
 
-		ArrayList<Object[]> s = executeQuery(query, logger, recieverId, queueId);
+		
+		ArrayList<Object[]> s;
+		try {
+			s = executeQuery(query, logger, recieverId, queueId);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.queueExceptionString)) {
+				// queue doesn't exist
+				throw new InvalidQueueException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 
 		if (s.size() > 0)
 			return getMessage(s.get(0));
@@ -58,11 +98,20 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public Message getMessageByTimestamp(long queueId, long recieverId) {
+	public Message getMessageByTimestamp(long queueId, long recieverId) throws InvalidQueueException, InvalidMessageException, PersistenceException {
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
 				+ " FROM messages WHERE receiver_id = ? AND queue_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
 
-		ArrayList<Object[]> s = executeQuery(query, logger, recieverId, queueId);
+		ArrayList<Object[]> s;
+		try {
+			s = executeQuery(query, logger, recieverId, queueId);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.queueExceptionString)) {
+				throw new InvalidQueueException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 
 		if (s.size() > 0)
 			return getMessage(s.get(0));
@@ -71,12 +120,23 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public Message getMessageBySender(long queueId, long recierId, long senderId) {
+	public Message getMessageBySender(long queueId, long receiverId, long senderId) throws InvalidQueueException, InvalidClientException, PersistenceException {
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
 				+ " FROM messages WHERE receiver_id = ? AND queue_id = ? AND sender_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
 
-		ArrayList<Object[]> s = executeQuery(query, logger, recierId, queueId,
-				senderId);
+		ArrayList<Object[]> s;
+		try {
+			s = executeQuery(query, logger, receiverId, queueId, senderId);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.queueExceptionString)) {
+				throw new InvalidQueueException("");
+			} else if(e.getMessage().contains(this.clientExceptionString)) {
+				throw new InvalidClientException("");
+			}
+			else {
+				throw new PersistenceException(e);
+			}
+		}
 
 		if (s.size() > 0)
 			return getMessage(s.get(0));
@@ -84,23 +144,30 @@ public class DbPersistence implements IPersistence {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see asl.Persistence.IPersistence#createQueue(java.lang.String)
-	 */
 	@Override
-	public long createQueue(String name) {
+	public long createQueue(String name) throws PersistenceException {
 		final String query = "INSERT INTO queues(name) VALUES(?) RETURNING id";
 		
-		return (long)executeScalar(query, logger, name);
+		try {
+			return (long)executeScalar(query, logger, name);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
 	}
 
 	@Override
-	public void removeQueue(long queueId) {
+	public void removeQueue(long queueId) throws PersistenceException, InvalidQueueException {
 		final String query = "DELETE FROM queues WHERE id = ?";
 		
-		executeStatement(query, logger, queueId);
+		try {
+			executeStatement(query, logger, queueId);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.queueExceptionString)) {
+				throw new InvalidQueueException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 	}
 
 	@Override
@@ -110,12 +177,21 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public Message getMessageById(long id) {
+	public Message getMessageById(long id) throws PersistenceException, InvalidMessageException {
 		final String query = "SELECT receiver_id, \"sender_id\", \"time_of_arrival\", \"queue_id\","
 				+ "id, priority, \"context_id\", message "
 				+ " FROM messages WHERE id = ?";
 
-		ArrayList<Object[]> s = executeQuery(query, logger, id);
+		ArrayList<Object[]> s;
+		try {
+			s = executeQuery(query, logger, id);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.messageExceptionString)) {
+				throw new InvalidMessageException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 
 		if (s.size() > 0)
 			return getMessage(s.get(0));
@@ -124,14 +200,32 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public long createClient(String name) {
+	public long createClient(String name) throws PersistenceException {
 		final String query = "INSERT INTO clients(name) VALUES(?) RETURNING id";
 
-		return (long) executeScalar(query, logger, name);
+		try {
+			return (long) executeScalar(query, logger, name);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
+	}
+	
+	@Override
+	public void removeClient(long clientId) throws InvalidClientException, PersistenceException {
+		final String query = "DELETE FROM clients WHERE id = ?";
+		
+		try {
+			executeStatement(query, logger, clientId);
+		} catch (SQLException e) {
+			if (e.getMessage().contains(this.clientExceptionString)) {
+				throw new InvalidClientException("");
+			} else {
+				throw new PersistenceException(e);
+			}
+		}
 	}
 
-	private void executeStatement(String sql, Logger logger,
-			Object... params) {
+	private void executeStatement(String sql, Logger logger, Object... params) throws SQLException {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
@@ -148,16 +242,12 @@ public class DbPersistence implements IPersistence {
 
 			con.commit();
 
-		} catch (SQLException e) {
-			// TODO: Insert logging
-			e.printStackTrace();
 		} finally {
 			close(set, stmt, con, logger);
 		}
 	}
 
-	private ArrayList<Object[]> executeQuery(String sql,
-			Logger logger, Object... params) {
+	private ArrayList<Object[]> executeQuery(String sql, Logger logger, Object... params) throws SQLException {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
@@ -183,25 +273,13 @@ public class DbPersistence implements IPersistence {
 				rows.add(cols);
 			}
 
-			return rows;
-
-		} catch (PSQLException e) {
-			logger.severe("Couldn't fulfill request:");
-			logger.severe(e.getMessage());
-		}
-		catch (SQLException e) {
-			// TODO: Insert logging
-			logger.severe(e.getMessage());
-			// TODO: Insert logging
-			e.printStackTrace();
+		return rows;
 		} finally {
 			close(set, stmt, con, logger);
 		}
-
-		return null;
 	}
 
-	private Object executeScalar(String sql, Logger logger, Object... params) {
+	private Object executeScalar(String sql, Logger logger, Object... params) throws SQLException {
 		ArrayList<Object[]> r = executeQuery(sql, logger, params);
 		if (r == null) {			
 			return -1L;
@@ -228,7 +306,7 @@ public class DbPersistence implements IPersistence {
 	}
 
 	private static void close(ResultSet rs, Statement ps, Connection conn,
-			Logger logger) {
+			Logger logger) throws SQLException {
 		if (rs != null) {
 			try {
 				rs.close();
@@ -255,20 +333,28 @@ public class DbPersistence implements IPersistence {
 
 	}
 
-	public void deleteSchema() {
+	public void deleteSchema() throws PersistenceException {
 		String sql = "DROP SCHEMA asl CASCADE;";
 
-		executeStatement(sql, logger);
+		try {
+			executeStatement(sql, logger);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
 	}
 
-	public void createSchema() {
+	public void createSchema() throws PersistenceException {
 		String sql = "CREATE SCHEMA asl " + "AUTHORIZATION asl;"
 				+ "GRANT ALL ON SCHEMA asl TO asl;";
 
-		executeStatement(sql, logger);
+		try {
+			executeStatement(sql, logger);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
 	}
 
-	public void buildSchema() {
+	public void buildSchema() throws PersistenceException {
 		String sql = "CREATE TABLE clients "
 				+ "( "
 				+ "id bigserial NOT NULL, "
@@ -318,6 +404,15 @@ public class DbPersistence implements IPersistence {
 				+ "OIDS=FALSE " + "); " + "ALTER TABLE messages "
 				+ "OWNER TO asl; " + " ";
 
-		executeStatement(sql, logger);
+		try {
+			executeStatement(sql, logger);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
+	}
+	
+	private long getIdOfExceptionString(String exceptionString) {
+		Matcher match = this.idRegex.matcher(exceptionString);
+		return Long.parseLong(match.group(1));
 	}
 }
