@@ -68,13 +68,15 @@ def _createdroplet(name, image_id, size='512mb'):
     else:
         size_id = 66
 
+    sshkeys = [41181, 46980, 46997]
     droplet = digitalocean.Droplet(api_key=API_KEY,
                                    client_id=CLIENT_ID,
                                    name=name,
                                    region_id=4,
                                    image_id=image_id,
-                                   size_id=size_id)
-    droplet.create(ssh_key_ids=[41180, 46980, 46997], private_networking=True)
+                                   size_id=size_id,
+                                   ssh_key_ids=sshkeys)
+    droplet.create(ssh_key_ids=sshkeys, private_networking=True)
 
 
 def destroyalldroplets():
