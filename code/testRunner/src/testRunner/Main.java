@@ -3,6 +3,7 @@ package testRunner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
 
@@ -21,9 +22,19 @@ public class Main {
 			System.out.println("* " + t.getIdentifier() + ": " + t.getInfo());
 		}
 		
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Choose test:");
-		String input = br.readLine();
+		String input;
+		if (args.length == 0) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Choose test:");
+			input = br.readLine();
+		} else {
+			/* Assuming that user has given args correctly in command line:
+			 * <host name> <test name> [<args..>]
+			 */
+			r.setArgs(Arrays.copyOfRange(args, 2, args.length));
+			settings.host = args[0];
+			input = args[1];
+		}
 		
 		MemoryLogger logger = new MemoryLogger(true);
 		r.runTest(input, settings, logger);

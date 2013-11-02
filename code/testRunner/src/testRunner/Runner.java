@@ -15,6 +15,8 @@ import testRunner.tests.SendMessagesTime;
 public class Runner {
 	List<Class> tests = new ArrayList<Class>();
 	
+	String testArgs[];
+	
 	public Runner(){
 		tests.add(DummyTest.class);
 		tests.add(SendMessages.class);
@@ -23,6 +25,10 @@ public class Runner {
 	
 	public List<Class> getTests(){
 		return tests;
+	}
+	
+	public void setArgs(String args[]) {
+		this.testArgs = args;
 	}
 
 	public Test getTestFromIdentifier(String input) throws InstantiationException, IllegalAccessException {
@@ -41,24 +47,26 @@ public class Runner {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Test test = this.getTestFromIdentifier(identifier);
 
-		System.out.println("---");
-		System.out.println(test.getInfo());
-		System.out.println("Please provide these arguments: ");
-		String[] argDescriptors = test.getArgsDescriptors();
-		String[] testArgs = new String[argDescriptors.length];
-		
-		for(int i = 0; i < argDescriptors.length; i++){
-			String arg = argDescriptors[i];
-			System.out.println(arg);
-			System.out.print("=>");
-			testArgs[i] = br.readLine();
+		if (this.testArgs.length <= 0) {
+			System.out.println("---");
+			System.out.println(test.getInfo());
+			System.out.println("Please provide these arguments: ");
+			String[] argDescriptors = test.getArgsDescriptors();
+			this.testArgs = new String[argDescriptors.length];
+			
+			for(int i = 0; i < argDescriptors.length; i++){
+				String arg = argDescriptors[i];
+				System.out.println(arg);
+				System.out.print("=>");
+				this.testArgs[i] = br.readLine();
+			}
 		}
 		
 		System.out.println("OK. Initing test...");
 		
 		System.out.println("---");
 		test.setConnectionInfo(settings.host, settings.port);
-		test.init(testArgs);
+		test.init(this.testArgs);
 		System.out.println("---");
 			
 		System.out.println("OK. Running test...");
