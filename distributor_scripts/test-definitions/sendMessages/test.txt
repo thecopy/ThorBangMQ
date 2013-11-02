@@ -1,0 +1,4 @@
+numclients=1
+numservers=1
+clientargs=50,5000
+testtime=180
