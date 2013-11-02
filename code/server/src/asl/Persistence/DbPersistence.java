@@ -24,7 +24,7 @@ import asl.infrastructure.exceptions.PersistenceException;
 
 public class DbPersistence implements IPersistence {
 
-	private PoolingDataSource connectionPool = new PoolingDataSource();
+	private PoolingDataSource connectionPool;
 	private Logger logger;
 	private final String messageExceptionString = "is not present in table \"messages\"";
 	private final String clientExceptionString = "is not present in table \"clients\"";
@@ -209,7 +209,8 @@ public class DbPersistence implements IPersistence {
 		final String query = "INSERT INTO clients(name) VALUES(?) RETURNING id";
 
 		try {
-			return (long) executeScalar(query, logger, name);
+			
+			return (long)executeScalar(query, logger, name);
 		} catch (SQLException e) {
 			throw new PersistenceException(e);
 		}
