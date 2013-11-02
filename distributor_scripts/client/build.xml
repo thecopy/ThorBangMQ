@@ -5,10 +5,10 @@
     <target name="create_run_jar">
         <jar destfile="asl_client.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="clientManager.main"/>
+                <attribute name="Main-Class" value="testRunner.Main"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="../../code/clientManager/bin"/>
+            <fileset dir="../../code/testRunner/bin"/>
             <fileset dir="../../code/client/bin"/>
             <zipfileset excludes="META-INF/*.SF" src="../../code/clientManager/commons-lang3-3.1.jar"/>
         </jar>
