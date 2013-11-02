@@ -1,5 +1,9 @@
 package testRunner.tests;
 
+import infrastructure.exceptions.InvalidClientException;
+import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.ServerException;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -17,7 +21,7 @@ public class SendMessages extends testRunner.Test {
 	
 	@Override
 	public String[] getArgsDescriptors() {
-		String[] descriptors = new String[3];
+		String[] descriptors = new String[2];
 		descriptors[0] = "Number of clients";
 		descriptors[1] = "Messages per client";
 		
@@ -129,7 +133,7 @@ public class SendMessages extends testRunner.Test {
 					client.SendMessage(userId, queue, 1, 0, "message no #" + i + " from " + userId + " to " + userId);
 				}
 				logger.log("#" + id + " : Finished");
-			} catch (IOException e) {
+			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();
