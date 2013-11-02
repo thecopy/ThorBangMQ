@@ -52,6 +52,7 @@ public class Main {
 			System.out.println("  d\t\tDump logfiles");
 			System.out.println("  q\t\tQuit");
 			System.out.println("  qd\t\tQuit and dump logfiles");
+			System.out.println("  resetdb\tClear the database");
 			
 	        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	        String input = null;
@@ -72,6 +73,11 @@ public class Main {
 					stopServer(socketServer, intervalLogger, t, intervalLoggerThread);
 					System.out.println("Bye :)");
 					break;
+				}
+				else if(input.equals("resetdb")){
+					System.out.println("Clearing db...");
+					clearDb(settings);
+					System.out.println("Db clean!");
 				}
 				else{
 					System.out.println("Unkown command '" + input + "'");
@@ -100,18 +106,29 @@ public class Main {
 		if(arg.equals("cleardb=true"))
 		{
 			System.out.println("Clearing db...");
-			DbPersistence dbPersistence = new DbPersistence(new PoolingDataSource(), null);
-			try {
-				dbPersistence.deleteSchema();
-				dbPersistence.createSchema();
-				dbPersistence.buildSchema();
-			} catch (PersistenceException e) {
-				e.printStackTrace();
-			}
+			clearDb(s);
 			System.out.println("Db clean!");
 		}
 		else{
 			System.out.println("Unkown argument " + arg);
+		}
+	}
+	
+	private static void clearDb(ServerSettings settings){
+		DbPersistence dbPersistence = new DbPersistence((PoolingDataSource)PoolingDataSource.getDataSource(settings.DB_DATA_SOURCE_NAME), null);
+		
+		try {
+			System.out.println("Deleting asl schema...");
+			dbPersistence.deleteSchema();
+		} catch (PersistenceException ignore) {
+			
+		}
+		System.out.println("Rebuilding asl schema...");
+		try {
+			dbPersistence.createSchema();
+			dbPersistence.buildSchema();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
 		}
 	}
 	

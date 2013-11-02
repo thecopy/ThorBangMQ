@@ -21,6 +21,7 @@ import asl.ServerSettings;
 import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
+import asl.Persistence.LyingPersistence;
 import asl.infrastructure.PersistenceType;
 import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
@@ -71,7 +72,7 @@ public class ThorBangMQServer {
 				? new InMemoryPersistence()
 				: settings.PERSISTENCE_TYPE.equals(PersistenceType.POSTGRES)
 				? new DbPersistence(connectionPool,logger)
-				: new DbPersistence(connectionPool,logger);
+				: new LyingPersistence();
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
 
