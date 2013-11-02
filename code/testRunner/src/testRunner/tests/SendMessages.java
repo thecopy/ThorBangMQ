@@ -43,15 +43,15 @@ public class SendMessages extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger logger) {
-		logger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
+	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) {
+		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 		
 		Thread[] clients = new Thread[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(host, port, messagesPerClient, i+1, (int)this.queueId, i, logger));
+			clients[i] = new Thread(new clientRunner(host, port, messagesPerClient, i+1, (int)this.queueId, i, applicationLogger, testLogger));
 		}
 		
-		logger.log("OK Done! Sending " + messagesPerClient + " messages sequentially to queue 1 per client...");
+		applicationLogger.log("OK Done! Sending " + messagesPerClient + " messages sequentially to queue 1 per client...");
 		
 		StopWatch w = new StopWatch();
 		
@@ -76,17 +76,17 @@ public class SendMessages extends testRunner.Test {
 		float totalMessages = (float) (numberOfClients * messagesPerClient);
 		float totalTimeInMs = w.getNanoTime()/1000/1000;
 		
-		logger.log("OK Done!");
-		logger.log("-------------------------------------------");
+		applicationLogger.log("OK Done!");
+		applicationLogger.log("-------------------------------------------");
 
-		logger.log("Number of Clients:\t" + numberOfClients + "");
-		logger.log("Messages per Client:\t" + messagesPerClient + "");
-		logger.log("Total Messages:\t\t" + totalMessages + "");
-		logger.log("");
-		logger.log("Total Time:\t\t" + totalTimeInMs + "ms");
-		logger.log("Per Message:\t\t" + totalTimeInMs/messagesPerClient/numberOfClients + "ms");
-		logger.log("Messages/second:\t" + totalMessages/totalTimeInMs * 1000);
-		logger.log("Time/message:\t\t" + totalTimeInMs/totalMessages + "ms");
+		applicationLogger.log("Number of Clients:\t" + numberOfClients + "");
+		applicationLogger.log("Messages per Client:\t" + messagesPerClient + "");
+		applicationLogger.log("Total Messages:\t\t" + totalMessages + "");
+		applicationLogger.log("");
+		applicationLogger.log("Total Time:\t\t" + totalTimeInMs + "ms");
+		applicationLogger.log("Per Message:\t\t" + totalTimeInMs/messagesPerClient/numberOfClients + "ms");
+		applicationLogger.log("Messages/second:\t" + totalMessages/totalTimeInMs * 1000);
+		applicationLogger.log("Time/message:\t\t" + totalTimeInMs/totalMessages + "ms");
 	}
 
 	@Override
@@ -106,14 +106,16 @@ public class SendMessages extends testRunner.Test {
 		private int id;
 		private int queue;
 		private int userId;
-		private MemoryLogger logger;
+		private MemoryLogger applicationLogger;
+		private MemoryLogger testLogger;
 		
-		public clientRunner(String hostname, int port, int messagesToSend, int userId, int queue, int id, MemoryLogger logger){
+		public clientRunner(String hostname, int port, int messagesToSend, int userId, int queue, int id, MemoryLogger applicationLogger, MemoryLogger testLogger){
 			
 			this.messagesToSend = messagesToSend;
 			this.id = id;
 			this.queue = queue;
-			this.logger = logger;
+			this.applicationLogger = applicationLogger;
+			this.testLogger = testLogger;
 			this.userId = userId;
 			
 			try {
@@ -132,7 +134,7 @@ public class SendMessages extends testRunner.Test {
 				for (int i = 0; i < messagesToSend; i++) {
 					client.SendMessage(userId, queue, 1, 0, "message no #" + i + " from " + userId + " to " + userId);
 				}
-				logger.log("#" + id + " : Finished");
+				applicationLogger.log("#" + id + " : Finished");
 			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
 				e.printStackTrace();
 			} finally {

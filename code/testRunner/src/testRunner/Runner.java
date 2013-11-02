@@ -43,7 +43,7 @@ public class Runner {
 	
 	
 	
-	public void runTest(String identifier, Settings settings, MemoryLogger logger) throws Exception{
+	public void runTest(String identifier, Settings settings, MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Test test = this.getTestFromIdentifier(identifier);
 
@@ -74,7 +74,7 @@ public class Runner {
 		System.out.println("---");
 		StopWatch w = new StopWatch();
 		w.start();
-		test.run(logger);
+		test.run(applicationLogger, testLogger);
 		w.stop();
 		System.out.println("---");
 			

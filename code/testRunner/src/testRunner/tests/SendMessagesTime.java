@@ -43,15 +43,15 @@ public class SendMessagesTime extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger logger) throws Exception {
-		logger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
+	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception {
+		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 		
 		Thread[] clients = new Thread[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
 			clients[i] = new Thread(new clientRunner(host, port, 1, 1));
 		}
 		
-		logger.log("OK Done! Sending messages...");
+		applicationLogger.log("OK Done! Sending messages...");
 		
 		StopWatch w = new StopWatch();
 		
@@ -67,7 +67,7 @@ public class SendMessagesTime extends testRunner.Test {
 			Thread.sleep(500);
 			w.split();
 			long millis = w.getSplitNanoTime() / 1000000;
-			logger.log("Checking of " + millis + " > " + lengthOfExperiment);
+			applicationLogger.log("Checking of " + millis + " > " + lengthOfExperiment);
 			if(millis /*ms*/> lengthOfExperiment)
 				stop = true;
 			w.unsplit();
@@ -82,11 +82,11 @@ public class SendMessagesTime extends testRunner.Test {
 		w.stop();
 		float totalTimeInMs = w.getNanoTime()/1000/1000;
 		
-		logger.log("OK Done!");
-		logger.log("-------------------------------------------");
+		applicationLogger.log("OK Done!");
+		applicationLogger.log("-------------------------------------------");
 
-		logger.log("Number of Clients:\t" + numberOfClients + "");
-		logger.log("Total Time:\t\t" + totalTimeInMs + "ms");
+		applicationLogger.log("Number of Clients:\t" + numberOfClients + "");
+		applicationLogger.log("Total Time:\t\t" + totalTimeInMs + "ms");
 	}
 
 	@Override
