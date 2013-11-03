@@ -14,4 +14,6 @@ public class Settings {
 		for(String arg : args)
 			System.out.println(arg);
 	}
+	public String TEST_LOG_PATH = "test_log.txt";
+	public String APPLICATION_LOG_PATH = "application_log.txt";
 }

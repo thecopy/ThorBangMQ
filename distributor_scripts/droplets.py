@@ -7,6 +7,8 @@ CLIENT_ID = environ['ASL_DIGITAL_OCEAN_CLIENT_ID']
 
 do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
+DEFAULT_DROPLET_SIZE = '2gb'
+
 
 def getdroplets():
     return do.get_all_droplets()
@@ -37,23 +39,23 @@ def getdatabase():
             for droplet in getdroplets() if 'database' in droplet.name]
 
 
-def createclient(size='512mb'):
+def createclient(size=DEFAULT_DROPLET_SIZE):
     clientnumber = len(getclients()) + 1
     name = 'asl-client-{}'.format(clientnumber)
     _createdroplet(name=name, image_id=1001057, size=size)
 
 
-def createserver(size='512mb'):
+def createserver(size=DEFAULT_DROPLET_SIZE):
     servernumber = len(getservers()) + 1
     name = 'asl-server-{}'.format(servernumber)
     _createdroplet(name=name, image_id=1001057, size=size)
 
 
-def createdatabase(size='512mb'):
+def createdatabase(size=DEFAULT_DROPLET_SIZE):
     _createdroplet(name='asl-database', image_id=949272, size=size)
 
 
-def _createdroplet(name, image_id, size='512mb'):
+def _createdroplet(name, image_id, size):
     size = size.lower()
     if size == '512mb':
         size_id = 66
@@ -68,13 +70,15 @@ def _createdroplet(name, image_id, size='512mb'):
     else:
         size_id = 66
 
+    sshkeys = [41181, 46980, 46997]
     droplet = digitalocean.Droplet(api_key=API_KEY,
                                    client_id=CLIENT_ID,
                                    name=name,
                                    region_id=4,
                                    image_id=image_id,
-                                   size_id=size_id)
-    droplet.create(ssh_key_ids=[41180, 46980, 46997], private_networking=True)
+                                   size_id=size_id,
+                                   ssh_key_ids=sshkeys)
+    droplet.create(ssh_key_ids=sshkeys, private_networking=True)
 
 
 def destroyalldroplets():
