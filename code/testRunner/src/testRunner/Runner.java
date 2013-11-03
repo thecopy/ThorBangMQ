@@ -8,7 +8,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.time.StopWatch;
 
+import testRunner.tests.BigMessage;
 import testRunner.tests.DummyTest;
+import testRunner.tests.SendAndPopMessages;
 import testRunner.tests.SendMessages;
 import testRunner.tests.SendMessagesTime;
 
@@ -19,6 +21,8 @@ public class Runner {
 		tests.add(DummyTest.class);
 		tests.add(SendMessages.class);
 		tests.add(SendMessagesTime.class);
+		tests.add(BigMessage.class);
+		tests.add(SendAndPopMessages.class);
 	}
 	
 	public List<Class> getTests(){
@@ -37,28 +41,12 @@ public class Runner {
 	
 	
 	
-	public void runTest(String identifier, Settings settings, MemoryLogger logger) throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Test test = this.getTestFromIdentifier(identifier);
-
-		System.out.println("---");
-		System.out.println(test.getInfo());
-		System.out.println("Please provide these arguments: ");
-		String[] argDescriptors = test.getArgsDescriptors();
-		String[] testArgs = new String[argDescriptors.length];
-		
-		for(int i = 0; i < argDescriptors.length; i++){
-			String arg = argDescriptors[i];
-			System.out.println(arg);
-			System.out.print("=>");
-			testArgs[i] = br.readLine();
-		}
-		
+	public void runTest(Test test, Settings settings, MemoryLogger logger, String[] args) throws Exception{
 		System.out.println("OK. Initing test...");
 		
 		System.out.println("---");
 		test.setConnectionInfo(settings.host, settings.port);
-		test.init(testArgs);
+		test.init(args);
 		System.out.println("---");
 			
 		System.out.println("OK. Running test...");
