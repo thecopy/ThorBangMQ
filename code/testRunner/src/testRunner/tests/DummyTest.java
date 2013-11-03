@@ -32,16 +32,16 @@ public class DummyTest extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger logger) {
-		logger.log("Running dummy test! :]");
-		logger.log("Host: " + super.host);
-		logger.log("Port: " + super.port);
+	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) {
+		applicationLogger.log("Running dummy test! :]");
+		applicationLogger.log("Host: " + super.host);
+		applicationLogger.log("Port: " + super.port);
 		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException ignore) {}
 		
-		logger.log("Yaaaaay");
+		applicationLogger.log("Yaaaaay");
 	}
 
 }

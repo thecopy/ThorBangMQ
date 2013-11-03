@@ -5,3 +5,5 @@ digitalocean.txt
 dispatcher/
 *.pyc
 *.jar
+\d{10}.txt
+logs/

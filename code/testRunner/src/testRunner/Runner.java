@@ -17,6 +17,8 @@ import testRunner.tests.SendMessagesTime;
 public class Runner {
 	List<Class> tests = new ArrayList<Class>();
 	
+	String testArgs[];
+	
 	public Runner(){
 		tests.add(DummyTest.class);
 		tests.add(SendMessages.class);
@@ -27,6 +29,10 @@ public class Runner {
 	
 	public List<Class> getTests(){
 		return tests;
+	}
+	
+	public void setArgs(String args[]) {
+		this.testArgs = args;
 	}
 
 	public Test getTestFromIdentifier(String input) throws InstantiationException, IllegalAccessException {
@@ -46,7 +52,7 @@ public class Runner {
 		
 		System.out.println("---");
 		test.setConnectionInfo(settings.host, settings.port);
-		test.init(args);
+		test.init(this.testArgs);
 		System.out.println("---");
 			
 		System.out.println("OK. Running test...");
@@ -54,7 +60,7 @@ public class Runner {
 		System.out.println("---");
 		StopWatch w = new StopWatch();
 		w.start();
-		test.run(logger);
+		test.run(applicationLogger, testLogger);
 		w.stop();
 		System.out.println("---");
 			
