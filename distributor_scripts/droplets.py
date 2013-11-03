@@ -7,6 +7,8 @@ CLIENT_ID = environ['ASL_DIGITAL_OCEAN_CLIENT_ID']
 
 do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
+DEFAULT_DROPLET_SIZE = '2gb'
+
 
 def getdroplets():
     return do.get_all_droplets()
@@ -37,23 +39,23 @@ def getdatabase():
             for droplet in getdroplets() if 'database' in droplet.name]
 
 
-def createclient(size='512mb'):
+def createclient(size=DEFAULT_DROPLET_SIZE):
     clientnumber = len(getclients()) + 1
     name = 'asl-client-{}'.format(clientnumber)
     _createdroplet(name=name, image_id=1001057, size=size)
 
 
-def createserver(size='512mb'):
+def createserver(size=DEFAULT_DROPLET_SIZE):
     servernumber = len(getservers()) + 1
     name = 'asl-server-{}'.format(servernumber)
     _createdroplet(name=name, image_id=1001057, size=size)
 
 
-def createdatabase(size='512mb'):
+def createdatabase(size=DEFAULT_DROPLET_SIZE):
     _createdroplet(name='asl-database', image_id=949272, size=size)
 
 
-def _createdroplet(name, image_id, size='512mb'):
+def _createdroplet(name, image_id, size):
     size = size.lower()
     if size == '512mb':
         size_id = 66

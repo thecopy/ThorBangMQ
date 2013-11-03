@@ -1,4 +1,5 @@
 import re
+import functools
 from sys import exit
 from os import path, chdir, mkdir
 from subprocess import call, PIPE, Popen
@@ -7,7 +8,8 @@ import logging
 
 logger = logging.getLogger('distributor')
 
-from droplets import createclient, createserver, createdatabase, getclients, getservers, getdatabase
+from droplets import (createclient, createserver, createdatabase, getclients,
+                      getservers, getdatabase, DEFAULT_DROPLET_SIZE)
 
 ROOT = path.dirname(path.realpath(__file__))
 
@@ -85,30 +87,30 @@ def scpdownloadfile(ip, remotefile, localfile):
     call(scpcmd.split(' '), stdout=PIPE)
 
 
-def startmissingmachines(numclients, numservers, numdatabases=1, size='512mb'):
-    started = 0
-    clients = getclients()
-    if len(clients) < numclients:
-        for i in range(numclients - len(clients)):
-            logger.info("Starting client machine..")
-            createclient(size)
-        started += numclients - len(clients)
+def startmissingmachines(numclients, numservers, numdatabases=1, size=DEFAULT_DROPLET_SIZE):
+    clientsstarted = startmissingmachine(machines=getclients(), nummachines=numclients,
+                                         createfun=functools.partial(createclient, size))
+    logger.info("Started {} client machines.".format(clientsstarted))
+    serversstarted = startmissingmachine(machines=getservers(), nummachines=numservers,
+                                         createfun=functools.partial(createserver, size))
+    logger.info("Started {} server machines.".format(serversstarted))
+    databasestarted = startmissingmachine(machines=getdatabase(), nummachines=1,
+                                          createfun=functools.partial(createdatabase, size))
+    logger.info("Started {} database machines.".format(databasestarted))
 
-    servers = getservers()
-    if len(servers) < numservers:
-        for i in range(numservers - len(servers)):
-            logger.info("Starting server machine..")
-            createserver(size)
-        started += numservers - len(servers)
-
-    if len(getdatabase()) < numdatabases:
-        logger.info("Starting database machine..")
-        createdatabase()
-        started += 1
-    if started > 1:
+    started = clientsstarted + serversstarted + databasestarted
+    if started > 0:
         logger.info("Waiting {secs} seconds for {num} machines to boot..".format(secs=DROPLET_CREATION_TIME,
                                                                                  num=started))
         sleep(DROPLET_CREATION_TIME)
+
+
+def startmissingmachine(machines, nummachines, createfun):
+    if len(machines) < nummachines:
+        for __ in xrange(nummachines - len(machines)):
+            createfun()
+        return nummachines - len(machines)
+    return 0
 
 
 def parsetestfile(testfile):

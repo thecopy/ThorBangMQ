@@ -36,13 +36,13 @@ def main():
                 testname = choice.split(' ')[1]
             except:
                 testname = None
-            if testname in gettests():
-                starttest(testname)
-            else:
+            if testname not in gettests():
                 print "Invalid test name '{}'".format(testname)
                 print "Please choose one of the following:"
                 for i, testname in enumerate(gettests()):
                     print "{}: {}".format(i + 1, testname)
+                continue
+            starttest(testname)
         elif choice == "6":
             for i, testname in gettests():
                 print "{}: {}".format(i + 1, testname)
