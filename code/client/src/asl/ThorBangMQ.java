@@ -238,4 +238,8 @@ public class ThorBangMQ {
 	private boolean responseIsError(String response) {
 		return response.startsWith("FAIL");
 	}
+	
+	public ITransport getTransport(){
+		return transport;
+	}
 }

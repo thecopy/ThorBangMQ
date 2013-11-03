@@ -13,9 +13,10 @@ import org.apache.commons.lang3.time.StopWatch;
 import asl.ThorBangMQ;
 import testRunner.MemoryLogger;
 
-public class SendMessages extends testRunner.Test {
+public class SendAndPopMessages extends testRunner.Test {
 	int numberOfClients = 0;
-	int messagesPerClient = 0;
+	int lengthOfExperiment = 0;
+	int poppers = 1;
 	ArrayList<Long> clients;
 	long queueId;
 	
@@ -23,7 +24,8 @@ public class SendMessages extends testRunner.Test {
 	public String[] getArgsDescriptors() {
 		String[] descriptors = new String[3];
 		descriptors[0] = "Number of clients";
-		descriptors[1] = "Messages per client";
+		descriptors[1] = "Length of experiment";
+		descriptors[2] = "Number of clients who 'pop'. If this argument is 3 every third client will pop";
 		
 		return descriptors;
 	}
@@ -31,7 +33,8 @@ public class SendMessages extends testRunner.Test {
 	@Override
 	public void init(String[] args) throws Exception {
 		numberOfClients = Integer.parseInt(args[0]);
-		messagesPerClient = Integer.parseInt(args[1]);
+		lengthOfExperiment = Integer.parseInt(args[1]);
+		poppers = Integer.parseInt(args[2]);
 		clients = new ArrayList<Long>();
 		
 		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);		
@@ -43,82 +46,83 @@ public class SendMessages extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger logger) {
+	public void run(MemoryLogger logger) throws Exception {
 		logger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 		
 		Thread[] clients = new Thread[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(host, port, messagesPerClient, i+1, (int)this.queueId, i, logger));
+			clients[i] = new Thread(new clientRunner(host, port, 1, 1, i%poppers==0));
 		}
 		
-		logger.log("OK Done! Sending " + messagesPerClient + " messages sequentially to queue 1 per client...");
+		logger.log("OK Done! Sending messages...");
 		
 		StopWatch w = new StopWatch();
 		
-		w.start();
 		
 		//Start client threads
 		for(int i = 0; i < numberOfClients;i++){
 			clients[i].start();
 		}
-		
-		//Wait for clients to finish
-		for (Thread client : clients) {
-			try {
-				client.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		w.start();
+		ArrayList<String> splitTimes = new ArrayList<String>(lengthOfExperiment/500+1);
+		Boolean stop = false;
+		while(!stop){
+			Thread.sleep(500);
+			w.split();
+			long millis = w.getSplitNanoTime() / 1000000;
+			logger.log("Checking of " + millis + " > " + lengthOfExperiment);
+			if(millis /*ms*/> lengthOfExperiment)
+				stop = true;
+			w.unsplit();
 		}
-
-		w.stop();
 		
-		float totalMessages = (float) (numberOfClients * messagesPerClient);
+		for (Thread client : clients) {
+			try{
+			client.interrupt();
+			}catch(Exception ignore) {}
+		}
+		
+		w.stop();
 		float totalTimeInMs = w.getNanoTime()/1000/1000;
 		
 		logger.log("OK Done!");
 		logger.log("-------------------------------------------");
 
 		logger.log("Number of Clients:\t" + numberOfClients + "");
-		logger.log("Messages per Client:\t" + messagesPerClient + "");
-		logger.log("Total Messages:\t\t" + totalMessages + "");
-		logger.log("");
 		logger.log("Total Time:\t\t" + totalTimeInMs + "ms");
-		logger.log("Per Message:\t\t" + totalTimeInMs/messagesPerClient/numberOfClients + "ms");
-		logger.log("Messages/second:\t" + totalMessages/totalTimeInMs * 1000);
-		logger.log("Time/message:\t\t" + totalTimeInMs/totalMessages + "ms");
 	}
 
 	@Override
 	public String getInfo() {
-		return "Sends a fixed number of messages to the server";
+		return "Sends and pops messages withing a specific time limit";
 	}
 
 	@Override
 	public String getIdentifier() {
-		return "sendMessages";
+		return "sendAndPopMessages";
 	}
 
 	class clientRunner implements Runnable{
 		
 		ThorBangMQ client;
-		private int messagesToSend;
-		private int id;
 		private int queue;
 		private int userId;
-		private MemoryLogger logger;
 		
-		public clientRunner(String hostname, int port, int messagesToSend, int userId, int queue, int id, MemoryLogger logger){
-			
-			this.messagesToSend = messagesToSend;
-			this.id = id;
+		public int numberOfMessagesSent = 0;
+		public int numberOfMessagesPoped = 0;
+		
+		public Boolean keepRunning = true;
+		private boolean popOrSend;
+		public clientRunner(String hostname, int port, int userId, int queue, boolean popOrSend){
 			this.queue = queue;
-			this.logger = logger;
 			this.userId = userId;
+			this.popOrSend = popOrSend;
 			
 			try {
+				
 				client = ThorBangMQ.build(hostname, port, userId);
 				client.init();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -127,10 +131,19 @@ public class SendMessages extends testRunner.Test {
 		@Override
 		public void run() {
 			try {
-				for (int i = 0; i < messagesToSend; i++) {
-					client.SendMessage(userId, queue, 1, 0, "message no #" + i + " from " + userId + " to " + userId);
+				while (keepRunning) {
+					if(popOrSend)
+					{
+						client.PopMessage(queue, true);
+						numberOfMessagesPoped++;
+					}
+					else
+					{
+						client.SendMessage(userId, queue, 1, 0, "message");
+					
+						numberOfMessagesSent++;
+					}
 				}
-				logger.log("#" + id + " : Finished");
 			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
 				e.printStackTrace();
 			} finally {

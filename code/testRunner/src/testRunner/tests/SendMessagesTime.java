@@ -1,5 +1,9 @@
 package testRunner.tests;
 
+import infrastructure.exceptions.InvalidClientException;
+import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.ServerException;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -125,7 +129,7 @@ public class SendMessagesTime extends testRunner.Test {
 					client.SendMessage(userId, queue, 1, 0, "message");
 					numberOfMessagesSent++;
 				}
-			} catch (IOException e) {
+			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();

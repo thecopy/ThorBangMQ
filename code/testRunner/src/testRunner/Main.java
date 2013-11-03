@@ -3,30 +3,40 @@ package testRunner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream.GetField;
+import java.util.Arrays;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Settings settings = new Settings();
-		settings.host = "localhost";
-		settings.port = 8123;
+		getInformationFromArgs(args, settings);
 		
 		System.out.println("ThorBangMQ test runner prototype");
 		
+		settings.printSettingsToSystemOut();
+		
 		Runner r = new Runner();
 		
-		System.out.println("Available tests:");
-		for(Class test : r.getTests()){
-			Test t = (Test)test.newInstance();
-			System.out.println("* " + t.getIdentifier() + ": " + t.getInfo());
+		Test t = r.getTestFromIdentifier(settings.testName);
+		r.runTest(t, settings, new MemoryLogger(true), settings.args);
+		
+	}
+	
+	private static void getInformationFromArgs(String[] args, Settings settings){
+		for(int i = 0; i < args.length; i++){
+			String arg = args[i];
+			if(arg.startsWith("host="))
+				settings.host = arg.substring(5);
+			else if(arg.startsWith("port="))
+				settings.port = Integer.parseInt(arg.substring(5));
+			else if(arg.startsWith("test="))
+				settings.testName = arg.substring(5);
+			else{
+				settings.args = Arrays.copyOfRange(args, i, args.length);
+				break;
+			}
 		}
-		
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Choose test:");
-		String input = br.readLine();
-		
-		MemoryLogger logger = new MemoryLogger(true);
-		r.runTest(input, settings, logger);
 	}
 
 }
