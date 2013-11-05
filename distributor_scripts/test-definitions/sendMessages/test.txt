@@ -1,6 +1,6 @@
 numclients=2
 numservers=1
-testtime=30
+testtime=600
 clientargs=10,50000
 clientargs=20,25000
 clientargs=30,16666
