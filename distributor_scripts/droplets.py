@@ -82,4 +82,5 @@ def _createdroplet(name, image_id, size):
 
 
 def destroyalldroplets():
-    map(lambda droplet: droplet.destroy(), getdroplets())
+    for droplet in getdroplets():
+        droplet.destroy()
