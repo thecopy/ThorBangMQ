@@ -1,0 +1,592 @@
+1383666375305	LISTENING_PORT	8123
+
+1383666375306	PERSISTENCE_TYPE	POSTGRES
+
+1383666375307	MESSAGE_MAX_LENGTH	4096
+
+1383666375307	NUM_CLIENTREQUESTWORKER_THREADS	100
+
+1383666375307	DB_SERVER_NAME	10.128.14.104
+
+1383666375307	DB_DATABASE_NAME	asl
+
+1383666375307	DB_DATA_SOURCE_NAME	asl
+
+1383666375307	DB_PORT_NUMBER	5432
+
+1383666375308	DB_USERNAME	asl
+
+1383666375308	DB_PASSWORD	asl2013
+
+1383666375308	DB_MAX_CONNECTIONS	100
+
+1383666375308	DB_DEFAULT_AUTO_COMMIT	false
+
+1383666375308	APPLICATION_LOG_PATH	application_log.txt
+
+1383666375308	TEST_LOG_PATH	test_log.txt
+
+1383666375309	LOG_INTERVAL	10000
+
+1383666377640	Client connect. There are now 1 clients connected.
+1383666377641	Accepted connection from /10.128.23.87:36625
+1383666377998	Client connect. There are now 2 clients connected.
+1383666377999	Accepted connection from /10.128.23.87:36626
+1383666378001	Client connect. There are now 3 clients connected.
+1383666378001	Accepted connection from /10.128.23.87:36627
+1383666378005	Client connect. There are now 4 clients connected.
+1383666378006	Accepted connection from /10.128.23.87:36628
+1383666378008	Client connect. There are now 5 clients connected.
+1383666378008	Accepted connection from /10.128.23.87:36629
+1383666378012	Client connect. There are now 6 clients connected.
+1383666378013	Accepted connection from /10.128.23.87:36630
+1383666378015	Client connect. There are now 7 clients connected.
+1383666378015	Accepted connection from /10.128.23.87:36631
+1383666378025	Client connect. There are now 8 clients connected.
+1383666378026	Accepted connection from /10.128.23.87:36632
+1383666378028	Client connect. There are now 9 clients connected.
+1383666378028	Accepted connection from /10.128.23.87:36633
+1383666378032	Client connect. There are now 10 clients connected.
+1383666378032	Accepted connection from /10.128.23.87:36634
+1383666378035	Client connect. There are now 11 clients connected.
+1383666378036	Accepted connection from /10.128.23.87:36635
+1383666378038	Client connect. There are now 12 clients connected.
+1383666378038	Accepted connection from /10.128.23.87:36636
+1383666378042	Client connect. There are now 13 clients connected.
+1383666378043	Accepted connection from /10.128.23.87:36637
+1383666378045	Client connect. There are now 14 clients connected.
+1383666378045	Accepted connection from /10.128.23.87:36638
+1383666378049	Client connect. There are now 15 clients connected.
+1383666378049	Accepted connection from /10.128.23.87:36639
+1383666378051	Client connect. There are now 16 clients connected.
+1383666378051	Accepted connection from /10.128.23.87:36640
+1383666378055	Client connect. There are now 17 clients connected.
+1383666378056	Accepted connection from /10.128.23.87:36641
+1383666378058	Client connect. There are now 18 clients connected.
+1383666378058	Accepted connection from /10.128.23.87:36642
+1383666378062	Client connect. There are now 19 clients connected.
+1383666378062	Accepted connection from /10.128.23.87:36643
+1383666378064	Client connect. There are now 20 clients connected.
+1383666378064	Accepted connection from /10.128.23.87:36644
+1383666378068	Client connect. There are now 21 clients connected.
+1383666378068	Accepted connection from /10.128.23.87:36645
+1383666378070	Client connect. There are now 22 clients connected.
+1383666378070	Accepted connection from /10.128.23.87:36646
+1383666378073	Client connect. There are now 23 clients connected.
+1383666378073	Accepted connection from /10.128.23.87:36647
+1383666378076	Client connect. There are now 24 clients connected.
+1383666378076	Accepted connection from /10.128.23.87:36648
+1383666378079	Client connect. There are now 25 clients connected.
+1383666378079	Accepted connection from /10.128.23.87:36649
+1383666378083	Client connect. There are now 26 clients connected.
+1383666378083	Accepted connection from /10.128.23.87:36650
+1383666378085	Client connect. There are now 27 clients connected.
+1383666378085	Accepted connection from /10.128.23.87:36651
+1383666378089	Client connect. There are now 28 clients connected.
+1383666378090	Accepted connection from /10.128.23.87:36652
+1383666378092	Client connect. There are now 29 clients connected.
+1383666378092	Accepted connection from /10.128.23.87:36653
+1383666378096	Client connect. There are now 30 clients connected.
+1383666378096	Accepted connection from /10.128.23.87:36654
+1383666378099	Client connect. There are now 31 clients connected.
+1383666378099	Accepted connection from /10.128.23.87:36655
+1383666378102	Client connect. There are now 32 clients connected.
+1383666378102	Accepted connection from /10.128.23.87:36656
+1383666378104	Client connect. There are now 33 clients connected.
+1383666378104	Accepted connection from /10.128.23.87:36657
+1383666378108	Client connect. There are now 34 clients connected.
+1383666378108	Accepted connection from /10.128.23.87:36658
+1383666378110	Client connect. There are now 35 clients connected.
+1383666378110	Accepted connection from /10.128.23.87:36659
+1383666378113	Client connect. There are now 36 clients connected.
+1383666378113	Accepted connection from /10.128.23.87:36660
+1383666378115	Client connect. There are now 37 clients connected.
+1383666378115	Accepted connection from /10.128.23.87:36661
+1383666378119	Client connect. There are now 38 clients connected.
+1383666378120	Accepted connection from /10.128.23.87:36662
+1383666378122	Client connect. There are now 39 clients connected.
+1383666378122	Accepted connection from /10.128.23.87:36663
+1383666378126	Client connect. There are now 40 clients connected.
+1383666378126	Accepted connection from /10.128.23.87:36664
+1383666378128	Client connect. There are now 41 clients connected.
+1383666378128	Accepted connection from /10.128.23.87:36665
+1383666378131	Client connect. There are now 42 clients connected.
+1383666378132	Accepted connection from /10.128.23.87:36666
+1383666378134	Client connect. There are now 43 clients connected.
+1383666378134	Accepted connection from /10.128.23.87:36667
+1383666378138	Client connect. There are now 44 clients connected.
+1383666378138	Accepted connection from /10.128.23.87:36668
+1383666378140	Client connect. There are now 45 clients connected.
+1383666378140	Accepted connection from /10.128.23.87:36669
+1383666378144	Client connect. There are now 46 clients connected.
+1383666378144	Accepted connection from /10.128.23.87:36670
+1383666378146	Client connect. There are now 47 clients connected.
+1383666378146	Accepted connection from /10.128.23.87:36671
+1383666378150	Client connect. There are now 48 clients connected.
+1383666378151	Accepted connection from /10.128.23.87:36672
+1383666378153	Client connect. There are now 49 clients connected.
+1383666378153	Accepted connection from /10.128.23.87:36673
+1383666378158	Client connect. There are now 50 clients connected.
+1383666378158	Accepted connection from /10.128.23.87:36674
+1383666378160	Client connect. There are now 51 clients connected.
+1383666378160	Accepted connection from /10.128.23.87:36675
+1383666378183	Client disconnect. There are now 50 clients connected.
+1383666381099	Client connect. There are now 51 clients connected.
+1383666381099	Accepted connection from /10.128.21.98:48634
+1383666382189	Client connect. There are now 52 clients connected.
+1383666382189	Accepted connection from /10.128.21.98:48635
+1383666382213	Client connect. There are now 53 clients connected.
+1383666382213	Accepted connection from /10.128.21.98:48636
+1383666382236	Client connect. There are now 54 clients connected.
+1383666382236	Accepted connection from /10.128.21.98:48637
+1383666382259	Client connect. There are now 55 clients connected.
+1383666382259	Accepted connection from /10.128.21.98:48638
+1383666382280	Client connect. There are now 56 clients connected.
+1383666382280	Accepted connection from /10.128.21.98:48639
+1383666382302	Client connect. There are now 57 clients connected.
+1383666382302	Accepted connection from /10.128.21.98:48640
+1383666382321	Client connect. There are now 58 clients connected.
+1383666382321	Accepted connection from /10.128.21.98:48641
+1383666382343	Client connect. There are now 59 clients connected.
+1383666382343	Accepted connection from /10.128.21.98:48642
+1383666382365	Client connect. There are now 60 clients connected.
+1383666382365	Accepted connection from /10.128.21.98:48643
+1383666382393	Client connect. There are now 61 clients connected.
+1383666382393	Accepted connection from /10.128.21.98:48644
+1383666382419	Client connect. There are now 62 clients connected.
+1383666382419	Accepted connection from /10.128.21.98:48645
+1383666382440	Client connect. There are now 63 clients connected.
+1383666382441	Accepted connection from /10.128.21.98:48646
+1383666382467	Client connect. There are now 64 clients connected.
+1383666382468	Accepted connection from /10.128.21.98:48647
+1383666382505	Client connect. There are now 65 clients connected.
+1383666382505	Accepted connection from /10.128.21.98:48648
+1383666382527	Client connect. There are now 66 clients connected.
+1383666382527	Accepted connection from /10.128.21.98:48649
+1383666382557	Client connect. There are now 67 clients connected.
+1383666382557	Accepted connection from /10.128.21.98:48650
+1383666382580	Client connect. There are now 68 clients connected.
+1383666382580	Accepted connection from /10.128.21.98:48651
+1383666382600	Client connect. There are now 69 clients connected.
+1383666382600	Accepted connection from /10.128.21.98:48652
+1383666382621	Client connect. There are now 70 clients connected.
+1383666382621	Accepted connection from /10.128.21.98:48653
+1383666382653	Client connect. There are now 71 clients connected.
+1383666382653	Accepted connection from /10.128.21.98:48654
+1383666382681	Client connect. There are now 72 clients connected.
+1383666382681	Accepted connection from /10.128.21.98:48655
+1383666382737	Client connect. There are now 73 clients connected.
+1383666382737	Accepted connection from /10.128.21.98:48656
+1383666382764	Client connect. There are now 74 clients connected.
+1383666382764	Accepted connection from /10.128.21.98:48657
+1383666382787	Client connect. There are now 75 clients connected.
+1383666382787	Accepted connection from /10.128.21.98:48658
+1383666382805	Client connect. There are now 76 clients connected.
+1383666382805	Accepted connection from /10.128.21.98:48659
+1383666382822	Client connect. There are now 77 clients connected.
+1383666382823	Accepted connection from /10.128.21.98:48660
+1383666382845	Client connect. There are now 78 clients connected.
+1383666382845	Accepted connection from /10.128.21.98:48661
+1383666382862	Client connect. There are now 79 clients connected.
+1383666382862	Accepted connection from /10.128.21.98:48662
+1383666382879	Client connect. There are now 80 clients connected.
+1383666382880	Accepted connection from /10.128.21.98:48663
+1383666382896	Client connect. There are now 81 clients connected.
+1383666382896	Accepted connection from /10.128.21.98:48664
+1383666382909	Client connect. There are now 82 clients connected.
+1383666382910	Accepted connection from /10.128.21.98:48665
+1383666382924	Client connect. There are now 83 clients connected.
+1383666382924	Accepted connection from /10.128.21.98:48666
+1383666382940	Client connect. There are now 84 clients connected.
+1383666382940	Accepted connection from /10.128.21.98:48667
+1383666382960	Client connect. There are now 85 clients connected.
+1383666382960	Accepted connection from /10.128.21.98:48668
+1383666382979	Client connect. There are now 86 clients connected.
+1383666382979	Accepted connection from /10.128.21.98:48669
+1383666382996	Client connect. There are now 87 clients connected.
+1383666382996	Accepted connection from /10.128.21.98:48670
+1383666383013	Client connect. There are now 88 clients connected.
+1383666383013	Accepted connection from /10.128.21.98:48671
+1383666383036	Client connect. There are now 89 clients connected.
+1383666383036	Accepted connection from /10.128.21.98:48672
+1383666383061	Client connect. There are now 90 clients connected.
+1383666383061	Accepted connection from /10.128.21.98:48673
+1383666383075	Client connect. There are now 91 clients connected.
+1383666383076	Accepted connection from /10.128.21.98:48674
+1383666383087	Client connect. There are now 92 clients connected.
+1383666383087	Accepted connection from /10.128.21.98:48675
+1383666383107	Client connect. There are now 93 clients connected.
+1383666383107	Accepted connection from /10.128.21.98:48676
+1383666383127	Client connect. There are now 94 clients connected.
+1383666383127	Accepted connection from /10.128.21.98:48677
+1383666383141	Client connect. There are now 95 clients connected.
+1383666383141	Accepted connection from /10.128.21.98:48678
+1383666383156	Client connect. There are now 96 clients connected.
+1383666383157	Accepted connection from /10.128.21.98:48679
+1383666383179	Client connect. There are now 97 clients connected.
+1383666383179	Accepted connection from /10.128.21.98:48680
+1383666383190	Client connect. There are now 98 clients connected.
+1383666383190	Accepted connection from /10.128.21.98:48681
+1383666383193	Client connect. There are now 99 clients connected.
+1383666383193	Accepted connection from /10.128.21.98:48682
+1383666383211	Client connect. There are now 100 clients connected.
+1383666383211	Accepted connection from /10.128.21.98:48683
+1383666383215	Client connect. There are now 101 clients connected.
+1383666383215	Accepted connection from /10.128.21.98:48684
+1383666383265	Client disconnect. There are now 100 clients connected.
+1383666442111	Client disconnect. There are now 99 clients connected.
+1383666442111	Client disconnect. There are now 98 clients connected.
+1383666442112	Client disconnect. There are now 97 clients connected.
+1383666442112	Client disconnect. There are now 96 clients connected.
+1383666442112	Client disconnect. There are now 95 clients connected.
+1383666442112	Client disconnect. There are now 94 clients connected.
+1383666442113	Client disconnect. There are now 93 clients connected.
+1383666442113	Client disconnect. There are now 92 clients connected.
+1383666442113	Client disconnect. There are now 91 clients connected.
+1383666442113	Client disconnect. There are now 90 clients connected.
+1383666442113	Client disconnect. There are now 89 clients connected.
+1383666442114	Client disconnect. There are now 88 clients connected.
+1383666442114	Client disconnect. There are now 87 clients connected.
+1383666442114	Client disconnect. There are now 86 clients connected.
+1383666442114	Client disconnect. There are now 85 clients connected.
+1383666442121	Client disconnect. There are now 84 clients connected.
+1383666442121	Client disconnect. There are now 83 clients connected.
+1383666442121	Client disconnect. There are now 82 clients connected.
+1383666442121	Client disconnect. There are now 81 clients connected.
+1383666442122	Client disconnect. There are now 80 clients connected.
+1383666442122	Client disconnect. There are now 79 clients connected.
+1383666442123	Client disconnect. There are now 78 clients connected.
+1383666442123	Client disconnect. There are now 77 clients connected.
+1383666442123	Client disconnect. There are now 76 clients connected.
+1383666442123	Client disconnect. There are now 75 clients connected.
+1383666442124	Client disconnect. There are now 74 clients connected.
+1383666442124	Client disconnect. There are now 73 clients connected.
+1383666442125	Client disconnect. There are now 72 clients connected.
+1383666442125	Client disconnect. There are now 71 clients connected.
+1383666442125	Client disconnect. There are now 70 clients connected.
+1383666442126	Client disconnect. There are now 69 clients connected.
+1383666442127	Client disconnect. There are now 68 clients connected.
+1383666442127	Client disconnect. There are now 67 clients connected.
+1383666442127	Client disconnect. There are now 66 clients connected.
+1383666442128	Client disconnect. There are now 65 clients connected.
+1383666442128	Client disconnect. There are now 64 clients connected.
+1383666442128	Client disconnect. There are now 63 clients connected.
+1383666442128	Client disconnect. There are now 62 clients connected.
+1383666442128	Client disconnect. There are now 61 clients connected.
+1383666442129	Client disconnect. There are now 60 clients connected.
+1383666442129	Client disconnect. There are now 59 clients connected.
+1383666442129	Client disconnect. There are now 58 clients connected.
+1383666442129	Client disconnect. There are now 57 clients connected.
+1383666442130	Client disconnect. There are now 56 clients connected.
+1383666442130	Client disconnect. There are now 55 clients connected.
+1383666442130	Client disconnect. There are now 54 clients connected.
+1383666442130	Client disconnect. There are now 53 clients connected.
+1383666442130	Client disconnect. There are now 52 clients connected.
+1383666442131	Client disconnect. There are now 51 clients connected.
+1383666442131	Client disconnect. There are now 50 clients connected.
+1383666443555	Client disconnect. There are now 49 clients connected.
+1383666443555	Client disconnect. There are now 48 clients connected.
+1383666443555	Client disconnect. There are now 47 clients connected.
+1383666443556	Client disconnect. There are now 46 clients connected.
+1383666443556	Client disconnect. There are now 45 clients connected.
+1383666443556	Client disconnect. There are now 44 clients connected.
+1383666443556	Client disconnect. There are now 43 clients connected.
+1383666443557	Client disconnect. There are now 42 clients connected.
+1383666443557	Client disconnect. There are now 41 clients connected.
+1383666443557	Client disconnect. There are now 40 clients connected.
+1383666443557	Client disconnect. There are now 39 clients connected.
+1383666443557	Client disconnect. There are now 38 clients connected.
+1383666443558	Client disconnect. There are now 37 clients connected.
+1383666443558	Client disconnect. There are now 36 clients connected.
+1383666443558	Client disconnect. There are now 35 clients connected.
+1383666443559	Client disconnect. There are now 34 clients connected.
+1383666443559	Client disconnect. There are now 33 clients connected.
+1383666443559	Client disconnect. There are now 32 clients connected.
+1383666443559	Client disconnect. There are now 31 clients connected.
+1383666443560	Client disconnect. There are now 30 clients connected.
+1383666443560	Client disconnect. There are now 29 clients connected.
+1383666443560	Client disconnect. There are now 28 clients connected.
+1383666443560	Client disconnect. There are now 27 clients connected.
+1383666443561	Client disconnect. There are now 26 clients connected.
+1383666443561	Client disconnect. There are now 25 clients connected.
+1383666443561	Client disconnect. There are now 24 clients connected.
+1383666443561	Client disconnect. There are now 23 clients connected.
+1383666443562	Client disconnect. There are now 22 clients connected.
+1383666443562	Client disconnect. There are now 21 clients connected.
+1383666443562	Client disconnect. There are now 20 clients connected.
+1383666443562	Client disconnect. There are now 19 clients connected.
+1383666443563	Client disconnect. There are now 18 clients connected.
+1383666443563	Client disconnect. There are now 17 clients connected.
+1383666443563	Client disconnect. There are now 16 clients connected.
+1383666443564	Client disconnect. There are now 15 clients connected.
+1383666443564	Client disconnect. There are now 14 clients connected.
+1383666443564	Client disconnect. There are now 13 clients connected.
+1383666443564	Client disconnect. There are now 12 clients connected.
+1383666443565	Client disconnect. There are now 11 clients connected.
+1383666443565	Client disconnect. There are now 10 clients connected.
+1383666443565	Client disconnect. There are now 9 clients connected.
+1383666443565	Client disconnect. There are now 8 clients connected.
+1383666443565	Client disconnect. There are now 7 clients connected.
+1383666443566	Client disconnect. There are now 6 clients connected.
+1383666443566	Client disconnect. There are now 5 clients connected.
+1383666443566	Client disconnect. There are now 4 clients connected.
+1383666443566	Client disconnect. There are now 3 clients connected.
+1383666443567	Client disconnect. There are now 2 clients connected.
+1383666443567	Client disconnect. There are now 1 clients connected.
+1383666443567	Client disconnect. There are now 0 clients connected.
+1383666463551	Client connect. There are now 1 clients connected.
+1383666463551	Accepted connection from /10.128.23.87:36676
+1383666463737	Client connect. There are now 2 clients connected.
+1383666463737	Accepted connection from /10.128.23.87:36677
+1383666463739	Client connect. There are now 3 clients connected.
+1383666463740	Accepted connection from /10.128.23.87:36678
+1383666463741	Client connect. There are now 4 clients connected.
+1383666463742	Accepted connection from /10.128.23.87:36679
+1383666463749	Client connect. There are now 5 clients connected.
+1383666463749	Accepted connection from /10.128.23.87:36680
+1383666463750	Client connect. There are now 6 clients connected.
+1383666463750	Accepted connection from /10.128.23.87:36681
+1383666463752	Client connect. There are now 7 clients connected.
+1383666463752	Accepted connection from /10.128.23.87:36682
+1383666463761	Client connect. There are now 8 clients connected.
+1383666463761	Accepted connection from /10.128.23.87:36683
+1383666463762	Client connect. There are now 9 clients connected.
+1383666463762	Accepted connection from /10.128.23.87:36684
+1383666463764	Client connect. There are now 10 clients connected.
+1383666463764	Accepted connection from /10.128.23.87:36685
+1383666463766	Client connect. There are now 11 clients connected.
+1383666463766	Accepted connection from /10.128.23.87:36686
+1383666463768	Client connect. There are now 12 clients connected.
+1383666463768	Accepted connection from /10.128.23.87:36687
+1383666463769	Client connect. There are now 13 clients connected.
+1383666463770	Accepted connection from /10.128.23.87:36688
+1383666463771	Client connect. There are now 14 clients connected.
+1383666463771	Accepted connection from /10.128.23.87:36689
+1383666463772	Client connect. There are now 15 clients connected.
+1383666463772	Accepted connection from /10.128.23.87:36690
+1383666463773	Client connect. There are now 16 clients connected.
+1383666463774	Accepted connection from /10.128.23.87:36691
+1383666463775	Client connect. There are now 17 clients connected.
+1383666463775	Accepted connection from /10.128.23.87:36692
+1383666463776	Client connect. There are now 18 clients connected.
+1383666463777	Accepted connection from /10.128.23.87:36693
+1383666463778	Client connect. There are now 19 clients connected.
+1383666463778	Accepted connection from /10.128.23.87:36694
+1383666463780	Client connect. There are now 20 clients connected.
+1383666463780	Accepted connection from /10.128.23.87:36695
+1383666463781	Client connect. There are now 21 clients connected.
+1383666463782	Accepted connection from /10.128.23.87:36696
+1383666463783	Client connect. There are now 22 clients connected.
+1383666463784	Accepted connection from /10.128.23.87:36697
+1383666463785	Client connect. There are now 23 clients connected.
+1383666463785	Accepted connection from /10.128.23.87:36698
+1383666463787	Client connect. There are now 24 clients connected.
+1383666463787	Accepted connection from /10.128.23.87:36699
+1383666463789	Client connect. There are now 25 clients connected.
+1383666463789	Accepted connection from /10.128.23.87:36700
+1383666463790	Client connect. There are now 26 clients connected.
+1383666463790	Accepted connection from /10.128.23.87:36701
+1383666463792	Client connect. There are now 27 clients connected.
+1383666463792	Accepted connection from /10.128.23.87:36702
+1383666463793	Client connect. There are now 28 clients connected.
+1383666463793	Accepted connection from /10.128.23.87:36703
+1383666463794	Client connect. There are now 29 clients connected.
+1383666463794	Accepted connection from /10.128.23.87:36704
+1383666463796	Client connect. There are now 30 clients connected.
+1383666463796	Accepted connection from /10.128.23.87:36705
+1383666463798	Client connect. There are now 31 clients connected.
+1383666463798	Accepted connection from /10.128.23.87:36706
+1383666463800	Client connect. There are now 32 clients connected.
+1383666463800	Accepted connection from /10.128.23.87:36707
+1383666463801	Client connect. There are now 33 clients connected.
+1383666463801	Accepted connection from /10.128.23.87:36708
+1383666463803	Client connect. There are now 34 clients connected.
+1383666463803	Accepted connection from /10.128.23.87:36709
+1383666463804	Client connect. There are now 35 clients connected.
+1383666463804	Accepted connection from /10.128.23.87:36710
+1383666463806	Client connect. There are now 36 clients connected.
+1383666463806	Accepted connection from /10.128.23.87:36711
+1383666463807	Client connect. There are now 37 clients connected.
+1383666463807	Accepted connection from /10.128.23.87:36712
+1383666463809	Client connect. There are now 38 clients connected.
+1383666463809	Accepted connection from /10.128.23.87:36713
+1383666463810	Client connect. There are now 39 clients connected.
+1383666463810	Accepted connection from /10.128.23.87:36714
+1383666463812	Client connect. There are now 40 clients connected.
+1383666463812	Accepted connection from /10.128.23.87:36715
+1383666463813	Client connect. There are now 41 clients connected.
+1383666463813	Accepted connection from /10.128.23.87:36716
+1383666463814	Client connect. There are now 42 clients connected.
+1383666463814	Accepted connection from /10.128.23.87:36717
+1383666463816	Client connect. There are now 43 clients connected.
+1383666463816	Accepted connection from /10.128.23.87:36718
+1383666463817	Client connect. There are now 44 clients connected.
+1383666463817	Accepted connection from /10.128.23.87:36719
+1383666463818	Client connect. There are now 45 clients connected.
+1383666463818	Accepted connection from /10.128.23.87:36720
+1383666463819	Client connect. There are now 46 clients connected.
+1383666463819	Accepted connection from /10.128.23.87:36721
+1383666463821	Client connect. There are now 47 clients connected.
+1383666463821	Accepted connection from /10.128.23.87:36722
+1383666463822	Client connect. There are now 48 clients connected.
+1383666463822	Accepted connection from /10.128.23.87:36723
+1383666463823	Client connect. There are now 49 clients connected.
+1383666463823	Accepted connection from /10.128.23.87:36724
+1383666463825	Client connect. There are now 50 clients connected.
+1383666463825	Accepted connection from /10.128.23.87:36725
+1383666463827	Client connect. There are now 51 clients connected.
+1383666463827	Accepted connection from /10.128.23.87:36726
+1383666463851	Client disconnect. There are now 50 clients connected.
+1383666466448	Client connect. There are now 51 clients connected.
+1383666466449	Accepted connection from /10.128.21.98:48685
+1383666467252	Client connect. There are now 52 clients connected.
+1383666467252	Accepted connection from /10.128.21.98:48686
+1383666467256	Client connect. There are now 53 clients connected.
+1383666467256	Accepted connection from /10.128.21.98:48687
+1383666467260	Client connect. There are now 54 clients connected.
+1383666467260	Accepted connection from /10.128.21.98:48688
+1383666467262	Client connect. There are now 55 clients connected.
+1383666467263	Accepted connection from /10.128.21.98:48689
+1383666467272	Client connect. There are now 56 clients connected.
+1383666467272	Accepted connection from /10.128.21.98:48690
+1383666467289	Client connect. There are now 57 clients connected.
+1383666467289	Accepted connection from /10.128.21.98:48691
+1383666467291	Client connect. There are now 58 clients connected.
+1383666467291	Accepted connection from /10.128.21.98:48692
+1383666467303	Client connect. There are now 59 clients connected.
+1383666467304	Accepted connection from /10.128.21.98:48693
+1383666467307	Client connect. There are now 60 clients connected.
+1383666467308	Accepted connection from /10.128.21.98:48694
+1383666467310	Client connect. There are now 61 clients connected.
+1383666467310	Accepted connection from /10.128.21.98:48695
+1383666467312	Client connect. There are now 62 clients connected.
+1383666467312	Accepted connection from /10.128.21.98:48696
+1383666467314	Client connect. There are now 63 clients connected.
+1383666467314	Accepted connection from /10.128.21.98:48697
+1383666467316	Client connect. There are now 64 clients connected.
+1383666467316	Accepted connection from /10.128.21.98:48698
+1383666467319	Client connect. There are now 65 clients connected.
+1383666467319	Accepted connection from /10.128.21.98:48699
+1383666467323	Client connect. There are now 66 clients connected.
+1383666467324	Accepted connection from /10.128.21.98:48700
+1383666467330	Client connect. There are now 67 clients connected.
+1383666467332	Accepted connection from /10.128.21.98:48701
+1383666467334	Client connect. There are now 68 clients connected.
+1383666467334	Accepted connection from /10.128.21.98:48702
+1383666467336	Client connect. There are now 69 clients connected.
+1383666467336	Accepted connection from /10.128.21.98:48703
+1383666467340	Client connect. There are now 70 clients connected.
+1383666467340	Accepted connection from /10.128.21.98:48704
+1383666467344	Client connect. There are now 71 clients connected.
+1383666467345	Accepted connection from /10.128.21.98:48705
+1383666467347	Client connect. There are now 72 clients connected.
+1383666467348	Accepted connection from /10.128.21.98:48706
+1383666467354	Client connect. There are now 73 clients connected.
+1383666467354	Accepted connection from /10.128.21.98:48707
+1383666467360	Client connect. There are now 74 clients connected.
+1383666467360	Accepted connection from /10.128.21.98:48708
+1383666467362	Client connect. There are now 75 clients connected.
+1383666467362	Accepted connection from /10.128.21.98:48709
+1383666467364	Client connect. There are now 76 clients connected.
+1383666467364	Accepted connection from /10.128.21.98:48710
+1383666467366	Client connect. There are now 77 clients connected.
+1383666467366	Accepted connection from /10.128.21.98:48711
+1383666467368	Client connect. There are now 78 clients connected.
+1383666467368	Accepted connection from /10.128.21.98:48712
+1383666467370	Client connect. There are now 79 clients connected.
+1383666467370	Accepted connection from /10.128.21.98:48713
+1383666467372	Client connect. There are now 80 clients connected.
+1383666467372	Accepted connection from /10.128.21.98:48714
+1383666467376	Client connect. There are now 81 clients connected.
+1383666467376	Accepted connection from /10.128.21.98:48715
+1383666467383	Client connect. There are now 82 clients connected.
+1383666467383	Accepted connection from /10.128.21.98:48716
+1383666467388	Client connect. There are now 83 clients connected.
+1383666467388	Accepted connection from /10.128.21.98:48717
+1383666467390	Client connect. There are now 84 clients connected.
+1383666467390	Accepted connection from /10.128.21.98:48718
+1383666467392	Client connect. There are now 85 clients connected.
+1383666467392	Accepted connection from /10.128.21.98:48719
+1383666467394	Client connect. There are now 86 clients connected.
+1383666467394	Accepted connection from /10.128.21.98:48720
+1383666467396	Client connect. There are now 87 clients connected.
+1383666467396	Accepted connection from /10.128.21.98:48721
+1383666467398	Client connect. There are now 88 clients connected.
+1383666467398	Accepted connection from /10.128.21.98:48722
+1383666467403	Client connect. There are now 89 clients connected.
+1383666467403	Accepted connection from /10.128.21.98:48723
+1383666467411	Client connect. There are now 90 clients connected.
+1383666467411	Accepted connection from /10.128.21.98:48724
+1383666467413	Client connect. There are now 91 clients connected.
+1383666467414	Accepted connection from /10.128.21.98:48725
+1383666467416	Client connect. There are now 92 clients connected.
+1383666467416	Accepted connection from /10.128.21.98:48726
+1383666467419	Client connect. There are now 93 clients connected.
+1383666467419	Accepted connection from /10.128.21.98:48727
+1383666467424	Client connect. There are now 94 clients connected.
+1383666467424	Accepted connection from /10.128.21.98:48728
+1383666467429	Client connect. There are now 95 clients connected.
+1383666467429	Accepted connection from /10.128.21.98:48729
+1383666467433	Client connect. There are now 96 clients connected.
+1383666467433	Accepted connection from /10.128.21.98:48730
+1383666467435	Client connect. There are now 97 clients connected.
+1383666467436	Accepted connection from /10.128.21.98:48731
+1383666467438	Client connect. There are now 98 clients connected.
+1383666467438	Accepted connection from /10.128.21.98:48732
+1383666467441	Client connect. There are now 99 clients connected.
+1383666467442	Accepted connection from /10.128.21.98:48733
+1383666467444	Client connect. There are now 100 clients connected.
+1383666467444	Accepted connection from /10.128.21.98:48734
+1383666467449	Client connect. There are now 101 clients connected.
+1383666467449	Accepted connection from /10.128.21.98:48735
+1383666467500	Client disconnect. There are now 100 clients connected.
+1383666527975	Client disconnect. There are now 99 clients connected.
+1383666527976	Client disconnect. There are now 98 clients connected.
+1383666527976	Client disconnect. There are now 97 clients connected.
+1383666527976	Client disconnect. There are now 96 clients connected.
+1383666527977	Client disconnect. There are now 95 clients connected.
+1383666527977	Client disconnect. There are now 94 clients connected.
+1383666527977	Client disconnect. There are now 93 clients connected.
+1383666527977	Client disconnect. There are now 92 clients connected.
+1383666527977	Client disconnect. There are now 91 clients connected.
+1383666527978	Client disconnect. There are now 90 clients connected.
+1383666527978	Client disconnect. There are now 89 clients connected.
+1383666527978	Client disconnect. There are now 88 clients connected.
+1383666527979	Client disconnect. There are now 87 clients connected.
+1383666527980	Client disconnect. There are now 86 clients connected.
+1383666527980	Client disconnect. There are now 85 clients connected.
+1383666527980	Client disconnect. There are now 84 clients connected.
+1383666527980	Client disconnect. There are now 83 clients connected.
+1383666527981	Client disconnect. There are now 82 clients connected.
+1383666527981	Client disconnect. There are now 81 clients connected.
+1383666527981	Client disconnect. There are now 80 clients connected.
+1383666527981	Client disconnect. There are now 79 clients connected.
+1383666527982	Client disconnect. There are now 78 clients connected.
+1383666527982	Client disconnect. There are now 77 clients connected.
+1383666527982	Client disconnect. There are now 76 clients connected.
+1383666527982	Client disconnect. There are now 75 clients connected.
+1383666527982	Client disconnect. There are now 74 clients connected.
+1383666527983	Client disconnect. There are now 73 clients connected.
+1383666527983	Client disconnect. There are now 72 clients connected.
+1383666527983	Client disconnect. There are now 71 clients connected.
+1383666527983	Client disconnect. There are now 70 clients connected.
+1383666527983	Client disconnect. There are now 69 clients connected.
+1383666527984	Client disconnect. There are now 68 clients connected.
+1383666527984	Client disconnect. There are now 67 clients connected.
+1383666527984	Client disconnect. There are now 66 clients connected.
+1383666527984	Client disconnect. There are now 65 clients connected.
+1383666527984	Client disconnect. There are now 64 clients connected.
+1383666527985	Client disconnect. There are now 63 clients connected.
+1383666527985	Client disconnect. There are now 62 clients connected.
+1383666527985	Client disconnect. There are now 61 clients connected.
+1383666527985	Client disconnect. There are now 60 clients connected.
+1383666527985	Client disconnect. There are now 59 clients connected.
+1383666527986	Client disconnect. There are now 58 clients connected.
+1383666527986	Client disconnect. There are now 57 clients connected.
+1383666527986	Client disconnect. There are now 56 clients connected.
+1383666527986	Client disconnect. There are now 55 clients connected.
+1383666527987	Client disconnect. There are now 54 clients connected.
+1383666527987	Client disconnect. There are now 53 clients connected.
+1383666527987	Client disconnect. There are now 52 clients connected.
+1383666527987	Client disconnect. There are now 51 clients connected.
+1383666527987	Client disconnect. There are now 50 clients connected.

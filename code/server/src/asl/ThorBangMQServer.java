@@ -61,13 +61,7 @@ public class ThorBangMQServer {
 	}
 
 	public static ThorBangMQServer build(ServerSettings settings, Logger logger) throws IOException{
-		PoolingDataSource connectionPool = new PoolingDataSource();
-		connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
-		connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
-		connectionPool.setUser(settings.DB_USERNAME);
-		connectionPool.setServerName(settings.DB_SERVER_NAME);
-		connectionPool.setPassword(settings.DB_PASSWORD);
-		connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
+		PoolingDataSource connectionPool = (PoolingDataSource) PoolingDataSource.getDataSource(settings.DB_DATA_SOURCE_NAME);
 		IPersistence persistence = settings.PERSISTENCE_TYPE.equals(PersistenceType.MEMORY)
 				? new InMemoryPersistence()
 				: settings.PERSISTENCE_TYPE.equals(PersistenceType.POSTGRES)
