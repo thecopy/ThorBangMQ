@@ -6,11 +6,12 @@ from os import path, chdir, mkdir
 from subprocess import call, PIPE, Popen
 from time import sleep, time
 import logging
+import random
 
 logger = logging.getLogger('distributor')
 
 from droplets import (createclient, createserver, createdatabase, getclients,
-                      getservers, getdatabase, DEFAULT_DROPLET_SIZE)
+                      getservers, getdatabase, DEFAULT_DROPLET_SIZE, getnewtestid)
 
 ROOT = path.dirname(path.realpath(__file__))
 
@@ -30,7 +31,7 @@ REMOTE_TEST_LOG_FILE_PATH = "/root/test_log.txt"
 REMOTE_APPLICATION_LOG_FILE_PATH = "/root/application_log.txt"
 
 
-SSH_COMMAND = "ssh root@{ip}"
+SSH_COMMAND = "ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@{ip}"
 SCREEN_COMMAND = "screen -d -m -S {name}"
 
 DROPLET_CREATION_TIME = 180  # seconds it takes for a droplet to be ready after creation
@@ -86,15 +87,16 @@ def scpdownloadfile(ip, remotefile, localfile):
     call(scpcmd.split(' '), stdout=PIPE)
 
 
-def startmissingmachines(numclients, numservers, numdatabases=1, size=DEFAULT_DROPLET_SIZE):
+def startmissingmachines(numclients, numservers, numdatabases=1, size=DEFAULT_DROPLET_SIZE,
+                         identifier):
     clientsstarted = startmissingmachine(machines=getclients(), nummachines=numclients,
-                                         createfun=functools.partial(createclient, size))
+                                         createfun=functools.partial(createclient, size, identifier))
     logger.info("Started {} client machines.".format(clientsstarted))
     serversstarted = startmissingmachine(machines=getservers(), nummachines=numservers,
-                                         createfun=functools.partial(createserver, size))
+                                         createfun=functools.partial(createserver, size, identifier))
     logger.info("Started {} server machines.".format(serversstarted))
     databasestarted = startmissingmachine(machines=getdatabase(), nummachines=1,
-                                          createfun=functools.partial(createdatabase, size))
+                                          createfun=functools.partial(createdatabase, size, identifier))
     logger.info("Started {} database machines.".format(databasestarted))
 
     started = clientsstarted + serversstarted + databasestarted
@@ -133,13 +135,14 @@ def parsetestfile(testfile):
     return testdesc
 
 
-def serversstarttest(servers):
+def serversstarttest(servers, cleardatabase=False):
     logger.info("Starting test on {numservers} servers".format(numservers=len(servers)))
     for globalip, localip in servers:
         killallscreens(globalip)
         cmd = SSH_COMMAND.format(ip=globalip).split(' ')
-        cmd += ["{screen} java -jar {file}".format(screen=SCREEN_COMMAND.format(name="server"),
-                                                   file=REMOTE_SERVER_FILE)]
+        cmd += ["{screen} java -jar {file} cleardb={cleardb}".format(screen=SCREEN_COMMAND.format(name="server"),
+                                                                     file=REMOTE_SERVER_FILE,
+                                                                     cleardb='true' if cleardatabase else 'false')]
         call(cmd)
 
 
@@ -209,6 +212,7 @@ def fetchlog((remoteip, localip), machinetype, testnum, logdir):
 
 
 def starttest(testname):
+    identifier = getnewtestid()
     testdir = path.join(ROOT, 'test-definitions', testname)
     if not path.isdir(testdir):
         logger.critical("No such test directory: {dir}".format(dir=testdir))
@@ -220,16 +224,20 @@ def starttest(testname):
     testdesc = parsetestfile(testfile)
 
     numclients, numservers = testdesc.get('numclients'), testdesc.get('numservers')
-    startmissingmachines(numclients=numclients,
-                         numservers=numservers)
-    clients = getclients()[0:numclients]
-    servers = getservers()[0:numservers]
+    startmissingmachines(numclients=numclients, numservers=numservers,
+                         identifier=identifier)
+    clients = getclients(identifier)[0:numclients]
+    servers = getservers(identifier)[0:numservers]
 
     distributejavafiles(clients=clients, servers=servers)
 
-    serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE_NAME)
+    performtests(clients, servers, testdesc, testdir)
+    logger.info("Test done!")
 
-    __, databaseip = getdatabase()[0]
+
+def performtests(clients, servers, testdesc, testdir):
+    __, databaseip = getdatabase(identifier)[0]
+    serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE_NAME)
 
     for i, serverarg in enumerate(testdesc.get('serverargs')):
         i += 1
@@ -238,13 +246,12 @@ def starttest(testname):
                                databasecons=serverarg['databaseconnections'],
                                workerthreads=serverarg['workerthreads'])
         scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE_NAME))
-        serversstarttest(servers=servers)
+        cleardatabase = serverarg.get('cleardatabase', False)
+        serversstarttest(servers=servers, cleardatabase=cleardatabase)
 
         for u, clientarg in enumerate(testdesc.get('clientargs')):
             u += 1
-            clientsstarttest(clients=clients,
-                             servers=servers,
-                             testname=testname,
+            clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
             waittime = int(testdesc.get('testtime'))
             wait(waittime)
@@ -254,7 +261,6 @@ def starttest(testname):
             wait(10)
         stoptest(servers)
         fetchlogs(clients=[], servers=servers, testdir=testdir, testnum=i)
-    logger.info("Test done!")
 
 
 def wait(waittime):
