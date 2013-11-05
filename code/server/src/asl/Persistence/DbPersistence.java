@@ -415,7 +415,7 @@ public class DbPersistence implements IPersistence {
 					"ON asl.messages "+
 					"USING btree "+
 					"(time_of_arrival NULLS FIRST);" +
-				"CREATE INDEX all "+
+				"CREATE INDEX receiver_toa_queue "+
 					"ON asl.messages "+
 					" USING btree "+
 					" (receiver_id, time_of_arrival, queue_id);";
