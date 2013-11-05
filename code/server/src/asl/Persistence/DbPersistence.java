@@ -411,9 +411,13 @@ public class DbPersistence implements IPersistence {
 				+ "OIDS=FALSE " + "); " + "ALTER TABLE messages "
 				+ "OWNER TO asl; " + " "
 				+ "CREATE INDEX time_of_arrival " +
-				"ON asl.messages "+
-				"USING btree "+
-				"(time_of_arrival NULLS FIRST);";
+					"ON asl.messages "+
+					"USING btree "+
+					"(time_of_arrival NULLS FIRST);" +
+				"CREATE INDEX all "+
+					"ON asl.messages "+
+					" USING btree "+
+					" (receiver_id, time_of_arrival, queue_id);";
 		try {
 			executeStatement(sql, logger);
 		} catch (SQLException e) {
