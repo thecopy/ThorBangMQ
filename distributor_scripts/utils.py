@@ -1,5 +1,6 @@
 import re
 import functools
+from collections import defaultdict
 from sys import exit
 from os import path, chdir, mkdir
 from subprocess import call, PIPE, Popen
@@ -47,9 +48,8 @@ def buildjavafiles():
 def _antmake(f):
     chdir(path.dirname(f))
     proc = Popen(['ant'], stdout=PIPE)
-    out = ""
-    for line in proc.stdout:
-        out += line.strip()
+    out = " ".join(line for line in proc.stdout)
+    logger.debug("_antmake: {}".format(out))
     if not "build successful" in out.lower():
         logger.info("Building {file} FAILED!".format(file=path.basename(f)))
         exit(-1)
@@ -75,10 +75,9 @@ def scpuploadfile(machines, localfile, remotefile):
 
 
 def killallscreens(ip):
-    cmd = SSH_COMMAND.format(ip=ip).split(' ')
-    cmd += "killall screen".split(' ')
+    cmd = "{ssh} killall screen".format(ssh=SSH_COMMAND.format(ip=ip))
     logger.info("Destroying all screens on {ip}".format(ip=ip))
-    call(cmd)
+    call(cmd.split(' '))
 
 
 def scpdownloadfile(ip, remotefile, localfile):
@@ -114,16 +113,16 @@ def startmissingmachine(machines, nummachines, createfun):
 
 
 def parsetestfile(testfile):
-    testdesc = {}
+    testdesc = defaultdict(list)
     with open(testfile, 'r') as f:
         for line in f:
             line = line.strip()
             splitline = line.split('=')
-            typ = splitline[0]
+            typ, args = splitline
             if typ == "testtime" or typ.startswith('num'):
-                testdesc[typ] = int(splitline[1])
+                testdesc[typ] = int(args)
             elif typ == "clientargs":
-                testdesc['clientargs'] = splitline[1].split(',')
+                testdesc['clientargs'].append(args.split(','))
     return testdesc
 
 
@@ -138,8 +137,9 @@ def serversstarttest(servers):
 
 
 def clientsstarttest(clients, servers, testname, args):
-    logger.info("Starting {numclients} clients in test '{testname}' ".format(numclients=len(clients),
-                                                                             testname=testname))
+    logger.info("Starting {numclients} clients in test '{testname}' "
+                "with args '{args}'".format(numclients=len(clients), testname=testname,
+                                            args=args))
     for i, client in enumerate(clients):
         # divide clients evenly across servers
         servernum = (i + 1) % len(servers)
@@ -158,8 +158,8 @@ def clientsstarttest(clients, servers, testname, args):
 
 def stoptest(*args):
     for machines in args:
-        for machine in machines:
-            killallscreens(machine[0])
+        for remoteip, localip in machines:
+            killallscreens(remoteip)
 
 
 def updateserverconfigfile(configfile, databaseip):
@@ -172,29 +172,28 @@ def updateserverconfigfile(configfile, databaseip):
         f.write(res)
 
 
-def fetchlogs(clients, servers, testdir):
+def fetchlogs(clients, servers, testdir, testnum=0):
     logdir = path.join(testdir, 'logs')
     for i, client in enumerate(clients):
-        fetchlog(client, "client_{}".format(i), logdir)
+        fetchlog(client, "client{}".format(i), testnum, logdir)
 
     for i, server in enumerate(servers):
-        fetchlog(server, "server_{}".format(i), logdir)
+        fetchlog(server, "server{}".format(i), testnum, logdir)
 
 
-def fetchlog(machine, machinetype, logdir):
+def fetchlog((remoteip, localip), machinetype, testnum, logdir):
+    logstr = "{timestamp}_test{testnum}_{machinetype}_{logtype}.txt"
     if not path.isdir(logdir):
         mkdir(logdir)
     timestamp = int(time())
-    logname = '{logtype}_{machinetype}__{timestamp}.txt'.format(logtype='test',
-                                                                machinetype=machinetype,
-                                                                timestamp=timestamp)
+    logname = logstr.format(logtype='test', machinetype=machinetype,
+                            timestamp=timestamp, testnum=testnum)
     logfile = path.join(logdir, logname)
-    scpdownloadfile(machine[0], REMOTE_TEST_LOG_FILE_PATH, logfile)
-    logname = '{logtype}_{machinetype}__{timestamp}.txt'.format(logtype='application',
-                                                                machinetype=machinetype,
-                                                                timestamp=timestamp)
+    scpdownloadfile(remoteip, REMOTE_TEST_LOG_FILE_PATH, logfile)
+    logname = logstr.format(logtype='application', machinetype=machinetype,
+                            timestamp=timestamp, testnum=testnum)
     logfile = path.join(logdir, logname)
-    scpdownloadfile(machine[0], REMOTE_APPLICATION_LOG_FILE_PATH, logfile)
+    scpdownloadfile(remoteip, REMOTE_APPLICATION_LOG_FILE_PATH, logfile)
 
 
 def starttest(testname):
@@ -208,31 +207,45 @@ def starttest(testname):
     testfile = path.join(testdir, 'test.txt')
     testdesc = parsetestfile(testfile)
 
-    startmissingmachines(numclients=testdesc.get('numclients'),
-                         numservers=testdesc.get('numservers'))
-    clients = getclients()
-    servers = getservers()
+    numclients, numservers = testdesc.get('numclients'), testdesc.get('numservers')
+    startmissingmachines(numclients=numclients,
+                         numservers=numservers)
+    clients = getclients()[0:numclients]
+    servers = getservers()[0:numservers]
 
     distributejavafiles(clients=clients, servers=servers)
 
     serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE_NAME)
-    updateserverconfigfile(serverconfigfile, getdatabase()[0][1])
+
+    __, databaseip = getdatabase()[0]
+    updateserverconfigfile(serverconfigfile, databaseip)
     scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE_NAME))
 
     serversstarttest(servers=servers)
-    clientsstarttest(clients=clients,
-                     servers=servers,
-                     testname=testname,
-                     args=testdesc.get('clientargs'))
 
-    # wait until we stop the test
-    waittime = int(testdesc.get('testtime'))
+    clientargs = testdesc.get('clientargs')
+    if not isinstance(clientargs, list):
+        clientargs = [clientargs]
+
+    for i, clientarg in enumerate(clientargs):
+        clientsstarttest(clients=clients,
+                         servers=servers,
+                         testname=testname,
+                         args=clientarg)
+        waittime = int(testdesc.get('testtime'))
+        wait(waittime)
+        stoptest(clients)
+        fetchlogs(clients=clients, servers=[], testdir=testdir, testnum=i)
+        # wait 10 seconds so that we can identify test switching on the server
+        wait(10)
+
+    stoptest(servers)
+    fetchlogs(clients=[], servers=servers, testdir=testdir)
+    logger.info("Test done!")
+
+
+def wait(waittime):
     logger.info("Waiting for {secs} seconds".format(secs=waittime))
     for i in range(0, waittime, WAIT_INTERVAL):
-        logger.info("Waited {} out of {}".format(i, waittime))
+        logger.debug("Waited {} out of {}".format(i, waittime))
         sleep(WAIT_INTERVAL)
-
-    stoptest(clients, servers)
-
-    fetchlogs(clients=clients, servers=servers, testdir=testdir)
-    logger.info("Test done!")
