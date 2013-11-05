@@ -1,0 +1,108 @@
+\title          {Advanced Systems Lab}
+\author         {Erik Jonsson (\textit{jerik}) and Michael Bang (\textit{mbang})}
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+    \DeclareGraphicsExtensions{.pdf,.png,.jpg}
+    \graphicspath{{img/}}
+
+\begin{document}
+    \maketitle
+
+    A little explanation of how the report is structured.
+
+    \section{Implementation description}
+        TODO: make \& insert graphs
+
+        \subsection{Client}
+        \subsection{Middleware}
+            \begin{itemize}
+                \item Resource pooling (locks vs. overhead of setting up new connections/spawning new threads)
+                \begin{itemize}
+                    \item Database connections
+                    \item Worker threads
+                \end{itemize}
+                \item Non-blocking sockets (all network i/o in main thread vs. overhead of spawning new threads, conceptually easier to implement all i/o in main thread vs. doing it in worker threads)
+            \end{itemize}
+        \subsection{Database}
+            \begin{itemize}
+                \item Indexes
+                \item Choice of schema (replicating messages vs. using relation table)
+                \item Using direct SQL calls (size of direct SQL text vs. size of text using stored procedures)
+            \end{itemize}
+
+    \section{Testing infrastructure}
+
+    \section{Tests}
+        TODO: Introductory comments.\\
+        \\
+        We used DigitalOcean.\\
+        \\
+        We have identified these variables which we modify when testing the performance of our system.
+
+        \begin{itemize}
+            \item Client
+            \begin{itemize}
+                \item Number of clients per server
+                \item Total number of clients
+                \item Actual test performed
+            \end{itemize}
+            \item Middleware
+            \begin{itemize}
+                \item Database connections
+                \item Worker threads
+                \item Impact of using database (vs. not storing messages ['haha, I fooled you'])
+            \end{itemize}
+            \item Database
+        \end{itemize}
+
+        \subsection{Pure send message}
+            \begin{itemize}
+                \item NOTE: we know that the amount of messages is going up (that we are varying more variables simultaneously).
+                \item Find point where system thrashes
+            \end{itemize}
+
+        \subsection{Pure create queue}
+            \begin{itemize}
+                \item NOTE: we know that the amount of queues is going up (that we are varying more variables simultaneously).
+                \item Find point where system thrashes
+            \end{itemize}
+
+        \subsection{Pure pop}
+        \begin{itemize}
+            \item NOTE: we know that the amount of messages is going down (that we are varying more variables simultaneously). We expect to see the time for each pop to fall.
+            \item Find point where system thrashes
+        \end{itemize}
+
+        \subsection{Pure peek}
+
+        \subsection{Mixed requests}
+            \begin{itemize}
+                \item Simulation of 'real workload'?
+            \end{itemize}
+
+        \subsection{Database connections vs. worker threads}
+            This is a $2^2$ test.
+
+        \subsection{Number of messages connections vs. time of reads}
+            This is a $2^2$ test.
+
+        \subsection{TODO: More tests}
+
+    \section{Results}
+    TODO: Note that we're using a closed system which has an effect on the system
+        TODO: Show raw data, graphs, do statistical treatment of data
+
+    \section{Analysis}
+
+    \section{Conclusion}
+        \begin{itemize}
+            \item Say something about performance of system
+            \item What we could've done different
+        \end{itemize}
+
+\end{document}
