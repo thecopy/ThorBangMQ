@@ -19,7 +19,7 @@ def main():
         print "5) start test <testname> [<testid>]"
         print "6) list available tests"
         print "7) list running droplets"
-        print "999) destroy all droplets"
+        print "999) destroy all droplets <testid>"
 
         choice = raw_input()
 
@@ -52,8 +52,9 @@ def main():
         elif choice == "7":
             for droplet in getdroplets():
                 logger.info('{name}: ({globalip}, {localip})'.format(name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))
-        elif choice == "999":
-            destroyalldroplets()
+        elif choice.startswith("999"):
+            __, testid = choice.split(' ')
+            destroyalldroplets(int(testid))
 
         print ""
         print "----------------"
