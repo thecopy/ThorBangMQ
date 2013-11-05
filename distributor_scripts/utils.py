@@ -123,6 +123,13 @@ def parsetestfile(testfile):
                 testdesc[typ] = int(args)
             elif typ == "clientargs":
                 testdesc['clientargs'].append(args.split(','))
+            elif typ == "serverargs":
+                args = args.split(',')
+                res = {}
+                for arg in args:
+                    arg, value = arg.split(':')
+                    res[arg] = value
+                testdesc['serverargs'].append(res)
     return testdesc
 
 
@@ -162,11 +169,16 @@ def stoptest(*args):
             killallscreens(remoteip)
 
 
-def updateserverconfigfile(configfile, databaseip):
+def updateserverconfigfile(configfile, databaseip, databasecons, workerthreads):
     res = ""
     with open(configfile, 'r') as f:
         res = f.read()
-    res = re.sub("DB_SERVER_NAME\t.*?\n", "DB_SERVER_NAME\t{}\n".format(databaseip), res)
+    res = re.sub("DB_SERVER_NAME\t.*?\n",
+                 "DB_SERVER_NAME\t{}\n".format(databaseip), res)
+    res = re.sub("DB_MAX_CONNECTIONS\t.*?\n",
+                 "DB_MAX_CONNECTIONS\t{}\n".format(databasecons), res)
+    res = re.sub("NUM_CLIENTREQUESTWORKER_THREADS\t.*?\n",
+                 "NUM_CLIENTREQUESTWORKER_THREADS\t{}\n".format(workerthreads), res)
     logger.debug("new settings file: {}".format(res))
     with open(configfile, 'w') as f:
         f.write(res)
@@ -218,29 +230,30 @@ def starttest(testname):
     serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE_NAME)
 
     __, databaseip = getdatabase()[0]
-    updateserverconfigfile(serverconfigfile, databaseip)
-    scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE_NAME))
 
-    serversstarttest(servers=servers)
+    for i, serverarg in enumerate(testdesc.get('serverargs')):
+        i += 1
+        # prepare server for next test
+        updateserverconfigfile(serverconfigfile, databaseip=databaseip,
+                               databasecons=serverarg['databaseconnections'],
+                               workerthreads=serverarg['workerthreads'])
+        scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE_NAME))
+        serversstarttest(servers=servers)
 
-    clientargs = testdesc.get('clientargs')
-    if not isinstance(clientargs, list):
-        clientargs = [clientargs]
-
-    for i, clientarg in enumerate(clientargs):
-        clientsstarttest(clients=clients,
-                         servers=servers,
-                         testname=testname,
-                         args=clientarg)
-        waittime = int(testdesc.get('testtime'))
-        wait(waittime)
-        stoptest(clients)
-        fetchlogs(clients=clients, servers=[], testdir=testdir, testnum=i)
-        # wait 10 seconds so that we can identify test switching on the server
-        wait(10)
-
-    stoptest(servers)
-    fetchlogs(clients=[], servers=servers, testdir=testdir)
+        for u, clientarg in enumerate(testdesc.get('clientargs')):
+            u += 1
+            clientsstarttest(clients=clients,
+                             servers=servers,
+                             testname=testname,
+                             args=clientarg)
+            waittime = int(testdesc.get('testtime'))
+            wait(waittime)
+            stoptest(clients)
+            fetchlogs(clients=clients, servers=[], testdir=testdir, testnum=i + u * 0.1)
+            # wait so that we can identify test switching on the server
+            wait(10)
+        stoptest(servers)
+        fetchlogs(clients=[], servers=servers, testdir=testdir, testnum=i)
     logger.info("Test done!")
 
 

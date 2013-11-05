@@ -7,7 +7,7 @@ CLIENT_ID = environ['ASL_DIGITAL_OCEAN_CLIENT_ID']
 
 do = digitalocean.Manager(client_id=CLIENT_ID, api_key=API_KEY)
 
-DEFAULT_DROPLET_SIZE = '2gb'
+DEFAULT_DROPLET_SIZE = '4gb'
 
 
 def getdroplets():
