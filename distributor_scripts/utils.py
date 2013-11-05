@@ -87,8 +87,7 @@ def scpdownloadfile(ip, remotefile, localfile):
     call(scpcmd.split(' '), stdout=PIPE)
 
 
-def startmissingmachines(numclients, numservers, numdatabases=1, size=DEFAULT_DROPLET_SIZE,
-                         identifier):
+def startmissingmachines(numclients, numservers, identifier, numdatabases=1, size=DEFAULT_DROPLET_SIZE):
     clientsstarted = startmissingmachine(machines=getclients(), nummachines=numclients,
                                          createfun=functools.partial(createclient, size, identifier))
     logger.info("Started {} client machines.".format(clientsstarted))
@@ -224,8 +223,7 @@ def starttest(testname):
     testdesc = parsetestfile(testfile)
 
     numclients, numservers = testdesc.get('numclients'), testdesc.get('numservers')
-    startmissingmachines(numclients=numclients, numservers=numservers,
-                         identifier=identifier)
+    startmissingmachines(identifier=identifier, numclients=numclients, numservers=numservers)
     clients = getclients(identifier)[0:numclients]
     servers = getservers(identifier)[0:numservers]
 
