@@ -42,7 +42,6 @@ public class Bootstrapper2 {
 				else
 					logger.severe("Error while checking type of field " 
 									+ field.getName() + ". Not int, boolean or String");
-					
 			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Could not read from configuration." + e);

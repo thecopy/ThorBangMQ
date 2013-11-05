@@ -119,10 +119,8 @@ public class SendMessages extends testRunner.Test {
 			this.userId = userId;
 			
 			try {
-				
 				client = ThorBangMQ.build(hostname, port, userId);
 				client.init();
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -20,17 +20,18 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {		
 		testLogger.setLevel(Level.ALL);
-		applicationLogger.setLevel(Level.WARNING);
+		applicationLogger.setLevel(Level.INFO);
 
 		// Read configuration file
 		ServerSettings settings = Bootstrapper2.StrapTheBoot(applicationLogger);
 		settings = parseArgs(args, settings);
+		settings.logSettings(applicationLogger);
 		
 		try {
 			System.out.println("Starting ThorBang MQ Server");
 
 			final ThorBangMQServer socketServer = ThorBangMQServer.build(settings, applicationLogger);
-			final IntervalLogger intervalLogger = new IntervalLogger(5000, testLogger, Level.SEVERE);
+			final IntervalLogger intervalLogger = new IntervalLogger(settings.LOG_INTERVAL, testLogger, Level.SEVERE);
 			
 			Thread t = new Thread(new Runnable() {
 				

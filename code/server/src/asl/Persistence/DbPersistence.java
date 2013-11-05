@@ -409,8 +409,11 @@ public class DbPersistence implements IPersistence {
 				+ "REFERENCES clients (id) MATCH SIMPLE "
 				+ "ON UPDATE NO ACTION ON DELETE NO ACTION " + ") " + "WITH ( "
 				+ "OIDS=FALSE " + "); " + "ALTER TABLE messages "
-				+ "OWNER TO asl; " + " ";
-
+				+ "OWNER TO asl; " + " "
+				+ "CREATE INDEX time_of_arrival " +
+				"ON asl.messages "+
+				"USING btree "+
+				"(time_of_arrival NULLS FIRST);";
 		try {
 			executeStatement(sql, logger);
 		} catch (SQLException e) {
