@@ -1,6 +1,8 @@
 package asl;
 
+import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.util.logging.Logger;
 
 import asl.infrastructure.PersistenceType;
 
@@ -26,5 +28,12 @@ public class ServerSettings {
 	public boolean DB_DEFAULT_AUTO_COMMIT = false;
 	public String APPLICATION_LOG_PATH = "application_log.txt";
 	public String TEST_LOG_PATH = "test_log.txt";
+	public int LOG_INTERVAL = 10000;
+	
+	public void logSettings(Logger logger) throws IllegalArgumentException, IllegalAccessException{
+		for(Field field : ServerSettings.class.getDeclaredFields()){
+			logger.info(field.getName() + "\t" + field.get(this) + "\n");
+		}
+	}
 
 }
