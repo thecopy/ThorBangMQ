@@ -46,7 +46,7 @@ public class SendAndPopMessages extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger logger) throws Exception {
+	public void run(MemoryLogger applicationLogger, MemoryLogger logger) throws Exception {
 		logger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 		
 		Thread[] clients = new Thread[numberOfClients];

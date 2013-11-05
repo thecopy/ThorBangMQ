@@ -47,8 +47,9 @@ public class Runner {
 	
 	
 	
-	public void runTest(Test test, Settings settings, MemoryLogger logger, String[] args) throws Exception{
+	public void runTest(String testName, Settings settings, MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception{
 		System.out.println("OK. Initing test...");
+		Test test = getTestFromIdentifier(testName);
 		
 		System.out.println("---");
 		test.setConnectionInfo(settings.host, settings.port);
