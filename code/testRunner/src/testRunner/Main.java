@@ -18,14 +18,15 @@ public class Main {
 		
 		Runner r = new Runner();
 		
-		System.out.println("Available tests:");
-		for(Class test : r.getTests()){
-			Test t = (Test)test.newInstance();
-			System.out.println("* " + t.getIdentifier() + ": " + t.getInfo());
-		}
-		
 		String input;
 		if (args.length == 0) {
+			
+			System.out.println("Available tests:");
+			for(Class test : r.getTests()){
+				Test t = (Test)test.newInstance();
+				System.out.println("* " + t.getIdentifier() + ": " + t.getInfo());
+			}
+			
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose test:");
 			input = br.readLine();
@@ -37,7 +38,8 @@ public class Main {
 			settings.host = args[0];
 			input = args[1];
 		}
-		
+		System.out.println("Test= " + input);
+
 		MemoryLogger applicationLogger = new MemoryLogger(true);
 		MemoryLogger testLogger = new MemoryLogger(true);
 		addShutdownHookForSavingLog((MemoryLogger)applicationLogger, settings.APPLICATION_LOG_PATH);

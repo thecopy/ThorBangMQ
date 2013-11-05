@@ -27,7 +27,7 @@ public class BigMessage extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger logger) {
+	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) {
 		ThorBangMQ client;
 		try {
 			client = ThorBangMQ.build(host, port, 1);
