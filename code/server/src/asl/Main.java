@@ -24,6 +24,15 @@ public class Main {
 
 		// Read configuration file
 		ServerSettings settings = Bootstrapper2.StrapTheBoot(applicationLogger);
+		
+		PoolingDataSource connectionPool = new PoolingDataSource();
+		connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
+		connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
+		connectionPool.setUser(settings.DB_USERNAME);
+		connectionPool.setServerName(settings.DB_SERVER_NAME);
+		connectionPool.setPassword(settings.DB_PASSWORD);
+		connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
+		
 		settings = parseArgs(args, settings);
 		settings.logSettings(applicationLogger);
 		
@@ -116,7 +125,18 @@ public class Main {
 	}
 	
 	private static void clearDb(ServerSettings settings){
-		DbPersistence dbPersistence = new DbPersistence((PoolingDataSource)PoolingDataSource.getDataSource(settings.DB_DATA_SOURCE_NAME), null);
+		PoolingDataSource connectionPool = (PoolingDataSource)PoolingDataSource.getDataSource(settings.DB_DATA_SOURCE_NAME);
+		if (connectionPool == null) {
+			connectionPool = new PoolingDataSource();
+			connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
+			connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
+			connectionPool.setUser(settings.DB_USERNAME);
+			connectionPool.setServerName(settings.DB_SERVER_NAME);
+			connectionPool.setPassword(settings.DB_PASSWORD);
+			connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
+		}
+		
+		DbPersistence dbPersistence = new DbPersistence(connectionPool, null);
 		
 		try {
 			System.out.println("Deleting asl schema...");

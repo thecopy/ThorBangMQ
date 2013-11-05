@@ -35,6 +35,7 @@ public class DbPersistence implements IPersistence {
 	public DbPersistence(PoolingDataSource connectionPool, Logger logger) {
 		this.logger = logger;
 		this.connectionPool = connectionPool;
+		System.out.println("connectionPool is null = "  + (null == connectionPool));
 	}
 
 	@Override
