@@ -14,45 +14,51 @@ def getdroplets():
     return do.get_all_droplets()
 
 
-def getclients():
+def getnewtestid():
+    ids = map(_getid, getdroplets())
+    return max(ids) + 1
+
+
+def getclients(testid):
     """ Get a list of 2-tuples where the first element is the droplet's global ip,
     and the second element is the droplet's local ip.
     """
     return [(droplet.ip_address, droplet.private_ip_address)
-            for droplet in getdroplets() if 'client' in droplet.name]
+            for droplet in getdroplets() if 'client' and _getid(droplet) == testid in droplet.name]
 
 
-def getservers():
+def getservers(testid):
     """ Get a list of 2-tuples where the first element is the droplet's global ip,
     and the second element is the droplet's local ip.
     """
     return [(droplet.ip_address, droplet.private_ip_address)
-            for droplet in getdroplets() if 'server' in droplet.name]
+            for droplet in getdroplets() if 'server' and _getid(droplet) == testid in droplet.name]
 
 
-def getdatabase():
+def getdatabase(testid):
     """ Get a list of 2-tuples where the first element is the droplet's global ip,
     and the second element is the droplet's local ip.
     It is assumed that there can be only one database.
     """
     return [(droplet.ip_address, droplet.private_ip_address)
-            for droplet in getdroplets() if 'database' in droplet.name]
+            for droplet in getdroplets() if 'database' and _getid(droplet) == testid in droplet.name]
 
 
-def createclient(size=DEFAULT_DROPLET_SIZE):
+def createclient(size=DEFAULT_DROPLET_SIZE, testid=1):
     clientnumber = len(getclients()) + 1
-    name = 'asl-client-{}'.format(clientnumber)
+    name = 'asl-client-{}-id-{}'.format(clientnumber, testid)
     _createdroplet(name=name, image_id=1001057, size=size)
 
 
-def createserver(size=DEFAULT_DROPLET_SIZE):
+def createserver(size=DEFAULT_DROPLET_SIZE, testid=1):
     servernumber = len(getservers()) + 1
-    name = 'asl-server-{}'.format(servernumber)
+    name = 'asl-server-{}-id-{}'.format(servernumber, testid)
     _createdroplet(name=name, image_id=1001057, size=size)
 
 
-def createdatabase(size=DEFAULT_DROPLET_SIZE):
-    _createdroplet(name='asl-database', image_id=949272, size=size)
+def createdatabase(size=DEFAULT_DROPLET_SIZE,  testid=1):
+    _createdroplet(name='asl-database-id-{}'.format(testid),
+                   image_id=949272, size=size)
 
 
 def _createdroplet(name, image_id, size):
@@ -84,3 +90,7 @@ def _createdroplet(name, image_id, size):
 def destroyalldroplets():
     for droplet in getdroplets():
         droplet.destroy()
+
+
+def _getid(droplet):
+    return int(droplet.name.split('-')[-1])
