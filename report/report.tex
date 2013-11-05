@@ -13,12 +13,15 @@
 \begin{document}
     \maketitle
 
-    A little explanation of how the report is structured.
+    TODO: A little explanation of how the report is structured.
 
     \section{Implementation description}
         TODO: make \& insert graphs
 
         \subsection{Client}
+            \begin{itemize}
+                \item Exception handling
+            \end{itemize}
         \subsection{Middleware}
             \begin{itemize}
                 \item Resource pooling (locks vs. overhead of setting up new connections/spawning new threads)
@@ -27,6 +30,7 @@
                     \item Worker threads
                 \end{itemize}
                 \item Non-blocking sockets (all network i/o in main thread vs. overhead of spawning new threads, conceptually easier to implement all i/o in main thread vs. doing it in worker threads)
+                \item Exception handling
             \end{itemize}
         \subsection{Database}
             \begin{itemize}
@@ -35,15 +39,20 @@
                 \item Using direct SQL calls (size of direct SQL text vs. size of text using stored procedures)
             \end{itemize}
 
-    \section{Testing infrastructure}
+        \subsection{Communication protocol}
+            TODO: Insert document that Erik wrote
 
+    \section{Testing infrastructure}
+        TODO: Describe testing infrastructure
+        
     \section{Tests}
         TODO: Introductory comments.\\
         \\
-        We used DigitalOcean.\\
+        TODO: Note that we used DigitalOcean instead of Amazon.\\
         \\
-        We have identified these variables which we modify when testing the performance of our system.
-
+        \\
+        We have identified these variables which we modify when testing the performance of our system.\\
+        TODO: Complete list
         \begin{itemize}
             \item Client
             \begin{itemize}
@@ -61,22 +70,16 @@
         \end{itemize}
 
         \subsection{Pure send message}
-            \begin{itemize}
-                \item NOTE: we know that the amount of messages is going up (that we are varying more variables simultaneously).
-                \item Find point where system thrashes
-            \end{itemize}
+            NOTE: we know that the amount of messages is going up (that we are varying more variables simultaneously).\\
+            TODO: Find point where system thrashes
 
         \subsection{Pure create queue}
-            \begin{itemize}
-                \item NOTE: we know that the amount of queues is going up (that we are varying more variables simultaneously).
-                \item Find point where system thrashes
-            \end{itemize}
+            NOTE: we know that the amount of queues is going up (that we are varying more variables simultaneously).\\
+            TODO: Find point where system thrashes
 
         \subsection{Pure pop}
-        \begin{itemize}
-            \item NOTE: we know that the amount of messages is going down (that we are varying more variables simultaneously). We expect to see the time for each pop to fall.
-            \item Find point where system thrashes
-        \end{itemize}
+            NOTE: we know that the amount of messages is going down (that we are varying more variables simultaneously). We expect to see the time for each pop to fall.\\
+            TODO: Find point where system thrashes
 
         \subsection{Pure peek}
 
@@ -94,15 +97,14 @@
         \subsection{TODO: More tests}
 
     \section{Results}
-    TODO: Note that we're using a closed system which has an effect on the system
+        TODO: Note that we're using a closed system which has an effect on the results\\
         TODO: Show raw data, graphs, do statistical treatment of data
 
     \section{Analysis}
+        TODO: Interpret results showed above
 
     \section{Conclusion}
-        \begin{itemize}
-            \item Say something about performance of system
-            \item What we could've done different
-        \end{itemize}
+        TODO: Say something about performance of system\\
+        TODO: Say something about what we could've done differently
 
 \end{document}
