@@ -8,7 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MemoryLogger extends Logger {
-	String format = "%d\t%s";
+	String format = "%d%s";
+	private long startTime;
 	
 	List<String> entries;
 
@@ -18,6 +19,7 @@ public class MemoryLogger extends Logger {
 		super("MemoryLogger",null);
 		this.outputToConsole = outputToConsole;
 		entries = new ArrayList<String>(1024);
+		this.startTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class MemoryLogger extends Logger {
 			entries.add("NEXT ENTRY TRUNCATED TO 512 CHARACTERS");
 		}
 		
-		String dataToPost = String.format(format, System.currentTimeMillis(), msg);
+		String dataToPost = String.format(format, System.currentTimeMillis() - this.startTime, msg);
 		entries.add(dataToPost);
 		if(outputToConsole)
 			System.out.println(dataToPost);
