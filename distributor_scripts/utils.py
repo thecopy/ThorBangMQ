@@ -168,6 +168,7 @@ def clientsstarttest(clients, servers, testname, args):
 
 def stoptest(*args):
     for machines in args:
+        assert(isinstance(machines, list))
         for remoteip, localip in machines:
             killallscreens(remoteip)
 
@@ -176,18 +177,20 @@ def updateserverconfigfile(configfile, databaseip, databasecons, workerthreads):
     res = ""
     with open(configfile, 'r') as f:
         res = f.read()
-    res = re.sub("DB_SERVER_NAME\t.*?\n",
-                 "DB_SERVER_NAME\t{}\n".format(databaseip), res)
-    res = re.sub("DB_MAX_CONNECTIONS\t.*?\n",
-                 "DB_MAX_CONNECTIONS\t{}\n".format(databasecons), res)
-    res = re.sub("NUM_CLIENTREQUESTWORKER_THREADS\t.*?\n",
-                 "NUM_CLIENTREQUESTWORKER_THREADS\t{}\n".format(workerthreads), res)
+    res = re.sub("(DB_SERVER_NAME).*?\n",
+                 "\\1\t{}\n".format(databaseip), res)
+    res = re.sub("(DB_MAX_CONNECTIONS).*?\n",
+                 "\\1\t{}\n".format(databasecons), res)
+    res = re.sub("(NUM_CLIENTREQUESTWORKER_THREADS\t).*?\n",
+                 "\\1\t{}\n".format(workerthreads), res)
     logger.debug("new settings file: {}".format(res))
     with open(configfile, 'w') as f:
         f.write(res)
 
 
 def fetchlogs(clients, servers, testdir, testnum=0):
+    assert(isinstance(clients, list))
+    assert(isinstance(servers, list))
     logdir = path.join(testdir, 'logs')
     for i, client in enumerate(clients):
         fetchlog(client, "client{}".format(i), testnum, logdir)
@@ -197,18 +200,17 @@ def fetchlogs(clients, servers, testdir, testnum=0):
 
 
 def fetchlog((remoteip, localip), machinetype, testnum, logdir):
-    logstr = "{timestamp}_test{testnum}_{machinetype}_{logtype}.txt"
     if not path.isdir(logdir):
         mkdir(logdir)
+    logstr = "{timestamp}_test{testnum}_{machinetype}_{logtype}.txt"
     timestamp = int(time())
-    logname = logstr.format(logtype='test', machinetype=machinetype,
-                            timestamp=timestamp, testnum=testnum)
-    logfile = path.join(logdir, logname)
-    scpdownloadfile(remoteip, REMOTE_TEST_LOG_FILE_PATH, logfile)
-    logname = logstr.format(logtype='application', machinetype=machinetype,
-                            timestamp=timestamp, testnum=testnum)
-    logfile = path.join(logdir, logname)
-    scpdownloadfile(remoteip, REMOTE_APPLICATION_LOG_FILE_PATH, logfile)
+    logs = [('test', REMOTE_TEST_LOG_FILE_PATH),
+            ('application', REMOTE_APPLICATION_LOG_FILE_PATH)]
+    for logtype, remotelogpath in logs:
+        logname = logstr.format(logtype=logtype, machinetype=machinetype,
+                                timestamp=timestamp, testnum=testnum)
+        logfile = path.join(logdir, logname)
+        scpdownloadfile(remoteip, remotelogpath, logfile)
 
 
 def starttest(testname, testid=None):
@@ -239,6 +241,8 @@ def starttest(testname, testid=None):
 
 
 def performtests(clients, servers, databaseip, testname, testdesc, testdir):
+    assert(isinstance(clients, list))
+    assert(isinstance(servers, list))
     serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE_NAME)
 
     for i, serverarg in enumerate(testdesc.get('serverargs')):
