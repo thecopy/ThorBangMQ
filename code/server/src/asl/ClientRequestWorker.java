@@ -47,6 +47,7 @@ public class ClientRequestWorker implements Runnable{
 
 	// TODO handle exceptions
 	private void interpreter(String msg) throws IOException {
+		logger.info(String.format("Interpreting message: \"%s\"", msg));
 		String[] methodWithArgs = msg.split(",", 2);
 try{
 		switch (methodWithArgs[0]) {
@@ -161,13 +162,13 @@ try{
 
 	// POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
 	public void popQueue(String argsConcat) {
-		
 		String[] args = argsConcat.split(",", 3);
 
 		long receiverId = Long.parseLong(args[0]);
 		long queueId = Long.parseLong(args[1]);
 		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[2]) == 1;
-		
+
+		logger.info(String.format("Popping queue %d for user %d ordered by %s", queueId, receiverId, getByTimestampInsteadOfPriority ? "time" : "prio"));
 		Message m;
 		try {
 			m = ps.peekQueue(receiverId, queueId, getByTimestampInsteadOfPriority);
@@ -175,6 +176,9 @@ try{
 				ps.deleteMessage(m.id);
 
 			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
+			
+			logger.info(String.format("Sending popped message"));
+
 			transport.Send(this.formatMessage(m));
 			
 		} catch (InvalidMessageException e) {

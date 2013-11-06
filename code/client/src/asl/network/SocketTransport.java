@@ -1,5 +1,7 @@
 package asl.network;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,27 +10,30 @@ import java.net.Socket;
 public class SocketTransport implements ITransport {
 	private Socket socket;
 	
-	InputStream inputStream;
-	OutputStream outputStream; 
+	BufferedInputStream inputStream;
+	BufferedOutputStream outputStream; 
 	
 	public SocketTransport(Socket socket) throws IOException{
 		this.socket = socket;	
 		
-		inputStream = socket.getInputStream();
-		outputStream = socket.getOutputStream();
+		inputStream = new BufferedInputStream(socket.getInputStream());
+		outputStream = new BufferedOutputStream(socket.getOutputStream());
 	}
 	
 	public void Send(String data) throws IOException{
 		outputStream.write(data.getBytes("UTF-8"));
+		outputStream.write(0); // request terminator
+		outputStream.flush();
 	}
 	
 	public String Read() throws IOException{
 		StringBuilder builder = new StringBuilder();
-		
-		byte[] buffer = new byte[1024];
+		int bufferSize = 65536; // 64KiB
+		byte[] buffer = new byte[bufferSize];
 		int readBytes = 0;
+		
 		while((readBytes = inputStream.read(buffer)) > 0){
-			
+			System.out.print(String.format("Read %d bytes from buffer\r", builder.length()+readBytes));
 			if(buffer[readBytes-1] == 0){ // EoF token
 				builder.append(new String(buffer, 0, readBytes-1, "UTF-8"));
 				break;

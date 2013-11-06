@@ -106,7 +106,10 @@ public class Main {
 			String response = client.getTransport().SendAndGetResponse(input);
 			w.stop();
 			System.out.println("Operation duration: " + w.getNanoTime() / 1000f / 1000 + " ms");
-			System.out.println(response);
+			System.out.println(String.format("[%d] %s", 
+					response.length(), 
+					response.substring(0, response.length() > 100 ? 100 : response.length())));
+			
 		}
 	}
 	
