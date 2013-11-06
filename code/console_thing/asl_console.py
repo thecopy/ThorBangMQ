@@ -21,10 +21,7 @@ def main():
             print e
             print "You must choose a number between 0 and {}".format(len(OPTIONS) - 1)
             continue
-        if len(input_) > 1:
-            args = input_[1:]
-        else:
-            args = []
+        args = input_[1:] if len(input_) > 1 else []
 
         parse_perform_command(cur, choice, args)
 
@@ -85,8 +82,8 @@ def firstxmessages(cur, num_msgs):
         (id_, sender_id, receiver_id, queue_id,
          time_of_arrival, priority, context_id, message) = res
         ret.append(messagestr.format(id=id_, sender_id=sender_id, receiver_id=receiver_id,
-                                        queue_id=queue_id, time_of_arrival=time_of_arrival,
-                                        priority=priority, context_id=context_id, message=message))
+                                     queue_id=queue_id, time_of_arrival=time_of_arrival,
+                                     priority=priority, context_id=context_id, message=message))
     return "\n".join(ret)
 
 OPTIONS = (
