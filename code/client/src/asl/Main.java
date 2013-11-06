@@ -7,6 +7,12 @@ import infrastructure.exceptions.ServerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collections;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 
 public class Main {
 
@@ -60,8 +66,65 @@ public class Main {
 			System.out.print(":");
 			String input = br.readLine();
 			
-			System.out.println(client.getTransport().SendAndGetResponse(input));
+			if(input.equals("help"))
+			{
+				String helpText = "Type any message to send to the ThorBangMQ server.\n"
+						+ "Special commands: \n"
+						+ "stdmsg\t\tSends a message to yourself in queue 1\n"
+						+ "stdmsg number\tSend a message to yourself in queue 1 with message length number bytes\n"
+						+ "pop\t\tPops queue 1\n"
+						+ "r number cmd\tRepeat <cmd> <number> of times. <cmd> can be any command including a special command";
+				System.out.println(helpText);
+				continue;
+			}else if(input.startsWith("r ")){
+				String[] parts = input.split(" ",3);
+				int repeats = Integer.parseInt(parts[1]);
+				String command = transformCommand(parts[2]);
+				double[] times = new double[repeats];
+				double avg = 0;
+
+				for(int i = 0;i<repeats;i++){
+					StopWatch w = new StopWatch();
+					w.start();
+					client.getTransport().SendAndGetResponse(command);
+					w.stop();
+					times[i] = w.getNanoTime() / 1000 / (double)1000;
+					avg += times[i];
+					System.out.print(times[i] + " ");
+				}
+				System.out.println("\nRepeated command " + repeats + " times.");
+				System.out.println("Average: " + avg/(double)repeats + " ms");
+				System.out.println("Max: " + Collections.max(Arrays.asList(ArrayUtils.toObject(times))) + " ms");
+				System.out.println("Min: " + Collections.min(Arrays.asList(ArrayUtils.toObject(times))) + " ms");
+				continue; 
+			}else{
+				input = transformCommand(input);
+			}
+			
+			StopWatch w = new StopWatch();
+			w.start();
+			String response = client.getTransport().SendAndGetResponse(input);
+			w.stop();
+			System.out.println("Operation duration: " + w.getNanoTime() / 1000f / 1000 + " ms");
+			System.out.println(response);
 		}
+	}
+	
+	private static String transformCommand(String input){
+		if(input.startsWith("stdmsg")){
+			if(input.length() > 6){
+				//     MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
+				int length = Integer.parseInt(input.substring(7));
+				String content = StringUtils.leftPad("", length, 'M');
+				input = String.format("MSG,%d,%d,1,1,0,%s", 1,1,content);
+			}else{
+				input = String.format("MSG,%d,%d,1,1,0,%s", 1,1,"Standard Message");
+			}
+		}else if(input.equals("pop")){
+			input = "POPQ,1,1,1";
+		}
+		
+		return input;
 	}
 		
 
