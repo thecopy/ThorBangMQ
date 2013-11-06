@@ -46,15 +46,18 @@ public class SendAndPopMessages extends testRunner.Test {
 	}
 
 	@Override
-	public void run(MemoryLogger applicationLogger, MemoryLogger logger) throws Exception {
-		logger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
-		
+	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception {
+		applicationLogger.log(String.format("numberOfClients: %d", this.numberOfClients));
+		applicationLogger.log(String.format("lengthOfExperiment: %d", this.lengthOfExperiment));
+		applicationLogger.log(String.format("poppers: %d", this.poppers));
+		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
+
 		Thread[] clients = new Thread[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
 			clients[i] = new Thread(new clientRunner(host, port, 1, 1, i%poppers==0));
 		}
 		
-		logger.log("OK Done! Sending messages...");
+		applicationLogger.log("OK Done! Sending messages...");
 		
 		StopWatch w = new StopWatch();
 		
@@ -70,7 +73,7 @@ public class SendAndPopMessages extends testRunner.Test {
 			Thread.sleep(500);
 			w.split();
 			long millis = w.getSplitNanoTime() / 1000000;
-			logger.log("Checking of " + millis + " > " + lengthOfExperiment);
+			applicationLogger.log("Checking of " + millis + " > " + lengthOfExperiment);
 			if(millis /*ms*/> lengthOfExperiment)
 				stop = true;
 			w.unsplit();
@@ -85,11 +88,11 @@ public class SendAndPopMessages extends testRunner.Test {
 		w.stop();
 		float totalTimeInMs = w.getNanoTime()/1000/1000;
 		
-		logger.log("OK Done!");
-		logger.log("-------------------------------------------");
+		applicationLogger.log("OK Done!");
+		applicationLogger.log("-------------------------------------------");
 
-		logger.log("Number of Clients:\t" + numberOfClients + "");
-		logger.log("Total Time:\t\t" + totalTimeInMs + "ms");
+		applicationLogger.log("Number of Clients:\t" + numberOfClients + "");
+		applicationLogger.log("Total Time:\t\t" + totalTimeInMs + "ms");
 	}
 
 	@Override
