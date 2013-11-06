@@ -96,4 +96,7 @@ def destroyalldroplets(testid):
 
 
 def _getid(droplet):
-    return int(droplet.name.split('-')[-1])
+    try:
+        return int(droplet.name.split('-')[-1])
+    except:
+        return -1

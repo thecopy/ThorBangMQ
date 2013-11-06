@@ -34,10 +34,10 @@ def main():
         elif choice.startswith("5"):
             args = choice.split(' ')
             testname, testid = None, None
-            if len(args) == 2:
+            if len(args) >= 2:
                 testname = args[1]
-            if len(args) == 3:
-                testid = args[3]
+            if len(args) >= 3:
+                testid = args[2]
 
             if testname not in gettests():
                 print "Invalid test name '{}'".format(testname)
