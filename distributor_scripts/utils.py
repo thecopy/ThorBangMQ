@@ -81,7 +81,7 @@ def killallscreens(ip):
 
 
 def scpdownloadfile(ip, remotefile, localfile):
-    scpcmd = "scp root@{ip}:{remotefile} {localfile}".format(remotefile=remotefile, ip=ip,
+    scpcmd = "scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@{ip}:{remotefile} {localfile}".format(remotefile=remotefile, ip=ip,
                                                              localfile=localfile)
     call(scpcmd.split(' '), stdout=PIPE)
 
@@ -181,7 +181,7 @@ def updateserverconfigfile(configfile, databaseip, databasecons, workerthreads):
                  "\\1\t{}\n".format(databaseip), res)
     res = re.sub("(DB_MAX_CONNECTIONS).*?\n",
                  "\\1\t{}\n".format(databasecons), res)
-    res = re.sub("(NUM_CLIENTREQUESTWORKER_THREADS\t).*?\n",
+    res = re.sub("(NUM_CLIENTREQUESTWORKER_THREADS).*?\n",
                  "\\1\t{}\n".format(workerthreads), res)
     logger.debug("new settings file: {}".format(res))
     with open(configfile, 'w') as f:
