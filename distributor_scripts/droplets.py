@@ -60,7 +60,7 @@ def createserver(size=DEFAULT_DROPLET_SIZE, testid=1):
 
 def createdatabase(size=DEFAULT_DROPLET_SIZE,  testid=1):
     _createdroplet(name='asl-database-id-{}'.format(testid),
-                   image_id=949272, size=size)
+                   image_id=1131016, size=size)
 
 
 def _createdroplet(name, image_id, size):
@@ -98,5 +98,5 @@ def destroyalldroplets(testid):
 def _getid(droplet):
     try:
         return int(droplet.name.split('-')[-1])
-    except:
+    except Exception:
         return -1
