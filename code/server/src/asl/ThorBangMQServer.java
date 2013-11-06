@@ -36,6 +36,7 @@ public class ThorBangMQServer {
 	private ServerSocketChannel serverChannel;
 	private ExecutorService executor;
 	private ByteBuffer readBuffer;
+	private HashMap<SelectionKey, String> incompleteReads = new HashMap<SelectionKey, String>();
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
 	private HashMap<SelectionKey, String> pendingWrites = new HashMap<SelectionKey, String>();
 	private Logger logger;
@@ -173,15 +174,33 @@ public class ThorBangMQServer {
 			this.disconnect(conn, clientAddress);
 			return;
 		}
+		String message = bufferToString(bytesRead);
+		
+		// For long messages we might not always get the full message
+		if(this.readBuffer.get(bytesRead-1) != 0){
+			String existing = this.incompleteReads.get(conn);
+			
+			if(existing != null) // Append incomplete read
+				existing += message;
+			else
+				this.incompleteReads.put(conn, message); // Otherwise add it
+		}else{
+			String existing = this.incompleteReads.get(conn);
+			if(existing != null){
+				message = existing + message; // prepend message with existing incomplete read
+				this.incompleteReads.remove(conn); // remove incomplete request from buffer
+			}
+			
+			ITransport transport = new DefaultTransport(this, conn);
 
-		ITransport transport = new DefaultTransport(this, conn);
-
-		this.executor.execute(
-				new ClientRequestWorker(
-						logger,
-						new ProtocolService(this.persistence),
-						transport,
-						bufferToString(bytesRead)));
+			this.executor.execute(
+					new ClientRequestWorker(
+							logger,
+							new ProtocolService(this.persistence),
+							transport,
+							message.substring(0, message.length()-1))); // remove last character, i.e. NULL (0)
+		}
+		
 	}
 
 	/**
@@ -198,7 +217,12 @@ public class ThorBangMQServer {
 			reply = this.pendingWrites.get(conn);
 			try {
 				clientAddress = ((SocketChannel)conn.channel()).getRemoteAddress().toString();
-				channel.write(stringToByteBuffer(reply));
+				
+				ByteBuffer dataToWrite = stringToByteBuffer(reply);
+				do{
+					channel.write(dataToWrite);
+				}while(dataToWrite.remaining() > 0);
+				
 			} catch (IOException e) {
 				this.unexpectedDisconnect(conn, clientAddress);
 			}

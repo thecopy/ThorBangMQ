@@ -15,8 +15,8 @@ import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.exceptions.PersistenceException;
 
 public class Main {
-	static final Logger testLogger = new MemoryLogger(false /*output to console*/);
-	static final Logger applicationLogger = new MemoryLogger(false /*output to console*/);
+	static final MemoryLogger testLogger = new MemoryLogger(false /*output to console*/);
+	static final MemoryLogger applicationLogger = new MemoryLogger(false /*output to console*/);
 
 	public static void main(String[] args) throws Exception {		
 		testLogger.setLevel(Level.ALL);
@@ -63,6 +63,7 @@ public class Main {
 			System.out.println("  q\t\tQuit");
 			System.out.println("  qd\t\tQuit and dump logfiles");
 			System.out.println("  resetdb\tClear the database");
+			System.out.println("  clearlogs\tClear the logs");
 			
 	        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	        String input = null;
@@ -88,6 +89,12 @@ public class Main {
 					System.out.println("Clearing db...");
 					clearDb(settings);
 					System.out.println("Db clean!");
+				}
+				else if(input.equals("clearlogs")){
+					applicationLogger.clear();
+					testLogger.clear();
+					System.out.println("Logs cleared!");
+					
 				}
 				else{
 					System.out.println("Unkown command '" + input + "'");

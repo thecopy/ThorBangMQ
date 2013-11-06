@@ -41,7 +41,8 @@ public class DbPersistence implements IPersistence {
 	@Override
 	public void deleteMessage(long messageId) throws PersistenceException, InvalidMessageException {
 		final String query = "DELETE FROM messages WHERE id = ?";
-		
+		logger.info(String.format("Deleting message %d", messageId));
+
 		try {
 			executeStatement(query, logger, messageId);
 		} catch (SQLException e) {
@@ -101,9 +102,10 @@ public class DbPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageByTimestamp(long queueId, long recieverId) throws InvalidQueueException, InvalidMessageException, PersistenceException {
+		
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
 				+ " FROM messages WHERE receiver_id = ? AND queue_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
-
+		logger.info(String.format("SELECT message where queue %d for user %d by time", queueId, recieverId));
 		ArrayList<Object[]> s;
 		try {
 			s = executeQuery(query, logger, recieverId, queueId);
@@ -415,7 +417,7 @@ public class DbPersistence implements IPersistence {
 					"ON asl.messages "+
 					"USING btree "+
 					"(time_of_arrival NULLS FIRST);" +
-				"CREATE INDEX all "+
+				"CREATE INDEX receiver_toa_queue "+
 					"ON asl.messages "+
 					" USING btree "+
 					" (receiver_id, time_of_arrival, queue_id);";

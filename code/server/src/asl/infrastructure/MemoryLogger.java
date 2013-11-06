@@ -43,6 +43,10 @@ public class MemoryLogger extends Logger {
 	@Override
 	public void log(Level level, String msg) {
 		if(level.intValue() < super.getLevel().intValue()) return;
+		if(msg.length() > 512){
+			msg = msg.substring(0,511);
+			entries.add("NEXT ENTRY TRUNCATED TO 512 CHARACTERS");
+		}
 		
 		String dataToPost = String.format(format, System.currentTimeMillis(), msg);
 		entries.add(dataToPost);
@@ -56,5 +60,9 @@ public class MemoryLogger extends Logger {
 			out.println(entry);
 		out.close();
 
+	}
+
+	public void clear() {
+		entries.clear();
 	}
 }
