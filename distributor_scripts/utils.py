@@ -278,15 +278,9 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
             wait(waittime)
 
             # stop test on clients and fetch their logs
-            stoptest(clients)
-            fetchlogs(clients=clients, servers=[], logdir=logdir, testnum=i + u * 0.1)
-            # wait so that we can identify test switching on the server
-            wait(10)
-
-        # stop test on servers and fetch their log
-        stoptest(servers)
-        fetchlogs(clients=[], servers=servers, logdir=logdir, testnum=i)
-        doplots(logdir)
+            stoptest(clients, servers)
+            fetchlogs(clients=clients, servers=servers, logdir=logdir, testnum=i + u * 0.1)
+            doplots(logdir)
 
 
 def wait(waittime):
