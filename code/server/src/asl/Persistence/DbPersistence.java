@@ -428,6 +428,24 @@ public class DbPersistence implements IPersistence {
 		}
 	}
 	
+	public void fillDb() throws PersistenceException{
+		String sql = "DO "+
+					"$do$ "+
+					"BEGIN  "+
+					"FOR i IN 1..25000 LOOP "+
+					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
+					"	VALUES(1,1,1,1,1,'some message'); "+
+					"END LOOP; "+
+					"END "+
+					"$do$";
+		
+		try {
+			executeStatement(sql, logger);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
+	}
+	
 	private long getIdOfExceptionString(String exceptionString) {
 		Matcher match = this.readExceptionStringPattern.matcher(exceptionString);
 		if (match.find()) {
