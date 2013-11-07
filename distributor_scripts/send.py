@@ -54,7 +54,7 @@ def main():
                 logger.info('{name}: ({globalip}, {localip})'.format(name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))
         elif choice.startswith("999"):
             __, testid = choice.split(' ')
-            destroyalldroplets(int(testid))
+            destroyalldroplets(testid)
 
         print ""
         print "----------------"

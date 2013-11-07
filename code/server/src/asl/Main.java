@@ -20,7 +20,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {		
 		testLogger.setLevel(Level.ALL);
-		applicationLogger.setLevel(Level.INFO);
+		applicationLogger.setLevel(Level.WARNING);
 
 		// Read configuration file
 		ServerSettings settings = Bootstrapper2.StrapTheBoot(applicationLogger);
