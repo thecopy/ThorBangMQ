@@ -11,6 +11,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import testRunner.tests.BigMessage;
 import testRunner.tests.DummyTest;
 import testRunner.tests.SendAndPopMessages;
+import testRunner.tests.SendAndPopSameClient;
 import testRunner.tests.SendMessages;
 import testRunner.tests.SendMessagesTime;
 import testRunner.tests.StandardTest;
@@ -27,6 +28,7 @@ public class Runner {
 		tests.add(BigMessage.class);
 		tests.add(SendAndPopMessages.class);
 		tests.add(StandardTest.class);
+		tests.add(SendAndPopSameClient.class);
 	}
 	
 	public List<Class> getTests(){
