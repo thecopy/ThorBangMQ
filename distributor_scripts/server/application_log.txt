@@ -1,0 +1,3583 @@
+1383837251302	LISTENING_PORT	8123
+
+1383837251306	PERSISTENCE_TYPE	MEMORY
+
+1383837251306	MESSAGE_MAX_LENGTH	4096
+
+1383837251306	NUM_CLIENTREQUESTWORKER_THREADS	10
+
+1383837251306	DB_SERVER_NAME	localhost
+
+1383837251306	DB_DATABASE_NAME	asl
+
+1383837251306	DB_DATA_SOURCE_NAME	asl
+
+1383837251306	DB_PORT_NUMBER	5432
+
+1383837251306	DB_USERNAME	asl
+
+1383837251306	DB_PASSWORD	asl2013
+
+1383837251306	DB_MAX_CONNECTIONS	5
+
+1383837251307	DB_DEFAULT_AUTO_COMMIT	false
+
+1383837251307	APPLICATION_LOG_PATH	application_log.txt
+
+1383837251307	TEST_LOG_PATH	test_log.txt
+
+1383837251307	PROFILER_LOG_PATH	profiler_log.txt
+
+1383837251307	LOG_INTERVAL	10000
+
+1383837260287	Client connect. There are now 1 clients connected.
+1383837260287	Accepted connection from /127.0.0.1:51825
+1383837260310	Interpreting message: "CREATECLIENT,client_0"
+1383837260316	Interpreting message: "CREATECLIENT,client_1"
+1383837260317	Interpreting message: "CREATECLIENT,client_2"
+1383837260318	Interpreting message: "CREATECLIENT,client_3"
+1383837260318	Interpreting message: "CREATECLIENT,client_4"
+1383837260319	Interpreting message: "CREATECLIENT,client_5"
+1383837260320	Interpreting message: "CREATECLIENT,client_6"
+1383837260320	Interpreting message: "CREATECLIENT,client_7"
+1383837260321	Interpreting message: "CREATECLIENT,client_8"
+1383837260322	Interpreting message: "CREATECLIENT,client_9"
+1383837260322	Interpreting message: "CREATECLIENT,client_10"
+1383837260323	Interpreting message: "CREATECLIENT,client_11"
+1383837260324	Interpreting message: "CREATECLIENT,client_12"
+1383837260324	Interpreting message: "CREATECLIENT,client_13"
+1383837260325	Interpreting message: "CREATECLIENT,client_14"
+1383837260325	Interpreting message: "CREATECLIENT,client_15"
+1383837260326	Interpreting message: "CREATECLIENT,client_16"
+1383837260327	Interpreting message: "CREATECLIENT,client_17"
+1383837260327	Interpreting message: "CREATECLIENT,client_18"
+1383837260328	Interpreting message: "CREATECLIENT,client_19"
+1383837260328	Interpreting message: "CREATECLIENT,client_20"
+1383837260329	Interpreting message: "CREATECLIENT,client_21"
+1383837260330	Interpreting message: "CREATECLIENT,client_22"
+1383837260330	Interpreting message: "CREATECLIENT,client_23"
+1383837260331	Interpreting message: "CREATECLIENT,client_24"
+1383837260331	Interpreting message: "CREATECLIENT,client_25"
+1383837260332	Interpreting message: "CREATECLIENT,client_26"
+1383837260333	Interpreting message: "CREATECLIENT,client_27"
+1383837260333	Interpreting message: "CREATECLIENT,client_28"
+1383837260334	Interpreting message: "CREATECLIENT,client_29"
+1383837260334	Interpreting message: "CREATECLIENT,client_30"
+1383837260335	Interpreting message: "CREATECLIENT,client_31"
+1383837260335	Interpreting message: "CREATECLIENT,client_32"
+1383837260336	Interpreting message: "CREATECLIENT,client_33"
+1383837260337	Interpreting message: "CREATECLIENT,client_34"
+1383837260337	Interpreting message: "CREATECLIENT,client_35"
+1383837260338	Interpreting message: "CREATECLIENT,client_36"
+1383837260338	Interpreting message: "CREATECLIENT,client_37"
+1383837260339	Interpreting message: "CREATECLIENT,client_38"
+1383837260339	Interpreting message: "CREATECLIENT,client_39"
+1383837260340	Interpreting message: "CREATECLIENT,client_40"
+1383837260340	Interpreting message: "CREATECLIENT,client_41"
+1383837260341	Interpreting message: "CREATECLIENT,client_42"
+1383837260342	Interpreting message: "CREATECLIENT,client_43"
+1383837260342	Interpreting message: "CREATECLIENT,client_44"
+1383837260343	Interpreting message: "CREATECLIENT,client_45"
+1383837260343	Interpreting message: "CREATEQUEUE,oneway_queue"
+1383837260344	Interpreting message: "CREATEQUEUE,twoway_queue"
+1383837260347	Client connect. There are now 2 clients connected.
+1383837260347	Accepted connection from /127.0.0.1:51826
+1383837260348	Interpreting message: "HELLO"
+1383837260349	Client connect. There are now 3 clients connected.
+1383837260349	Accepted connection from /127.0.0.1:51827
+1383837260349	Interpreting message: "HELLO"
+1383837260350	Client connect. There are now 4 clients connected.
+1383837260350	Accepted connection from /127.0.0.1:51828
+1383837260350	Interpreting message: "HELLO"
+1383837260351	Client connect. There are now 5 clients connected.
+1383837260352	Accepted connection from /127.0.0.1:51829
+1383837260352	Interpreting message: "HELLO"
+1383837260353	Client connect. There are now 6 clients connected.
+1383837260353	Accepted connection from /127.0.0.1:51830
+1383837260353	Interpreting message: "HELLO"
+1383837260354	Client connect. There are now 7 clients connected.
+1383837260354	Accepted connection from /127.0.0.1:51831
+1383837260354	Interpreting message: "HELLO"
+1383837260355	Client connect. There are now 8 clients connected.
+1383837260355	Accepted connection from /127.0.0.1:51832
+1383837260356	Interpreting message: "HELLO"
+1383837260356	Client connect. There are now 9 clients connected.
+1383837260357	Accepted connection from /127.0.0.1:51833
+1383837260357	Interpreting message: "HELLO"
+1383837260357	Client connect. There are now 10 clients connected.
+1383837260358	Accepted connection from /127.0.0.1:51834
+1383837260358	Interpreting message: "HELLO"
+1383837260359	Client connect. There are now 11 clients connected.
+1383837260359	Accepted connection from /127.0.0.1:51835
+1383837260359	Interpreting message: "HELLO"
+1383837260360	Client connect. There are now 12 clients connected.
+1383837260360	Accepted connection from /127.0.0.1:51836
+1383837260360	Interpreting message: "HELLO"
+1383837260361	Client connect. There are now 13 clients connected.
+1383837260361	Accepted connection from /127.0.0.1:51837
+1383837260362	Interpreting message: "HELLO"
+1383837260362	Client connect. There are now 14 clients connected.
+1383837260363	Accepted connection from /127.0.0.1:51838
+1383837260363	Interpreting message: "HELLO"
+1383837260364	Client connect. There are now 15 clients connected.
+1383837260364	Accepted connection from /127.0.0.1:51839
+1383837260364	Interpreting message: "HELLO"
+1383837260365	Client connect. There are now 16 clients connected.
+1383837260365	Accepted connection from /127.0.0.1:51840
+1383837260365	Interpreting message: "HELLO"
+1383837260366	Client connect. There are now 17 clients connected.
+1383837260366	Accepted connection from /127.0.0.1:51841
+1383837260367	Interpreting message: "HELLO"
+1383837260367	Client connect. There are now 18 clients connected.
+1383837260367	Accepted connection from /127.0.0.1:51842
+1383837260368	Interpreting message: "HELLO"
+1383837260368	Client connect. There are now 19 clients connected.
+1383837260369	Accepted connection from /127.0.0.1:51843
+1383837260369	Interpreting message: "HELLO"
+1383837260370	Client connect. There are now 20 clients connected.
+1383837260370	Accepted connection from /127.0.0.1:51844
+1383837260370	Interpreting message: "HELLO"
+1383837260371	Client connect. There are now 21 clients connected.
+1383837260371	Accepted connection from /127.0.0.1:51845
+1383837260372	Interpreting message: "HELLO"
+1383837260372	Client connect. There are now 22 clients connected.
+1383837260372	Accepted connection from /127.0.0.1:51846
+1383837260373	Interpreting message: "HELLO"
+1383837260374	Client connect. There are now 23 clients connected.
+1383837260374	Accepted connection from /127.0.0.1:51847
+1383837260374	Interpreting message: "HELLO"
+1383837260375	Client connect. There are now 24 clients connected.
+1383837260375	Accepted connection from /127.0.0.1:51848
+1383837260376	Interpreting message: "HELLO"
+1383837260377	Client connect. There are now 25 clients connected.
+1383837260377	Accepted connection from /127.0.0.1:51849
+1383837260378	Interpreting message: "HELLO"
+1383837260381	Client connect. There are now 26 clients connected.
+1383837260382	Accepted connection from /127.0.0.1:51850
+1383837260382	Interpreting message: "HELLO"
+1383837260383	Client connect. There are now 27 clients connected.
+1383837260384	Accepted connection from /127.0.0.1:51851
+1383837260384	Interpreting message: "HELLO"
+1383837260385	Client connect. There are now 28 clients connected.
+1383837260386	Accepted connection from /127.0.0.1:51852
+1383837260387	Interpreting message: "HELLO"
+1383837260388	Client connect. There are now 29 clients connected.
+1383837260388	Accepted connection from /127.0.0.1:51853
+1383837260388	Interpreting message: "HELLO"
+1383837260389	Client connect. There are now 30 clients connected.
+1383837260390	Accepted connection from /127.0.0.1:51854
+1383837260390	Interpreting message: "HELLO"
+1383837260391	Client connect. There are now 31 clients connected.
+1383837260391	Accepted connection from /127.0.0.1:51855
+1383837260391	Interpreting message: "HELLO"
+1383837260392	Client connect. There are now 32 clients connected.
+1383837260393	Accepted connection from /127.0.0.1:51856
+1383837260393	Interpreting message: "HELLO"
+1383837260394	Client connect. There are now 33 clients connected.
+1383837260395	Accepted connection from /127.0.0.1:51857
+1383837260395	Interpreting message: "HELLO"
+1383837260396	Client connect. There are now 34 clients connected.
+1383837260396	Accepted connection from /127.0.0.1:51858
+1383837260397	Interpreting message: "HELLO"
+1383837260398	Client connect. There are now 35 clients connected.
+1383837260398	Accepted connection from /127.0.0.1:51859
+1383837260399	Interpreting message: "HELLO"
+1383837260400	Client connect. There are now 36 clients connected.
+1383837260400	Accepted connection from /127.0.0.1:51860
+1383837260400	Interpreting message: "HELLO"
+1383837260401	Client connect. There are now 37 clients connected.
+1383837260402	Accepted connection from /127.0.0.1:51861
+1383837260402	Interpreting message: "HELLO"
+1383837260403	Client connect. There are now 38 clients connected.
+1383837260403	Accepted connection from /127.0.0.1:51862
+1383837260404	Interpreting message: "HELLO"
+1383837260405	Client connect. There are now 39 clients connected.
+1383837260405	Accepted connection from /127.0.0.1:51863
+1383837260406	Interpreting message: "HELLO"
+1383837260407	Client connect. There are now 40 clients connected.
+1383837260408	Accepted connection from /127.0.0.1:51864
+1383837260408	Interpreting message: "HELLO"
+1383837260410	Client connect. There are now 41 clients connected.
+1383837260410	Accepted connection from /127.0.0.1:51865
+1383837260410	Interpreting message: "HELLO"
+1383837260411	Client connect. There are now 42 clients connected.
+1383837260411	Accepted connection from /127.0.0.1:51866
+1383837260412	Interpreting message: "HELLO"
+1383837260413	Client connect. There are now 43 clients connected.
+1383837260413	Accepted connection from /127.0.0.1:51867
+1383837260414	Interpreting message: "HELLO"
+1383837260414	Client connect. There are now 44 clients connected.
+1383837260415	Accepted connection from /127.0.0.1:51868
+1383837260415	Interpreting message: "HELLO"
+1383837260416	Client connect. There are now 45 clients connected.
+1383837260416	Accepted connection from /127.0.0.1:51869
+1383837260416	Interpreting message: "HELLO"
+1383837260417	Client connect. There are now 46 clients connected.
+1383837260417	Accepted connection from /127.0.0.1:51870
+1383837260417	Interpreting message: "HELLO"
+1383837260418	Client connect. There are now 47 clients connected.
+1383837260418	Accepted connection from /127.0.0.1:51871
+1383837260418	Interpreting message: "HELLO"
+1383837260419	Client connect. There are now 48 clients connected.
+1383837260419	Accepted connection from /127.0.0.1:51872
+1383837260420	Interpreting message: "HELLO"
+1383837260420	Client connect. There are now 49 clients connected.
+1383837260421	Accepted connection from /127.0.0.1:51873
+1383837260421	Interpreting message: "HELLO"
+1383837260422	Client connect. There are now 50 clients connected.
+1383837260422	Accepted connection from /127.0.0.1:51874
+1383837260422	Interpreting message: "HELLO"
+1383837260423	Client connect. There are now 51 clients connected.
+1383837260423	Accepted connection from /127.0.0.1:51875
+1383837260423	Interpreting message: "HELLO"
+1383837260424	Client connect. There are now 52 clients connected.
+1383837260424	Accepted connection from /127.0.0.1:51876
+1383837260424	Interpreting message: "HELLO"
+1383837260425	Client connect. There are now 53 clients connected.
+1383837260426	Accepted connection from /127.0.0.1:51877
+1383837260426	Interpreting message: "HELLO"
+1383837260427	Client connect. There are now 54 clients connected.
+1383837260427	Accepted connection from /127.0.0.1:51878
+1383837260427	Interpreting message: "HELLO"
+1383837260428	Client connect. There are now 55 clients connected.
+1383837260428	Accepted connection from /127.0.0.1:51879
+1383837260429	Interpreting message: "HELLO"
+1383837260430	Client connect. There are now 56 clients connected.
+1383837260430	Accepted connection from /127.0.0.1:51880
+1383837260431	Interpreting message: "HELLO"
+1383837260431	Client connect. There are now 57 clients connected.
+1383837260432	Accepted connection from /127.0.0.1:51881
+1383837260432	Interpreting message: "HELLO"
+1383837260433	Client connect. There are now 58 clients connected.
+1383837260433	Accepted connection from /127.0.0.1:51882
+1383837260433	Interpreting message: "HELLO"
+1383837260434	Client connect. There are now 59 clients connected.
+1383837260434	Accepted connection from /127.0.0.1:51883
+1383837260435	Interpreting message: "HELLO"
+1383837260435	Client connect. There are now 60 clients connected.
+1383837260435	Accepted connection from /127.0.0.1:51884
+1383837260436	Interpreting message: "HELLO"
+1383837260436	Client connect. There are now 61 clients connected.
+1383837260437	Accepted connection from /127.0.0.1:51885
+1383837260437	Interpreting message: "HELLO"
+1383837260439	Interpreting message: "MSG,2,0,1,1,0,1"
+1383837260439	Interpreting message: "MSG,27,0,1,1,0,1"
+1383837260440	Interpreting message: "MSG,18,0,1,1,0,1"
+1383837260440	Interpreting message: "MSG,23,0,1,1,0,1"
+1383837260440	Interpreting message: "MSG,7,0,1,1,0,1"
+1383837260441	Interpreting message: "MSG,18,0,1,1,0,1"
+1383837260441	Interpreting message: "MSG,2,0,1,1,0,1"
+1383837260442	Interpreting message: "MSG,21,0,1,1,0,1"
+1383837260443	Interpreting message: "MSG,29,0,1,1,0,1"
+1383837260443	Interpreting message: "MSG,13,0,1,1,0,1"
+1383837260441	Interpreting message: "MSG,14,0,1,1,0,1"
+1383837260443	Interpreting message: "MSG,23,0,1,1,0,1"
+1383837260443	Interpreting message: "MSG,4,0,1,1,0,1"
+1383837260445	Interpreting message: "MSG,7,0,1,1,0,1"
+1383837260446	Interpreting message: "MSG,7,0,1,1,0,1"
+1383837260446	Interpreting message: "MSG,30,0,1,1,0,1"
+1383837260446	Interpreting message: "MSG,18,0,1,1,0,1"
+1383837260446	Interpreting message: "MSG,19,0,1,1,0,1"
+1383837260446	Interpreting message: "MSG,5,0,1,1,0,1"
+1383837260447	Interpreting message: "MSG,7,0,1,1,0,1"
+1383837260447	Interpreting message: "MSG,21,0,1,1,0,1"
+1383837260448	Interpreting message: "MSG,27,0,1,1,0,1"
+1383837260448	Interpreting message: "MSG,10,0,1,1,0,1"
+1383837260448	Interpreting message: "MSG,1,0,1,1,0,1"
+1383837260449	Interpreting message: "MSG,2,0,1,1,0,1"
+1383837260449	Interpreting message: "MSG,5,0,1,1,0,1"
+1383837260449	Interpreting message: "MSG,25,0,1,1,0,1"
+1383837260450	Interpreting message: "MSG,12,0,1,1,0,1"
+1383837260450	Interpreting message: "MSG,22,0,1,1,0,1"
+1383837260451	Interpreting message: "MSG,15,0,1,1,0,1"
+1383837260451	Interpreting message: "MSG,31,30,2,1,4424313100545854544,1"
+1383837260451	Interpreting message: "MSG,31,30,2,1,-8091889563938357683,1"
+1383837260452	Interpreting message: "MSG,31,30,2,1,5023606700642998073,1"
+1383837260452	Interpreting message: "MSG,31,30,2,1,2928224257137935586,1"
+1383837260453	Interpreting message: "MSG,31,30,2,1,-6830963824018057113,1"
+1383837260458	Interpreting message: "MSG,31,30,2,1,-3297575242140794576,1"
+1383837260458	Interpreting message: "MSG,31,30,2,1,6346683324116326138,1"
+1383837260459	Interpreting message: "MSG,31,30,2,1,214724030712819838,1"
+1383837260459	Client disconnect. There are now 60 clients connected.
+1383837260459	Interpreting message: "MSG,31,30,2,1,-4687273186958143426,1"
+1383837260459	Interpreting message: "MSG,31,30,2,1,6289383185558626888,1"
+1383837260459	Interpreting message: "MSG,31,30,2,1,3758283405162809025,1"
+1383837260459	Interpreting message: "MSG,31,30,2,1,-8011458309549052840,1"
+1383837260460	Interpreting message: "MSG,31,30,2,1,-1021891915558639177,1"
+1383837260460	Interpreting message: "MSG,31,30,2,1,-1880522358373934875,1"
+1383837260461	Interpreting message: "MSG,31,30,2,1,3667789256458301740,1"
+1383837260645	Interpreting message: "POPQ,0,1,1"
+1383837260646	Popping queue 1 for user 0 ordered by time
+1383837260646	Interpreting message: "POPQ,0,1,1"
+1383837260646	Interpreting message: "POPQ,0,1,1"
+1383837260646	Sending popped message
+1383837260646	Popping queue 1 for user 0 ordered by time
+1383837260646	Popping queue 1 for user 0 ordered by time
+1383837260646	Sending popped message
+1383837260646	Sending popped message
+1383837260647	Interpreting message: "POPQ,0,1,1"
+1383837260647	Interpreting message: "POPQ,0,1,1"
+1383837260647	Popping queue 1 for user 0 ordered by time
+1383837260647	Popping queue 1 for user 0 ordered by time
+1383837260647	Popping queue 1 for user 0 ordered by time
+1383837260647	Sending popped message
+1383837260647	Sending popped message
+1383837260647	Interpreting message: "POPQ,0,1,1"
+1383837260647	Interpreting message: "POPQ,0,1,1"
+1383837260648	Popping queue 1 for user 0 ordered by time
+1383837260648	Popping queue 1 for user 0 ordered by time
+1383837260648	Sending popped message
+1383837260648	Sending popped message
+1383837260648	Interpreting message: "POPQ,0,1,1"
+1383837260649	Interpreting message: "POPQ,0,1,1"
+1383837260649	Interpreting message: "POPQ,0,1,1"
+1383837260649	Sending popped message
+1383837260649	Popping queue 1 for user 0 ordered by time
+1383837260649	Interpreting message: "POPQ,0,1,1"
+1383837260649	Popping queue 1 for user 0 ordered by time
+1383837260649	Sending popped message
+1383837260649	Sending popped message
+1383837260649	Popping queue 1 for user 0 ordered by time
+1383837260649	Interpreting message: "POPQ,0,1,1"
+1383837260650	Sending popped message
+1383837260650	Interpreting message: "POPQ,0,1,1"
+1383837260650	Interpreting message: "POPQ,0,1,1"
+1383837260650	Popping queue 1 for user 0 ordered by time
+1383837260650	Popping queue 1 for user 0 ordered by time
+1383837260650	Popping queue 1 for user 0 ordered by time
+1383837260650	Sending popped message
+1383837260650	Sending popped message
+1383837260650	Sending popped message
+1383837260650	Interpreting message: "POPQ,0,1,1"
+1383837260651	Interpreting message: "POPQ,0,1,1"
+1383837260651	Interpreting message: "POPQ,0,1,1"
+1383837260651	Popping queue 1 for user 0 ordered by time
+1383837260651	Popping queue 1 for user 0 ordered by time
+1383837260651	Popping queue 1 for user 0 ordered by time
+1383837260651	Sending popped message
+1383837260651	Sending popped message
+1383837260651	Sending popped message
+1383837260651	Interpreting message: "POPQ,0,1,1"
+1383837260652	Popping queue 1 for user 0 ordered by time
+1383837260652	Sending popped message
+1383837260653	Interpreting message: "POPQ,0,1,1"
+1383837260654	Popping queue 1 for user 0 ordered by time
+1383837260654	Sending popped message
+1383837260654	Interpreting message: "POPQ,0,1,1"
+1383837260655	Popping queue 1 for user 0 ordered by time
+1383837260655	Interpreting message: "POPQ,0,1,1"
+1383837260655	Interpreting message: "POPQ,0,1,1"
+1383837260655	Sending popped message
+1383837260655	Interpreting message: "POPQ,0,1,1"
+1383837260655	Interpreting message: "POPQ,0,1,1"
+1383837260656	Sending popped message
+1383837260656	Popping queue 1 for user 0 ordered by time
+1383837260656	Popping queue 1 for user 0 ordered by time
+1383837260656	Popping queue 1 for user 0 ordered by time
+1383837260656	Sending popped message
+1383837260656	Sending popped message
+1383837260656	Sending popped message
+1383837260656	Interpreting message: "POPQ,0,1,1"
+1383837260656	Interpreting message: "POPQ,0,1,1"
+1383837260656	Interpreting message: "POPQ,0,1,1"
+1383837260656	Popping queue 1 for user 0 ordered by time
+1383837260656	Popping queue 1 for user 0 ordered by time
+1383837260657	Popping queue 1 for user 0 ordered by time
+1383837260657	Sending popped message
+1383837260657	Sending popped message
+1383837260657	Sending popped message
+1383837260657	Interpreting message: "POPQ,0,1,1"
+1383837260657	Interpreting message: "POPQ,30,2,1"
+1383837260657	Interpreting message: "POPQ,30,2,1"
+1383837260657	Popping queue 2 for user 30 ordered by time
+1383837260657	Popping queue 2 for user 30 ordered by time
+1383837260657	Sending popped message
+1383837260658	Popping queue 1 for user 0 ordered by time
+1383837260658	Sending popped message
+1383837260658	Interpreting message: "POPQ,30,2,1"
+1383837260658	Sending popped message
+1383837260658	Interpreting message: "POPQ,30,2,1"
+1383837260658	Popping queue 2 for user 30 ordered by time
+1383837260658	Sending popped message
+1383837260658	Popping queue 2 for user 30 ordered by time
+1383837260656	Interpreting message: "POPQ,0,1,1"
+1383837260658	Sending popped message
+1383837260659	Popping queue 1 for user 0 ordered by time
+1383837260659	Sending popped message
+1383837260660	Interpreting message: "POPQ,30,2,1"
+1383837260660	Popping queue 2 for user 30 ordered by time
+1383837260660	Sending popped message
+1383837260661	Interpreting message: "POPQ,30,2,1"
+1383837260661	Popping queue 2 for user 30 ordered by time
+1383837260661	Interpreting message: "POPQ,30,2,1"
+1383837260661	Sending popped message
+1383837260662	Popping queue 2 for user 30 ordered by time
+1383837260662	Sending popped message
+1383837260663	Interpreting message: "POPQ,30,2,1"
+1383837260663	Interpreting message: "POPQ,30,2,1"
+1383837260664	Popping queue 2 for user 30 ordered by time
+1383837260664	Popping queue 2 for user 30 ordered by time
+1383837260664	Sending popped message
+1383837260664	Sending popped message
+1383837260664	Interpreting message: "POPQ,30,2,1"
+1383837260664	Interpreting message: "POPQ,30,2,1"
+1383837260664	Interpreting message: "POPQ,30,2,1"
+1383837260664	Popping queue 2 for user 30 ordered by time
+1383837260664	Popping queue 2 for user 30 ordered by time
+1383837260665	Sending popped message
+1383837260665	Interpreting message: "POPQ,30,2,1"
+1383837260665	Interpreting message: "POPQ,30,2,1"
+1383837260665	Popping queue 2 for user 30 ordered by time
+1383837260665	Popping queue 2 for user 30 ordered by time
+1383837260665	Sending popped message
+1383837260665	Sending popped message
+1383837260666	Interpreting message: "POPQ,30,2,1"
+1383837260666	Interpreting message: "POPQ,30,2,1"
+1383837260666	Popping queue 2 for user 30 ordered by time
+1383837260666	Popping queue 2 for user 30 ordered by time
+1383837260666	Sending popped message
+1383837260666	Sending popped message
+1383837260666	Sending popped message
+1383837260664	Popping queue 2 for user 30 ordered by time
+1383837260667	Sending popped message
+1383837260849	Interpreting message: "POPQ,0,1,1"
+1383837260849	Interpreting message: "POPQ,0,1,1"
+1383837260850	Interpreting message: "POPQ,0,1,1"
+1383837260850	Popping queue 1 for user 0 ordered by time
+1383837260850	Popping queue 1 for user 0 ordered by time
+1383837260850	Sending popped message
+1383837260850	Popping queue 1 for user 0 ordered by time
+1383837260850	Sending popped message
+1383837260850	Sending popped message
+1383837260853	Interpreting message: "POPQ,0,1,1"
+1383837260854	Interpreting message: "POPQ,0,1,1"
+1383837260854	Popping queue 1 for user 0 ordered by time
+1383837260854	Popping queue 1 for user 0 ordered by time
+1383837260854	Interpreting message: "POPQ,0,1,1"
+1383837260854	Sending popped message
+1383837260854	Sending popped message
+1383837260854	Interpreting message: "POPQ,0,1,1"
+1383837260854	Interpreting message: "POPQ,0,1,1"
+1383837260854	Popping queue 1 for user 0 ordered by time
+1383837260854	Sending popped message
+1383837260854	Popping queue 1 for user 0 ordered by time
+1383837260855	Popping queue 1 for user 0 ordered by time
+1383837260855	Sending popped message
+1383837260855	Sending popped message
+1383837260855	Popping queue 1 for user 0 ordered by time
+1383837260855	Interpreting message: "POPQ,0,1,1"
+1383837260855	Sending popped message
+1383837260855	Popping queue 1 for user 0 ordered by time
+1383837260856	Sending popped message
+1383837260857	Interpreting message: "POPQ,0,1,1"
+1383837260857	Interpreting message: "POPQ,0,1,1"
+1383837260857	Popping queue 1 for user 0 ordered by time
+1383837260857	Popping queue 1 for user 0 ordered by time
+1383837260858	Sending popped message
+1383837260858	Sending popped message
+1383837260858	Interpreting message: "POPQ,0,1,1"
+1383837260858	Interpreting message: "POPQ,0,1,1"
+1383837260858	Interpreting message: "POPQ,0,1,1"
+1383837260858	Popping queue 1 for user 0 ordered by time
+1383837260858	Popping queue 1 for user 0 ordered by time
+1383837260858	Sending popped message
+1383837260858	Popping queue 1 for user 0 ordered by time
+1383837260858	Sending popped message
+1383837260858	Sending popped message
+1383837260858	Interpreting message: "POPQ,0,1,1"
+1383837260858	Interpreting message: "POPQ,0,1,1"
+1383837260859	Interpreting message: "POPQ,0,1,1"
+1383837260859	Popping queue 1 for user 0 ordered by time
+1383837260859	Popping queue 1 for user 0 ordered by time
+1383837260859	Sending popped message
+1383837260859	Sending popped message
+1383837260859	Sending popped message
+1383837260859	Interpreting message: "POPQ,0,1,1"
+1383837260859	Popping queue 1 for user 0 ordered by time
+1383837260860	Sending popped message
+1383837260861	Interpreting message: "POPQ,0,1,1"
+1383837260861	Interpreting message: "POPQ,0,1,1"
+1383837260862	Popping queue 1 for user 0 ordered by time
+1383837260862	Popping queue 1 for user 0 ordered by time
+1383837260862	Sending popped message
+1383837260862	Sending popped message
+1383837260862	Interpreting message: "POPQ,0,1,1"
+1383837260862	Interpreting message: "POPQ,0,1,1"
+1383837260862	Interpreting message: "POPQ,0,1,1"
+1383837260862	Popping queue 1 for user 0 ordered by time
+1383837260862	Popping queue 1 for user 0 ordered by time
+1383837260863	Sending popped message
+1383837260863	Popping queue 1 for user 0 ordered by time
+1383837260863	Interpreting message: "POPQ,30,2,1"
+1383837260863	Sending popped message
+1383837260863	Interpreting message: "POPQ,30,2,1"
+1383837260863	Interpreting message: "POPQ,0,1,1"
+1383837260863	Popping queue 2 for user 30 ordered by time
+1383837260863	Popping queue 2 for user 30 ordered by time
+1383837260863	Sending popped message
+1383837260863	Popping queue 1 for user 0 ordered by time
+1383837260864	Sending popped message
+1383837260864	Sending popped message
+1383837260864	Interpreting message: "POPQ,0,1,1"
+1383837260864	Interpreting message: "POPQ,0,1,1"
+1383837260864	Popping queue 1 for user 0 ordered by time
+1383837260864	Popping queue 1 for user 0 ordered by time
+1383837260864	Sending popped message
+1383837260864	Sending popped message
+1383837260864	Interpreting message: "POPQ,0,1,1"
+1383837260864	Interpreting message: "POPQ,0,1,1"
+1383837260865	Interpreting message: "POPQ,0,1,1"
+1383837260865	Interpreting message: "POPQ,30,2,1"
+1383837260865	Popping queue 1 for user 0 ordered by time
+1383837260865	Popping queue 1 for user 0 ordered by time
+1383837260865	Popping queue 1 for user 0 ordered by time
+1383837260865	Sending popped message
+1383837260865	Sending popped message
+1383837260865	Popping queue 2 for user 30 ordered by time
+1383837260865	Sending popped message
+1383837260865	Interpreting message: "POPQ,30,2,1"
+1383837260865	Sending popped message
+1383837260865	Interpreting message: "POPQ,30,2,1"
+1383837260865	Popping queue 2 for user 30 ordered by time
+1383837260865	Popping queue 2 for user 30 ordered by time
+1383837260866	Sending popped message
+1383837260866	Sending popped message
+1383837260866	Interpreting message: "POPQ,30,2,1"
+1383837260866	Popping queue 2 for user 30 ordered by time
+1383837260866	Sending popped message
+1383837260867	Interpreting message: "POPQ,30,2,1"
+1383837260867	Popping queue 2 for user 30 ordered by time
+1383837260868	Sending popped message
+1383837260868	Interpreting message: "POPQ,30,2,1"
+1383837260868	Popping queue 2 for user 30 ordered by time
+1383837260868	Sending popped message
+1383837260870	Interpreting message: "POPQ,30,2,1"
+1383837260870	Popping queue 2 for user 30 ordered by time
+1383837260870	Interpreting message: "POPQ,30,2,1"
+1383837260870	Sending popped message
+1383837260870	Interpreting message: "POPQ,30,2,1"
+1383837260870	Popping queue 2 for user 30 ordered by time
+1383837260871	Sending popped message
+1383837260871	Popping queue 2 for user 30 ordered by time
+1383837260871	Interpreting message: "POPQ,30,2,1"
+1383837260871	Sending popped message
+1383837260871	Interpreting message: "POPQ,30,2,1"
+1383837260871	Popping queue 2 for user 30 ordered by time
+1383837260871	Sending popped message
+1383837260871	Popping queue 2 for user 30 ordered by time
+1383837260871	Interpreting message: "POPQ,30,2,1"
+1383837260871	Sending popped message
+1383837260872	Interpreting message: "POPQ,30,2,1"
+1383837260872	Popping queue 2 for user 30 ordered by time
+1383837260872	Sending popped message
+1383837260872	Popping queue 2 for user 30 ordered by time
+1383837260872	Interpreting message: "POPQ,30,2,1"
+1383837260872	Sending popped message
+1383837260872	Popping queue 2 for user 30 ordered by time
+1383837260873	Sending popped message
+1383837261052	Interpreting message: "POPQ,0,1,1"
+1383837261052	Interpreting message: "POPQ,0,1,1"
+1383837261052	Interpreting message: "POPQ,0,1,1"
+1383837261052	Popping queue 1 for user 0 ordered by time
+1383837261052	Popping queue 1 for user 0 ordered by time
+1383837261052	Sending popped message
+1383837261052	Popping queue 1 for user 0 ordered by time
+1383837261052	Sending popped message
+1383837261052	Sending popped message
+1383837261058	Interpreting message: "POPQ,0,1,1"
+1383837261058	Interpreting message: "POPQ,0,1,1"
+1383837261059	Popping queue 1 for user 0 ordered by time
+1383837261059	Popping queue 1 for user 0 ordered by time
+1383837261059	Sending popped message
+1383837261059	Sending popped message
+1383837261059	Sending popped message
+1383837261059	Popping queue 1 for user 0 ordered by time
+1383837261059	Interpreting message: "POPQ,0,1,1"
+1383837261059	Interpreting message: "POPQ,0,1,1"
+1383837261059	Sending popped message
+1383837261059	Popping queue 1 for user 0 ordered by time
+1383837261059	Popping queue 1 for user 0 ordered by time
+1383837261059	Sending popped message
+1383837261059	Sending popped message
+1383837261060	Interpreting message: "POPQ,0,1,1"
+1383837261060	Popping queue 1 for user 0 ordered by time
+1383837261060	Interpreting message: "POPQ,0,1,1"
+1383837261060	Sending popped message
+1383837261060	Popping queue 1 for user 0 ordered by time
+1383837261061	Interpreting message: "POPQ,0,1,1"
+1383837261061	Sending popped message
+1383837261061	Popping queue 1 for user 0 ordered by time
+1383837261061	Sending popped message
+1383837261061	Interpreting message: "POPQ,0,1,1"
+1383837261062	Popping queue 1 for user 0 ordered by time
+1383837261062	Sending popped message
+1383837261062	Interpreting message: "POPQ,0,1,1"
+1383837261062	Interpreting message: "POPQ,0,1,1"
+1383837261062	Popping queue 1 for user 0 ordered by time
+1383837261063	Popping queue 1 for user 0 ordered by time
+1383837261063	Sending popped message
+1383837261063	Sending popped message
+1383837261063	Interpreting message: "POPQ,0,1,1"
+1383837261063	Interpreting message: "POPQ,0,1,1"
+1383837261063	Interpreting message: "POPQ,0,1,1"
+1383837261063	Popping queue 1 for user 0 ordered by time
+1383837261063	Popping queue 1 for user 0 ordered by time
+1383837261063	Sending popped message
+1383837261063	Sending popped message
+1383837261063	Popping queue 1 for user 0 ordered by time
+1383837261063	Sending popped message
+1383837261064	Interpreting message: "POPQ,0,1,1"
+1383837261064	Popping queue 1 for user 0 ordered by time
+1383837261064	Sending popped message
+1383837261065	Interpreting message: "POPQ,0,1,1"
+1383837261066	Interpreting message: "POPQ,0,1,1"
+1383837261066	Interpreting message: "POPQ,0,1,1"
+1383837261066	Popping queue 1 for user 0 ordered by time
+1383837261066	Popping queue 1 for user 0 ordered by time
+1383837261066	Sending popped message
+1383837261066	Popping queue 1 for user 0 ordered by time
+1383837261066	Sending popped message
+1383837261066	Sending popped message
+1383837261066	Interpreting message: "POPQ,0,1,1"
+1383837261067	Popping queue 1 for user 0 ordered by time
+1383837261067	Sending popped message
+1383837261067	Interpreting message: "POPQ,0,1,1"
+1383837261067	Popping queue 1 for user 0 ordered by time
+1383837261067	Sending popped message
+1383837261068	Interpreting message: "POPQ,0,1,1"
+1383837261068	Popping queue 1 for user 0 ordered by time
+1383837261068	Interpreting message: "POPQ,30,2,1"
+1383837261068	Sending popped message
+1383837261068	Popping queue 2 for user 30 ordered by time
+1383837261069	Sending popped message
+1383837261069	Popping queue 2 for user 30 ordered by time
+1383837261069	Interpreting message: "POPQ,0,1,1"
+1383837261069	Sending popped message
+1383837261069	Popping queue 1 for user 0 ordered by time
+1383837261069	Sending popped message
+1383837261069	Interpreting message: "POPQ,30,2,1"
+1383837261070	Popping queue 2 for user 30 ordered by time
+1383837261070	Interpreting message: "POPQ,30,2,1"
+1383837261070	Sending popped message
+1383837261070	Interpreting message: "POPQ,0,1,1"
+1383837261070	Interpreting message: "POPQ,30,2,1"
+1383837261070	Popping queue 2 for user 30 ordered by time
+1383837261070	Sending popped message
+1383837261070	Popping queue 1 for user 0 ordered by time
+1383837261070	Popping queue 2 for user 30 ordered by time
+1383837261070	Interpreting message: "POPQ,0,1,1"
+1383837261070	Sending popped message
+1383837261071	Sending popped message
+1383837261071	Interpreting message: "POPQ,0,1,1"
+1383837261071	Interpreting message: "POPQ,0,1,1"
+1383837261071	Sending popped message
+1383837261071	Popping queue 1 for user 0 ordered by time
+1383837261071	Interpreting message: "POPQ,30,2,1"
+1383837261071	Sending popped message
+1383837261071	Popping queue 1 for user 0 ordered by time
+1383837261071	Popping queue 2 for user 30 ordered by time
+1383837261071	Sending popped message
+1383837261071	Sending popped message
+1383837261073	Interpreting message: "POPQ,30,2,1"
+1383837261073	Interpreting message: "POPQ,30,2,1"
+1383837261073	Popping queue 2 for user 30 ordered by time
+1383837261073	Popping queue 2 for user 30 ordered by time
+1383837261073	Sending popped message
+1383837261073	Sending popped message
+1383837261075	Interpreting message: "POPQ,30,2,1"
+1383837261075	Interpreting message: "POPQ,30,2,1"
+1383837261075	Interpreting message: "POPQ,30,2,1"
+1383837261075	Popping queue 2 for user 30 ordered by time
+1383837261075	Popping queue 2 for user 30 ordered by time
+1383837261075	Sending popped message
+1383837261075	Interpreting message: "POPQ,30,2,1"
+1383837261075	Sending popped message
+1383837261075	Popping queue 2 for user 30 ordered by time
+1383837261075	Interpreting message: "POPQ,30,2,1"
+1383837261075	Sending popped message
+1383837261076	Popping queue 2 for user 30 ordered by time
+1383837261076	Interpreting message: "POPQ,30,2,1"
+1383837261076	Sending popped message
+1383837261076	Interpreting message: "POPQ,30,2,1"
+1383837261076	Popping queue 2 for user 30 ordered by time
+1383837261076	Sending popped message
+1383837261076	Sending popped message
+1383837261076	Popping queue 2 for user 30 ordered by time
+1383837261076	Sending popped message
+1383837261255	Interpreting message: "POPQ,0,1,1"
+1383837261255	Interpreting message: "POPQ,0,1,1"
+1383837261255	Interpreting message: "POPQ,0,1,1"
+1383837261256	Popping queue 1 for user 0 ordered by time
+1383837261256	Popping queue 1 for user 0 ordered by time
+1383837261256	Sending popped message
+1383837261256	Popping queue 1 for user 0 ordered by time
+1383837261256	Sending popped message
+1383837261256	Sending popped message
+1383837261261	Interpreting message: "POPQ,0,1,1"
+1383837261262	Popping queue 1 for user 0 ordered by time
+1383837261262	Sending popped message
+1383837261262	Interpreting message: "POPQ,0,1,1"
+1383837261262	Interpreting message: "POPQ,0,1,1"
+1383837261262	Popping queue 1 for user 0 ordered by time
+1383837261262	Interpreting message: "POPQ,0,1,1"
+1383837261262	Popping queue 1 for user 0 ordered by time
+1383837261262	Sending popped message
+1383837261262	Sending popped message
+1383837261262	Popping queue 1 for user 0 ordered by time
+1383837261262	Interpreting message: "POPQ,0,1,1"
+1383837261262	Sending popped message
+1383837261263	Interpreting message: "POPQ,0,1,1"
+1383837261263	Interpreting message: "POPQ,0,1,1"
+1383837261263	Popping queue 1 for user 0 ordered by time
+1383837261263	Popping queue 1 for user 0 ordered by time
+1383837261263	Sending popped message
+1383837261263	Popping queue 1 for user 0 ordered by time
+1383837261263	Sending popped message
+1383837261263	Interpreting message: "POPQ,0,1,1"
+1383837261263	Interpreting message: "POPQ,0,1,1"
+1383837261263	Sending popped message
+1383837261263	Popping queue 1 for user 0 ordered by time
+1383837261263	Popping queue 1 for user 0 ordered by time
+1383837261263	Sending popped message
+1383837261263	Sending popped message
+1383837261264	Interpreting message: "POPQ,0,1,1"
+1383837261264	Popping queue 1 for user 0 ordered by time
+1383837261264	Sending popped message
+1383837261264	Interpreting message: "POPQ,0,1,1"
+1383837261265	Interpreting message: "POPQ,0,1,1"
+1383837261265	Popping queue 1 for user 0 ordered by time
+1383837261265	Sending popped message
+1383837261265	Popping queue 1 for user 0 ordered by time
+1383837261265	Interpreting message: "POPQ,0,1,1"
+1383837261265	Sending popped message
+1383837261265	Popping queue 1 for user 0 ordered by time
+1383837261265	Sending popped message
+1383837261266	Interpreting message: "POPQ,0,1,1"
+1383837261266	Popping queue 1 for user 0 ordered by time
+1383837261266	Sending popped message
+1383837261267	Interpreting message: "POPQ,0,1,1"
+1383837261267	Interpreting message: "POPQ,0,1,1"
+1383837261267	Popping queue 1 for user 0 ordered by time
+1383837261267	Popping queue 1 for user 0 ordered by time
+1383837261267	Sending popped message
+1383837261267	Sending popped message
+1383837261268	Interpreting message: "POPQ,0,1,1"
+1383837261268	Interpreting message: "POPQ,0,1,1"
+1383837261269	Interpreting message: "POPQ,0,1,1"
+1383837261269	Popping queue 1 for user 0 ordered by time
+1383837261269	Popping queue 1 for user 0 ordered by time
+1383837261269	Popping queue 1 for user 0 ordered by time
+1383837261269	Sending popped message
+1383837261269	Sending popped message
+1383837261269	Sending popped message
+1383837261270	Interpreting message: "POPQ,0,1,1"
+1383837261270	Popping queue 1 for user 0 ordered by time
+1383837261270	Sending popped message
+1383837261271	Interpreting message: "POPQ,30,2,1"
+1383837261271	Popping queue 2 for user 30 ordered by time
+1383837261271	Sending popped message
+1383837261272	Interpreting message: "POPQ,30,2,1"
+1383837261272	Interpreting message: "POPQ,0,1,1"
+1383837261272	Interpreting message: "POPQ,0,1,1"
+1383837261273	Popping queue 1 for user 0 ordered by time
+1383837261273	Popping queue 2 for user 30 ordered by time
+1383837261273	Interpreting message: "POPQ,0,1,1"
+1383837261273	Popping queue 1 for user 0 ordered by time
+1383837261273	Sending popped message
+1383837261273	Sending popped message
+1383837261273	Popping queue 1 for user 0 ordered by time
+1383837261273	Sending popped message
+1383837261274	Interpreting message: "POPQ,30,2,1"
+1383837261274	Interpreting message: "POPQ,30,2,1"
+1383837261274	Popping queue 2 for user 30 ordered by time
+1383837261274	Popping queue 2 for user 30 ordered by time
+1383837261274	Sending popped message
+1383837261274	Sending popped message
+1383837261274	Interpreting message: "POPQ,0,1,1"
+1383837261275	Interpreting message: "POPQ,30,2,1"
+1383837261275	Interpreting message: "POPQ,30,2,1"
+1383837261275	Popping queue 1 for user 0 ordered by time
+1383837261275	Popping queue 2 for user 30 ordered by time
+1383837261275	Popping queue 2 for user 30 ordered by time
+1383837261275	Sending popped message
+1383837261275	Sending popped message
+1383837261275	Sending popped message
+1383837261275	Interpreting message: "POPQ,0,1,1"
+1383837261275	Interpreting message: "POPQ,0,1,1"
+1383837261275	Interpreting message: "POPQ,0,1,1"
+1383837261275	Popping queue 1 for user 0 ordered by time
+1383837261275	Popping queue 1 for user 0 ordered by time
+1383837261276	Popping queue 1 for user 0 ordered by time
+1383837261276	Sending popped message
+1383837261276	Sending popped message
+1383837261276	Sending popped message
+1383837261277	Interpreting message: "POPQ,30,2,1"
+1383837261277	Popping queue 2 for user 30 ordered by time
+1383837261277	Sending popped message
+1383837261277	Interpreting message: "POPQ,30,2,1"
+1383837261277	Interpreting message: "POPQ,30,2,1"
+1383837261278	Popping queue 2 for user 30 ordered by time
+1383837261278	Sending popped message
+1383837261278	Popping queue 2 for user 30 ordered by time
+1383837261278	Sending popped message
+1383837261278	Interpreting message: "POPQ,30,2,1"
+1383837261278	Interpreting message: "POPQ,30,2,1"
+1383837261278	Interpreting message: "POPQ,30,2,1"
+1383837261278	Popping queue 2 for user 30 ordered by time
+1383837261278	Popping queue 2 for user 30 ordered by time
+1383837261278	Popping queue 2 for user 30 ordered by time
+1383837261278	Sending popped message
+1383837261278	Sending popped message
+1383837261279	Sending popped message
+1383837261279	Interpreting message: "POPQ,30,2,1"
+1383837261279	Interpreting message: "POPQ,30,2,1"
+1383837261279	Interpreting message: "POPQ,30,2,1"
+1383837261279	Popping queue 2 for user 30 ordered by time
+1383837261279	Interpreting message: "POPQ,30,2,1"
+1383837261279	Sending popped message
+1383837261279	Popping queue 2 for user 30 ordered by time
+1383837261279	Sending popped message
+1383837261279	Popping queue 2 for user 30 ordered by time
+1383837261279	Sending popped message
+1383837261279	Sending popped message
+1383837261458	Interpreting message: "POPQ,0,1,1"
+1383837261458	Interpreting message: "POPQ,0,1,1"
+1383837261458	Popping queue 1 for user 0 ordered by time
+1383837261458	Popping queue 1 for user 0 ordered by time
+1383837261458	Sending popped message
+1383837261459	Sending popped message
+1383837261465	Interpreting message: "POPQ,0,1,1"
+1383837261465	Interpreting message: "POPQ,0,1,1"
+1383837261465	Popping queue 1 for user 0 ordered by time
+1383837261465	Popping queue 1 for user 0 ordered by time
+1383837261465	Sending popped message
+1383837261465	Sending popped message
+1383837261466	Interpreting message: "POPQ,0,1,1"
+1383837261466	Interpreting message: "POPQ,0,1,1"
+1383837261466	Interpreting message: "POPQ,0,1,1"
+1383837261467	Interpreting message: "POPQ,0,1,1"
+1383837261467	Popping queue 1 for user 0 ordered by time
+1383837261467	Sending popped message
+1383837261467	Popping queue 1 for user 0 ordered by time
+1383837261467	Popping queue 1 for user 0 ordered by time
+1383837261467	Popping queue 1 for user 0 ordered by time
+1383837261467	Interpreting message: "POPQ,0,1,1"
+1383837261467	Sending popped message
+1383837261467	Sending popped message
+1383837261467	Popping queue 1 for user 0 ordered by time
+1383837261467	Interpreting message: "POPQ,0,1,1"
+1383837261467	Sending popped message
+1383837261467	Popping queue 1 for user 0 ordered by time
+1383837261468	Sending popped message
+1383837261468	Interpreting message: "POPQ,0,1,1"
+1383837261468	Popping queue 1 for user 0 ordered by time
+1383837261468	Interpreting message: "POPQ,0,1,1"
+1383837261468	Sending popped message
+1383837261468	Popping queue 1 for user 0 ordered by time
+1383837261469	Interpreting message: "POPQ,0,1,1"
+1383837261469	Sending popped message
+1383837261469	Interpreting message: "POPQ,0,1,1"
+1383837261469	Popping queue 1 for user 0 ordered by time
+1383837261469	Sending popped message
+1383837261469	Interpreting message: "POPQ,0,1,1"
+1383837261469	Popping queue 1 for user 0 ordered by time
+1383837261469	Interpreting message: "POPQ,0,1,1"
+1383837261469	Sending popped message
+1383837261469	Popping queue 1 for user 0 ordered by time
+1383837261469	Interpreting message: "POPQ,0,1,1"
+1383837261469	Sending popped message
+1383837261469	Popping queue 1 for user 0 ordered by time
+1383837261470	Sending popped message
+1383837261470	Popping queue 1 for user 0 ordered by time
+1383837261470	Interpreting message: "POPQ,0,1,1"
+1383837261470	Sending popped message
+1383837261470	Popping queue 1 for user 0 ordered by time
+1383837261470	Sending popped message
+1383837261471	Interpreting message: "POPQ,0,1,1"
+1383837261471	Popping queue 1 for user 0 ordered by time
+1383837261471	Sending popped message
+1383837261471	Interpreting message: "POPQ,0,1,1"
+1383837261472	Popping queue 1 for user 0 ordered by time
+1383837261472	Sending popped message
+1383837261472	Interpreting message: "POPQ,0,1,1"
+1383837261472	Interpreting message: "POPQ,0,1,1"
+1383837261472	Popping queue 1 for user 0 ordered by time
+1383837261472	Sending popped message
+1383837261473	Popping queue 1 for user 0 ordered by time
+1383837261473	Sending popped message
+1383837261473	Interpreting message: "POPQ,30,2,1"
+1383837261473	Popping queue 2 for user 30 ordered by time
+1383837261474	Sending popped message
+1383837261474	Interpreting message: "POPQ,30,2,1"
+1383837261474	Interpreting message: "POPQ,0,1,1"
+1383837261475	Popping queue 1 for user 0 ordered by time
+1383837261475	Popping queue 2 for user 30 ordered by time
+1383837261475	Sending popped message
+1383837261475	Sending popped message
+1383837261475	Interpreting message: "POPQ,0,1,1"
+1383837261475	Interpreting message: "POPQ,0,1,1"
+1383837261475	Popping queue 1 for user 0 ordered by time
+1383837261475	Popping queue 1 for user 0 ordered by time
+1383837261475	Sending popped message
+1383837261475	Sending popped message
+1383837261476	Interpreting message: "POPQ,30,2,1"
+1383837261476	Popping queue 2 for user 30 ordered by time
+1383837261477	Sending popped message
+1383837261477	Popping queue 2 for user 30 ordered by time
+1383837261477	Sending popped message
+1383837261477	Interpreting message: "POPQ,0,1,1"
+1383837261477	Interpreting message: "POPQ,30,2,1"
+1383837261477	Popping queue 2 for user 30 ordered by time
+1383837261477	Popping queue 1 for user 0 ordered by time
+1383837261477	Sending popped message
+1383837261477	Sending popped message
+1383837261478	Interpreting message: "POPQ,30,2,1"
+1383837261478	Popping queue 2 for user 30 ordered by time
+1383837261478	Sending popped message
+1383837261478	Interpreting message: "POPQ,0,1,1"
+1383837261478	Interpreting message: "POPQ,0,1,1"
+1383837261479	Popping queue 1 for user 0 ordered by time
+1383837261479	Popping queue 1 for user 0 ordered by time
+1383837261479	Interpreting message: "POPQ,0,1,1"
+1383837261479	Sending popped message
+1383837261479	Sending popped message
+1383837261479	Popping queue 1 for user 0 ordered by time
+1383837261479	Sending popped message
+1383837261480	Interpreting message: "POPQ,30,2,1"
+1383837261480	Popping queue 2 for user 30 ordered by time
+1383837261480	Sending popped message
+1383837261481	Interpreting message: "POPQ,30,2,1"
+1383837261481	Interpreting message: "POPQ,30,2,1"
+1383837261481	Popping queue 2 for user 30 ordered by time
+1383837261481	Popping queue 2 for user 30 ordered by time
+1383837261481	Sending popped message
+1383837261481	Sending popped message
+1383837261481	Interpreting message: "POPQ,30,2,1"
+1383837261482	Popping queue 2 for user 30 ordered by time
+1383837261482	Sending popped message
+1383837261482	Interpreting message: "POPQ,30,2,1"
+1383837261482	Interpreting message: "POPQ,30,2,1"
+1383837261483	Popping queue 2 for user 30 ordered by time
+1383837261483	Popping queue 2 for user 30 ordered by time
+1383837261483	Sending popped message
+1383837261483	Sending popped message
+1383837261483	Interpreting message: "POPQ,30,2,1"
+1383837261483	Interpreting message: "POPQ,30,2,1"
+1383837261483	Interpreting message: "POPQ,30,2,1"
+1383837261483	Popping queue 2 for user 30 ordered by time
+1383837261483	Popping queue 2 for user 30 ordered by time
+1383837261483	Popping queue 2 for user 30 ordered by time
+1383837261483	Sending popped message
+1383837261483	Sending popped message
+1383837261483	Sending popped message
+1383837261483	Interpreting message: "POPQ,30,2,1"
+1383837261484	Popping queue 2 for user 30 ordered by time
+1383837261484	Sending popped message
+1383837261660	Interpreting message: "POPQ,0,1,1"
+1383837261660	Interpreting message: "POPQ,0,1,1"
+1383837261661	Interpreting message: "POPQ,0,1,1"
+1383837261661	Popping queue 1 for user 0 ordered by time
+1383837261661	Popping queue 1 for user 0 ordered by time
+1383837261661	Sending popped message
+1383837261661	Sending popped message
+1383837261661	Popping queue 1 for user 0 ordered by time
+1383837261661	Sending popped message
+1383837261667	Interpreting message: "POPQ,0,1,1"
+1383837261667	Interpreting message: "POPQ,0,1,1"
+1383837261668	Popping queue 1 for user 0 ordered by time
+1383837261668	Popping queue 1 for user 0 ordered by time
+1383837261668	Sending popped message
+1383837261668	Sending popped message
+1383837261670	Interpreting message: "POPQ,0,1,1"
+1383837261670	Interpreting message: "POPQ,0,1,1"
+1383837261670	Interpreting message: "POPQ,0,1,1"
+1383837261670	Interpreting message: "POPQ,0,1,1"
+1383837261670	Popping queue 1 for user 0 ordered by time
+1383837261670	Popping queue 1 for user 0 ordered by time
+1383837261670	Popping queue 1 for user 0 ordered by time
+1383837261670	Sending popped message
+1383837261670	Sending popped message
+1383837261670	Sending popped message
+1383837261670	Popping queue 1 for user 0 ordered by time
+1383837261671	Sending popped message
+1383837261672	Interpreting message: "POPQ,0,1,1"
+1383837261672	Interpreting message: "POPQ,0,1,1"
+1383837261672	Popping queue 1 for user 0 ordered by time
+1383837261672	Interpreting message: "POPQ,0,1,1"
+1383837261672	Sending popped message
+1383837261672	Interpreting message: "POPQ,0,1,1"
+1383837261672	Popping queue 1 for user 0 ordered by time
+1383837261672	Interpreting message: "POPQ,0,1,1"
+1383837261672	Sending popped message
+1383837261672	Popping queue 1 for user 0 ordered by time
+1383837261672	Popping queue 1 for user 0 ordered by time
+1383837261672	Sending popped message
+1383837261672	Sending popped message
+1383837261672	Interpreting message: "POPQ,0,1,1"
+1383837261672	Popping queue 1 for user 0 ordered by time
+1383837261673	Sending popped message
+1383837261673	Interpreting message: "POPQ,0,1,1"
+1383837261673	Popping queue 1 for user 0 ordered by time
+1383837261673	Sending popped message
+1383837261673	Popping queue 1 for user 0 ordered by time
+1383837261673	Sending popped message
+1383837261674	Interpreting message: "POPQ,0,1,1"
+1383837261674	Popping queue 1 for user 0 ordered by time
+1383837261674	Sending popped message
+1383837261674	Interpreting message: "POPQ,0,1,1"
+1383837261674	Interpreting message: "POPQ,0,1,1"
+1383837261674	Popping queue 1 for user 0 ordered by time
+1383837261674	Interpreting message: "POPQ,0,1,1"
+1383837261675	Sending popped message
+1383837261675	Interpreting message: "POPQ,0,1,1"
+1383837261675	Popping queue 1 for user 0 ordered by time
+1383837261675	Popping queue 1 for user 0 ordered by time
+1383837261675	Sending popped message
+1383837261675	Sending popped message
+1383837261675	Interpreting message: "POPQ,0,1,1"
+1383837261676	Interpreting message: "POPQ,0,1,1"
+1383837261676	Popping queue 1 for user 0 ordered by time
+1383837261675	Popping queue 1 for user 0 ordered by time
+1383837261676	Sending popped message
+1383837261676	Interpreting message: "POPQ,30,2,1"
+1383837261676	Popping queue 2 for user 30 ordered by time
+1383837261676	Sending popped message
+1383837261677	Interpreting message: "POPQ,30,2,1"
+1383837261676	Sending popped message
+1383837261677	Popping queue 2 for user 30 ordered by time
+1383837261677	Interpreting message: "POPQ,0,1,1"
+1383837261677	Sending popped message
+1383837261678	Interpreting message: "POPQ,0,1,1"
+1383837261678	Interpreting message: "POPQ,0,1,1"
+1383837261678	Popping queue 1 for user 0 ordered by time
+1383837261678	Sending popped message
+1383837261678	Popping queue 1 for user 0 ordered by time
+1383837261678	Popping queue 1 for user 0 ordered by time
+1383837261678	Sending popped message
+1383837261678	Sending popped message
+1383837261678	Popping queue 1 for user 0 ordered by time
+1383837261678	Sending popped message
+1383837261679	Interpreting message: "POPQ,30,2,1"
+1383837261679	Popping queue 2 for user 30 ordered by time
+1383837261679	Interpreting message: "POPQ,30,2,1"
+1383837261680	Sending popped message
+1383837261680	Popping queue 2 for user 30 ordered by time
+1383837261680	Sending popped message
+1383837261681	Interpreting message: "POPQ,0,1,1"
+1383837261681	Popping queue 1 for user 0 ordered by time
+1383837261681	Sending popped message
+1383837261682	Interpreting message: "POPQ,30,2,1"
+1383837261682	Popping queue 2 for user 30 ordered by time
+1383837261682	Interpreting message: "POPQ,30,2,1"
+1383837261682	Sending popped message
+1383837261682	Interpreting message: "POPQ,0,1,1"
+1383837261683	Popping queue 2 for user 30 ordered by time
+1383837261683	Sending popped message
+1383837261683	Popping queue 1 for user 0 ordered by time
+1383837261683	Interpreting message: "POPQ,0,1,1"
+1383837261683	Sending popped message
+1383837261683	Interpreting message: "POPQ,0,1,1"
+1383837261683	Popping queue 1 for user 0 ordered by time
+1383837261683	Sending popped message
+1383837261683	Popping queue 1 for user 0 ordered by time
+1383837261683	Sending popped message
+1383837261685	Interpreting message: "POPQ,30,2,1"
+1383837261686	Popping queue 2 for user 30 ordered by time
+1383837261686	Sending popped message
+1383837261688	Interpreting message: "POPQ,30,2,1"
+1383837261689	Popping queue 2 for user 30 ordered by time
+1383837261689	Sending popped message
+1383837261689	Interpreting message: "POPQ,30,2,1"
+1383837261689	Popping queue 2 for user 30 ordered by time
+1383837261689	Sending popped message
+1383837261690	Interpreting message: "POPQ,30,2,1"
+1383837261690	Popping queue 2 for user 30 ordered by time
+1383837261690	Sending popped message
+1383837261690	Interpreting message: "POPQ,30,2,1"
+1383837261690	Interpreting message: "POPQ,30,2,1"
+1383837261690	Popping queue 2 for user 30 ordered by time
+1383837261690	Popping queue 2 for user 30 ordered by time
+1383837261690	Sending popped message
+1383837261690	Sending popped message
+1383837261691	Interpreting message: "POPQ,30,2,1"
+1383837261691	Interpreting message: "POPQ,30,2,1"
+1383837261691	Popping queue 2 for user 30 ordered by time
+1383837261691	Popping queue 2 for user 30 ordered by time
+1383837261691	Sending popped message
+1383837261691	Sending popped message
+1383837261691	Interpreting message: "POPQ,30,2,1"
+1383837261691	Popping queue 2 for user 30 ordered by time
+1383837261691	Sending popped message
+1383837261692	Interpreting message: "POPQ,30,2,1"
+1383837261692	Popping queue 2 for user 30 ordered by time
+1383837261693	Sending popped message
+1383837261862	Interpreting message: "POPQ,0,1,1"
+1383837261862	Interpreting message: "POPQ,0,1,1"
+1383837261863	Interpreting message: "POPQ,0,1,1"
+1383837261863	Popping queue 1 for user 0 ordered by time
+1383837261863	Popping queue 1 for user 0 ordered by time
+1383837261863	Sending popped message
+1383837261863	Sending popped message
+1383837261863	Sending popped message
+1383837261869	Interpreting message: "POPQ,0,1,1"
+1383837261869	Interpreting message: "POPQ,0,1,1"
+1383837261869	Popping queue 1 for user 0 ordered by time
+1383837261869	Popping queue 1 for user 0 ordered by time
+1383837261869	Sending popped message
+1383837261869	Sending popped message
+1383837261872	Interpreting message: "POPQ,0,1,1"
+1383837261872	Interpreting message: "POPQ,0,1,1"
+1383837261872	Popping queue 1 for user 0 ordered by time
+1383837261872	Interpreting message: "POPQ,0,1,1"
+1383837261872	Popping queue 1 for user 0 ordered by time
+1383837261872	Sending popped message
+1383837261872	Sending popped message
+1383837261872	Popping queue 1 for user 0 ordered by time
+1383837261872	Sending popped message
+1383837261872	Interpreting message: "POPQ,0,1,1"
+1383837261873	Popping queue 1 for user 0 ordered by time
+1383837261873	Sending popped message
+1383837261876	Interpreting message: "POPQ,0,1,1"
+1383837261876	Popping queue 1 for user 0 ordered by time
+1383837261876	Interpreting message: "POPQ,0,1,1"
+1383837261877	Sending popped message
+1383837261877	Interpreting message: "POPQ,0,1,1"
+1383837261877	Interpreting message: "POPQ,0,1,1"
+1383837261877	Popping queue 1 for user 0 ordered by time
+1383837261877	Sending popped message
+1383837261877	Popping queue 1 for user 0 ordered by time
+1383837261877	Popping queue 1 for user 0 ordered by time
+1383837261877	Interpreting message: "POPQ,0,1,1"
+1383837261877	Sending popped message
+1383837261877	Sending popped message
+1383837261877	Interpreting message: "POPQ,0,1,1"
+1383837261877	Popping queue 1 for user 0 ordered by time
+1383837261877	Interpreting message: "POPQ,0,1,1"
+1383837261877	Sending popped message
+1383837261877	Popping queue 1 for user 0 ordered by time
+1383837261877	Popping queue 1 for user 0 ordered by time
+1383837261877	Interpreting message: "POPQ,0,1,1"
+1383837261877	Sending popped message
+1383837261877	Sending popped message
+1383837261878	Interpreting message: "POPQ,0,1,1"
+1383837261878	Popping queue 1 for user 0 ordered by time
+1383837261878	Sending popped message
+1383837261878	Popping queue 1 for user 0 ordered by time
+1383837261878	Sending popped message
+1383837261879	Interpreting message: "POPQ,0,1,1"
+1383837261880	Popping queue 1 for user 0 ordered by time
+1383837261880	Sending popped message
+1383837261880	Interpreting message: "POPQ,0,1,1"
+1383837261880	Interpreting message: "POPQ,0,1,1"
+1383837261880	Popping queue 1 for user 0 ordered by time
+1383837261880	Popping queue 1 for user 0 ordered by time
+1383837261880	Sending popped message
+1383837261880	Sending popped message
+1383837261880	Interpreting message: "POPQ,30,2,1"
+1383837261880	Interpreting message: "POPQ,0,1,1"
+1383837261881	Interpreting message: "POPQ,0,1,1"
+1383837261881	Popping queue 2 for user 30 ordered by time
+1383837261881	Sending popped message
+1383837261881	Popping queue 1 for user 0 ordered by time
+1383837261881	Popping queue 1 for user 0 ordered by time
+1383837261881	Sending popped message
+1383837261881	Interpreting message: "POPQ,30,2,1"
+1383837261881	Interpreting message: "POPQ,0,1,1"
+1383837261881	Sending popped message
+1383837261881	Popping queue 2 for user 30 ordered by time
+1383837261881	Sending popped message
+1383837261881	Popping queue 1 for user 0 ordered by time
+1383837261881	Sending popped message
+1383837261881	Interpreting message: "POPQ,0,1,1"
+1383837261882	Interpreting message: "POPQ,0,1,1"
+1383837261882	Popping queue 1 for user 0 ordered by time
+1383837261882	Popping queue 1 for user 0 ordered by time
+1383837261882	Sending popped message
+1383837261882	Sending popped message
+1383837261882	Interpreting message: "POPQ,30,2,1"
+1383837261882	Popping queue 2 for user 30 ordered by time
+1383837261882	Sending popped message
+1383837261885	Interpreting message: "POPQ,30,2,1"
+1383837261885	Interpreting message: "POPQ,0,1,1"
+1383837261885	Popping queue 2 for user 30 ordered by time
+1383837261885	Interpreting message: "POPQ,30,2,1"
+1383837261886	Popping queue 1 for user 0 ordered by time
+1383837261886	Sending popped message
+1383837261886	Interpreting message: "POPQ,30,2,1"
+1383837261886	Popping queue 2 for user 30 ordered by time
+1383837261886	Sending popped message
+1383837261886	Interpreting message: "POPQ,0,1,1"
+1383837261886	Sending popped message
+1383837261886	Popping queue 2 for user 30 ordered by time
+1383837261886	Popping queue 1 for user 0 ordered by time
+1383837261886	Sending popped message
+1383837261886	Sending popped message
+1383837261887	Interpreting message: "POPQ,0,1,1"
+1383837261887	Interpreting message: "POPQ,0,1,1"
+1383837261887	Popping queue 1 for user 0 ordered by time
+1383837261887	Sending popped message
+1383837261887	Popping queue 1 for user 0 ordered by time
+1383837261887	Sending popped message
+1383837261890	Interpreting message: "POPQ,30,2,1"
+1383837261890	Popping queue 2 for user 30 ordered by time
+1383837261891	Sending popped message
+1383837261894	Interpreting message: "POPQ,30,2,1"
+1383837261894	Interpreting message: "POPQ,30,2,1"
+1383837261894	Popping queue 2 for user 30 ordered by time
+1383837261894	Sending popped message
+1383837261894	Interpreting message: "POPQ,30,2,1"
+1383837261894	Popping queue 2 for user 30 ordered by time
+1383837261894	Popping queue 2 for user 30 ordered by time
+1383837261894	Sending popped message
+1383837261894	Sending popped message
+1383837261895	Interpreting message: "POPQ,30,2,1"
+1383837261895	Interpreting message: "POPQ,30,2,1"
+1383837261895	Popping queue 2 for user 30 ordered by time
+1383837261896	Popping queue 2 for user 30 ordered by time
+1383837261896	Sending popped message
+1383837261896	Sending popped message
+1383837261896	Interpreting message: "POPQ,30,2,1"
+1383837261896	Interpreting message: "POPQ,30,2,1"
+1383837261896	Popping queue 2 for user 30 ordered by time
+1383837261896	Sending popped message
+1383837261896	Popping queue 2 for user 30 ordered by time
+1383837261896	Interpreting message: "POPQ,30,2,1"
+1383837261896	Sending popped message
+1383837261896	Interpreting message: "POPQ,30,2,1"
+1383837261897	Popping queue 2 for user 30 ordered by time
+1383837261897	Popping queue 2 for user 30 ordered by time
+1383837261897	Sending popped message
+1383837261897	Sending popped message
+1383837262066	Interpreting message: "POPQ,0,1,1"
+1383837262066	Interpreting message: "POPQ,0,1,1"
+1383837262066	Interpreting message: "POPQ,0,1,1"
+1383837262067	Popping queue 1 for user 0 ordered by time
+1383837262067	Popping queue 1 for user 0 ordered by time
+1383837262067	Sending popped message
+1383837262067	Sending popped message
+1383837262067	Sending popped message
+1383837262071	Interpreting message: "POPQ,0,1,1"
+1383837262072	Interpreting message: "POPQ,0,1,1"
+1383837262072	Popping queue 1 for user 0 ordered by time
+1383837262072	Sending popped message
+1383837262072	Popping queue 1 for user 0 ordered by time
+1383837262072	Sending popped message
+1383837262074	Interpreting message: "POPQ,0,1,1"
+1383837262075	Interpreting message: "POPQ,0,1,1"
+1383837262075	Interpreting message: "POPQ,0,1,1"
+1383837262075	Popping queue 1 for user 0 ordered by time
+1383837262075	Popping queue 1 for user 0 ordered by time
+1383837262075	Interpreting message: "POPQ,0,1,1"
+1383837262075	Sending popped message
+1383837262075	Popping queue 1 for user 0 ordered by time
+1383837262075	Sending popped message
+1383837262075	Sending popped message
+1383837262075	Popping queue 1 for user 0 ordered by time
+1383837262075	Sending popped message
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Popping queue 1 for user 0 ordered by time
+1383837262082	Popping queue 1 for user 0 ordered by time
+1383837262082	Popping queue 1 for user 0 ordered by time
+1383837262082	Sending popped message
+1383837262082	Sending popped message
+1383837262082	Sending popped message
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Popping queue 1 for user 0 ordered by time
+1383837262082	Popping queue 1 for user 0 ordered by time
+1383837262082	Popping queue 1 for user 0 ordered by time
+1383837262082	Sending popped message
+1383837262082	Sending popped message
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262082	Interpreting message: "POPQ,0,1,1"
+1383837262083	Popping queue 1 for user 0 ordered by time
+1383837262083	Sending popped message
+1383837262083	Popping queue 1 for user 0 ordered by time
+1383837262083	Interpreting message: "POPQ,0,1,1"
+1383837262083	Sending popped message
+1383837262083	Popping queue 1 for user 0 ordered by time
+1383837262083	Interpreting message: "POPQ,0,1,1"
+1383837262083	Sending popped message
+1383837262083	Popping queue 1 for user 0 ordered by time
+1383837262083	Sending popped message
+1383837262084	Interpreting message: "POPQ,0,1,1"
+1383837262084	Popping queue 1 for user 0 ordered by time
+1383837262084	Sending popped message
+1383837262084	Interpreting message: "POPQ,30,2,1"
+1383837262084	Interpreting message: "POPQ,0,1,1"
+1383837262084	Popping queue 2 for user 30 ordered by time
+1383837262084	Popping queue 1 for user 0 ordered by time
+1383837262084	Sending popped message
+1383837262084	Sending popped message
+1383837262085	Interpreting message: "POPQ,30,2,1"
+1383837262085	Popping queue 2 for user 30 ordered by time
+1383837262085	Interpreting message: "POPQ,0,1,1"
+1383837262085	Sending popped message
+1383837262085	Interpreting message: "POPQ,0,1,1"
+1383837262085	Popping queue 1 for user 0 ordered by time
+1383837262085	Interpreting message: "POPQ,0,1,1"
+1383837262085	Sending popped message
+1383837262085	Popping queue 1 for user 0 ordered by time
+1383837262085	Sending popped message
+1383837262086	Interpreting message: "POPQ,0,1,1"
+1383837262086	Popping queue 1 for user 0 ordered by time
+1383837262086	Interpreting message: "POPQ,30,2,1"
+1383837262086	Interpreting message: "POPQ,0,1,1"
+1383837262086	Sending popped message
+1383837262086	Popping queue 1 for user 0 ordered by time
+1383837262086	Popping queue 2 for user 30 ordered by time
+1383837262086	Popping queue 1 for user 0 ordered by time
+1383837262086	Sending popped message
+1383837262086	Sending popped message
+1383837262086	Sending popped message
+1383837262088	Interpreting message: "POPQ,30,2,1"
+1383837262088	Interpreting message: "POPQ,0,1,1"
+1383837262088	Interpreting message: "POPQ,30,2,1"
+1383837262088	Popping queue 2 for user 30 ordered by time
+1383837262088	Popping queue 1 for user 0 ordered by time
+1383837262088	Sending popped message
+1383837262088	Popping queue 2 for user 30 ordered by time
+1383837262088	Sending popped message
+1383837262088	Sending popped message
+1383837262088	Interpreting message: "POPQ,0,1,1"
+1383837262088	Interpreting message: "POPQ,30,2,1"
+1383837262088	Interpreting message: "POPQ,0,1,1"
+1383837262089	Popping queue 1 for user 0 ordered by time
+1383837262089	Popping queue 1 for user 0 ordered by time
+1383837262089	Popping queue 2 for user 30 ordered by time
+1383837262089	Sending popped message
+1383837262089	Sending popped message
+1383837262089	Interpreting message: "POPQ,0,1,1"
+1383837262089	Popping queue 1 for user 0 ordered by time
+1383837262089	Sending popped message
+1383837262092	Interpreting message: "POPQ,30,2,1"
+1383837262093	Popping queue 2 for user 30 ordered by time
+1383837262093	Sending popped message
+1383837262098	Interpreting message: "POPQ,30,2,1"
+1383837262098	Popping queue 2 for user 30 ordered by time
+1383837262098	Interpreting message: "POPQ,30,2,1"
+1383837262098	Sending popped message
+1383837262098	Interpreting message: "POPQ,30,2,1"
+1383837262098	Popping queue 2 for user 30 ordered by time
+1383837262098	Sending popped message
+1383837262099	Popping queue 2 for user 30 ordered by time
+1383837262099	Sending popped message
+1383837262099	Sending popped message
+1383837262099	Interpreting message: "POPQ,30,2,1"
+1383837262099	Interpreting message: "POPQ,30,2,1"
+1383837262099	Popping queue 2 for user 30 ordered by time
+1383837262099	Interpreting message: "POPQ,30,2,1"
+1383837262099	Sending popped message
+1383837262099	Popping queue 2 for user 30 ordered by time
+1383837262099	Popping queue 2 for user 30 ordered by time
+1383837262099	Interpreting message: "POPQ,30,2,1"
+1383837262099	Sending popped message
+1383837262099	Popping queue 2 for user 30 ordered by time
+1383837262099	Popping queue 2 for user 30 ordered by time
+1383837262099	Sending popped message
+1383837262099	Sending popped message
+1383837262269	Interpreting message: "POPQ,0,1,1"
+1383837262269	Interpreting message: "POPQ,0,1,1"
+1383837262270	Popping queue 1 for user 0 ordered by time
+1383837262270	Popping queue 1 for user 0 ordered by time
+1383837262270	Sending popped message
+1383837262270	Sending popped message
+1383837262270	Interpreting message: "POPQ,0,1,1"
+1383837262270	Popping queue 1 for user 0 ordered by time
+1383837262270	Sending popped message
+1383837262274	Interpreting message: "POPQ,0,1,1"
+1383837262274	Interpreting message: "POPQ,0,1,1"
+1383837262274	Popping queue 1 for user 0 ordered by time
+1383837262274	Popping queue 1 for user 0 ordered by time
+1383837262274	Sending popped message
+1383837262275	Sending popped message
+1383837262277	Interpreting message: "POPQ,0,1,1"
+1383837262277	Interpreting message: "POPQ,0,1,1"
+1383837262277	Popping queue 1 for user 0 ordered by time
+1383837262277	Popping queue 1 for user 0 ordered by time
+1383837262277	Sending popped message
+1383837262277	Sending popped message
+1383837262278	Interpreting message: "POPQ,0,1,1"
+1383837262278	Interpreting message: "POPQ,0,1,1"
+1383837262278	Popping queue 1 for user 0 ordered by time
+1383837262278	Popping queue 1 for user 0 ordered by time
+1383837262278	Sending popped message
+1383837262278	Sending popped message
+1383837262284	Interpreting message: "POPQ,0,1,1"
+1383837262284	Popping queue 1 for user 0 ordered by time
+1383837262284	Sending popped message
+1383837262285	Interpreting message: "POPQ,0,1,1"
+1383837262285	Popping queue 1 for user 0 ordered by time
+1383837262285	Sending popped message
+1383837262285	Interpreting message: "POPQ,0,1,1"
+1383837262285	Popping queue 1 for user 0 ordered by time
+1383837262285	Sending popped message
+1383837262286	Interpreting message: "POPQ,0,1,1"
+1383837262286	Popping queue 1 for user 0 ordered by time
+1383837262286	Sending popped message
+1383837262286	Interpreting message: "POPQ,0,1,1"
+1383837262287	Interpreting message: "POPQ,0,1,1"
+1383837262287	Popping queue 1 for user 0 ordered by time
+1383837262287	Sending popped message
+1383837262287	Popping queue 1 for user 0 ordered by time
+1383837262287	Interpreting message: "POPQ,0,1,1"
+1383837262287	Sending popped message
+1383837262287	Interpreting message: "POPQ,0,1,1"
+1383837262287	Popping queue 1 for user 0 ordered by time
+1383837262287	Popping queue 1 for user 0 ordered by time
+1383837262287	Sending popped message
+1383837262287	Sending popped message
+1383837262287	Popping queue 1 for user 0 ordered by time
+1383837262287	Sending popped message
+1383837262291	Interpreting message: "POPQ,0,1,1"
+1383837262292	Popping queue 1 for user 0 ordered by time
+1383837262292	Sending popped message
+1383837262292	Interpreting message: "POPQ,0,1,1"
+1383837262292	Interpreting message: "POPQ,0,1,1"
+1383837262292	Popping queue 1 for user 0 ordered by time
+1383837262292	Interpreting message: "POPQ,30,2,1"
+1383837262292	Sending popped message
+1383837262292	Popping queue 1 for user 0 ordered by time
+1383837262292	Popping queue 2 for user 30 ordered by time
+1383837262292	Sending popped message
+1383837262292	Interpreting message: "POPQ,30,2,1"
+1383837262292	Sending popped message
+1383837262292	Interpreting message: "POPQ,0,1,1"
+1383837262292	Popping queue 2 for user 30 ordered by time
+1383837262292	Interpreting message: "POPQ,0,1,1"
+1383837262292	Sending popped message
+1383837262292	Popping queue 1 for user 0 ordered by time
+1383837262292	Popping queue 1 for user 0 ordered by time
+1383837262292	Sending popped message
+1383837262292	Sending popped message
+1383837262293	Interpreting message: "POPQ,30,2,1"
+1383837262293	Popping queue 2 for user 30 ordered by time
+1383837262293	Sending popped message
+1383837262293	Interpreting message: "POPQ,30,2,1"
+1383837262294	Popping queue 2 for user 30 ordered by time
+1383837262294	Sending popped message
+1383837262294	Interpreting message: "POPQ,30,2,1"
+1383837262294	Popping queue 2 for user 30 ordered by time
+1383837262294	Sending popped message
+1383837262295	Interpreting message: "POPQ,0,1,1"
+1383837262295	Interpreting message: "POPQ,0,1,1"
+1383837262295	Interpreting message: "POPQ,30,2,1"
+1383837262295	Popping queue 1 for user 0 ordered by time
+1383837262295	Popping queue 1 for user 0 ordered by time
+1383837262295	Popping queue 2 for user 30 ordered by time
+1383837262295	Sending popped message
+1383837262295	Sending popped message
+1383837262295	Sending popped message
+1383837262295	Interpreting message: "POPQ,0,1,1"
+1383837262295	Interpreting message: "POPQ,30,2,1"
+1383837262295	Popping queue 1 for user 0 ordered by time
+1383837262295	Popping queue 2 for user 30 ordered by time
+1383837262295	Sending popped message
+1383837262295	Sending popped message
+1383837262295	Interpreting message: "POPQ,0,1,1"
+1383837262296	Popping queue 1 for user 0 ordered by time
+1383837262296	Sending popped message
+1383837262296	Interpreting message: "POPQ,0,1,1"
+1383837262296	Popping queue 1 for user 0 ordered by time
+1383837262296	Sending popped message
+1383837262296	Interpreting message: "POPQ,0,1,1"
+1383837262296	Interpreting message: "POPQ,0,1,1"
+1383837262296	Popping queue 1 for user 0 ordered by time
+1383837262297	Popping queue 1 for user 0 ordered by time
+1383837262297	Sending popped message
+1383837262297	Sending popped message
+1383837262300	Interpreting message: "POPQ,30,2,1"
+1383837262300	Interpreting message: "POPQ,30,2,1"
+1383837262300	Interpreting message: "POPQ,30,2,1"
+1383837262300	Popping queue 2 for user 30 ordered by time
+1383837262300	Sending popped message
+1383837262300	Popping queue 2 for user 30 ordered by time
+1383837262300	Sending popped message
+1383837262301	Interpreting message: "POPQ,30,2,1"
+1383837262301	Interpreting message: "POPQ,30,2,1"
+1383837262301	Popping queue 2 for user 30 ordered by time
+1383837262301	Interpreting message: "POPQ,30,2,1"
+1383837262301	Popping queue 2 for user 30 ordered by time
+1383837262301	Sending popped message
+1383837262301	Sending popped message
+1383837262301	Popping queue 2 for user 30 ordered by time
+1383837262301	Sending popped message
+1383837262301	Interpreting message: "POPQ,30,2,1"
+1383837262301	Interpreting message: "POPQ,30,2,1"
+1383837262301	Popping queue 2 for user 30 ordered by time
+1383837262301	Interpreting message: "POPQ,30,2,1"
+1383837262301	Sending popped message
+1383837262302	Popping queue 2 for user 30 ordered by time
+1383837262302	Popping queue 2 for user 30 ordered by time
+1383837262302	Sending popped message
+1383837262302	Sending popped message
+1383837262473	Interpreting message: "POPQ,0,1,1"
+1383837262473	Interpreting message: "POPQ,0,1,1"
+1383837262473	Interpreting message: "POPQ,0,1,1"
+1383837262473	Popping queue 1 for user 0 ordered by time
+1383837262473	Popping queue 1 for user 0 ordered by time
+1383837262474	Sending popped message
+1383837262474	Sending popped message
+1383837262474	Popping queue 1 for user 0 ordered by time
+1383837262474	Sending popped message
+1383837262477	Interpreting message: "POPQ,0,1,1"
+1383837262477	Interpreting message: "POPQ,0,1,1"
+1383837262477	Popping queue 1 for user 0 ordered by time
+1383837262477	Sending popped message
+1383837262477	Popping queue 1 for user 0 ordered by time
+1383837262477	Sending popped message
+1383837262480	Interpreting message: "POPQ,0,1,1"
+1383837262480	Popping queue 1 for user 0 ordered by time
+1383837262480	Interpreting message: "POPQ,0,1,1"
+1383837262480	Sending popped message
+1383837262480	Interpreting message: "POPQ,0,1,1"
+1383837262480	Popping queue 1 for user 0 ordered by time
+1383837262480	Interpreting message: "POPQ,0,1,1"
+1383837262480	Sending popped message
+1383837262480	Sending popped message
+1383837262480	Popping queue 1 for user 0 ordered by time
+1383837262480	Sending popped message
+1383837262487	Interpreting message: "POPQ,0,1,1"
+1383837262487	Popping queue 1 for user 0 ordered by time
+1383837262487	Sending popped message
+1383837262488	Interpreting message: "POPQ,0,1,1"
+1383837262488	Popping queue 1 for user 0 ordered by time
+1383837262488	Sending popped message
+1383837262492	Interpreting message: "POPQ,0,1,1"
+1383837262492	Popping queue 1 for user 0 ordered by time
+1383837262492	Interpreting message: "POPQ,0,1,1"
+1383837262492	Sending popped message
+1383837262492	Interpreting message: "POPQ,0,1,1"
+1383837262492	Popping queue 1 for user 0 ordered by time
+1383837262492	Sending popped message
+1383837262493	Popping queue 1 for user 0 ordered by time
+1383837262493	Sending popped message
+1383837262493	Interpreting message: "POPQ,0,1,1"
+1383837262494	Popping queue 1 for user 0 ordered by time
+1383837262494	Sending popped message
+1383837262494	Interpreting message: "POPQ,0,1,1"
+1383837262494	Popping queue 1 for user 0 ordered by time
+1383837262494	Sending popped message
+1383837262495	Interpreting message: "POPQ,0,1,1"
+1383837262495	Interpreting message: "POPQ,30,2,1"
+1383837262496	Popping queue 1 for user 0 ordered by time
+1383837262496	Popping queue 2 for user 30 ordered by time
+1383837262496	Sending popped message
+1383837262496	Interpreting message: "POPQ,0,1,1"
+1383837262496	Sending popped message
+1383837262496	Interpreting message: "POPQ,30,2,1"
+1383837262496	Interpreting message: "POPQ,30,2,1"
+1383837262496	Interpreting message: "POPQ,0,1,1"
+1383837262496	Popping queue 1 for user 0 ordered by time
+1383837262496	Sending popped message
+1383837262496	Popping queue 2 for user 30 ordered by time
+1383837262496	Popping queue 1 for user 0 ordered by time
+1383837262496	Popping queue 2 for user 30 ordered by time
+1383837262496	Sending popped message
+1383837262496	Interpreting message: "POPQ,0,1,1"
+1383837262496	Sending popped message
+1383837262496	Interpreting message: "POPQ,0,1,1"
+1383837262496	Interpreting message: "POPQ,0,1,1"
+1383837262496	Popping queue 1 for user 0 ordered by time
+1383837262496	Sending popped message
+1383837262496	Popping queue 1 for user 0 ordered by time
+1383837262496	Popping queue 1 for user 0 ordered by time
+1383837262496	Sending popped message
+1383837262496	Sending popped message
+1383837262498	Interpreting message: "POPQ,30,2,1"
+1383837262498	Interpreting message: "POPQ,30,2,1"
+1383837262498	Popping queue 2 for user 30 ordered by time
+1383837262498	Popping queue 2 for user 30 ordered by time
+1383837262498	Interpreting message: "POPQ,0,1,1"
+1383837262498	Sending popped message
+1383837262498	Sending popped message
+1383837262498	Interpreting message: "POPQ,30,2,1"
+1383837262498	Popping queue 1 for user 0 ordered by time
+1383837262498	Interpreting message: "POPQ,0,1,1"
+1383837262498	Sending popped message
+1383837262498	Popping queue 2 for user 30 ordered by time
+1383837262498	Popping queue 1 for user 0 ordered by time
+1383837262498	Interpreting message: "POPQ,0,1,1"
+1383837262498	Sending popped message
+1383837262498	Sending popped message
+1383837262499	Popping queue 1 for user 0 ordered by time
+1383837262499	Interpreting message: "POPQ,0,1,1"
+1383837262499	Interpreting message: "POPQ,0,1,1"
+1383837262499	Sending popped message
+1383837262499	Popping queue 1 for user 0 ordered by time
+1383837262499	Popping queue 1 for user 0 ordered by time
+1383837262499	Sending popped message
+1383837262499	Interpreting message: "POPQ,30,2,1"
+1383837262499	Sending popped message
+1383837262499	Interpreting message: "POPQ,0,1,1"
+1383837262499	Interpreting message: "POPQ,0,1,1"
+1383837262499	Interpreting message: "POPQ,0,1,1"
+1383837262499	Popping queue 2 for user 30 ordered by time
+1383837262499	Popping queue 1 for user 0 ordered by time
+1383837262499	Sending popped message
+1383837262499	Popping queue 1 for user 0 ordered by time
+1383837262499	Sending popped message
+1383837262499	Popping queue 1 for user 0 ordered by time
+1383837262499	Sending popped message
+1383837262499	Sending popped message
+1383837262504	Interpreting message: "POPQ,30,2,1"
+1383837262504	Popping queue 2 for user 30 ordered by time
+1383837262504	Sending popped message
+1383837262504	Interpreting message: "POPQ,30,2,1"
+1383837262505	Interpreting message: "POPQ,30,2,1"
+1383837262505	Popping queue 2 for user 30 ordered by time
+1383837262505	Interpreting message: "POPQ,30,2,1"
+1383837262505	Sending popped message
+1383837262505	Popping queue 2 for user 30 ordered by time
+1383837262505	Interpreting message: "POPQ,30,2,1"
+1383837262505	Sending popped message
+1383837262505	Popping queue 2 for user 30 ordered by time
+1383837262505	Interpreting message: "POPQ,30,2,1"
+1383837262505	Sending popped message
+1383837262505	Popping queue 2 for user 30 ordered by time
+1383837262505	Popping queue 2 for user 30 ordered by time
+1383837262505	Sending popped message
+1383837262505	Interpreting message: "POPQ,30,2,1"
+1383837262505	Sending popped message
+1383837262505	Interpreting message: "POPQ,30,2,1"
+1383837262506	Interpreting message: "POPQ,30,2,1"
+1383837262506	Popping queue 2 for user 30 ordered by time
+1383837262506	Popping queue 2 for user 30 ordered by time
+1383837262506	Sending popped message
+1383837262506	Popping queue 2 for user 30 ordered by time
+1383837262506	Sending popped message
+1383837262506	Sending popped message
+1383837262676	Interpreting message: "POPQ,0,1,1"
+1383837262677	Interpreting message: "POPQ,0,1,1"
+1383837262677	Interpreting message: "POPQ,0,1,1"
+1383837262677	Popping queue 1 for user 0 ordered by time
+1383837262677	Sending popped message
+1383837262677	Popping queue 1 for user 0 ordered by time
+1383837262677	Popping queue 1 for user 0 ordered by time
+1383837262677	Sending popped message
+1383837262677	Sending popped message
+1383837262678	Interpreting message: "POPQ,0,1,1"
+1383837262678	Popping queue 1 for user 0 ordered by time
+1383837262679	Sending popped message
+1383837262679	Interpreting message: "POPQ,0,1,1"
+1383837262679	Popping queue 1 for user 0 ordered by time
+1383837262679	Sending popped message
+1383837262683	Interpreting message: "POPQ,0,1,1"
+1383837262683	Interpreting message: "POPQ,0,1,1"
+1383837262683	Popping queue 1 for user 0 ordered by time
+1383837262683	Interpreting message: "POPQ,0,1,1"
+1383837262683	Popping queue 1 for user 0 ordered by time
+1383837262683	Interpreting message: "POPQ,0,1,1"
+1383837262683	Sending popped message
+1383837262683	Sending popped message
+1383837262683	Popping queue 1 for user 0 ordered by time
+1383837262683	Popping queue 1 for user 0 ordered by time
+1383837262683	Sending popped message
+1383837262683	Sending popped message
+1383837262689	Interpreting message: "POPQ,0,1,1"
+1383837262689	Interpreting message: "POPQ,0,1,1"
+1383837262689	Popping queue 1 for user 0 ordered by time
+1383837262689	Popping queue 1 for user 0 ordered by time
+1383837262689	Sending popped message
+1383837262689	Sending popped message
+1383837262696	Interpreting message: "POPQ,0,1,1"
+1383837262696	Interpreting message: "POPQ,0,1,1"
+1383837262696	Interpreting message: "POPQ,0,1,1"
+1383837262696	Popping queue 1 for user 0 ordered by time
+1383837262696	Sending popped message
+1383837262696	Popping queue 1 for user 0 ordered by time
+1383837262696	Interpreting message: "POPQ,0,1,1"
+1383837262696	Sending popped message
+1383837262696	Interpreting message: "POPQ,0,1,1"
+1383837262696	Popping queue 1 for user 0 ordered by time
+1383837262696	Sending popped message
+1383837262696	Popping queue 1 for user 0 ordered by time
+1383837262696	Sending popped message
+1383837262698	Interpreting message: "POPQ,0,1,1"
+1383837262698	Interpreting message: "POPQ,30,2,1"
+1383837262698	Interpreting message: "POPQ,0,1,1"
+1383837262698	Popping queue 1 for user 0 ordered by time
+1383837262698	Interpreting message: "POPQ,30,2,1"
+1383837262698	Sending popped message
+1383837262698	Popping queue 1 for user 0 ordered by time
+1383837262698	Sending popped message
+1383837262698	Popping queue 2 for user 30 ordered by time
+1383837262699	Sending popped message
+1383837262699	Interpreting message: "POPQ,30,2,1"
+1383837262699	Popping queue 2 for user 30 ordered by time
+1383837262699	Sending popped message
+1383837262700	Interpreting message: "POPQ,0,1,1"
+1383837262700	Interpreting message: "POPQ,0,1,1"
+1383837262700	Popping queue 1 for user 0 ordered by time
+1383837262700	Popping queue 1 for user 0 ordered by time
+1383837262700	Sending popped message
+1383837262700	Sending popped message
+1383837262700	Interpreting message: "POPQ,0,1,1"
+1383837262700	Interpreting message: "POPQ,30,2,1"
+1383837262700	Interpreting message: "POPQ,0,1,1"
+1383837262700	Popping queue 1 for user 0 ordered by time
+1383837262700	Popping queue 2 for user 30 ordered by time
+1383837262700	Popping queue 1 for user 0 ordered by time
+1383837262700	Sending popped message
+1383837262700	Sending popped message
+1383837262700	Sending popped message
+1383837262700	Interpreting message: "POPQ,30,2,1"
+1383837262700	Popping queue 2 for user 30 ordered by time
+1383837262700	Sending popped message
+1383837262702	Interpreting message: "POPQ,0,1,1"
+1383837262702	Popping queue 1 for user 0 ordered by time
+1383837262702	Interpreting message: "POPQ,30,2,1"
+1383837262702	Sending popped message
+1383837262702	Popping queue 2 for user 30 ordered by time
+1383837262702	Interpreting message: "POPQ,0,1,1"
+1383837262702	Sending popped message
+1383837262702	Popping queue 1 for user 0 ordered by time
+1383837262702	Interpreting message: "POPQ,0,1,1"
+1383837262703	Interpreting message: "POPQ,0,1,1"
+1383837262703	Sending popped message
+1383837262703	Popping queue 1 for user 0 ordered by time
+1383837262703	Popping queue 1 for user 0 ordered by time
+1383837262703	Sending popped message
+1383837262703	Sending popped message
+1383837262703	Interpreting message: "POPQ,30,2,1"
+1383837262703	Interpreting message: "POPQ,0,1,1"
+1383837262703	Popping queue 2 for user 30 ordered by time
+1383837262703	Popping queue 1 for user 0 ordered by time
+1383837262703	Sending popped message
+1383837262703	Sending popped message
+1383837262703	Interpreting message: "POPQ,0,1,1"
+1383837262703	Interpreting message: "POPQ,0,1,1"
+1383837262703	Popping queue 1 for user 0 ordered by time
+1383837262703	Popping queue 1 for user 0 ordered by time
+1383837262703	Sending popped message
+1383837262703	Sending popped message
+1383837262703	Interpreting message: "POPQ,0,1,1"
+1383837262704	Popping queue 1 for user 0 ordered by time
+1383837262704	Sending popped message
+1383837262708	Interpreting message: "POPQ,30,2,1"
+1383837262708	Interpreting message: "POPQ,30,2,1"
+1383837262708	Popping queue 2 for user 30 ordered by time
+1383837262708	Popping queue 2 for user 30 ordered by time
+1383837262708	Popping queue 2 for user 30 ordered by time
+1383837262708	Sending popped message
+1383837262708	Sending popped message
+1383837262708	Sending popped message
+1383837262708	Interpreting message: "POPQ,30,2,1"
+1383837262708	Interpreting message: "POPQ,30,2,1"
+1383837262708	Interpreting message: "POPQ,30,2,1"
+1383837262709	Popping queue 2 for user 30 ordered by time
+1383837262709	Popping queue 2 for user 30 ordered by time
+1383837262709	Popping queue 2 for user 30 ordered by time
+1383837262709	Sending popped message
+1383837262709	Sending popped message
+1383837262709	Sending popped message
+1383837262709	Interpreting message: "POPQ,30,2,1"
+1383837262709	Interpreting message: "POPQ,30,2,1"
+1383837262709	Popping queue 2 for user 30 ordered by time
+1383837262709	Popping queue 2 for user 30 ordered by time
+1383837262709	Sending popped message
+1383837262709	Sending popped message
+1383837262709	Popping queue 2 for user 30 ordered by time
+1383837262709	Sending popped message
+1383837262879	Interpreting message: "POPQ,0,1,1"
+1383837262880	Interpreting message: "POPQ,0,1,1"
+1383837262880	Popping queue 1 for user 0 ordered by time
+1383837262880	Sending popped message
+1383837262880	Popping queue 1 for user 0 ordered by time
+1383837262880	Interpreting message: "POPQ,0,1,1"
+1383837262880	Interpreting message: "POPQ,0,1,1"
+1383837262880	Sending popped message
+1383837262880	Popping queue 1 for user 0 ordered by time
+1383837262880	Popping queue 1 for user 0 ordered by time
+1383837262880	Sending popped message
+1383837262880	Sending popped message
+1383837262880	Interpreting message: "POPQ,0,1,1"
+1383837262881	Popping queue 1 for user 0 ordered by time
+1383837262881	Sending popped message
+1383837262885	Interpreting message: "POPQ,0,1,1"
+1383837262885	Interpreting message: "POPQ,0,1,1"
+1383837262885	Popping queue 1 for user 0 ordered by time
+1383837262885	Interpreting message: "POPQ,0,1,1"
+1383837262885	Popping queue 1 for user 0 ordered by time
+1383837262885	Interpreting message: "POPQ,0,1,1"
+1383837262885	Sending popped message
+1383837262885	Sending popped message
+1383837262885	Popping queue 1 for user 0 ordered by time
+1383837262885	Popping queue 1 for user 0 ordered by time
+1383837262885	Sending popped message
+1383837262886	Sending popped message
+1383837262890	Interpreting message: "POPQ,0,1,1"
+1383837262890	Interpreting message: "POPQ,0,1,1"
+1383837262891	Popping queue 1 for user 0 ordered by time
+1383837262891	Popping queue 1 for user 0 ordered by time
+1383837262891	Sending popped message
+1383837262891	Sending popped message
+1383837262898	Interpreting message: "POPQ,0,1,1"
+1383837262898	Interpreting message: "POPQ,0,1,1"
+1383837262898	Interpreting message: "POPQ,0,1,1"
+1383837262898	Popping queue 1 for user 0 ordered by time
+1383837262898	Popping queue 1 for user 0 ordered by time
+1383837262898	Popping queue 1 for user 0 ordered by time
+1383837262898	Sending popped message
+1383837262898	Sending popped message
+1383837262898	Sending popped message
+1383837262898	Interpreting message: "POPQ,0,1,1"
+1383837262898	Interpreting message: "POPQ,0,1,1"
+1383837262898	Popping queue 1 for user 0 ordered by time
+1383837262898	Popping queue 1 for user 0 ordered by time
+1383837262899	Sending popped message
+1383837262899	Sending popped message
+1383837262899	Interpreting message: "POPQ,0,1,1"
+1383837262900	Popping queue 1 for user 0 ordered by time
+1383837262900	Interpreting message: "POPQ,30,2,1"
+1383837262900	Sending popped message
+1383837262900	Interpreting message: "POPQ,0,1,1"
+1383837262900	Popping queue 2 for user 30 ordered by time
+1383837262900	Sending popped message
+1383837262900	Popping queue 1 for user 0 ordered by time
+1383837262900	Interpreting message: "POPQ,30,2,1"
+1383837262900	Sending popped message
+1383837262900	Popping queue 2 for user 30 ordered by time
+1383837262900	Sending popped message
+1383837262901	Interpreting message: "POPQ,30,2,1"
+1383837262901	Popping queue 2 for user 30 ordered by time
+1383837262901	Sending popped message
+1383837262904	Interpreting message: "POPQ,30,2,1"
+1383837262904	Interpreting message: "POPQ,0,1,1"
+1383837262904	Interpreting message: "POPQ,0,1,1"
+1383837262904	Popping queue 2 for user 30 ordered by time
+1383837262904	Popping queue 1 for user 0 ordered by time
+1383837262904	Popping queue 1 for user 0 ordered by time
+1383837262904	Sending popped message
+1383837262904	Sending popped message
+1383837262904	Sending popped message
+1383837262904	Interpreting message: "POPQ,30,2,1"
+1383837262904	Interpreting message: "POPQ,0,1,1"
+1383837262904	Popping queue 2 for user 30 ordered by time
+1383837262904	Popping queue 1 for user 0 ordered by time
+1383837262904	Sending popped message
+1383837262904	Interpreting message: "POPQ,0,1,1"
+1383837262904	Popping queue 1 for user 0 ordered by time
+1383837262905	Sending popped message
+1383837262905	Interpreting message: "POPQ,0,1,1"
+1383837262905	Popping queue 1 for user 0 ordered by time
+1383837262905	Interpreting message: "POPQ,0,1,1"
+1383837262905	Sending popped message
+1383837262905	Popping queue 1 for user 0 ordered by time
+1383837262905	Popping queue 1 for user 0 ordered by time
+1383837262905	Interpreting message: "POPQ,0,1,1"
+1383837262905	Sending popped message
+1383837262905	Sending popped message
+1383837262905	Popping queue 1 for user 0 ordered by time
+1383837262905	Sending popped message
+1383837262906	Interpreting message: "POPQ,30,2,1"
+1383837262906	Interpreting message: "POPQ,30,2,1"
+1383837262906	Interpreting message: "POPQ,0,1,1"
+1383837262906	Popping queue 2 for user 30 ordered by time
+1383837262906	Popping queue 2 for user 30 ordered by time
+1383837262906	Sending popped message
+1383837262906	Sending popped message
+1383837262906	Popping queue 1 for user 0 ordered by time
+1383837262906	Sending popped message
+1383837262906	Interpreting message: "POPQ,0,1,1"
+1383837262906	Interpreting message: "POPQ,0,1,1"
+1383837262907	Popping queue 1 for user 0 ordered by time
+1383837262907	Popping queue 1 for user 0 ordered by time
+1383837262907	Interpreting message: "POPQ,0,1,1"
+1383837262907	Sending popped message
+1383837262907	Sending popped message
+1383837262907	Popping queue 1 for user 0 ordered by time
+1383837262907	Sending popped message
+1383837262911	Interpreting message: "POPQ,30,2,1"
+1383837262911	Interpreting message: "POPQ,30,2,1"
+1383837262911	Popping queue 2 for user 30 ordered by time
+1383837262911	Sending popped message
+1383837262911	Interpreting message: "POPQ,30,2,1"
+1383837262911	Interpreting message: "POPQ,30,2,1"
+1383837262911	Popping queue 2 for user 30 ordered by time
+1383837262911	Popping queue 2 for user 30 ordered by time
+1383837262911	Sending popped message
+1383837262911	Sending popped message
+1383837262911	Interpreting message: "POPQ,30,2,1"
+1383837262911	Interpreting message: "POPQ,30,2,1"
+1383837262911	Popping queue 2 for user 30 ordered by time
+1383837262912	Sending popped message
+1383837262912	Popping queue 2 for user 30 ordered by time
+1383837262912	Popping queue 2 for user 30 ordered by time
+1383837262912	Sending popped message
+1383837262912	Sending popped message
+1383837262912	Interpreting message: "POPQ,30,2,1"
+1383837262912	Popping queue 2 for user 30 ordered by time
+1383837262912	Popping queue 2 for user 30 ordered by time
+1383837262912	Sending popped message
+1383837262912	Sending popped message
+1383837262912	Interpreting message: "POPQ,30,2,1"
+1383837262912	Popping queue 2 for user 30 ordered by time
+1383837262912	Sending popped message
+1383837263082	Interpreting message: "POPQ,0,1,1"
+1383837263082	Interpreting message: "POPQ,0,1,1"
+1383837263082	Interpreting message: "POPQ,0,1,1"
+1383837263082	Popping queue 1 for user 0 ordered by time
+1383837263082	Popping queue 1 for user 0 ordered by time
+1383837263082	Popping queue 1 for user 0 ordered by time
+1383837263082	Sending popped message
+1383837263083	Interpreting message: "POPQ,0,1,1"
+1383837263083	Sending popped message
+1383837263083	Sending popped message
+1383837263083	Interpreting message: "POPQ,0,1,1"
+1383837263083	Popping queue 1 for user 0 ordered by time
+1383837263083	Popping queue 1 for user 0 ordered by time
+1383837263083	Sending popped message
+1383837263086	Interpreting message: "POPQ,0,1,1"
+1383837263087	Popping queue 1 for user 0 ordered by time
+1383837263087	Interpreting message: "POPQ,0,1,1"
+1383837263087	Interpreting message: "POPQ,0,1,1"
+1383837263087	Sending popped message
+1383837263087	Popping queue 1 for user 0 ordered by time
+1383837263087	Popping queue 1 for user 0 ordered by time
+1383837263087	Interpreting message: "POPQ,0,1,1"
+1383837263087	Sending popped message
+1383837263087	Sending popped message
+1383837263087	Popping queue 1 for user 0 ordered by time
+1383837263087	Sending popped message
+1383837263092	Interpreting message: "POPQ,0,1,1"
+1383837263092	Interpreting message: "POPQ,0,1,1"
+1383837263092	Popping queue 1 for user 0 ordered by time
+1383837263092	Popping queue 1 for user 0 ordered by time
+1383837263092	Sending popped message
+1383837263092	Sending popped message
+1383837263102	Interpreting message: "POPQ,0,1,1"
+1383837263102	Interpreting message: "POPQ,0,1,1"
+1383837263102	Popping queue 1 for user 0 ordered by time
+1383837263102	Popping queue 1 for user 0 ordered by time
+1383837263102	Sending popped message
+1383837263102	Sending popped message
+1383837263102	Interpreting message: "POPQ,0,1,1"
+1383837263103	Interpreting message: "POPQ,0,1,1"
+1383837263103	Popping queue 1 for user 0 ordered by time
+1383837263103	Popping queue 1 for user 0 ordered by time
+1383837263103	Sending popped message
+1383837263103	Sending popped message
+1383837263103	Interpreting message: "POPQ,0,1,1"
+1383837263103	Interpreting message: "POPQ,0,1,1"
+1383837263103	Interpreting message: "POPQ,30,2,1"
+1383837263103	Popping queue 1 for user 0 ordered by time
+1383837263103	Popping queue 1 for user 0 ordered by time
+1383837263103	Popping queue 2 for user 30 ordered by time
+1383837263103	Sending popped message
+1383837263103	Sending popped message
+1383837263103	Sending popped message
+1383837263103	Interpreting message: "POPQ,0,1,1"
+1383837263104	Interpreting message: "POPQ,30,2,1"
+1383837263104	Popping queue 1 for user 0 ordered by time
+1383837263104	Popping queue 2 for user 30 ordered by time
+1383837263104	Sending popped message
+1383837263104	Interpreting message: "POPQ,30,2,1"
+1383837263104	Sending popped message
+1383837263104	Popping queue 2 for user 30 ordered by time
+1383837263104	Sending popped message
+1383837263105	Interpreting message: "POPQ,30,2,1"
+1383837263106	Popping queue 2 for user 30 ordered by time
+1383837263106	Interpreting message: "POPQ,0,1,1"
+1383837263106	Sending popped message
+1383837263106	Interpreting message: "POPQ,30,2,1"
+1383837263106	Interpreting message: "POPQ,0,1,1"
+1383837263106	Sending popped message
+1383837263106	Popping queue 2 for user 30 ordered by time
+1383837263106	Sending popped message
+1383837263106	Popping queue 1 for user 0 ordered by time
+1383837263106	Sending popped message
+1383837263107	Interpreting message: "POPQ,0,1,1"
+1383837263107	Popping queue 1 for user 0 ordered by time
+1383837263107	Interpreting message: "POPQ,0,1,1"
+1383837263107	Sending popped message
+1383837263107	Popping queue 1 for user 0 ordered by time
+1383837263107	Interpreting message: "POPQ,0,1,1"
+1383837263107	Sending popped message
+1383837263107	Popping queue 1 for user 0 ordered by time
+1383837263107	Interpreting message: "POPQ,0,1,1"
+1383837263107	Sending popped message
+1383837263107	Popping queue 1 for user 0 ordered by time
+1383837263107	Interpreting message: "POPQ,0,1,1"
+1383837263107	Sending popped message
+1383837263107	Popping queue 1 for user 0 ordered by time
+1383837263108	Sending popped message
+1383837263108	Interpreting message: "POPQ,0,1,1"
+1383837263108	Popping queue 1 for user 0 ordered by time
+1383837263108	Sending popped message
+1383837263109	Interpreting message: "POPQ,30,2,1"
+1383837263109	Interpreting message: "POPQ,30,2,1"
+1383837263109	Popping queue 2 for user 30 ordered by time
+1383837263109	Sending popped message
+1383837263109	Interpreting message: "POPQ,0,1,1"
+1383837263109	Popping queue 2 for user 30 ordered by time
+1383837263109	Interpreting message: "POPQ,0,1,1"
+1383837263109	Sending popped message
+1383837263109	Popping queue 1 for user 0 ordered by time
+1383837263109	Interpreting message: "POPQ,0,1,1"
+1383837263109	Popping queue 1 for user 0 ordered by time
+1383837263109	Sending popped message
+1383837263109	Sending popped message
+1383837263109	Popping queue 1 for user 0 ordered by time
+1383837263109	Sending popped message
+1383837263109	Interpreting message: "POPQ,0,1,1"
+1383837263109	Popping queue 1 for user 0 ordered by time
+1383837263109	Sending popped message
+1383837263114	Interpreting message: "POPQ,30,2,1"
+1383837263114	Interpreting message: "POPQ,30,2,1"
+1383837263114	Popping queue 2 for user 30 ordered by time
+1383837263115	Sending popped message
+1383837263115	Interpreting message: "POPQ,30,2,1"
+1383837263115	Popping queue 2 for user 30 ordered by time
+1383837263115	Sending popped message
+1383837263114	Popping queue 2 for user 30 ordered by time
+1383837263115	Sending popped message
+1383837263115	Interpreting message: "POPQ,30,2,1"
+1383837263115	Interpreting message: "POPQ,30,2,1"
+1383837263115	Popping queue 2 for user 30 ordered by time
+1383837263115	Sending popped message
+1383837263115	Popping queue 2 for user 30 ordered by time
+1383837263115	Interpreting message: "POPQ,30,2,1"
+1383837263115	Sending popped message
+1383837263115	Interpreting message: "POPQ,30,2,1"
+1383837263115	Popping queue 2 for user 30 ordered by time
+1383837263115	Sending popped message
+1383837263116	Popping queue 2 for user 30 ordered by time
+1383837263116	Interpreting message: "POPQ,30,2,1"
+1383837263116	Sending popped message
+1383837263116	Interpreting message: "POPQ,30,2,1"
+1383837263116	Popping queue 2 for user 30 ordered by time
+1383837263116	Sending popped message
+1383837263116	Popping queue 2 for user 30 ordered by time
+1383837263116	Sending popped message
+1383837263284	Interpreting message: "POPQ,0,1,1"
+1383837263284	Interpreting message: "POPQ,0,1,1"
+1383837263284	Popping queue 1 for user 0 ordered by time
+1383837263284	Sending popped message
+1383837263284	Popping queue 1 for user 0 ordered by time
+1383837263284	Interpreting message: "POPQ,0,1,1"
+1383837263284	Sending popped message
+1383837263284	Interpreting message: "POPQ,0,1,1"
+1383837263284	Popping queue 1 for user 0 ordered by time
+1383837263284	Popping queue 1 for user 0 ordered by time
+1383837263284	Sending popped message
+1383837263284	Sending popped message
+1383837263284	Interpreting message: "POPQ,0,1,1"
+1383837263285	Popping queue 1 for user 0 ordered by time
+1383837263285	Sending popped message
+1383837263289	Interpreting message: "POPQ,0,1,1"
+1383837263289	Interpreting message: "POPQ,0,1,1"
+1383837263289	Interpreting message: "POPQ,0,1,1"
+1383837263289	Popping queue 1 for user 0 ordered by time
+1383837263289	Popping queue 1 for user 0 ordered by time
+1383837263289	Interpreting message: "POPQ,0,1,1"
+1383837263289	Sending popped message
+1383837263289	Popping queue 1 for user 0 ordered by time
+1383837263289	Sending popped message
+1383837263289	Sending popped message
+1383837263289	Popping queue 1 for user 0 ordered by time
+1383837263289	Sending popped message
+1383837263293	Interpreting message: "POPQ,0,1,1"
+1383837263293	Interpreting message: "POPQ,0,1,1"
+1383837263293	Popping queue 1 for user 0 ordered by time
+1383837263293	Sending popped message
+1383837263293	Popping queue 1 for user 0 ordered by time
+1383837263293	Sending popped message
+1383837263305	Interpreting message: "POPQ,0,1,1"
+1383837263305	Interpreting message: "POPQ,0,1,1"
+1383837263305	Popping queue 1 for user 0 ordered by time
+1383837263305	Sending popped message
+1383837263305	Popping queue 1 for user 0 ordered by time
+1383837263305	Interpreting message: "POPQ,0,1,1"
+1383837263305	Sending popped message
+1383837263305	Interpreting message: "POPQ,30,2,1"
+1383837263305	Popping queue 1 for user 0 ordered by time
+1383837263305	Sending popped message
+1383837263305	Popping queue 2 for user 30 ordered by time
+1383837263305	Sending popped message
+1383837263306	Interpreting message: "POPQ,0,1,1"
+1383837263306	Popping queue 1 for user 0 ordered by time
+1383837263306	Interpreting message: "POPQ,0,1,1"
+1383837263306	Sending popped message
+1383837263306	Interpreting message: "POPQ,0,1,1"
+1383837263306	Popping queue 1 for user 0 ordered by time
+1383837263306	Sending popped message
+1383837263306	Popping queue 1 for user 0 ordered by time
+1383837263306	Sending popped message
+1383837263306	Interpreting message: "POPQ,30,2,1"
+1383837263306	Popping queue 1 for user 0 ordered by time
+1383837263306	Sending popped message
+1383837263306	Popping queue 2 for user 30 ordered by time
+1383837263306	Sending popped message
+1383837263306	Interpreting message: "POPQ,30,2,1"
+1383837263307	Popping queue 2 for user 30 ordered by time
+1383837263307	Sending popped message
+1383837263307	Interpreting message: "POPQ,30,2,1"
+1383837263307	Popping queue 2 for user 30 ordered by time
+1383837263307	Interpreting message: "POPQ,0,1,1"
+1383837263307	Sending popped message
+1383837263307	Interpreting message: "POPQ,30,2,1"
+1383837263307	Popping queue 1 for user 0 ordered by time
+1383837263307	Sending popped message
+1383837263307	Popping queue 2 for user 30 ordered by time
+1383837263307	Sending popped message
+1383837263308	Interpreting message: "POPQ,0,1,1"
+1383837263308	Interpreting message: "POPQ,0,1,1"
+1383837263308	Popping queue 1 for user 0 ordered by time
+1383837263308	Sending popped message
+1383837263308	Popping queue 1 for user 0 ordered by time
+1383837263308	Sending popped message
+1383837263310	Interpreting message: "POPQ,0,1,1"
+1383837263310	Interpreting message: "POPQ,0,1,1"
+1383837263310	Interpreting message: "POPQ,0,1,1"
+1383837263310	Popping queue 1 for user 0 ordered by time
+1383837263310	Popping queue 1 for user 0 ordered by time
+1383837263310	Sending popped message
+1383837263310	Interpreting message: "POPQ,0,1,1"
+1383837263310	Sending popped message
+1383837263310	Sending popped message
+1383837263310	Interpreting message: "POPQ,0,1,1"
+1383837263310	Popping queue 1 for user 0 ordered by time
+1383837263310	Sending popped message
+1383837263310	Popping queue 1 for user 0 ordered by time
+1383837263310	Interpreting message: "POPQ,30,2,1"
+1383837263310	Sending popped message
+1383837263310	Interpreting message: "POPQ,30,2,1"
+1383837263310	Popping queue 2 for user 30 ordered by time
+1383837263310	Interpreting message: "POPQ,0,1,1"
+1383837263311	Sending popped message
+1383837263311	Popping queue 2 for user 30 ordered by time
+1383837263311	Popping queue 1 for user 0 ordered by time
+1383837263311	Sending popped message
+1383837263311	Sending popped message
+1383837263311	Interpreting message: "POPQ,0,1,1"
+1383837263311	Interpreting message: "POPQ,0,1,1"
+1383837263311	Popping queue 1 for user 0 ordered by time
+1383837263311	Interpreting message: "POPQ,0,1,1"
+1383837263311	Popping queue 1 for user 0 ordered by time
+1383837263311	Sending popped message
+1383837263311	Sending popped message
+1383837263311	Popping queue 1 for user 0 ordered by time
+1383837263311	Sending popped message
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Popping queue 2 for user 30 ordered by time
+1383837263317	Popping queue 2 for user 30 ordered by time
+1383837263317	Sending popped message
+1383837263317	Popping queue 2 for user 30 ordered by time
+1383837263317	Sending popped message
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Popping queue 2 for user 30 ordered by time
+1383837263317	Interpreting message: "POPQ,30,2,1"
+1383837263317	Sending popped message
+1383837263317	Sending popped message
+1383837263318	Popping queue 2 for user 30 ordered by time
+1383837263318	Popping queue 2 for user 30 ordered by time
+1383837263318	Interpreting message: "POPQ,30,2,1"
+1383837263318	Sending popped message
+1383837263318	Sending popped message
+1383837263318	Popping queue 2 for user 30 ordered by time
+1383837263318	Interpreting message: "POPQ,30,2,1"
+1383837263318	Sending popped message
+1383837263318	Popping queue 2 for user 30 ordered by time
+1383837263318	Sending popped message
+1383837263486	Interpreting message: "POPQ,0,1,1"
+1383837263486	Interpreting message: "POPQ,0,1,1"
+1383837263486	Interpreting message: "POPQ,0,1,1"
+1383837263486	Popping queue 1 for user 0 ordered by time
+1383837263486	Popping queue 1 for user 0 ordered by time
+1383837263486	Interpreting message: "POPQ,0,1,1"
+1383837263486	Sending popped message
+1383837263486	Popping queue 1 for user 0 ordered by time
+1383837263487	Sending popped message
+1383837263487	Interpreting message: "POPQ,0,1,1"
+1383837263487	Popping queue 1 for user 0 ordered by time
+1383837263487	Sending popped message
+1383837263487	Popping queue 1 for user 0 ordered by time
+1383837263487	Sending popped message
+1383837263491	Interpreting message: "POPQ,0,1,1"
+1383837263491	Interpreting message: "POPQ,0,1,1"
+1383837263491	Interpreting message: "POPQ,0,1,1"
+1383837263491	Popping queue 1 for user 0 ordered by time
+1383837263491	Popping queue 1 for user 0 ordered by time
+1383837263491	Interpreting message: "POPQ,0,1,1"
+1383837263491	Sending popped message
+1383837263491	Sending popped message
+1383837263491	Popping queue 1 for user 0 ordered by time
+1383837263491	Sending popped message
+1383837263491	Popping queue 1 for user 0 ordered by time
+1383837263491	Sending popped message
+1383837263494	Interpreting message: "POPQ,0,1,1"
+1383837263494	Popping queue 1 for user 0 ordered by time
+1383837263494	Popping queue 1 for user 0 ordered by time
+1383837263494	Sending popped message
+1383837263507	Interpreting message: "POPQ,0,1,1"
+1383837263507	Interpreting message: "POPQ,0,1,1"
+1383837263507	Interpreting message: "POPQ,0,1,1"
+1383837263507	Popping queue 1 for user 0 ordered by time
+1383837263507	Interpreting message: "POPQ,30,2,1"
+1383837263507	Sending popped message
+1383837263507	Popping queue 1 for user 0 ordered by time
+1383837263507	Popping queue 2 for user 30 ordered by time
+1383837263507	Sending popped message
+1383837263507	Sending popped message
+1383837263508	Interpreting message: "POPQ,0,1,1"
+1383837263508	Interpreting message: "POPQ,30,2,1"
+1383837263508	Popping queue 1 for user 0 ordered by time
+1383837263508	Interpreting message: "POPQ,0,1,1"
+1383837263508	Sending popped message
+1383837263508	Popping queue 2 for user 30 ordered by time
+1383837263508	Sending popped message
+1383837263508	Interpreting message: "POPQ,0,1,1"
+1383837263508	Popping queue 1 for user 0 ordered by time
+1383837263508	Sending popped message
+1383837263508	Popping queue 1 for user 0 ordered by time
+1383837263508	Interpreting message: "POPQ,0,1,1"
+1383837263508	Sending popped message
+1383837263508	Popping queue 1 for user 0 ordered by time
+1383837263508	Sending popped message
+1383837263509	Interpreting message: "POPQ,30,2,1"
+1383837263509	Interpreting message: "POPQ,30,2,1"
+1383837263509	Popping queue 2 for user 30 ordered by time
+1383837263509	Interpreting message: "POPQ,30,2,1"
+1383837263509	Sending popped message
+1383837263509	Popping queue 2 for user 30 ordered by time
+1383837263509	Popping queue 2 for user 30 ordered by time
+1383837263509	Sending popped message
+1383837263509	Sending popped message
+1383837263510	Interpreting message: "POPQ,0,1,1"
+1383837263510	Popping queue 1 for user 0 ordered by time
+1383837263510	Sending popped message
+1383837263510	Interpreting message: "POPQ,0,1,1"
+1383837263510	Interpreting message: "POPQ,0,1,1"
+1383837263510	Popping queue 1 for user 0 ordered by time
+1383837263510	Sending popped message
+1383837263510	Popping queue 1 for user 0 ordered by time
+1383837263510	Sending popped message
+1383837263514	Interpreting message: "POPQ,0,1,1"
+1383837263514	Interpreting message: "POPQ,0,1,1"
+1383837263514	Popping queue 1 for user 0 ordered by time
+1383837263514	Popping queue 1 for user 0 ordered by time
+1383837263514	Sending popped message
+1383837263514	Interpreting message: "POPQ,0,1,1"
+1383837263514	Sending popped message
+1383837263514	Interpreting message: "POPQ,30,2,1"
+1383837263514	Popping queue 1 for user 0 ordered by time
+1383837263514	Interpreting message: "POPQ,0,1,1"
+1383837263514	Sending popped message
+1383837263514	Popping queue 2 for user 30 ordered by time
+1383837263514	Popping queue 1 for user 0 ordered by time
+1383837263514	Sending popped message
+1383837263514	Interpreting message: "POPQ,30,2,1"
+1383837263514	Sending popped message
+1383837263514	Popping queue 2 for user 30 ordered by time
+1383837263514	Sending popped message
+1383837263514	Interpreting message: "POPQ,0,1,1"
+1383837263514	Interpreting message: "POPQ,0,1,1"
+1383837263515	Interpreting message: "POPQ,0,1,1"
+1383837263515	Popping queue 1 for user 0 ordered by time
+1383837263515	Popping queue 1 for user 0 ordered by time
+1383837263515	Popping queue 1 for user 0 ordered by time
+1383837263515	Sending popped message
+1383837263515	Sending popped message
+1383837263515	Sending popped message
+1383837263515	Interpreting message: "POPQ,0,1,1"
+1383837263515	Interpreting message: "POPQ,0,1,1"
+1383837263515	Popping queue 1 for user 0 ordered by time
+1383837263515	Popping queue 1 for user 0 ordered by time
+1383837263515	Sending popped message
+1383837263515	Sending popped message
+1383837263520	Interpreting message: "POPQ,30,2,1"
+1383837263520	Interpreting message: "POPQ,30,2,1"
+1383837263520	Popping queue 2 for user 30 ordered by time
+1383837263520	Popping queue 2 for user 30 ordered by time
+1383837263520	Sending popped message
+1383837263520	Sending popped message
+1383837263520	Interpreting message: "POPQ,30,2,1"
+1383837263520	Interpreting message: "POPQ,30,2,1"
+1383837263520	Interpreting message: "POPQ,30,2,1"
+1383837263520	Popping queue 2 for user 30 ordered by time
+1383837263520	Popping queue 2 for user 30 ordered by time
+1383837263520	Popping queue 2 for user 30 ordered by time
+1383837263520	Sending popped message
+1383837263520	Sending popped message
+1383837263520	Sending popped message
+1383837263521	Interpreting message: "POPQ,30,2,1"
+1383837263521	Interpreting message: "POPQ,30,2,1"
+1383837263521	Popping queue 2 for user 30 ordered by time
+1383837263521	Popping queue 2 for user 30 ordered by time
+1383837263521	Sending popped message
+1383837263521	Sending popped message
+1383837263521	Popping queue 2 for user 30 ordered by time
+1383837263521	Sending popped message
+1383837263689	Interpreting message: "POPQ,0,1,1"
+1383837263689	Interpreting message: "POPQ,0,1,1"
+1383837263689	Interpreting message: "POPQ,0,1,1"
+1383837263689	Popping queue 1 for user 0 ordered by time
+1383837263689	Sending popped message
+1383837263689	Popping queue 1 for user 0 ordered by time
+1383837263689	Popping queue 1 for user 0 ordered by time
+1383837263689	Sending popped message
+1383837263689	Sending popped message
+1383837263689	Interpreting message: "POPQ,0,1,1"
+1383837263689	Interpreting message: "POPQ,0,1,1"
+1383837263690	Popping queue 1 for user 0 ordered by time
+1383837263690	Popping queue 1 for user 0 ordered by time
+1383837263690	Sending popped message
+1383837263690	Sending popped message
+1383837263693	Interpreting message: "POPQ,0,1,1"
+1383837263693	Interpreting message: "POPQ,0,1,1"
+1383837263694	Interpreting message: "POPQ,0,1,1"
+1383837263694	Popping queue 1 for user 0 ordered by time
+1383837263694	Popping queue 1 for user 0 ordered by time
+1383837263694	Popping queue 1 for user 0 ordered by time
+1383837263694	Sending popped message
+1383837263694	Sending popped message
+1383837263694	Sending popped message
+1383837263694	Interpreting message: "POPQ,0,1,1"
+1383837263694	Popping queue 1 for user 0 ordered by time
+1383837263694	Sending popped message
+1383837263696	Interpreting message: "POPQ,0,1,1"
+1383837263696	Interpreting message: "POPQ,0,1,1"
+1383837263696	Popping queue 1 for user 0 ordered by time
+1383837263696	Popping queue 1 for user 0 ordered by time
+1383837263696	Sending popped message
+1383837263696	Sending popped message
+1383837263708	Interpreting message: "POPQ,0,1,1"
+1383837263708	Interpreting message: "POPQ,0,1,1"
+1383837263708	Popping queue 1 for user 0 ordered by time
+1383837263708	Popping queue 1 for user 0 ordered by time
+1383837263708	Sending popped message
+1383837263708	Sending popped message
+1383837263710	Interpreting message: "POPQ,0,1,1"
+1383837263710	Interpreting message: "POPQ,30,2,1"
+1383837263711	Popping queue 1 for user 0 ordered by time
+1383837263711	Popping queue 2 for user 30 ordered by time
+1383837263711	Sending popped message
+1383837263711	Interpreting message: "POPQ,0,1,1"
+1383837263711	Interpreting message: "POPQ,0,1,1"
+1383837263711	Interpreting message: "POPQ,30,2,1"
+1383837263711	Popping queue 1 for user 0 ordered by time
+1383837263711	Popping queue 1 for user 0 ordered by time
+1383837263711	Popping queue 2 for user 30 ordered by time
+1383837263711	Sending popped message
+1383837263711	Sending popped message
+1383837263711	Sending popped message
+1383837263711	Interpreting message: "POPQ,30,2,1"
+1383837263711	Interpreting message: "POPQ,30,2,1"
+1383837263711	Popping queue 2 for user 30 ordered by time
+1383837263711	Popping queue 2 for user 30 ordered by time
+1383837263711	Sending popped message
+1383837263711	Sending popped message
+1383837263711	Interpreting message: "POPQ,0,1,1"
+1383837263711	Interpreting message: "POPQ,0,1,1"
+1383837263712	Popping queue 1 for user 0 ordered by time
+1383837263712	Popping queue 1 for user 0 ordered by time
+1383837263712	Interpreting message: "POPQ,30,2,1"
+1383837263712	Sending popped message
+1383837263712	Sending popped message
+1383837263712	Interpreting message: "POPQ,0,1,1"
+1383837263712	Popping queue 2 for user 30 ordered by time
+1383837263712	Popping queue 1 for user 0 ordered by time
+1383837263712	Sending popped message
+1383837263712	Popping queue 1 for user 0 ordered by time
+1383837263712	Sending popped message
+1383837263712	Sending popped message
+1383837263712	Interpreting message: "POPQ,0,1,1"
+1383837263712	Popping queue 1 for user 0 ordered by time
+1383837263712	Sending popped message
+1383837263717	Interpreting message: "POPQ,0,1,1"
+1383837263717	Interpreting message: "POPQ,0,1,1"
+1383837263717	Interpreting message: "POPQ,0,1,1"
+1383837263717	Popping queue 1 for user 0 ordered by time
+1383837263717	Popping queue 1 for user 0 ordered by time
+1383837263718	Popping queue 1 for user 0 ordered by time
+1383837263718	Sending popped message
+1383837263718	Sending popped message
+1383837263718	Interpreting message: "POPQ,30,2,1"
+1383837263718	Interpreting message: "POPQ,0,1,1"
+1383837263718	Interpreting message: "POPQ,30,2,1"
+1383837263718	Popping queue 1 for user 0 ordered by time
+1383837263718	Sending popped message
+1383837263718	Popping queue 2 for user 30 ordered by time
+1383837263718	Sending popped message
+1383837263718	Sending popped message
+1383837263718	Interpreting message: "POPQ,0,1,1"
+1383837263718	Interpreting message: "POPQ,0,1,1"
+1383837263718	Interpreting message: "POPQ,0,1,1"
+1383837263718	Popping queue 1 for user 0 ordered by time
+1383837263718	Sending popped message
+1383837263718	Popping queue 1 for user 0 ordered by time
+1383837263718	Popping queue 1 for user 0 ordered by time
+1383837263718	Interpreting message: "POPQ,0,1,1"
+1383837263718	Sending popped message
+1383837263718	Sending popped message
+1383837263718	Popping queue 1 for user 0 ordered by time
+1383837263718	Interpreting message: "POPQ,0,1,1"
+1383837263718	Sending popped message
+1383837263719	Popping queue 1 for user 0 ordered by time
+1383837263719	Sending popped message
+1383837263723	Interpreting message: "POPQ,30,2,1"
+1383837263723	Interpreting message: "POPQ,30,2,1"
+1383837263723	Interpreting message: "POPQ,30,2,1"
+1383837263723	Popping queue 2 for user 30 ordered by time
+1383837263723	Popping queue 2 for user 30 ordered by time
+1383837263723	Popping queue 2 for user 30 ordered by time
+1383837263723	Sending popped message
+1383837263723	Sending popped message
+1383837263723	Sending popped message
+1383837263723	Interpreting message: "POPQ,30,2,1"
+1383837263723	Interpreting message: "POPQ,30,2,1"
+1383837263723	Interpreting message: "POPQ,30,2,1"
+1383837263724	Popping queue 2 for user 30 ordered by time
+1383837263724	Popping queue 2 for user 30 ordered by time
+1383837263724	Popping queue 2 for user 30 ordered by time
+1383837263724	Sending popped message
+1383837263724	Sending popped message
+1383837263724	Interpreting message: "POPQ,30,2,1"
+1383837263724	Interpreting message: "POPQ,30,2,1"
+1383837263724	Interpreting message: "POPQ,30,2,1"
+1383837263724	Popping queue 2 for user 30 ordered by time
+1383837263724	Sending popped message
+1383837263724	Popping queue 2 for user 30 ordered by time
+1383837263724	Sending popped message
+1383837263724	Sending popped message
+1383837263892	Interpreting message: "POPQ,0,1,1"
+1383837263892	Interpreting message: "POPQ,0,1,1"
+1383837263892	Interpreting message: "POPQ,0,1,1"
+1383837263892	Popping queue 1 for user 0 ordered by time
+1383837263892	Popping queue 1 for user 0 ordered by time
+1383837263893	Sending popped message
+1383837263893	Popping queue 1 for user 0 ordered by time
+1383837263893	Interpreting message: "POPQ,0,1,1"
+1383837263893	Sending popped message
+1383837263893	Interpreting message: "POPQ,0,1,1"
+1383837263893	Popping queue 1 for user 0 ordered by time
+1383837263893	Popping queue 1 for user 0 ordered by time
+1383837263893	Sending popped message
+1383837263893	Sending popped message
+1383837263895	Interpreting message: "POPQ,0,1,1"
+1383837263895	Interpreting message: "POPQ,0,1,1"
+1383837263895	Popping queue 1 for user 0 ordered by time
+1383837263895	Interpreting message: "POPQ,0,1,1"
+1383837263895	Sending popped message
+1383837263895	Interpreting message: "POPQ,0,1,1"
+1383837263895	Popping queue 1 for user 0 ordered by time
+1383837263895	Popping queue 1 for user 0 ordered by time
+1383837263895	Sending popped message
+1383837263895	Popping queue 1 for user 0 ordered by time
+1383837263895	Sending popped message
+1383837263895	Sending popped message
+1383837263898	Interpreting message: "POPQ,0,1,1"
+1383837263898	Interpreting message: "POPQ,0,1,1"
+1383837263898	Popping queue 1 for user 0 ordered by time
+1383837263898	Popping queue 1 for user 0 ordered by time
+1383837263898	Sending popped message
+1383837263898	Sending popped message
+1383837263910	Interpreting message: "POPQ,0,1,1"
+1383837263910	Interpreting message: "POPQ,0,1,1"
+1383837263911	Popping queue 1 for user 0 ordered by time
+1383837263910	Popping queue 1 for user 0 ordered by time
+1383837263911	Sending popped message
+1383837263911	Sending popped message
+1383837263912	Interpreting message: "POPQ,0,1,1"
+1383837263912	Interpreting message: "POPQ,30,2,1"
+1383837263913	Interpreting message: "POPQ,30,2,1"
+1383837263913	Popping queue 1 for user 0 ordered by time
+1383837263913	Popping queue 2 for user 30 ordered by time
+1383837263913	Sending popped message
+1383837263913	Popping queue 2 for user 30 ordered by time
+1383837263913	Sending popped message
+1383837263913	Sending popped message
+1383837263914	Interpreting message: "POPQ,30,2,1"
+1383837263914	Interpreting message: "POPQ,30,2,1"
+1383837263914	Popping queue 2 for user 30 ordered by time
+1383837263914	Popping queue 2 for user 30 ordered by time
+1383837263914	Sending popped message
+1383837263914	Sending popped message
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263915	Sending popped message
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Sending popped message
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Interpreting message: "POPQ,30,2,1"
+1383837263915	Sending popped message
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Popping queue 2 for user 30 ordered by time
+1383837263915	Sending popped message
+1383837263915	Sending popped message
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263915	Interpreting message: "POPQ,0,1,1"
+1383837263915	Sending popped message
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263915	Sending popped message
+1383837263915	Popping queue 1 for user 0 ordered by time
+1383837263916	Sending popped message
+1383837263919	Interpreting message: "POPQ,0,1,1"
+1383837263919	Interpreting message: "POPQ,0,1,1"
+1383837263920	Popping queue 1 for user 0 ordered by time
+1383837263920	Sending popped message
+1383837263920	Popping queue 1 for user 0 ordered by time
+1383837263920	Interpreting message: "POPQ,0,1,1"
+1383837263920	Sending popped message
+1383837263920	Popping queue 1 for user 0 ordered by time
+1383837263920	Interpreting message: "POPQ,30,2,1"
+1383837263920	Interpreting message: "POPQ,30,2,1"
+1383837263920	Sending popped message
+1383837263920	Popping queue 2 for user 30 ordered by time
+1383837263920	Popping queue 2 for user 30 ordered by time
+1383837263920	Sending popped message
+1383837263920	Sending popped message
+1383837263921	Interpreting message: "POPQ,0,1,1"
+1383837263921	Popping queue 1 for user 0 ordered by time
+1383837263921	Sending popped message
+1383837263921	Interpreting message: "POPQ,0,1,1"
+1383837263921	Interpreting message: "POPQ,0,1,1"
+1383837263921	Popping queue 1 for user 0 ordered by time
+1383837263921	Sending popped message
+1383837263921	Popping queue 1 for user 0 ordered by time
+1383837263921	Sending popped message
+1383837263921	Interpreting message: "POPQ,0,1,1"
+1383837263922	Interpreting message: "POPQ,0,1,1"
+1383837263922	Popping queue 1 for user 0 ordered by time
+1383837263922	Sending popped message
+1383837263922	Popping queue 1 for user 0 ordered by time
+1383837263922	Popping queue 1 for user 0 ordered by time
+1383837263922	Sending popped message
+1383837263922	Sending popped message
+1383837263926	Interpreting message: "POPQ,30,2,1"
+1383837263926	Interpreting message: "POPQ,30,2,1"
+1383837263926	Interpreting message: "POPQ,30,2,1"
+1383837263926	Popping queue 2 for user 30 ordered by time
+1383837263926	Popping queue 2 for user 30 ordered by time
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Sending popped message
+1383837263927	Sending popped message
+1383837263927	Sending popped message
+1383837263927	Interpreting message: "POPQ,30,2,1"
+1383837263927	Interpreting message: "POPQ,30,2,1"
+1383837263927	Interpreting message: "POPQ,30,2,1"
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Sending popped message
+1383837263927	Sending popped message
+1383837263927	Interpreting message: "POPQ,30,2,1"
+1383837263927	Interpreting message: "POPQ,30,2,1"
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Interpreting message: "POPQ,30,2,1"
+1383837263927	Sending popped message
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Popping queue 2 for user 30 ordered by time
+1383837263927	Sending popped message
+1383837263927	Sending popped message
+1383837264095	Interpreting message: "POPQ,0,1,1"
+1383837264095	Interpreting message: "POPQ,0,1,1"
+1383837264095	Interpreting message: "POPQ,0,1,1"
+1383837264095	Popping queue 1 for user 0 ordered by time
+1383837264095	Popping queue 1 for user 0 ordered by time
+1383837264095	Popping queue 1 for user 0 ordered by time
+1383837264095	Sending popped message
+1383837264095	Sending popped message
+1383837264095	Interpreting message: "POPQ,0,1,1"
+1383837264095	Sending popped message
+1383837264095	Interpreting message: "POPQ,0,1,1"
+1383837264095	Popping queue 1 for user 0 ordered by time
+1383837264096	Sending popped message
+1383837264096	Popping queue 1 for user 0 ordered by time
+1383837264096	Sending popped message
+1383837264096	Interpreting message: "POPQ,0,1,1"
+1383837264096	Interpreting message: "POPQ,0,1,1"
+1383837264097	Interpreting message: "POPQ,0,1,1"
+1383837264097	Popping queue 1 for user 0 ordered by time
+1383837264097	Sending popped message
+1383837264097	Popping queue 1 for user 0 ordered by time
+1383837264097	Popping queue 1 for user 0 ordered by time
+1383837264097	Sending popped message
+1383837264097	Sending popped message
+1383837264097	Interpreting message: "POPQ,0,1,1"
+1383837264097	Popping queue 1 for user 0 ordered by time
+1383837264097	Sending popped message
+1383837264100	Interpreting message: "POPQ,0,1,1"
+1383837264100	Interpreting message: "POPQ,0,1,1"
+1383837264100	Popping queue 1 for user 0 ordered by time
+1383837264100	Popping queue 1 for user 0 ordered by time
+1383837264100	Sending popped message
+1383837264100	Sending popped message
+1383837264113	Interpreting message: "POPQ,0,1,1"
+1383837264113	Interpreting message: "POPQ,0,1,1"
+1383837264113	Popping queue 1 for user 0 ordered by time
+1383837264113	Popping queue 1 for user 0 ordered by time
+1383837264113	Sending popped message
+1383837264113	Sending popped message
+1383837264114	Interpreting message: "POPQ,0,1,1"
+1383837264114	Interpreting message: "POPQ,30,2,1"
+1383837264114	Popping queue 1 for user 0 ordered by time
+1383837264114	Interpreting message: "POPQ,30,2,1"
+1383837264114	Popping queue 2 for user 30 ordered by time
+1383837264114	Sending popped message
+1383837264114	Sending popped message
+1383837264114	Popping queue 2 for user 30 ordered by time
+1383837264114	Sending popped message
+1383837264117	Interpreting message: "POPQ,30,2,1"
+1383837264118	Interpreting message: "POPQ,30,2,1"
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Popping queue 2 for user 30 ordered by time
+1383837264118	Popping queue 2 for user 30 ordered by time
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Sending popped message
+1383837264118	Sending popped message
+1383837264118	Sending popped message
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Interpreting message: "POPQ,30,2,1"
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Sending popped message
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Popping queue 2 for user 30 ordered by time
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Sending popped message
+1383837264118	Sending popped message
+1383837264118	Sending popped message
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Interpreting message: "POPQ,0,1,1"
+1383837264118	Sending popped message
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Popping queue 1 for user 0 ordered by time
+1383837264118	Sending popped message
+1383837264118	Sending popped message
+1383837264124	Interpreting message: "POPQ,0,1,1"
+1383837264124	Interpreting message: "POPQ,0,1,1"
+1383837264124	Interpreting message: "POPQ,0,1,1"
+1383837264124	Popping queue 1 for user 0 ordered by time
+1383837264124	Popping queue 1 for user 0 ordered by time
+1383837264124	Popping queue 1 for user 0 ordered by time
+1383837264124	Sending popped message
+1383837264124	Sending popped message
+1383837264124	Sending popped message
+1383837264124	Interpreting message: "POPQ,30,2,1"
+1383837264124	Interpreting message: "POPQ,30,2,1"
+1383837264124	Interpreting message: "POPQ,0,1,1"
+1383837264124	Popping queue 2 for user 30 ordered by time
+1383837264124	Popping queue 2 for user 30 ordered by time
+1383837264124	Popping queue 1 for user 0 ordered by time
+1383837264124	Sending popped message
+1383837264124	Sending popped message
+1383837264124	Sending popped message
+1383837264124	Interpreting message: "POPQ,0,1,1"
+1383837264124	Interpreting message: "POPQ,0,1,1"
+1383837264125	Popping queue 1 for user 0 ordered by time
+1383837264125	Popping queue 1 for user 0 ordered by time
+1383837264125	Sending popped message
+1383837264125	Sending popped message
+1383837264125	Interpreting message: "POPQ,0,1,1"
+1383837264125	Popping queue 1 for user 0 ordered by time
+1383837264125	Sending popped message
+1383837264125	Interpreting message: "POPQ,0,1,1"
+1383837264125	Popping queue 1 for user 0 ordered by time
+1383837264125	Sending popped message
+1383837264126	Interpreting message: "POPQ,0,1,1"
+1383837264126	Popping queue 1 for user 0 ordered by time
+1383837264126	Sending popped message
+1383837264129	Interpreting message: "POPQ,30,2,1"
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Sending popped message
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Sending popped message
+1383837264130	Sending popped message
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Sending popped message
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Sending popped message
+1383837264130	Sending popped message
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Interpreting message: "POPQ,30,2,1"
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Popping queue 2 for user 30 ordered by time
+1383837264130	Sending popped message
+1383837264130	Sending popped message
+1383837264130	Sending popped message
+1383837264297	Interpreting message: "POPQ,0,1,1"
+1383837264297	Interpreting message: "POPQ,0,1,1"
+1383837264297	Popping queue 1 for user 0 ordered by time
+1383837264298	Sending popped message
+1383837264298	Popping queue 1 for user 0 ordered by time
+1383837264298	Interpreting message: "POPQ,0,1,1"
+1383837264298	Sending popped message
+1383837264298	Popping queue 1 for user 0 ordered by time
+1383837264298	Interpreting message: "POPQ,0,1,1"
+1383837264298	Sending popped message
+1383837264298	Popping queue 1 for user 0 ordered by time
+1383837264298	Sending popped message
+1383837264298	Interpreting message: "POPQ,0,1,1"
+1383837264298	Interpreting message: "POPQ,0,1,1"
+1383837264298	Popping queue 1 for user 0 ordered by time
+1383837264298	Sending popped message
+1383837264298	Popping queue 1 for user 0 ordered by time
+1383837264298	Sending popped message
+1383837264298	Interpreting message: "POPQ,0,1,1"
+1383837264299	Interpreting message: "POPQ,0,1,1"
+1383837264299	Popping queue 1 for user 0 ordered by time
+1383837264299	Interpreting message: "POPQ,0,1,1"
+1383837264299	Sending popped message
+1383837264299	Popping queue 1 for user 0 ordered by time
+1383837264299	Sending popped message
+1383837264299	Popping queue 1 for user 0 ordered by time
+1383837264299	Sending popped message
+1383837264302	Interpreting message: "POPQ,0,1,1"
+1383837264302	Interpreting message: "POPQ,0,1,1"
+1383837264302	Popping queue 1 for user 0 ordered by time
+1383837264302	Popping queue 1 for user 0 ordered by time
+1383837264302	Sending popped message
+1383837264302	Sending popped message
+1383837264315	Interpreting message: "POPQ,0,1,1"
+1383837264315	Interpreting message: "POPQ,0,1,1"
+1383837264315	Interpreting message: "POPQ,0,1,1"
+1383837264315	Popping queue 1 for user 0 ordered by time
+1383837264315	Popping queue 1 for user 0 ordered by time
+1383837264315	Sending popped message
+1383837264315	Popping queue 1 for user 0 ordered by time
+1383837264315	Sending popped message
+1383837264315	Sending popped message
+1383837264315	Interpreting message: "POPQ,30,2,1"
+1383837264315	Interpreting message: "POPQ,30,2,1"
+1383837264315	Popping queue 2 for user 30 ordered by time
+1383837264315	Popping queue 2 for user 30 ordered by time
+1383837264316	Sending popped message
+1383837264316	Sending popped message
+1383837264320	Interpreting message: "POPQ,30,2,1"
+1383837264320	Interpreting message: "POPQ,30,2,1"
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Popping queue 2 for user 30 ordered by time
+1383837264321	Popping queue 2 for user 30 ordered by time
+1383837264321	Sending popped message
+1383837264321	Sending popped message
+1383837264321	Popping queue 1 for user 0 ordered by time
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Sending popped message
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Interpreting message: "POPQ,30,2,1"
+1383837264321	Popping queue 1 for user 0 ordered by time
+1383837264321	Popping queue 1 for user 0 ordered by time
+1383837264321	Sending popped message
+1383837264321	Sending popped message
+1383837264321	Popping queue 2 for user 30 ordered by time
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Sending popped message
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Popping queue 1 for user 0 ordered by time
+1383837264321	Popping queue 1 for user 0 ordered by time
+1383837264321	Sending popped message
+1383837264321	Sending popped message
+1383837264321	Interpreting message: "POPQ,0,1,1"
+1383837264321	Sending popped message
+1383837264321	Popping queue 1 for user 0 ordered by time
+1383837264321	Sending popped message
+1383837264325	Interpreting message: "POPQ,0,1,1"
+1383837264326	Interpreting message: "POPQ,0,1,1"
+1383837264326	Interpreting message: "POPQ,0,1,1"
+1383837264326	Popping queue 1 for user 0 ordered by time
+1383837264326	Popping queue 1 for user 0 ordered by time
+1383837264326	Popping queue 1 for user 0 ordered by time
+1383837264326	Sending popped message
+1383837264326	Sending popped message
+1383837264326	Sending popped message
+1383837264327	Interpreting message: "POPQ,0,1,1"
+1383837264327	Interpreting message: "POPQ,30,2,1"
+1383837264327	Interpreting message: "POPQ,30,2,1"
+1383837264327	Popping queue 1 for user 0 ordered by time
+1383837264327	Popping queue 2 for user 30 ordered by time
+1383837264327	Sending popped message
+1383837264327	Popping queue 2 for user 30 ordered by time
+1383837264327	Sending popped message
+1383837264327	Interpreting message: "POPQ,0,1,1"
+1383837264327	Sending popped message
+1383837264327	Interpreting message: "POPQ,0,1,1"
+1383837264327	Interpreting message: "POPQ,0,1,1"
+1383837264327	Popping queue 1 for user 0 ordered by time
+1383837264327	Sending popped message
+1383837264327	Popping queue 1 for user 0 ordered by time
+1383837264327	Popping queue 1 for user 0 ordered by time
+1383837264327	Sending popped message
+1383837264327	Sending popped message
+1383837264327	Interpreting message: "POPQ,0,1,1"
+1383837264327	Interpreting message: "POPQ,0,1,1"
+1383837264327	Popping queue 1 for user 0 ordered by time
+1383837264327	Sending popped message
+1383837264327	Popping queue 1 for user 0 ordered by time
+1383837264328	Sending popped message
+1383837264332	Interpreting message: "POPQ,30,2,1"
+1383837264332	Interpreting message: "POPQ,30,2,1"
+1383837264333	Sending popped message
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Sending popped message
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Sending popped message
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Sending popped message
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Sending popped message
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Sending popped message
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Sending popped message
+1383837264333	Interpreting message: "POPQ,30,2,1"
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264333	Sending popped message
+1383837264333	Popping queue 2 for user 30 ordered by time
+1383837264334	Sending popped message
+1383837264500	Interpreting message: "POPQ,0,1,1"
+1383837264500	Interpreting message: "POPQ,0,1,1"
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Sending popped message
+1383837264501	Sending popped message
+1383837264501	Interpreting message: "POPQ,0,1,1"
+1383837264501	Interpreting message: "POPQ,0,1,1"
+1383837264501	Interpreting message: "POPQ,0,1,1"
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Sending popped message
+1383837264501	Sending popped message
+1383837264501	Sending popped message
+1383837264501	Interpreting message: "POPQ,0,1,1"
+1383837264501	Interpreting message: "POPQ,0,1,1"
+1383837264501	Interpreting message: "POPQ,0,1,1"
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Popping queue 1 for user 0 ordered by time
+1383837264501	Sending popped message
+1383837264501	Sending popped message
+1383837264503	Interpreting message: "POPQ,0,1,1"
+1383837264503	Interpreting message: "POPQ,0,1,1"
+1383837264503	Popping queue 1 for user 0 ordered by time
+1383837264503	Sending popped message
+1383837264503	Popping queue 1 for user 0 ordered by time
+1383837264503	Sending popped message
+1383837264517	Interpreting message: "POPQ,0,1,1"
+1383837264518	Interpreting message: "POPQ,0,1,1"
+1383837264518	Interpreting message: "POPQ,0,1,1"
+1383837264518	Popping queue 1 for user 0 ordered by time
+1383837264518	Popping queue 1 for user 0 ordered by time
+1383837264518	Popping queue 1 for user 0 ordered by time
+1383837264518	Sending popped message
+1383837264518	Sending popped message
+1383837264518	Interpreting message: "POPQ,30,2,1"
+1383837264518	Sending popped message
+1383837264518	Interpreting message: "POPQ,30,2,1"
+1383837264518	Popping queue 2 for user 30 ordered by time
+1383837264518	Sending popped message
+1383837264518	Popping queue 2 for user 30 ordered by time
+1383837264518	Sending popped message
+1383837264525	Interpreting message: "POPQ,0,1,1"
+1383837264526	Interpreting message: "POPQ,0,1,1"
+1383837264526	Interpreting message: "POPQ,0,1,1"
+1383837264526	Popping queue 1 for user 0 ordered by time
+1383837264526	Popping queue 1 for user 0 ordered by time
+1383837264526	Popping queue 1 for user 0 ordered by time
+1383837264526	Sending popped message
+1383837264526	Sending popped message
+1383837264526	Sending popped message
+1383837264526	Interpreting message: "POPQ,30,2,1"
+1383837264526	Interpreting message: "POPQ,0,1,1"
+1383837264526	Interpreting message: "POPQ,0,1,1"
+1383837264526	Popping queue 2 for user 30 ordered by time
+1383837264526	Popping queue 1 for user 0 ordered by time
+1383837264526	Popping queue 1 for user 0 ordered by time
+1383837264526	Sending popped message
+1383837264526	Sending popped message
+1383837264526	Sending popped message
+1383837264526	Interpreting message: "POPQ,30,2,1"
+1383837264526	Interpreting message: "POPQ,0,1,1"
+1383837264526	Popping queue 2 for user 30 ordered by time
+1383837264526	Sending popped message
+1383837264526	Interpreting message: "POPQ,30,2,1"
+1383837264526	Popping queue 1 for user 0 ordered by time
+1383837264526	Popping queue 2 for user 30 ordered by time
+1383837264527	Sending popped message
+1383837264527	Sending popped message
+1383837264527	Interpreting message: "POPQ,0,1,1"
+1383837264527	Interpreting message: "POPQ,0,1,1"
+1383837264527	Popping queue 1 for user 0 ordered by time
+1383837264527	Popping queue 1 for user 0 ordered by time
+1383837264527	Sending popped message
+1383837264527	Sending popped message
+1383837264527	Interpreting message: "POPQ,0,1,1"
+1383837264527	Interpreting message: "POPQ,0,1,1"
+1383837264527	Popping queue 1 for user 0 ordered by time
+1383837264527	Sending popped message
+1383837264527	Popping queue 1 for user 0 ordered by time
+1383837264527	Sending popped message
+1383837264528	Interpreting message: "POPQ,30,2,1"
+1383837264528	Popping queue 2 for user 30 ordered by time
+1383837264528	Interpreting message: "POPQ,30,2,1"
+1383837264528	Sending popped message
+1383837264528	Interpreting message: "POPQ,0,1,1"
+1383837264529	Popping queue 2 for user 30 ordered by time
+1383837264529	Sending popped message
+1383837264529	Interpreting message: "POPQ,0,1,1"
+1383837264529	Popping queue 1 for user 0 ordered by time
+1383837264529	Interpreting message: "POPQ,0,1,1"
+1383837264529	Sending popped message
+1383837264529	Popping queue 1 for user 0 ordered by time
+1383837264529	Popping queue 1 for user 0 ordered by time
+1383837264529	Sending popped message
+1383837264529	Sending popped message
+1383837264529	Interpreting message: "POPQ,0,1,1"
+1383837264529	Interpreting message: "POPQ,0,1,1"
+1383837264529	Interpreting message: "POPQ,0,1,1"
+1383837264529	Popping queue 1 for user 0 ordered by time
+1383837264529	Popping queue 1 for user 0 ordered by time
+1383837264529	Popping queue 1 for user 0 ordered by time
+1383837264529	Sending popped message
+1383837264529	Sending popped message
+1383837264529	Sending popped message
+1383837264534	Interpreting message: "POPQ,30,2,1"
+1383837264534	Popping queue 2 for user 30 ordered by time
+1383837264534	Sending popped message
+1383837264534	Interpreting message: "POPQ,30,2,1"
+1383837264534	Popping queue 2 for user 30 ordered by time
+1383837264534	Sending popped message
+1383837264534	Interpreting message: "POPQ,30,2,1"
+1383837264535	Popping queue 2 for user 30 ordered by time
+1383837264535	Sending popped message
+1383837264535	Interpreting message: "POPQ,30,2,1"
+1383837264535	Interpreting message: "POPQ,30,2,1"
+1383837264535	Popping queue 2 for user 30 ordered by time
+1383837264535	Sending popped message
+1383837264535	Popping queue 2 for user 30 ordered by time
+1383837264535	Sending popped message
+1383837264535	Interpreting message: "POPQ,30,2,1"
+1383837264535	Interpreting message: "POPQ,30,2,1"
+1383837264535	Popping queue 2 for user 30 ordered by time
+1383837264535	Popping queue 2 for user 30 ordered by time
+1383837264536	Sending popped message
+1383837264536	Sending popped message
+1383837264536	Interpreting message: "POPQ,30,2,1"
+1383837264536	Interpreting message: "POPQ,30,2,1"
+1383837264536	Popping queue 2 for user 30 ordered by time
+1383837264536	Sending popped message
+1383837264536	Popping queue 2 for user 30 ordered by time
+1383837264536	Sending popped message
+1383837264703	Interpreting message: "POPQ,0,1,1"
+1383837264703	Popping queue 1 for user 0 ordered by time
+1383837264703	Interpreting message: "POPQ,0,1,1"
+1383837264703	Sending popped message
+1383837264703	Sending popped message
+1383837264703	Popping queue 1 for user 0 ordered by time
+1383837264703	Interpreting message: "POPQ,0,1,1"
+1383837264703	Sending popped message
+1383837264703	Popping queue 1 for user 0 ordered by time
+1383837264704	Interpreting message: "POPQ,0,1,1"
+1383837264704	Sending popped message
+1383837264704	Sending popped message
+1383837264704	Popping queue 1 for user 0 ordered by time
+1383837264704	Interpreting message: "POPQ,0,1,1"
+1383837264704	Interpreting message: "POPQ,0,1,1"
+1383837264704	Sending popped message
+1383837264704	Popping queue 1 for user 0 ordered by time
+1383837264704	Interpreting message: "POPQ,0,1,1"
+1383837264704	Sending popped message
+1383837264704	Sending popped message
+1383837264704	Popping queue 1 for user 0 ordered by time
+1383837264704	Sending popped message
+1383837264704	Interpreting message: "POPQ,0,1,1"
+1383837264704	Interpreting message: "POPQ,0,1,1"
+1383837264705	Popping queue 1 for user 0 ordered by time
+1383837264705	Sending popped message
+1383837264705	Popping queue 1 for user 0 ordered by time
+1383837264705	Sending popped message
+1383837264721	Interpreting message: "POPQ,0,1,1"
+1383837264721	Interpreting message: "POPQ,0,1,1"
+1383837264721	Interpreting message: "POPQ,0,1,1"
+1383837264721	Popping queue 1 for user 0 ordered by time
+1383837264721	Popping queue 1 for user 0 ordered by time
+1383837264721	Sending popped message
+1383837264721	Popping queue 1 for user 0 ordered by time
+1383837264721	Sending popped message
+1383837264721	Interpreting message: "POPQ,30,2,1"
+1383837264721	Sending popped message
+1383837264722	Popping queue 2 for user 30 ordered by time
+1383837264722	Interpreting message: "POPQ,30,2,1"
+1383837264722	Sending popped message
+1383837264722	Popping queue 2 for user 30 ordered by time
+1383837264722	Sending popped message
+1383837264729	Interpreting message: "POPQ,0,1,1"
+1383837264729	Interpreting message: "POPQ,30,2,1"
+1383837264729	Interpreting message: "POPQ,0,1,1"
+1383837264729	Popping queue 2 for user 30 ordered by time
+1383837264729	Interpreting message: "POPQ,0,1,1"
+1383837264729	Sending popped message
+1383837264729	Popping queue 1 for user 0 ordered by time
+1383837264729	Interpreting message: "POPQ,0,1,1"
+1383837264729	Sending popped message
+1383837264730	Popping queue 1 for user 0 ordered by time
+1383837264730	Interpreting message: "POPQ,0,1,1"
+1383837264730	Sending popped message
+1383837264730	Popping queue 1 for user 0 ordered by time
+1383837264730	Sending popped message
+1383837264730	Interpreting message: "POPQ,0,1,1"
+1383837264730	Popping queue 1 for user 0 ordered by time
+1383837264730	Sending popped message
+1383837264731	Interpreting message: "POPQ,30,2,1"
+1383837264731	Popping queue 2 for user 30 ordered by time
+1383837264731	Sending popped message
+1383837264731	Interpreting message: "POPQ,0,1,1"
+1383837264731	Interpreting message: "POPQ,0,1,1"
+1383837264731	Popping queue 1 for user 0 ordered by time
+1383837264731	Sending popped message
+1383837264731	Popping queue 1 for user 0 ordered by time
+1383837264731	Interpreting message: "POPQ,0,1,1"
+1383837264732	Sending popped message
+1383837264732	Interpreting message: "POPQ,30,2,1"
+1383837264732	Popping queue 1 for user 0 ordered by time
+1383837264732	Popping queue 2 for user 30 ordered by time
+1383837264732	Sending popped message
+1383837264732	Sending popped message
+1383837264732	Interpreting message: "POPQ,0,1,1"
+1383837264732	Popping queue 1 for user 0 ordered by time
+1383837264732	Sending popped message
+1383837264732	Popping queue 1 for user 0 ordered by time
+1383837264732	Sending popped message
+1383837264733	Popping queue 1 for user 0 ordered by time
+1383837264733	Sending popped message
+1383837264733	Interpreting message: "POPQ,0,1,1"
+1383837264733	Interpreting message: "POPQ,30,2,1"
+1383837264733	Popping queue 1 for user 0 ordered by time
+1383837264733	Popping queue 2 for user 30 ordered by time
+1383837264733	Sending popped message
+1383837264733	Sending popped message
+1383837264733	Interpreting message: "POPQ,30,2,1"
+1383837264733	Popping queue 2 for user 30 ordered by time
+1383837264733	Interpreting message: "POPQ,0,1,1"
+1383837264733	Sending popped message
+1383837264734	Popping queue 1 for user 0 ordered by time
+1383837264734	Sending popped message
+1383837264734	Popping queue 1 for user 0 ordered by time
+1383837264734	Sending popped message
+1383837264734	Interpreting message: "POPQ,0,1,1"
+1383837264734	Interpreting message: "POPQ,0,1,1"
+1383837264734	Popping queue 1 for user 0 ordered by time
+1383837264734	Popping queue 1 for user 0 ordered by time
+1383837264734	Sending popped message
+1383837264734	Sending popped message
+1383837264734	Interpreting message: "POPQ,0,1,1"
+1383837264734	Popping queue 1 for user 0 ordered by time
+1383837264734	Sending popped message
+1383837264739	Interpreting message: "POPQ,30,2,1"
+1383837264739	Interpreting message: "POPQ,30,2,1"
+1383837264739	Popping queue 2 for user 30 ordered by time
+1383837264739	Popping queue 2 for user 30 ordered by time
+1383837264739	Sending popped message
+1383837264739	Sending popped message
+1383837264739	Interpreting message: "POPQ,30,2,1"
+1383837264739	Interpreting message: "POPQ,30,2,1"
+1383837264739	Popping queue 2 for user 30 ordered by time
+1383837264739	Popping queue 2 for user 30 ordered by time
+1383837264739	Sending popped message
+1383837264739	Interpreting message: "POPQ,30,2,1"
+1383837264739	Sending popped message
+1383837264739	Popping queue 2 for user 30 ordered by time
+1383837264739	Interpreting message: "POPQ,30,2,1"
+1383837264739	Sending popped message
+1383837264740	Popping queue 2 for user 30 ordered by time
+1383837264740	Sending popped message
+1383837264740	Popping queue 2 for user 30 ordered by time
+1383837264740	Interpreting message: "POPQ,30,2,1"
+1383837264740	Sending popped message
+1383837264740	Popping queue 2 for user 30 ordered by time
+1383837264740	Interpreting message: "POPQ,30,2,1"
+1383837264740	Sending popped message
+1383837264740	Popping queue 2 for user 30 ordered by time
+1383837264740	Sending popped message
+1383837264905	Interpreting message: "POPQ,0,1,1"
+1383837264905	Popping queue 1 for user 0 ordered by time
+1383837264905	Sending popped message
+1383837264905	Interpreting message: "POPQ,0,1,1"
+1383837264905	Interpreting message: "POPQ,0,1,1"
+1383837264905	Popping queue 1 for user 0 ordered by time
+1383837264905	Popping queue 1 for user 0 ordered by time
+1383837264905	Sending popped message
+1383837264905	Sending popped message
+1383837264905	Interpreting message: "POPQ,0,1,1"
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Sending popped message
+1383837264906	Interpreting message: "POPQ,0,1,1"
+1383837264906	Interpreting message: "POPQ,0,1,1"
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Sending popped message
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Sending popped message
+1383837264906	Sending popped message
+1383837264906	Interpreting message: "POPQ,0,1,1"
+1383837264906	Interpreting message: "POPQ,0,1,1"
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Interpreting message: "POPQ,0,1,1"
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Sending popped message
+1383837264906	Sending popped message
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Sending popped message
+1383837264906	Interpreting message: "POPQ,0,1,1"
+1383837264906	Popping queue 1 for user 0 ordered by time
+1383837264906	Sending popped message
+1383837264924	Interpreting message: "POPQ,0,1,1"
+1383837264924	Interpreting message: "POPQ,0,1,1"
+1383837264924	Interpreting message: "POPQ,30,2,1"
+1383837264924	Popping queue 1 for user 0 ordered by time
+1383837264925	Popping queue 1 for user 0 ordered by time
+1383837264925	Popping queue 2 for user 30 ordered by time
+1383837264925	Sending popped message
+1383837264925	Sending popped message
+1383837264925	Sending popped message
+1383837264925	Interpreting message: "POPQ,30,2,1"
+1383837264925	Interpreting message: "POPQ,0,1,1"
+1383837264925	Popping queue 2 for user 30 ordered by time
+1383837264925	Popping queue 1 for user 0 ordered by time
+1383837264925	Sending popped message
+1383837264925	Sending popped message
+1383837264935	Interpreting message: "POPQ,30,2,1"
+1383837264935	Interpreting message: "POPQ,0,1,1"
+1383837264935	Popping queue 1 for user 0 ordered by time
+1383837264935	Sending popped message
+1383837264935	Sending popped message
+1383837264935	Interpreting message: "POPQ,0,1,1"
+1383837264935	Popping queue 1 for user 0 ordered by time
+1383837264935	Sending popped message
+1383837264935	Interpreting message: "POPQ,0,1,1"
+1383837264935	Interpreting message: "POPQ,30,2,1"
+1383837264935	Popping queue 1 for user 0 ordered by time
+1383837264935	Popping queue 2 for user 30 ordered by time
+1383837264935	Sending popped message
+1383837264935	Sending popped message
+1383837264935	Interpreting message: "POPQ,0,1,1"
+1383837264935	Interpreting message: "POPQ,0,1,1"
+1383837264935	Popping queue 1 for user 0 ordered by time
+1383837264935	Popping queue 1 for user 0 ordered by time
+1383837264936	Sending popped message
+1383837264936	Sending popped message
+1383837264936	Interpreting message: "POPQ,0,1,1"
+1383837264936	Popping queue 1 for user 0 ordered by time
+1383837264936	Interpreting message: "POPQ,30,2,1"
+1383837264936	Sending popped message
+1383837264936	Popping queue 2 for user 30 ordered by time
+1383837264936	Interpreting message: "POPQ,0,1,1"
+1383837264936	Sending popped message
+1383837264936	Popping queue 1 for user 0 ordered by time
+1383837264936	Interpreting message: "POPQ,0,1,1"
+1383837264936	Sending popped message
+1383837264936	Popping queue 1 for user 0 ordered by time
+1383837264936	Interpreting message: "POPQ,0,1,1"
+1383837264936	Sending popped message
+1383837264936	Popping queue 1 for user 0 ordered by time
+1383837264937	Sending popped message
+1383837264937	Interpreting message: "POPQ,0,1,1"
+1383837264937	Popping queue 1 for user 0 ordered by time
+1383837264937	Sending popped message
+1383837264937	Interpreting message: "POPQ,0,1,1"
+1383837264937	Interpreting message: "POPQ,30,2,1"
+1383837264937	Interpreting message: "POPQ,0,1,1"
+1383837264937	Popping queue 1 for user 0 ordered by time
+1383837264937	Popping queue 2 for user 30 ordered by time
+1383837264937	Popping queue 1 for user 0 ordered by time
+1383837264937	Sending popped message
+1383837264937	Sending popped message
+1383837264937	Sending popped message
+1383837264937	Interpreting message: "POPQ,0,1,1"
+1383837264937	Popping queue 1 for user 0 ordered by time
+1383837264937	Sending popped message
+1383837264937	Interpreting message: "POPQ,30,2,1"
+1383837264937	Interpreting message: "POPQ,0,1,1"
+1383837264938	Popping queue 2 for user 30 ordered by time
+1383837264938	Sending popped message
+1383837264938	Sending popped message
+1383837264938	Interpreting message: "POPQ,0,1,1"
+1383837264938	Popping queue 1 for user 0 ordered by time
+1383837264938	Sending popped message
+1383837264938	Interpreting message: "POPQ,0,1,1"
+1383837264938	Popping queue 1 for user 0 ordered by time
+1383837264938	Sending popped message
+1383837264940	Interpreting message: "POPQ,30,2,1"
+1383837264940	Popping queue 2 for user 30 ordered by time
+1383837264940	Sending popped message
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Popping queue 2 for user 30 ordered by time
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Sending popped message
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Popping queue 2 for user 30 ordered by time
+1383837264942	Sending popped message
+1383837264942	Popping queue 2 for user 30 ordered by time
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Sending popped message
+1383837264942	Popping queue 2 for user 30 ordered by time
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Sending popped message
+1383837264942	Popping queue 2 for user 30 ordered by time
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Sending popped message
+1383837264942	Popping queue 2 for user 30 ordered by time
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264942	Interpreting message: "POPQ,30,2,1"
+1383837264943	Popping queue 2 for user 30 ordered by time
+1383837264943	Popping queue 2 for user 30 ordered by time
+1383837264943	Sending popped message
+1383837264943	Sending popped message
+1383837265107	Interpreting message: "POPQ,0,1,1"
+1383837265107	Interpreting message: "POPQ,0,1,1"
+1383837265107	Interpreting message: "POPQ,0,1,1"
+1383837265107	Popping queue 1 for user 0 ordered by time
+1383837265107	Popping queue 1 for user 0 ordered by time
+1383837265107	Sending popped message
+1383837265107	Interpreting message: "POPQ,0,1,1"
+1383837265107	Sending popped message
+1383837265107	Popping queue 1 for user 0 ordered by time
+1383837265107	Sending popped message
+1383837265107	Popping queue 1 for user 0 ordered by time
+1383837265107	Sending popped message
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Popping queue 1 for user 0 ordered by time
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Sending popped message
+1383837265108	Popping queue 1 for user 0 ordered by time
+1383837265108	Popping queue 1 for user 0 ordered by time
+1383837265108	Sending popped message
+1383837265108	Sending popped message
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Popping queue 1 for user 0 ordered by time
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Sending popped message
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Popping queue 1 for user 0 ordered by time
+1383837265108	Interpreting message: "POPQ,0,1,1"
+1383837265108	Sending popped message
+1383837265109	Popping queue 1 for user 0 ordered by time
+1383837265109	Sending popped message
+1383837265109	Popping queue 1 for user 0 ordered by time
+1383837265109	Sending popped message
+1383837265127	Interpreting message: "POPQ,0,1,1"
+1383837265127	Interpreting message: "POPQ,30,2,1"
+1383837265127	Popping queue 1 for user 0 ordered by time
+1383837265127	Popping queue 1 for user 0 ordered by time
+1383837265127	Sending popped message
+1383837265127	Sending popped message
+1383837265127	Popping queue 2 for user 30 ordered by time
+1383837265127	Sending popped message
+1383837265127	Popping queue 2 for user 30 ordered by time
+1383837265127	Sending popped message
+1383837265127	Interpreting message: "POPQ,0,1,1"
+1383837265128	Popping queue 1 for user 0 ordered by time
+1383837265128	Sending popped message
+1383837265138	Interpreting message: "POPQ,30,2,1"
+1383837265138	Popping queue 2 for user 30 ordered by time
+1383837265138	Sending popped message
+1383837265138	Sending popped message
+1383837265138	Interpreting message: "POPQ,0,1,1"
+1383837265138	Interpreting message: "POPQ,0,1,1"
+1383837265138	Popping queue 1 for user 0 ordered by time
+1383837265138	Sending popped message
+1383837265138	Popping queue 1 for user 0 ordered by time
+1383837265138	Popping queue 1 for user 0 ordered by time
+1383837265138	Sending popped message
+1383837265138	Interpreting message: "POPQ,0,1,1"
+1383837265138	Popping queue 1 for user 0 ordered by time
+1383837265138	Interpreting message: "POPQ,0,1,1"
+1383837265139	Sending popped message
+1383837265139	Popping queue 1 for user 0 ordered by time
+1383837265139	Interpreting message: "POPQ,30,2,1"
+1383837265139	Sending popped message
+1383837265139	Popping queue 2 for user 30 ordered by time
+1383837265139	Interpreting message: "POPQ,0,1,1"
+1383837265139	Sending popped message
+1383837265139	Interpreting message: "POPQ,0,1,1"
+1383837265139	Popping queue 1 for user 0 ordered by time
+1383837265139	Sending popped message
+1383837265139	Popping queue 1 for user 0 ordered by time
+1383837265139	Sending popped message
+1383837265139	Interpreting message: "POPQ,0,1,1"
+1383837265139	Interpreting message: "POPQ,0,1,1"
+1383837265140	Popping queue 1 for user 0 ordered by time
+1383837265140	Popping queue 1 for user 0 ordered by time
+1383837265140	Sending popped message
+1383837265140	Sending popped message
+1383837265140	Interpreting message: "POPQ,30,2,1"
+1383837265140	Interpreting message: "POPQ,0,1,1"
+1383837265140	Interpreting message: "POPQ,0,1,1"
+1383837265140	Popping queue 2 for user 30 ordered by time
+1383837265140	Popping queue 1 for user 0 ordered by time
+1383837265140	Popping queue 1 for user 0 ordered by time
+1383837265140	Sending popped message
+1383837265140	Sending popped message
+1383837265140	Sending popped message
+1383837265140	Interpreting message: "POPQ,0,1,1"
+1383837265140	Popping queue 1 for user 0 ordered by time
+1383837265140	Sending popped message
+1383837265140	Interpreting message: "POPQ,0,1,1"
+1383837265140	Popping queue 1 for user 0 ordered by time
+1383837265140	Sending popped message
+1383837265141	Interpreting message: "POPQ,30,2,1"
+1383837265141	Popping queue 2 for user 30 ordered by time
+1383837265142	Sending popped message
+1383837265142	Interpreting message: "POPQ,0,1,1"
+1383837265142	Interpreting message: "POPQ,0,1,1"
+1383837265142	Interpreting message: "POPQ,0,1,1"
+1383837265142	Popping queue 1 for user 0 ordered by time
+1383837265142	Popping queue 1 for user 0 ordered by time
+1383837265142	Popping queue 1 for user 0 ordered by time
+1383837265142	Sending popped message
+1383837265142	Sending popped message
+1383837265142	Sending popped message
+1383837265142	Interpreting message: "POPQ,30,2,1"
+1383837265142	Popping queue 2 for user 30 ordered by time
+1383837265142	Sending popped message
+1383837265143	Interpreting message: "POPQ,30,2,1"
+1383837265143	Popping queue 2 for user 30 ordered by time
+1383837265143	Sending popped message
+1383837265144	Interpreting message: "POPQ,30,2,1"
+1383837265144	Interpreting message: "POPQ,30,2,1"
+1383837265144	Interpreting message: "POPQ,30,2,1"
+1383837265144	Interpreting message: "POPQ,30,2,1"
+1383837265144	Popping queue 2 for user 30 ordered by time
+1383837265144	Popping queue 2 for user 30 ordered by time
+1383837265145	Popping queue 2 for user 30 ordered by time
+1383837265145	Sending popped message
+1383837265145	Sending popped message
+1383837265145	Sending popped message
+1383837265145	Popping queue 2 for user 30 ordered by time
+1383837265145	Interpreting message: "POPQ,30,2,1"
+1383837265145	Sending popped message
+1383837265145	Interpreting message: "POPQ,30,2,1"
+1383837265145	Popping queue 2 for user 30 ordered by time
+1383837265145	Interpreting message: "POPQ,30,2,1"
+1383837265145	Sending popped message
+1383837265145	Popping queue 2 for user 30 ordered by time
+1383837265145	Sending popped message
+1383837265145	Popping queue 2 for user 30 ordered by time
+1383837265145	Sending popped message
+1383837265309	Interpreting message: "POPQ,0,1,1"
+1383837265309	Interpreting message: "POPQ,0,1,1"
+1383837265309	Interpreting message: "POPQ,0,1,1"
+1383837265309	Popping queue 1 for user 0 ordered by time
+1383837265309	Popping queue 1 for user 0 ordered by time
+1383837265309	Interpreting message: "POPQ,0,1,1"
+1383837265309	Sending popped message
+1383837265309	Sending popped message
+1383837265309	Popping queue 1 for user 0 ordered by time
+1383837265309	Sending popped message
+1383837265309	Popping queue 1 for user 0 ordered by time
+1383837265309	Sending popped message
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Popping queue 1 for user 0 ordered by time
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Popping queue 1 for user 0 ordered by time
+1383837265310	Sending popped message
+1383837265310	Popping queue 1 for user 0 ordered by time
+1383837265310	Sending popped message
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Sending popped message
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Sending popped message
+1383837265310	Popping queue 1 for user 0 ordered by time
+1383837265310	Popping queue 1 for user 0 ordered by time
+1383837265310	Sending popped message
+1383837265310	Interpreting message: "POPQ,0,1,1"
+1383837265310	Sending popped message
+1383837265310	Popping queue 1 for user 0 ordered by time
+1383837265311	Sending popped message
+1383837265328	Interpreting message: "POPQ,0,1,1"
+1383837265329	Interpreting message: "POPQ,0,1,1"
+1383837265329	Interpreting message: "POPQ,30,2,1"
+1383837265329	Popping queue 1 for user 0 ordered by time
+1383837265329	Sending popped message
+1383837265329	Popping queue 2 for user 30 ordered by time
+1383837265329	Interpreting message: "POPQ,0,1,1"
+1383837265329	Sending popped message
+1383837265329	Interpreting message: "POPQ,30,2,1"
+1383837265329	Popping queue 1 for user 0 ordered by time
+1383837265329	Sending popped message
+1383837265329	Popping queue 2 for user 30 ordered by time
+1383837265329	Sending popped message
+1383837265341	Interpreting message: "POPQ,30,2,1"
+1383837265341	Interpreting message: "POPQ,30,2,1"
+1383837265341	Popping queue 2 for user 30 ordered by time
+1383837265341	Interpreting message: "POPQ,0,1,1"
+1383837265341	Popping queue 2 for user 30 ordered by time
+1383837265341	Sending popped message
+1383837265341	Sending popped message
+1383837265341	Popping queue 1 for user 0 ordered by time
+1383837265341	Interpreting message: "POPQ,0,1,1"
+1383837265341	Interpreting message: "POPQ,0,1,1"
+1383837265341	Sending popped message
+1383837265341	Popping queue 1 for user 0 ordered by time
+1383837265341	Interpreting message: "POPQ,30,2,1"
+1383837265341	Popping queue 1 for user 0 ordered by time
+1383837265341	Sending popped message
+1383837265341	Popping queue 2 for user 30 ordered by time
+1383837265341	Sending popped message
+1383837265342	Sending popped message
+1383837265342	Interpreting message: "POPQ,0,1,1"
+1383837265342	Interpreting message: "POPQ,0,1,1"
+1383837265343	Popping queue 1 for user 0 ordered by time
+1383837265343	Popping queue 1 for user 0 ordered by time
+1383837265343	Interpreting message: "POPQ,0,1,1"
+1383837265343	Sending popped message
+1383837265343	Sending popped message
+1383837265343	Interpreting message: "POPQ,0,1,1"
+1383837265343	Popping queue 1 for user 0 ordered by time
+1383837265343	Interpreting message: "POPQ,0,1,1"
+1383837265343	Popping queue 1 for user 0 ordered by time
+1383837265343	Sending popped message
+1383837265343	Sending popped message
+1383837265343	Popping queue 1 for user 0 ordered by time
+1383837265343	Sending popped message
+1383837265343	Interpreting message: "POPQ,0,1,1"
+1383837265343	Popping queue 1 for user 0 ordered by time
+1383837265343	Sending popped message
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265344	Popping queue 1 for user 0 ordered by time
+1383837265344	Sending popped message
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265344	Popping queue 1 for user 0 ordered by time
+1383837265344	Interpreting message: "POPQ,30,2,1"
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265344	Sending popped message
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265344	Popping queue 1 for user 0 ordered by time
+1383837265344	Popping queue 2 for user 30 ordered by time
+1383837265344	Sending popped message
+1383837265344	Popping queue 1 for user 0 ordered by time
+1383837265344	Sending popped message
+1383837265344	Sending popped message
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265344	Interpreting message: "POPQ,0,1,1"
+1383837265345	Popping queue 1 for user 0 ordered by time
+1383837265345	Sending popped message
+1383837265345	Popping queue 1 for user 0 ordered by time
+1383837265345	Sending popped message
+1383837265345	Interpreting message: "POPQ,30,2,1"
+1383837265345	Popping queue 2 for user 30 ordered by time
+1383837265345	Interpreting message: "POPQ,30,2,1"
+1383837265345	Sending popped message
+1383837265345	Popping queue 2 for user 30 ordered by time
+1383837265345	Sending popped message
+1383837265345	Interpreting message: "POPQ,30,2,1"
+1383837265345	Popping queue 1 for user 0 ordered by time
+1383837265345	Sending popped message
+1383837265345	Popping queue 2 for user 30 ordered by time
+1383837265346	Sending popped message
+1383837265346	Interpreting message: "POPQ,30,2,1"
+1383837265346	Interpreting message: "POPQ,30,2,1"
+1383837265346	Popping queue 2 for user 30 ordered by time
+1383837265346	Popping queue 2 for user 30 ordered by time
+1383837265346	Sending popped message
+1383837265346	Sending popped message
+1383837265347	Interpreting message: "POPQ,30,2,1"
+1383837265347	Interpreting message: "POPQ,30,2,1"
+1383837265347	Popping queue 2 for user 30 ordered by time
+1383837265347	Sending popped message
+1383837265347	Popping queue 2 for user 30 ordered by time
+1383837265347	Interpreting message: "POPQ,30,2,1"
+1383837265347	Sending popped message
+1383837265347	Interpreting message: "POPQ,30,2,1"
+1383837265348	Interpreting message: "POPQ,30,2,1"
+1383837265348	Popping queue 2 for user 30 ordered by time
+1383837265348	Sending popped message
+1383837265348	Popping queue 2 for user 30 ordered by time
+1383837265348	Popping queue 2 for user 30 ordered by time
+1383837265348	Sending popped message
+1383837265348	Sending popped message
+1383837265464	Client disconnect. There are now 59 clients connected.
+1383837265464	Client disconnect. There are now 58 clients connected.
+1383837265464	Client disconnect. There are now 57 clients connected.
+1383837265465	Client disconnect. There are now 56 clients connected.
+1383837265465	Client disconnect. There are now 55 clients connected.
+1383837265465	Client disconnect. There are now 54 clients connected.
+1383837265465	Client disconnect. There are now 53 clients connected.
+1383837265466	Client disconnect. There are now 52 clients connected.
+1383837265466	Client disconnect. There are now 51 clients connected.
+1383837265466	Client disconnect. There are now 50 clients connected.
+1383837265467	Client disconnect. There are now 49 clients connected.
+1383837265467	Client disconnect. There are now 48 clients connected.
+1383837265467	Client disconnect. There are now 47 clients connected.
+1383837265468	Client disconnect. There are now 46 clients connected.
+1383837265469	Client disconnect. There are now 45 clients connected.
+1383837265469	Client disconnect. There are now 44 clients connected.
+1383837265469	Client disconnect. There are now 43 clients connected.
+1383837265469	Client disconnect. There are now 42 clients connected.
+1383837265470	Client disconnect. There are now 41 clients connected.
+1383837265471	Client disconnect. There are now 40 clients connected.
+1383837265471	Client disconnect. There are now 39 clients connected.
+1383837265472	Client disconnect. There are now 38 clients connected.
+1383837265472	Client disconnect. There are now 37 clients connected.
+1383837265473	Client disconnect. There are now 36 clients connected.
+1383837265473	Client disconnect. There are now 35 clients connected.
+1383837265473	Client disconnect. There are now 34 clients connected.
+1383837265474	Client disconnect. There are now 33 clients connected.
+1383837265475	Client disconnect. There are now 32 clients connected.
+1383837265475	Client disconnect. There are now 31 clients connected.
+1383837265476	Client disconnect. There are now 30 clients connected.
+1383837265476	Client disconnect. There are now 29 clients connected.
+1383837265476	Client disconnect. There are now 28 clients connected.
+1383837265476	Client disconnect. There are now 27 clients connected.
+1383837265476	Client disconnect. There are now 26 clients connected.
+1383837265477	Client disconnect. There are now 25 clients connected.
+1383837265477	Client disconnect. There are now 24 clients connected.
+1383837265477	Client disconnect. There are now 23 clients connected.
+1383837265478	Client disconnect. There are now 22 clients connected.
+1383837265478	Client disconnect. There are now 21 clients connected.
+1383837265479	Client disconnect. There are now 20 clients connected.
+1383837265479	Client disconnect. There are now 19 clients connected.
+1383837265479	Client disconnect. There are now 18 clients connected.
+1383837265479	Client disconnect. There are now 17 clients connected.
+1383837265480	Client disconnect. There are now 16 clients connected.
+1383837265480	Client disconnect. There are now 15 clients connected.
+1383837265481	Client disconnect. There are now 14 clients connected.
+1383837265488	Client disconnect. There are now 13 clients connected.
+1383837265488	Client disconnect. There are now 12 clients connected.
+1383837265488	Client disconnect. There are now 11 clients connected.
+1383837265488	Client disconnect. There are now 10 clients connected.
+1383837265489	Client disconnect. There are now 9 clients connected.
+1383837265489	Client disconnect. There are now 8 clients connected.
+1383837265489	Client disconnect. There are now 7 clients connected.
+1383837265489	Client disconnect. There are now 6 clients connected.
+1383837265489	Client disconnect. There are now 5 clients connected.
+1383837265489	Client disconnect. There are now 4 clients connected.
+1383837265489	Client disconnect. There are now 3 clients connected.
+1383837265489	Client disconnect. There are now 2 clients connected.
+1383837265489	Client disconnect. There are now 1 clients connected.
+1383837265489	Client disconnect. There are now 0 clients connected.
