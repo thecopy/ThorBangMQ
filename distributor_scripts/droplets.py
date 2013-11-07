@@ -15,7 +15,7 @@ def getdroplets():
 
 
 def getnewtestid():
-    ids = map(_getid, getdroplets())
+    ids = map(int, map(_getid, getdroplets()))
     if not ids:
         ids.append(0)
     return max(ids) + 1
