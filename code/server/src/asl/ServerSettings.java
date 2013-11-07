@@ -32,7 +32,7 @@ public class ServerSettings {
 	
 	public void logSettings(Logger logger) throws IllegalArgumentException, IllegalAccessException{
 		for(Field field : ServerSettings.class.getDeclaredFields()){
-			logger.info(field.getName() + "\t" + field.get(this) + "\n");
+			logger.warning(field.getName() + "\t" + field.get(this) + "\n");
 		}
 	}
 
