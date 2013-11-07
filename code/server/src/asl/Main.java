@@ -158,6 +158,14 @@ public class Main {
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Inserting filler data...");
+		try {
+			dbPersistence.createClient("defaultclient");
+			dbPersistence.createQueue("defaultqueue");
+			dbPersistence.fillDb();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static void stopServer(ThorBangMQServer server, IntervalLogger logger, Thread serverThread, Thread intervalLoggerThread) throws InterruptedException{
