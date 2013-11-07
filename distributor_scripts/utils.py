@@ -2,10 +2,14 @@ import re
 import functools
 from collections import defaultdict
 from sys import exit
-from os import path, chdir, mkdir
+from os import path, chdir
+import shutil
+import os
+import errno
 from subprocess import call, PIPE, Popen
-from time import sleep, time
+from time import sleep
 import logging
+from datetime import datetime
 
 logger = logging.getLogger('distributor')
 
@@ -24,7 +28,8 @@ REMOTE_CLIENT_FILE = path.join('/root/', CLIENT_FILE)
 REMOTE_SERVER_DIR = path.join('/root/')
 REMOTE_SERVER_FILE = path.join(REMOTE_SERVER_DIR, SERVER_FILE)
 
-SERVER_CONFIG_FILE_NAME = "conf.txt"
+SERVER_CONFIG_FILE = "conf.txt"
+TEST_CONFIG_FILE = "test.txt"
 
 REMOTE_TEST_LOG_FILE_PATH = "/root/test_log.txt"
 REMOTE_APPLICATION_LOG_FILE_PATH = "/root/application_log.txt"
@@ -188,10 +193,9 @@ def updateserverconfigfile(configfile, databaseip, databasecons, workerthreads):
         f.write(res)
 
 
-def fetchlogs(clients, servers, testdir, testnum=0):
+def fetchlogs(clients, servers, logdir, testnum=0):
     assert(isinstance(clients, list))
     assert(isinstance(servers, list))
-    logdir = path.join(testdir, 'logs')
     for i, client in enumerate(clients):
         fetchlog(client, "client{}".format(i), testnum, logdir)
 
@@ -201,14 +205,13 @@ def fetchlogs(clients, servers, testdir, testnum=0):
 
 def fetchlog((remoteip, localip), machinetype, testnum, logdir):
     if not path.isdir(logdir):
-        mkdir(logdir)
-    logstr = "{timestamp}_test{testnum}_{machinetype}_{logtype}.txt"
-    timestamp = int(time())
+        mkdir_p(logdir)
+    logstr = "test{testnum}_{machinetype}_{logtype}.txt"
     logs = [('test', REMOTE_TEST_LOG_FILE_PATH),
             ('application', REMOTE_APPLICATION_LOG_FILE_PATH)]
     for logtype, remotelogpath in logs:
         logname = logstr.format(logtype=logtype, machinetype=machinetype,
-                                timestamp=timestamp, testnum=testnum)
+                                testnum=testnum)
         logfile = path.join(logdir, logname)
         scpdownloadfile(remoteip, remotelogpath, logfile)
 
@@ -224,7 +227,7 @@ def starttest(testname, testid=None):
 
     buildjavafiles()
 
-    testfile = path.join(testdir, 'test.txt')
+    testfile = path.join(testdir, TEST_CONFIG_FILE)
     testdesc = parsetestfile(testfile)
 
     numclients, numservers = testdesc.get('numclients'), testdesc.get('numservers')
@@ -243,7 +246,14 @@ def starttest(testname, testid=None):
 def performtests(clients, servers, databaseip, testname, testdesc, testdir):
     assert(isinstance(clients, list))
     assert(isinstance(servers, list))
-    serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE_NAME)
+    serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE)
+    timestamp = datetime.strftime(datetime.now(), "%Y-%m-%d__%H_%M_%S")
+    logdir = path.join(testdir, 'logs', timestamp)
+    mkdir_p(logdir)
+    shutil.copy(path.join(testdir, SERVER_CONFIG_FILE),
+                path.join(logdir, SERVER_CONFIG_FILE))
+    shutil.copy(path.join(testdir, TEST_CONFIG_FILE),
+                path.join(logdir, TEST_CONFIG_FILE))
 
     for i, serverarg in enumerate(testdesc.get('serverargs')):
         i += 1
@@ -251,7 +261,7 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
         updateserverconfigfile(serverconfigfile, databaseip=databaseip,
                                databasecons=serverarg['databaseconnections'],
                                workerthreads=serverarg['workerthreads'])
-        scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE_NAME))
+        scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE))
         cleardatabase = serverarg.get('cleardatabase', False)
 
         # start test on server
@@ -267,13 +277,13 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
 
             # stop test on clients and fetch their logs
             stoptest(clients)
-            fetchlogs(clients=clients, servers=[], testdir=testdir, testnum=i + u * 0.1)
+            fetchlogs(clients=clients, servers=[], logdir=logdir, testnum=i + u * 0.1)
             # wait so that we can identify test switching on the server
             wait(10)
 
         # stop test on servers and fetch their log
         stoptest(servers)
-        fetchlogs(clients=[], servers=servers, testdir=testdir, testnum=i)
+        fetchlogs(clients=[], servers=servers, logdir=logdir, testnum=i)
 
 
 def wait(waittime):
@@ -281,3 +291,13 @@ def wait(waittime):
     for i in range(0, waittime, WAIT_INTERVAL):
         logger.debug("Waited {} out of {}".format(i, waittime))
         sleep(WAIT_INTERVAL)
+
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
