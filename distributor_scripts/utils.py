@@ -13,7 +13,7 @@ from datetime import datetime
 
 logger = logging.getLogger('distributor')
 
-from droplets import (createclient, createserver, createdatabase, getclients,
+from droplets import (createclient, createserver, createdatabase, getclients, destroyalldroplets,
                       getservers, getdatabase, DEFAULT_DROPLET_SIZE, getnewtestid)
 from gnuplot import doplots
 
@@ -138,6 +138,8 @@ def parsetestfile(testfile):
                     arg, value = arg.split(':')
                     res[arg] = value
                 testdesc['serverargs'].append(res)
+            elif typ == "destroydroplets":
+                testdesc['destroydroplets'] = True
     return testdesc
 
 
@@ -243,6 +245,8 @@ def starttest(testname, testid=None):
 
     performtests(clients, servers, databaseip, testname, testdesc, testdir)
     logger.info("Test done!")
+    if testdesc.get('destroydroplets', False):
+        destroyalldroplets(testid)
 
 
 def performtests(clients, servers, databaseip, testname, testdesc, testdir):
@@ -281,6 +285,7 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
             stoptest(clients, servers)
             fetchlogs(clients=clients, servers=servers, logdir=logdir, testnum=i + u * 0.1)
             doplots(logdir)
+
 
 
 def wait(waittime):
