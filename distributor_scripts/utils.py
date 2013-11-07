@@ -15,6 +15,7 @@ logger = logging.getLogger('distributor')
 
 from droplets import (createclient, createserver, createdatabase, getclients,
                       getservers, getdatabase, DEFAULT_DROPLET_SIZE, getnewtestid)
+from gnuplot import doplots
 
 ROOT = path.dirname(path.realpath(__file__))
 
@@ -86,8 +87,9 @@ def killallscreens(ip):
 
 
 def scpdownloadfile(ip, remotefile, localfile):
-    scpcmd = "scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@{ip}:{remotefile} {localfile}".format(remotefile=remotefile, ip=ip,
-                                                             localfile=localfile)
+    scpcmd = ("scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
+              "root@{ip}:{remotefile} {localfile}".format(remotefile=remotefile, ip=ip,
+                                                          localfile=localfile))
     call(scpcmd.split(' '), stdout=PIPE)
 
 
@@ -284,6 +286,7 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
         # stop test on servers and fetch their log
         stoptest(servers)
         fetchlogs(clients=[], servers=servers, logdir=logdir, testnum=i)
+        doplots(logdir)
 
 
 def wait(waittime):
