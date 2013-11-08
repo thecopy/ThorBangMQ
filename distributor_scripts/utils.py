@@ -262,19 +262,20 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
                 path.join(logdir, TEST_CONFIG_FILE))
 
     for i, serverarg in enumerate(testdesc.get('serverargs')):
-        i += 1
-        # prepare server for test
-        updateserverconfigfile(serverconfigfile, databaseip=databaseip,
-                               databasecons=serverarg['databaseconnections'],
-                               workerthreads=serverarg['workerthreads'])
-        scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE))
-        cleardatabase = serverarg.get('cleardatabase', False)
-
-        # start test on server
-        serversstarttest(servers=servers, cleardatabase=cleardatabase)
-
         for u, clientarg in enumerate(testdesc.get('clientargs')):
+            i += 1
+            # prepare server for test
+            updateserverconfigfile(serverconfigfile, databaseip=databaseip,
+                                   databasecons=serverarg['databaseconnections'],
+                                   workerthreads=serverarg['workerthreads'])
+            scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE))
+            cleardatabase = serverarg.get('cleardatabase', False)
+
+            # start test on server
+            serversstarttest(servers=servers, cleardatabase=cleardatabase)
+
             u += 1
+            # start test on client
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
             # wait until test is done
@@ -285,7 +286,6 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
             stoptest(clients, servers)
             fetchlogs(clients=clients, servers=servers, logdir=logdir, testnum=i + u * 0.1)
             doplots(logdir)
-
 
 
 def wait(waittime):
