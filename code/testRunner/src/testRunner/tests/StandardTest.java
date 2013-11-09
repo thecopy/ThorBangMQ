@@ -64,11 +64,11 @@ public class StandardTest extends testRunner.Test {
 			
 			for(int i = 0; i < numberOfOneWayClients; i++){
 				oneWayClients.add(new clientRunner(host,port,clients.get(i) ,
-						oneWayQueueId, numberOfOneWayClients, true));
+						oneWayQueueId, numberOfOneWayClients, true, i == 0));
 			}
 			for(int i = 0; i < numberOfOneWayClients; i++){
 				twoWayClients.add(new clientRunner(host,port,clients.get(i)+numberOfOneWayClients, 
-						twoWayQueueId, numberOfTwoWayClients, false));
+						twoWayQueueId, numberOfTwoWayClients, false, false));
 			}
 			
 			applicationLogger.log("Starting all clients...");
@@ -117,13 +117,14 @@ public class StandardTest extends testRunner.Test {
 		public Boolean keepRunning = true;
 		private boolean oneWay;
 		private int numOfOneWayers;
+		private boolean sendTheFirst;
 		
-		public clientRunner(String hostname, int port, long userId, long queue, int numOfOneWayers, boolean oneWay){
+		public clientRunner(String hostname, int port, long userId, long queue, int numOfOneWayers, boolean oneWay, boolean sendTheFirst){
 			this.queue = queue;
 			this.userId = userId;
 			this.oneWay = oneWay;
 			this.numOfOneWayers = numOfOneWayers;
-			
+			this.sendTheFirst = sendTheFirst;
 			try {
 				
 				client = ThorBangMQ.build(hostname, port, userId);
@@ -138,24 +139,28 @@ public class StandardTest extends testRunner.Test {
 		public void run() {
 			Random r = new Random();
 			try {
+				if(sendTheFirst){
+					int target = r.nextInt(numOfOneWayers)+1;
+					client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
+				}
 				while (keepRunning) {
 					if(oneWay){
+						Message msg = null;
+						do{
+							Thread.sleep(200);
+							msg = client.PopMessage(queue, true);
+						}while(msg == null);
+						messageCounter = Long.parseLong(msg.content);
+
 						int target = -1;
 						do{
 							target = r.nextInt(numOfOneWayers)+1;
 						}while(target == userId);
 						
 						client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
-						Message msg = null;
-						do{
-							Thread.sleep(200);
-							msg = client.PopMessage(queue, true);
-						}while(msg == null);
-						
-						messageCounter = Long.parseLong(msg.content);
 						
 					}else{ // Two-Way
-						if(userId%2 == 0){ // Sender
+						if(userId%2 == 1){ // Sender
 							long context = r.nextLong();
 							client.SendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
 							Message msg = null;
