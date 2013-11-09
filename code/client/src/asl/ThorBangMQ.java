@@ -228,7 +228,7 @@ public class ThorBangMQ {
 		String[] msgParts = msg.split(",", 5);
 		
 		long sender = Long.parseLong(msgParts[1]);
-		String context = msgParts[2];
+		long context = Long.parseLong(msgParts[2]);
 		long id = Long.parseLong(msgParts[3]);
 		String content = msgParts[4];
 		

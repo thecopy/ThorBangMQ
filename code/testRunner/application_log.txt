@@ -1,22 +1,3 @@
-1383769500765	Connecting 10 clients to localhost:8123...
-1383769500792	OK Done! Sending 200 messages sequentially to queue 1 per client...
-1383769503680	#8 : Finished
-1383769503694	#6 : Finished
-1383769503782	#3 : Finished
-1383769503834	#7 : Finished
-1383769503837	#9 : Finished
-1383769503881	#2 : Finished
-1383769503937	#1 : Finished
-1383769503948	#4 : Finished
-1383769504008	#5 : Finished
-1383769504009	#0 : Finished
-1383769504010	OK Done!
-1383769504010	-------------------------------------------
-1383769504010	Number of Clients:	10
-1383769504010	Messages per Client:	200
-1383769504012	Total Messages:		2000.0
-1383769504012	
-1383769504012	Total Time:		3217.0ms
-1383769504013	Per Message:		1.6084999ms
-1383769504014	Messages/second:	621.69727
-1383769504014	Time/message:		1.6085ms
+1383843390517	Starting all clients...
+1383843420575	OK DONE:) Shutting down all clients...
+1383843420576	OK

@@ -13,6 +13,7 @@ import testRunner.tests.DummyTest;
 import testRunner.tests.SendAndPopMessages;
 import testRunner.tests.SendMessages;
 import testRunner.tests.SendMessagesTime;
+import testRunner.tests.StandardTest;
 
 public class Runner {
 	List<Class> tests = new ArrayList<Class>();
@@ -25,6 +26,7 @@ public class Runner {
 		tests.add(SendMessagesTime.class);
 		tests.add(BigMessage.class);
 		tests.add(SendAndPopMessages.class);
+		tests.add(StandardTest.class);
 	}
 	
 	public List<Class> getTests(){
@@ -50,6 +52,8 @@ public class Runner {
 	public void runTest(String testName, Settings settings, MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception{
 		System.out.println("OK. Initing test...");
 		Test test = getTestFromIdentifier(testName);
+		
+		
 		
 		System.out.println("---");
 		test.setConnectionInfo(settings.host, settings.port);
