@@ -47,8 +47,8 @@ def main():
                 continue
             starttest(testname, testid)
         elif choice == "6":
-            for i, testname in gettests():
-                print "{}: {}".format(i + 1, testname)
+            for testname in gettests():
+                print testname
         elif choice == "7":
             for droplet in getdroplets():
                 logger.info('{name}: ({globalip}, {localip})'.format(name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))

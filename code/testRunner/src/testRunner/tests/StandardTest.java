@@ -55,6 +55,9 @@ public class StandardTest extends testRunner.Test {
 
 	@Override
 	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception {
+		applicationLogger.log(String.format("numberOfOneWayClients: %d", this.numberOfOneWayClients));
+		applicationLogger.log(String.format("numberOfTwoWayClients: %d", this.numberOfTwoWayClients));
+		applicationLogger.log(String.format("lengthOfExperiment: %d", this.lengthOfExperiment));
 		try{
 			ArrayList<clientRunner> oneWayClients = new ArrayList<clientRunner>(numberOfOneWayClients);
 			ArrayList<clientRunner> twoWayClients = new ArrayList<clientRunner>(numberOfTwoWayClients);

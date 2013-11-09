@@ -1,0 +1,4 @@
+1383839200831	numberOfClients: 300
+1383839200831	lengthOfExperiment: 360000
+1383839200831	poppers: 2
+1383839200831	Connecting 300 clients to 10.128.10.41:8123...
