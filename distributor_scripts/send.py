@@ -15,7 +15,7 @@ def main():
         print "1) create client"
         print "2) create server"
         print "3) build jars"
-        print "4) upload jars"
+        print "4) upload jars <testid>"
         print "5) start test <testname> [<testid>]"
         print "6) list available tests"
         print "7) list running droplets"
@@ -29,8 +29,9 @@ def main():
             createserver()
         elif choice == "3":
             buildjavafiles()
-        elif choice == "4":
-            distributejavafiles(clients=getclients(), servers=getservers())
+        elif choice.startswith("4"):
+            testid = choice.split(' ')[1]
+            distributejavafiles(clients=getclients(testid), servers=getservers(testid))
         elif choice.startswith("5"):
             args = choice.split(' ')
             testname, testid = None, None
