@@ -55,6 +55,8 @@ public class Runner {
 		System.out.println("OK. Initing test...");
 		Test test = getTestFromIdentifier(testName);
 		
+		
+		
 		System.out.println("---");
 		test.setConnectionInfo(settings.host, settings.port);
 		test.init(this.testArgs);

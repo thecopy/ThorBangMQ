@@ -1,0 +1,12 @@
+1003ClientRequestWorker:	194000.00 requests (PEEKQ,1,1,1) per second
+1004				5.14 µs per request (PEEKQ,1,1,1)
+1004
+2005ClientRequestWorker:	152000.00 requests (POPQ,1,1,1) per second
+2005				6.55 µs per request (POPQ,1,1,1)
+2005
+3006ClientRequestWorker:	493000.00 requests (MSG,1,1,1,1,1,content) per second
+3006				2.03 µs per request (MSG,1,1,1,1,1,content)
+3006
+4223DbPersistence:	39000.00 requests (getMessageById) per second
+4223			25.27 µs per request (getMessageById)
+4223

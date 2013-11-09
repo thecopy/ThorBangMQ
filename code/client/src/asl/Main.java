@@ -23,8 +23,10 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println("Starting ThorBangMQ Client...");
-		
-		ThorBangMQ client = ThorBangMQ.build("127.0.0.1", 8123, 1);
+		String host = "127.0.0.1";
+		if(args.length > 0)
+			host = args[0];
+		ThorBangMQ client = ThorBangMQ.build(host, 8123, 1);
 
 		System.out.println("Initializing connection...");
 		
@@ -76,13 +78,13 @@ public class Main {
 						+ "r number cmd\tRepeat <cmd> <number> of times. <cmd> can be any command including a special command";
 				System.out.println(helpText);
 				continue;
-			}else if(input.startsWith("r ")){
+			}else if(input.startsWith("r! ") || input.startsWith("r ")) {
 				String[] parts = input.split(" ",3);
 				int repeats = Integer.parseInt(parts[1]);
 				String command = transformCommand(parts[2]);
 				double[] times = new double[repeats];
 				double avg = 0;
-
+				boolean print = input.equals("r!");
 				for(int i = 0;i<repeats;i++){
 					StopWatch w = new StopWatch();
 					w.start();
@@ -90,7 +92,8 @@ public class Main {
 					w.stop();
 					times[i] = w.getNanoTime() / 1000 / (double)1000;
 					avg += times[i];
-					System.out.print(times[i] + " ");
+					if(print)
+						System.out.print(times[i] + " ");
 				}
 				System.out.println("\nRepeated command " + repeats + " times.");
 				System.out.println("Average: " + avg/(double)repeats + " ms");
