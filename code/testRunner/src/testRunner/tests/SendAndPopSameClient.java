@@ -50,8 +50,10 @@ public class SendAndPopSameClient extends testRunner.Test {
 		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 
 		Thread[] clients = new Thread[numberOfClients];
+		clientRunner[] runners = new clientRunner[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(host, port, clientIds.get(i), (int)queueId));
+			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId);
+			clients[i] = new Thread(runners[i]);
 		}
 		
 		applicationLogger.log("OK Done! Sending messages...");
@@ -67,10 +69,13 @@ public class SendAndPopSameClient extends testRunner.Test {
 		
 		Thread.sleep(lengthOfExperiment);
 		
-		for (Thread client : clients) {
+		for (int i = 0; i < numberOfClients;i++) {
 			try{
-			client.interrupt();
-			}catch(Exception ignore) {}
+				runners[i].keepRunning = false;
+				clients[i].join();
+			}catch(Exception ignore) {
+				ignore.printStackTrace();
+			}
 		}
 		
 		w.stop();
