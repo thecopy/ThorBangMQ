@@ -9,14 +9,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MemoryLogger extends Logger {
-	String format = "%d\t%s";
+	String format = "%d%s";
+	private long startTime;
 	
 	List<String> entries;
+
+	private Boolean outputToConsole;
 		
-	protected MemoryLogger() {
+	public MemoryLogger(Boolean outputToConsole) {
 		super("MemoryLogger",null);
-		
-		entries = new ArrayList<String>(256);
+		this.outputToConsole = outputToConsole;
+		entries = new ArrayList<String>(1024);
+		this.startTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -26,6 +30,7 @@ public class MemoryLogger extends Logger {
 
 	@Override
 	public void info(String msg) {
+		
 		this.log(Level.INFO, msg);
 	}
 	
@@ -34,10 +39,22 @@ public class MemoryLogger extends Logger {
 		this.log(Level.WARNING, msg);
 	}
 	
+	public void log(String msg) {
+		log(Level.INFO, msg);
+	}
+	
 	@Override
 	public void log(Level level, String msg) {
-		String dataToPost = String.format(format, System.currentTimeMillis(), msg);
+		if(level.intValue() < super.getLevel().intValue()) return;
+		if(msg.length() > 512){
+			msg = msg.substring(0,511);
+			entries.add("NEXT ENTRY TRUNCATED TO 512 CHARACTERS");
+		}
+		
+		String dataToPost = String.format(format, System.currentTimeMillis() - this.startTime, msg);
 		entries.add(dataToPost);
+		if(outputToConsole)
+			System.out.println(dataToPost);
 	}
 	
 	public void dumpToFile(String path) throws FileNotFoundException{
@@ -46,5 +63,9 @@ public class MemoryLogger extends Logger {
 			out.println(entry);
 		out.close();
 
+	}
+
+	public void clear() {
+		entries.clear();
 	}
 }

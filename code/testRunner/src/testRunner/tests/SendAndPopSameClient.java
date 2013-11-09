@@ -17,7 +17,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 	int numberOfClients = 0;
 	int lengthOfExperiment = 0;
 	int poppers = 1;
-	ArrayList<Long> clients;
+	ArrayList<Integer> clientIds;
 	long queueId;
 	
 	@Override
@@ -33,11 +33,11 @@ public class SendAndPopSameClient extends testRunner.Test {
 	public void init(String[] args) throws Exception {
 		numberOfClients = Integer.parseInt(args[0]);
 		lengthOfExperiment = Integer.parseInt(args[1]);
-		clients = new ArrayList<Long>();
+		clientIds = new ArrayList<Integer>();
 		
 		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);		
 		for(int i = 0; i < numberOfClients; i += 1) {
-			clients.add(api.createClient("client_" + i));
+			clientIds.add((int)api.createClient("client_" + i));
 		}
 		this.queueId = api.createQueue("writetest_queue");
 
@@ -51,7 +51,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 
 		Thread[] clients = new Thread[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(host, port, 1, 1));
+			clients[i] = new Thread(new clientRunner(host, port, clientIds.get(i), (int)queueId));
 		}
 		
 		applicationLogger.log("OK Done! Sending messages...");
@@ -64,17 +64,8 @@ public class SendAndPopSameClient extends testRunner.Test {
 			clients[i].start();
 		}
 		w.start();
-		ArrayList<String> splitTimes = new ArrayList<String>(lengthOfExperiment/500+1);
-		Boolean stop = false;
-		while(!stop){
-			Thread.sleep(500);
-			w.split();
-			long millis = w.getSplitNanoTime() / 1000000;
-			applicationLogger.log("Checking of " + millis + " > " + lengthOfExperiment);
-			if(millis /*ms*/> lengthOfExperiment)
-				stop = true;
-			w.unsplit();
-		}
+		
+		Thread.sleep(lengthOfExperiment);
 		
 		for (Thread client : clients) {
 			try{

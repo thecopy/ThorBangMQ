@@ -86,6 +86,13 @@ public class ThorBangMQ {
 		}
 	}
 	
+	public void BroadcastMessage(long queueId, long priority, long context, String content)
+			throws IOException, InvalidQueueException, InvalidClientException, ServerException
+	{
+		SendMessage(-1, queueId, priority, context, content);
+	}
+
+	
 	public Message PeekMessage(long queueId, Boolean getByTime) throws IOException, InvalidQueueException, ServerException {
 		String response = transport.SendAndGetResponse(String.format(PeekQueueStringFormat, 
 						userId,
