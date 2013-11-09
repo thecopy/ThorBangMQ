@@ -262,8 +262,9 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
                 path.join(logdir, TEST_CONFIG_FILE))
 
     for i, serverarg in enumerate(testdesc.get('serverargs')):
+        i += 1
         for u, clientarg in enumerate(testdesc.get('clientargs')):
-            i += 1
+            u += 1
             # prepare server for test
             updateserverconfigfile(serverconfigfile, databaseip=databaseip,
                                    databasecons=serverarg['databaseconnections'],
