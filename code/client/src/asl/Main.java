@@ -1,5 +1,6 @@
 package asl;
 
+import infrastructure.MemoryLogger;
 import infrastructure.exceptions.InvalidClientException;
 import infrastructure.exceptions.InvalidQueueException;
 import infrastructure.exceptions.ServerException;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.logging.Level;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +29,6 @@ public class Main {
 		if(args.length > 0)
 			host = args[0];
 		ThorBangMQ client = ThorBangMQ.build(host, 8123, 1);
-
 		System.out.println("Initializing connection...");
 		
 		try {
@@ -75,7 +76,7 @@ public class Main {
 						+ "stdmsg\t\tSends a message to yourself in queue 1\n"
 						+ "stdmsg number\tSend a message to yourself in queue 1 with message length number bytes\n"
 						+ "pop\t\tPops queue 1\n"
-						+ "r number cmd\tRepeat <cmd> <number> of times. <cmd> can be any command including a special command";
+						+ "r! number cmd\tRepeat <cmd> <number> of times. <cmd> can be any command including a special command. r! will log all the request durations into a log file.";
 				System.out.println(helpText);
 				continue;
 			}else if(input.startsWith("r! ") || input.startsWith("r ")) {
@@ -84,7 +85,11 @@ public class Main {
 				String command = transformCommand(parts[2]);
 				double[] times = new double[repeats];
 				double avg = 0;
-				boolean print = input.equals("r!");
+				boolean log = input.startsWith("r!");
+
+				MemoryLogger mlogger = new MemoryLogger(false);
+				mlogger.setLevel(Level.ALL);
+				
 				for(int i = 0;i<repeats;i++){
 					StopWatch w = new StopWatch();
 					w.start();
@@ -92,8 +97,13 @@ public class Main {
 					w.stop();
 					times[i] = w.getNanoTime() / 1000 / (double)1000;
 					avg += times[i];
-					if(print)
-						System.out.print(times[i] + " ");
+					if(log)
+						mlogger.log("," + times[i]);
+				}
+				if(log){
+					String fileName = "repeatlog_" + repeats + "_" + command + ".log";
+					System.out.println("Durations saved to file: " + System.getProperty("user.dir") + "/" + fileName);
+					mlogger.dumpToFile(fileName);
 				}
 				System.out.println("\nRepeated command " + repeats + " times.");
 				System.out.println("Average: " + avg/(double)repeats + " ms");
