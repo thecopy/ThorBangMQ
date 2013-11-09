@@ -56,14 +56,15 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public long storeMessage(Message message) throws PersistenceException, InvalidQueueException, InvalidClientException {
+	public long storeMessage(long senderId, long receiverId, long queueId, long contextId,
+			int priority, String content) throws PersistenceException, InvalidQueueException, InvalidClientException {
 		final String query = "INSERT INTO messages (sender_id, receiver_id, queue_id, context_id, priority, message) "
 				+ " VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 
 		try {
-			return (long) executeScalar(query, logger, message.senderId,
-					message.receiverId, message.queueId, message.contextId,
-					message.priority, message.content);
+			return (long) executeScalar(query, logger, senderId,
+					receiverId, queueId, contextId,
+					priority, content);
 		} catch (SQLException e) {
 			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.clientExceptionString)) {
@@ -125,9 +126,10 @@ public class DbPersistence implements IPersistence {
 	}
 
 	@Override
-	public Message getMessageBySender(long queueId, long receiverId, long senderId) throws InvalidQueueException, InvalidClientException, PersistenceException {
-		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL) AND queue_id = ? AND sender_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
+	public Message getMessageBySender(long queueId, long receiverId, long senderId, boolean getByTimestampInsteadOfPriority) throws InvalidQueueException, InvalidClientException, PersistenceException {
+		final String query = String.format("SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
+				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL) AND queue_id = ? AND sender_id = ? ORDER BY %s LIMIT 1",
+				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC");
 
 		ArrayList<Object[]> s;
 		try {

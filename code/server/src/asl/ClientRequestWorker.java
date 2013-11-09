@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import javax.security.auth.login.FailedLoginException;
 
 import asl.Persistence.IPersistence;
-import asl.infrastructure.IProtocolService;
 import asl.infrastructure.exceptions.InvalidClientException;
 import asl.infrastructure.exceptions.InvalidMessageException;
 import asl.infrastructure.exceptions.InvalidQueueException;
@@ -25,15 +24,17 @@ public class ClientRequestWorker implements Runnable{
 	private String requestString = null;
 	private Logger logger;
 	private ITransport transport;
-	private IProtocolService ps;
 	private IPersistence persistence;
 
-	public ClientRequestWorker(Logger logger, IProtocolService ps, ITransport transport, String requestString) {
+	public ClientRequestWorker(
+			Logger logger, 
+			IPersistence persistence,
+			ITransport transport, 
+			String requestString) {
 		this.requestString = requestString;
 		this.logger = logger;
 		this.transport = transport;
-		this.ps = ps;
-		//this.persistence = persistence;
+		this.persistence = persistence;
 	}
 
 	@Override
@@ -103,7 +104,10 @@ try{
 		try{
 			for(String queueStr : msgArgs[2].split(";")){
 				long queue = Long.parseLong(queueStr);
-				ps.storeMessage(reciever, sender, queue, prio, context, content);
+
+				persistence.storeMessage(reciever, sender, queue, context, prio, content);
+				
+				GlobalCounters.numberOfMessagesPersisted.incrementAndGet();
 			}
 			
 			transport.Send(okMessage);
@@ -125,7 +129,10 @@ try{
 			long reciever = Long.parseLong(args[0]);
 			long queue = Long.parseLong(args[1]);
 			Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[2]) == 1;
-			Message m = ps.peekQueue(reciever, queue, getByTimestampInsteadOfPriority);
+
+			Message m = peekQueue(reciever, queue, getByTimestampInsteadOfPriority);
+			
+			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 			transport.Send(formatMessage(m));
 			
 		}  catch (InvalidQueueException e) {
@@ -144,9 +151,9 @@ try{
 		long receiver = Long.parseLong(args[0]);
 		long queue = Long.parseLong(args[1]);
 		long sender = Long.parseLong(args[2]);
-		
+		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[3]) == 1;
 		try {
-			Message m = persistence.getMessageBySender(queue, receiver, sender);
+			Message m = persistence.getMessageBySender(queue, receiver, sender,getByTimestampInsteadOfPriority);
 
 			transport.Send(formatMessage(m));
 			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
@@ -171,9 +178,9 @@ try{
 		logger.info(String.format("Popping queue %d for user %d ordered by %s", queueId, receiverId, getByTimestampInsteadOfPriority ? "time" : "prio"));
 		Message m;
 		try {
-			m = ps.peekQueue(receiverId, queueId, getByTimestampInsteadOfPriority);
+			m = peekQueue(receiverId, queueId, getByTimestampInsteadOfPriority);
 			if(m != null)
-				ps.deleteMessage(m.id);
+				persistence.deleteMessage(m.id);
 
 			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 			
@@ -197,9 +204,10 @@ try{
 		long receiverId = Long.parseLong(args[0]);
 		long queueId = Long.parseLong(args[1]);
 		long senderId = Long.parseLong(args[2]);
-		
+		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[3]) == 1;
+
 		try {
-			Message m = ps.peekQueueWithSender(queueId, receiverId, senderId);
+			Message m = persistence.getMessageBySender(queueId, receiverId, senderId,getByTimestampInsteadOfPriority);
 			if(m != null)
 				persistence.deleteMessage(m.id);
 			
@@ -220,10 +228,9 @@ try{
 	// CREATEQUEUE,NameOfQueue
 	public void createQueue(String args) {
 		// TODO: unspecified that this will return -1.
-		Long queueId;
 		try {
-			queueId = ps.createQueue(args);
-			transport.Send(queueId.toString());
+			long queueId = persistence.createQueue(args);
+			transport.Send(String.valueOf(queueId));
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
 		}
@@ -232,7 +239,7 @@ try{
 	// REMOVEQUEUE,QueueId
 	public void removeQueue(String args) {
 		try {
-			ps.removeQueue(Long.parseLong(args));
+			persistence.removeQueue(Long.parseLong(args));
 			transport.Send(okMessage);
 		} catch (InvalidQueueException e) {
 			transport.Send(String.format(this.queueFailMessage, e.id));
@@ -244,9 +251,8 @@ try{
 	// CREATECLIENT,NameOfClient
 	public void createClient(String arg) {
 		// TODO: Unspecified that this could return -1.
-		Long clientId;
 		try {
-			clientId = ps.createClient(arg);
+			Long clientId = persistence.createClient(arg);
 			transport.Send(clientId.toString());
 		} catch (PersistenceException e) {
 			transport.Send(this.persistenceFailMessage);
@@ -257,7 +263,7 @@ try{
 	public void removeClient(String arg) {
 		
 		try {
-			ps.removeClient(Long.parseLong(arg));
+			persistence.removeClient(Long.parseLong(arg));
 			transport.Send(okMessage);
 		} catch (PersistenceException e) {
 			transport.Send(this.persistenceFailMessage);
@@ -266,11 +272,22 @@ try{
 		}
 	}
 	
-	private String formatMessage(Message m) {
+	public static String formatMessage(Message m) {
 		if(m == null)
 			return "MSG0";
 		
 		return String.format(SendMessageStringFormat, m.senderId, m.contextId,
 				              m.id, m.content);
+	}
+	
+	private Message peekQueue(long receiver, long queue, boolean getByTimestampInsteadOfPriority) throws InvalidQueueException, PersistenceException, InvalidMessageException{
+		Message m;
+		if (getByTimestampInsteadOfPriority) {
+			m = persistence.getMessageByTimestamp(queue, receiver);
+		} else {
+			m = persistence.getMessageByPriority(queue, receiver);
+		}
+		
+		return m;
 	}
 }

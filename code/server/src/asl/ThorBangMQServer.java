@@ -23,7 +23,6 @@ import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
 import asl.Persistence.LyingPersistence;
 import asl.infrastructure.PersistenceType;
-import asl.infrastructure.ProtocolService;
 import asl.network.DefaultTransport;
 import asl.network.ITransport;
 
@@ -196,7 +195,7 @@ public class ThorBangMQServer {
 			this.executor.execute(
 					new ClientRequestWorker(
 							logger,
-							new ProtocolService(this.persistence),
+							this.persistence,
 							transport,
 							message.substring(0, message.length()-1))); // remove last character, i.e. NULL (0)
 		}
