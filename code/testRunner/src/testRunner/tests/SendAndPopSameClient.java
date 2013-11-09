@@ -19,13 +19,13 @@ public class SendAndPopSameClient extends testRunner.Test {
 	int poppers = 1;
 	ArrayList<Integer> clientIds;
 	long queueId;
-
+	
 	@Override
 	public String[] getArgsDescriptors() {
 		String[] descriptors = new String[2];
 		descriptors[0] = "Number of clients";
 		descriptors[1] = "Length of experiment";
-
+		
 		return descriptors;
 	}
 
@@ -34,8 +34,8 @@ public class SendAndPopSameClient extends testRunner.Test {
 		numberOfClients = Integer.parseInt(args[0]);
 		lengthOfExperiment = Integer.parseInt(args[1]);
 		clientIds = new ArrayList<Integer>();
-
-		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);
+		
+		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);		
 		for(int i = 0; i < numberOfClients; i += 1) {
 			clientIds.add((int)api.createClient("client_" + i));
 		}
@@ -50,32 +50,37 @@ public class SendAndPopSameClient extends testRunner.Test {
 		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 
 		Thread[] clients = new Thread[numberOfClients];
+		clientRunner[] runners = new clientRunner[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(host, port, clientIds.get(i), (int)queueId, applicationLogger, testLogger));
+			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId);
+			clients[i] = new Thread(runners[i]);
 		}
-
+		
 		applicationLogger.log("OK Done! Sending messages...");
-
+		
 		StopWatch w = new StopWatch();
-
-
+		
+		
 		//Start client threads
 		for(int i = 0; i < numberOfClients;i++){
 			clients[i].start();
 		}
 		w.start();
-
+		
 		Thread.sleep(lengthOfExperiment);
-
-		for (Thread client : clients) {
+		
+		for (int i = 0; i < numberOfClients;i++) {
 			try{
-			client.interrupt();
-			}catch(Exception ignore) {}
+				runners[i].keepRunning = false;
+				clients[i].join();
+			}catch(Exception ignore) {
+				ignore.printStackTrace();
+			}
 		}
-
+		
 		w.stop();
 		float totalTimeInMs = w.getNanoTime()/1000/1000;
-
+		
 		applicationLogger.log("OK Done!");
 		applicationLogger.log("-------------------------------------------");
 
@@ -94,26 +99,24 @@ public class SendAndPopSameClient extends testRunner.Test {
 	}
 
 	class clientRunner implements Runnable{
-
+		
 		ThorBangMQ client;
 		private int queue;
 		private int userId;
-
+		
 		public int numberOfMessagesSent = 0;
 		public int numberOfMessagesPoped = 0;
-		public int numberOfErrors = 0;
-		private MemoryLogger testLogger;
-		private MemoryLogger applicationLogger;
-
+		
 		public Boolean keepRunning = true;
-		public clientRunner(String hostname, int port, int userId, int queue, MemoryLogger applicationLogger, MemoryLogger testLogger){
+		public clientRunner(String hostname, int port, int userId, int queue){
 			this.queue = queue;
 			this.userId = userId;
-			this.testLogger = testLogger;
-
+			
 			try {
+				
 				client = ThorBangMQ.build(hostname, port, userId);
 				client.init();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -129,13 +132,8 @@ public class SendAndPopSameClient extends testRunner.Test {
 					numberOfMessagesPoped++;
 				}
 			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
-				this.numberOfErrors++;
-				this.applicationLogger.severe(e.getMessage());
-
+				e.printStackTrace();
 			} finally {
-				testLogger.log(String.format("numberOfMessagesSent: %d", this.numberOfMessagesSent));
-				testLogger.log(String.format("numberOfMessagesPopped: %d", this.numberOfMessagesSent));
-				testLogger.log(String.format("numberOfErrors: %d", this.numberOfErrors));
 				client.stop();
 			}
 		}

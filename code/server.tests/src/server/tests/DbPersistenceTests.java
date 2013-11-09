@@ -74,7 +74,7 @@ public class DbPersistenceTests {
 		Message messageToStore = new Message(receiver, sender, 0, queue, 0, priority, context, content);
 		
 		// Act
-		long id = persistence.storeMessage(messageToStore);
+		long id = persistence.storeMessage(sender, receiver, queue, context, priority, content);
 		Message messageLoaded = persistence.getMessageById(id);
 		
 		// Assert
@@ -98,23 +98,21 @@ public class DbPersistenceTests {
 		long queue = 1;
 		long context = 4;
 		String content = "content";
-		int priority = 1;
-		Message first = new Message(receiver, sender, 0, queue, 0, priority, context, content);
-		persistence.storeMessage(first);
-		Message second = new Message(receiver, sender, 0, queue, 0, priority+1, context, content);
-		persistence.storeMessage(second);
+		int priority = 2;
+		persistence.storeMessage(sender, receiver, queue, context, priority-1, content);
+		persistence.storeMessage(sender, receiver, queue, context, priority, content);
 		
 		// Act
 		Message loaded = persistence.getMessageByPriority(queue, receiver);
 		
 		// Assert
 		assertNotNull(loaded);
-		assertEquals(second.content, loaded.content);
-		assertEquals(second.contextId, loaded.contextId);
-		assertEquals(second.senderId, loaded.senderId);
-		assertEquals(second.receiverId, loaded.receiverId);
-		assertEquals(second.queueId, loaded.queueId);
-		assertEquals(second.priority, loaded.priority);
+		assertEquals(content, loaded.content);
+		assertEquals(context, loaded.contextId);
+		assertEquals(sender, loaded.senderId);
+		assertEquals(receiver, loaded.receiverId);
+		assertEquals(queue, loaded.queueId);
+		assertEquals(priority, loaded.priority);
 	}
 	
 	@Test
@@ -128,10 +126,8 @@ public class DbPersistenceTests {
 		long context = 4;
 		String content = "content";
 		int priority = 1;
-		Message first = new Message(receiver, sender, 0, queue, 0, priority, context, content);
-		long id = persistence.storeMessage(first);
-		Message second = new Message(receiver, sender, 0, queue, 0, priority+1, context, content);
-		persistence.storeMessage(second);
+		long id = persistence.storeMessage(sender, receiver, queue, context, priority, content);
+		persistence.storeMessage(sender, receiver, queue, context, priority+1, content);
 		
 		// Act
 		Message loaded = persistence.getMessageByTimestamp(queue, receiver);
@@ -139,12 +135,12 @@ public class DbPersistenceTests {
 		// Assert
 		assertNotNull(loaded);
 		assertEquals(id, loaded.id);
-		assertEquals(first.content, loaded.content);
-		assertEquals(first.contextId, loaded.contextId);
-		assertEquals(first.senderId, loaded.senderId);
-		assertEquals(first.receiverId, loaded.receiverId);
-		assertEquals(first.queueId, loaded.queueId);
-		assertEquals(first.priority, loaded.priority);
+		assertEquals(content, loaded.content);
+		assertEquals(context, loaded.contextId);
+		assertEquals(sender, loaded.senderId);
+		assertEquals(receiver, loaded.receiverId);
+		assertEquals(queue, loaded.queueId);
+		assertEquals(priority, loaded.priority);
 	}
 
 	
@@ -159,25 +155,22 @@ public class DbPersistenceTests {
 		long context = 4;
 		String content = "content";
 		int priority = 1;
-		Message first = new Message(receiver, sender, 0, queue, 0, priority, context, content);
-			persistence.storeMessage(first);
-		Message second = new Message(receiver, sender+1, 0, queue, 0, priority+1, context, content);
-			long id = persistence.storeMessage(second);
-		Message third = new Message(receiver, sender, 0, queue, 0, priority+2, context, content);
-			persistence.storeMessage(third);
+		persistence.storeMessage(sender, receiver, queue, context, priority, content);
+		long id = persistence.storeMessage(sender+1, receiver, queue, context, priority, content);
+		persistence.storeMessage(sender, receiver, queue, context, priority+1, content);
 		
 		// Act
-		Message loaded = persistence.getMessageBySender(queue, receiver, sender+1);
+		Message loaded = persistence.getMessageBySender(queue, receiver, sender+1, false);
 		
 		// Assert
 		assertNotNull(loaded);
 		assertEquals(id, loaded.id);
-		assertEquals(second.content, loaded.content);
-		assertEquals(second.contextId, loaded.contextId);
-		assertEquals(second.senderId, loaded.senderId);
-		assertEquals(second.receiverId, loaded.receiverId);
-		assertEquals(second.queueId, loaded.queueId);
-		assertEquals(second.priority, loaded.priority);
+		assertEquals(content, loaded.content);
+		assertEquals(context, loaded.contextId);
+		assertEquals(sender+1, loaded.senderId);
+		assertEquals(receiver, loaded.receiverId);
+		assertEquals(queue, loaded.queueId);
+		assertEquals(priority, loaded.priority);
 	}
 
 	@Test
@@ -191,8 +184,7 @@ public class DbPersistenceTests {
 		long context = 4;
 		String content = "content";
 		int priority = 1;
-		Message msg = new Message(receiver, sender, 0, queue, 0, priority, context, content);
-		long id = persistence.storeMessage(msg);
+		long id = persistence.storeMessage(sender, receiver, queue, context, priority, content);
 		
 		// Act
 		persistence.deleteMessage(id);
@@ -211,6 +203,6 @@ public class DbPersistenceTests {
 		persistence.removeQueue(1); // this is created in getTestablePersistence()
 		
 		// Assert
-		persistence.storeMessage(new Message(1,1,0,1 /* JUST REMOVED THIS QUEUE */, 0, 1, 0, ""));
+		persistence.storeMessage(1,1,1,1,1,"a"); // just remove queue id = 1
 	}
 }
