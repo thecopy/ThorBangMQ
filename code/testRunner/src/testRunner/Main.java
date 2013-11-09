@@ -41,7 +41,7 @@ public class Main {
 		System.out.println("Test= " + input);
 
 		MemoryLogger applicationLogger = new MemoryLogger(true);
-		MemoryLogger testLogger = new MemoryLogger(true);
+		MemoryLogger testLogger = new MemoryLogger(false);
 		addShutdownHookForSavingLog((MemoryLogger)applicationLogger, settings.APPLICATION_LOG_PATH);
 		addShutdownHookForSavingLog((MemoryLogger)testLogger, settings.TEST_LOG_PATH);
 		r.runTest(input, settings, applicationLogger, testLogger);

@@ -55,4 +55,8 @@ public class MemoryLogger extends Logger {
 		out.close();
 
 	}
+	
+	public void clear(){
+		entries.clear();
+	}
 }

@@ -19,7 +19,8 @@ public class LyingPersistence implements IPersistence{
 	}
 
 	@Override
-	public long storeMessage(Message message) throws PersistenceException,
+	public long storeMessage(long senderId, long receiverId, long queueId, long contextId,
+			int priority, String content) throws PersistenceException,
 			InvalidQueueException, InvalidClientException {
 		// TODO Auto-generated method stub
 		return 0;
@@ -41,7 +42,7 @@ public class LyingPersistence implements IPersistence{
 	}
 
 	@Override
-	public Message getMessageBySender(long queueId, long recierId, long senderId)
+	public Message getMessageBySender(long queueId, long recierId, long senderId, boolean b)
 			throws InvalidClientException, InvalidQueueException,
 			PersistenceException {
 		// TODO Auto-generated method stub

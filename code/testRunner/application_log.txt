@@ -1,8 +1,2 @@
-1384005584661	numberOfClients: 20
-1384005584661	lengthOfExperiment: 5000
-1384005584661	Connecting 20 clients to localhost:8123...
-1384005584695	OK Done! Sending messages...
-1384005589702	OK Done!
-1384005589703	-------------------------------------------
-1384005589703	Number of Clients:	20
-1384005589703	Total Time:		5000.0ms
+1384013297937	Started test, hold on...
+1384013305751	OK! :)

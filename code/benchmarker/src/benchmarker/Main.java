@@ -13,7 +13,7 @@ import org.postgresql.jdbc2.optional.PoolingDataSource;
 import asl.ClientRequestWorker;
 import asl.Persistence.DbPersistence;
 import asl.Persistence.IPersistence;
-import asl.infrastructure.IProtocolService;
+import asl.Persistence.LyingPersistence;
 import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.exceptions.InvalidMessageException;
 import asl.infrastructure.exceptions.PersistenceException;
@@ -37,9 +37,8 @@ public class Main {
 	}
 	
 	private static void benchmarkClientRequestWorker(long duration, final String request, final Logger logger) throws InterruptedException{
-		final IProtocolService ps = new FakeProtocolService();
 		final ITransport t = new FakeTransport();
-		
+		final IPersistence ps = new LyingPersistence();
 		final AtomicLong counter = new AtomicLong(0);
 		RunnableWithStop test = new RunnableWithStop() {
 			@Override
