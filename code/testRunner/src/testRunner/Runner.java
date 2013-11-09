@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import testRunner.tests.BigMessage;
 import testRunner.tests.DummyTest;
+import testRunner.tests.PushPeekPop;
 import testRunner.tests.SendAndPopMessages;
 import testRunner.tests.SendAndPopSameClient;
 import testRunner.tests.SendMessages;
@@ -29,6 +30,8 @@ public class Runner {
 		tests.add(SendAndPopMessages.class);
 		tests.add(StandardTest.class);
 		tests.add(SendAndPopSameClient.class);
+		tests.add(PushPeekPop.class);
+		
 	}
 	
 	public List<Class> getTests(){
@@ -55,9 +58,9 @@ public class Runner {
 		System.out.println("OK. Initing test...");
 		Test test = getTestFromIdentifier(testName);
 		
+		System.out.println(String.format("Test is %s null!", test == null ? "" : "not"));
 		
-		
-		System.out.println("---");
+		System.out.println("---"); 
 		test.setConnectionInfo(settings.host, settings.port);
 		test.init(this.testArgs);
 		System.out.println("---");
