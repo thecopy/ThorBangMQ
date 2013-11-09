@@ -62,7 +62,7 @@ public class Main {
 			System.out.println("  d\t\tDump logfiles");
 			System.out.println("  q\t\tQuit");
 			System.out.println("  qd\t\tQuit and dump logfiles");
-			System.out.println("  resetdb\tClear the database");
+			System.out.println("  resetdb<!>\tClear the database, add ! to skip filling db");
 			System.out.println("  clearlogs\tClear the logs");
 			
 	        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -85,9 +85,9 @@ public class Main {
 					System.out.println("Bye :)");
 					break;
 				}
-				else if(input.equals("resetdb")){
+				else if(input.startsWith("resetdb")){
 					System.out.println("Clearing db...");
-					clearDb(settings);
+					clearDb(settings, input.endsWith("!"));
 					System.out.println("Db clean!");
 				}
 				else if(input.equals("clearlogs")){
@@ -123,7 +123,7 @@ public class Main {
 		if(arg.equals("cleardb=true"))
 		{
 			System.out.println("Clearing db...");
-			clearDb(s);
+			clearDb(s, true);
 			System.out.println("Db clean!");
 		}
 		else{
@@ -131,7 +131,7 @@ public class Main {
 		}
 	}
 	
-	private static void clearDb(ServerSettings settings){
+	private static void clearDb(ServerSettings settings, boolean skipFill){
 		PoolingDataSource connectionPool = (PoolingDataSource)PoolingDataSource.getDataSource(settings.DB_DATA_SOURCE_NAME);
 		if (connectionPool == null) {
 			connectionPool = new PoolingDataSource();
@@ -158,6 +158,7 @@ public class Main {
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 		}
+		if(skipFill) return;
 		System.out.println("Inserting filler data...");
 		try {
 			dbPersistence.createClient("defaultclient");
