@@ -123,7 +123,7 @@ public class Main {
 		if(arg.equals("cleardb=true"))
 		{
 			System.out.println("Clearing db...");
-			clearDb(s, true);
+			clearDb(s, false);
 			System.out.println("Db clean!");
 		}
 		else{
