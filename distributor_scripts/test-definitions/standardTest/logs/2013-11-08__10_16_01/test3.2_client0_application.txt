@@ -1,0 +1,6 @@
+1383908291408	numberOfOneWayClients: 200
+1383908291409	numberOfTwoWayClients: 100
+1383908291409	lengthOfExperiment: 1200000
+1383908291931	Starting all clients...
+1383909492103	OK DONE:) Shutting down all clients...
+1383909492105	OK
