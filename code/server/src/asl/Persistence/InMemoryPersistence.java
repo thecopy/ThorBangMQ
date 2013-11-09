@@ -33,7 +33,12 @@ public class InMemoryPersistence implements IPersistence {
 	}
 
 	@Override
-	public long storeMessage(Message message) {
+	public long storeMessage(long senderId, long receiverId, long queueId, long contextId,
+			int priority, String content) {
+		
+		Message message = new Message(
+				receiverId, senderId, 0, queueId, 
+				0, priority, contextId, content);
 		message.id = ++id;
 		messages.add(message);
 		
@@ -80,7 +85,7 @@ public class InMemoryPersistence implements IPersistence {
 	}
 
 	@Override
-	public Message getMessageBySender(long queueId, long recieverId, long senderId) {
+	public Message getMessageBySender(long queueId, long recieverId, long senderId, boolean getByTimestampInsteadOfPriority) {
 		Message message = null;
 		
 		for(int i = 0; i < messages.size(); i++){
@@ -89,7 +94,9 @@ public class InMemoryPersistence implements IPersistence {
 			{
 				if(message == null){	
 					message = m;
-				}else if(message.timestamp > m.timestamp){
+				}else if(getByTimestampInsteadOfPriority && message.timestamp > m.timestamp){
+					message = m;
+				}else if(getByTimestampInsteadOfPriority == false && message.priority < m.priority){
 					message = m;
 				}
 			}

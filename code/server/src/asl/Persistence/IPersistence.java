@@ -11,11 +11,12 @@ import asl.infrastructure.exceptions.PersistenceException;
 
 public interface IPersistence {
 	void deleteMessage(long messageId) throws InvalidMessageException, PersistenceException;
-	long storeMessage(Message message) throws PersistenceException, InvalidQueueException, InvalidClientException;
+	long storeMessage(long senderId, long receiverId, long queueId, long contextId,
+			int priority, String content) throws PersistenceException, InvalidQueueException, InvalidClientException;
 
 	Message getMessageByPriority(long queueId, long recieverId) throws InvalidQueueException, PersistenceException;
 	Message getMessageByTimestamp(long queueId, long recieverId) throws InvalidQueueException, PersistenceException, InvalidMessageException;
-	Message getMessageBySender(long queueId, long recierId, long senderId) throws InvalidClientException, InvalidQueueException, PersistenceException;
+	Message getMessageBySender(long queueId, long recierId, long senderId, boolean getByTimestampInsteadOfPriority) throws InvalidClientException, InvalidQueueException, PersistenceException;
 	Message getMessageById(long id) throws InvalidMessageException, PersistenceException;
 
     /**

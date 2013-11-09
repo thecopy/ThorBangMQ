@@ -65,7 +65,7 @@ public class InMemoryPersistenceTests {
 		InMemoryPersistence persistence = new InMemoryPersistence(messages);
 		
 		// Act
-		Message message = persistence.getMessageBySender(queueId, myId, senderId);
+		Message message = persistence.getMessageBySender(queueId, myId, senderId, true);
 		
 		// Assert
 		assertEquals(messages.get(2), message);
@@ -86,7 +86,7 @@ public class InMemoryPersistenceTests {
 		InMemoryPersistence persistence = new InMemoryPersistence(messages);
 		 
 		// Act
-		Message message = persistence.getMessageBySender(1+queueId, myId, senderId);
+		Message message = persistence.getMessageBySender(1+queueId, myId, senderId, false);
 		Message message1 = persistence.getMessageByPriority(1+queueId, myId);
 		Message message2 = persistence.getMessageByTimestamp(1+queueId, myId);
 		
@@ -99,18 +99,28 @@ public class InMemoryPersistenceTests {
 
 	@Test
 	public void shouldStoreMessage() {
-		
 		// Arrange
 		InMemoryPersistence persistence = new InMemoryPersistence();
-		Message messageToStore = new Message(1,2,3,4,-1,6, 0, "content");
+		long sender = 2;
+		long reciever = 3;
+		long queue = 4;
+		long context = 5;
+		int prio = 6;
+		String content = "content";
 		
 		// Act
-		persistence.storeMessage(messageToStore);
-		Message gottenMessage = persistence.getMessageById(messageToStore.id);
+		long id = persistence.storeMessage(sender, reciever, queue, context, prio, content);
+		Message gottenMessage = persistence.getMessageById(id);
 		
 		// Assert
-		assertNotEquals(-1, messageToStore.id);
-		assertEquals(messageToStore, gottenMessage);
+		assertNotEquals(-1, gottenMessage.id);
+		assertEquals(sender, gottenMessage.senderId);
+		assertEquals(reciever, gottenMessage.receiverId);
+		assertEquals(queue,gottenMessage.queueId);
+		assertEquals(context, gottenMessage.contextId);
+		assertEquals(prio, gottenMessage.priority);
+		assertEquals(content, gottenMessage.content);
+
 	}
 
 }
