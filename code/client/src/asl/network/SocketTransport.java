@@ -33,7 +33,6 @@ public class SocketTransport implements ITransport {
 		int readBytes = 0;
 		
 		while((readBytes = inputStream.read(buffer)) > 0){
-			System.out.print(String.format("Read %d bytes from buffer\r", builder.length()+readBytes));
 			
 			if(buffer[readBytes-1] == 0){ // EoF token
 				builder.append(new String(buffer, 0, readBytes-1, "UTF-8"));
