@@ -51,7 +51,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 
 		Thread[] clients = new Thread[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			clients[i] = new Thread(new clientRunner(host, port, clientIds.get(i), (int)queueId));
+			clients[i] = new Thread(new clientRunner(host, port, clientIds.get(i), (int)queueId, applicationLogger, testLogger));
 		}
 
 		applicationLogger.log("OK Done! Sending messages...");
@@ -134,7 +134,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 
 			} finally {
 				testLogger.log(String.format("numberOfMessagesSent: %d", this.numberOfMessagesSent));
-				testLogger.log(String.format("numberOfMessagesPoped: %d", this.numberOfMessagesSent));
+				testLogger.log(String.format("numberOfMessagesPopped: %d", this.numberOfMessagesSent));
 				testLogger.log(String.format("numberOfErrors: %d", this.numberOfErrors));
 				client.stop();
 			}
