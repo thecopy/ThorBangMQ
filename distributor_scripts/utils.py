@@ -218,6 +218,8 @@ def fetchlog((remoteip, localip), machinetype, testnum, logdir):
                                 testnum=testnum)
         logfile = path.join(logdir, logname)
         scpdownloadfile(remoteip, remotelogpath, logfile)
+        # hack to download all *.log-files on remote
+        scpdownloadfile(remoteip, '/root/*.log', logdir)
 
 
 def starttest(testname, testid=None):
@@ -275,7 +277,6 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
             # start test on server
             serversstarttest(servers=servers, cleardatabase=cleardatabase)
             sleep(5)
-            u += 1
             # start test on client
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
