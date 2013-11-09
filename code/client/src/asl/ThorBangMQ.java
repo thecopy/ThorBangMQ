@@ -13,7 +13,7 @@ import asl.network.SocketTransport;
 
 public class ThorBangMQ {
 	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
-	private final static String SendMessageStringFormat = "MSG,%d,%d,%d,%d,%d,%s";
+	private final static String SendMessageStringFormat = "MSG,%d,%d,%s,%d,%d,%s";
 	
 	private final static String PeekQueueStringFormat = "PEEKQ,%d,%d,%d";
 	private final static String PeekQueueWithSenderStringFormat = "PEEKS,%d,%d,%d,%d";
@@ -66,30 +66,46 @@ public class ThorBangMQ {
 	
 	public void SendMessage(long recieverId, long queueId, long priority, long context, String content)
 				throws IOException, InvalidQueueException, InvalidClientException, ServerException
-			{
-		String response = transport.SendAndGetResponse(String.format(SendMessageStringFormat, 
-													   recieverId,
-													   userId,
-													   queueId,
-													   priority,
-													   context,
-													   content));
-		if (this.responseIsError(response)) {
-			String resp[] = response.split(" ");
-			if (resp[1] == "UNKNOWN") {
-				throw new ServerException();
-			} else if (resp[1] == "QUEUE") {
-				throw new InvalidQueueException(Long.parseLong(resp[2]));
-			} else if (resp[1] == "CLIENT") {
-				throw new InvalidClientException(Long.parseLong(resp[2]));
-			}
-		}
+	{
+		long[] queues = new long[1];
+		queues[0] = queueId;
+		SendMessage(recieverId, priority, context, content,queues);
 	}
 	
-	public void BroadcastMessage(long queueId, long priority, long context, String content)
+	public void SendMessage(long recieverId, long priority, long context, String content, long... queueIds)
+			throws IOException, InvalidQueueException, InvalidClientException, ServerException
+		{
+		String queues = "";
+		for(long queueId : queueIds){
+			if(queues.equals(""))
+				queues = String.valueOf(queueId);
+			else
+				queues += ";" + String.valueOf(queueId);
+				
+		}
+	String response = transport.SendAndGetResponse(String.format(SendMessageStringFormat, 
+												   recieverId,
+												   userId,
+												   queues,
+												   priority,
+												   context,
+												   content));
+	if (this.responseIsError(response)) {
+		String resp[] = response.split(" ");
+		if (resp[1] == "UNKNOWN") {
+			throw new ServerException();
+		} else if (resp[1] == "QUEUE") {
+			throw new InvalidQueueException(Long.parseLong(resp[2]));
+		} else if (resp[1] == "CLIENT") {
+			throw new InvalidClientException(Long.parseLong(resp[2]));
+		}
+	}
+}
+	
+	public void BroadcastMessage(long priority, long context, String content, long... queues)
 			throws IOException, InvalidQueueException, InvalidClientException, ServerException
 	{
-		SendMessage(-1, queueId, priority, context, content);
+		SendMessage(-1, priority, context, content, queues);
 	}
 
 	
