@@ -120,7 +120,7 @@
             Communication between the middleware and our database is done using JDBC, making SQL queries directly from our Java code. We decided not to use stored procedures even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code. 
 
         \subsection{Communication protocol}
-            We have chosen to use a very simple messaging protocol between the clients and the middleware. We have chosen to use an end of message token to differentiate messages from each other, as we found it simpler to implement than defining packets with headers etc. We decided that our end of message token should be null, i.e. "\textbackslash\textbackslash0". All messages should be encoded in UTF8.\\
+            We have chosen to use a very simple messaging protocol between the clients and the middleware. We have chosen to use an end of message token to differentiate messages from each other, as we found it simpler to implement than defining packets with headers etc. We decided that our end of message token should be null, i.e. "\textbackslash0". All messages should be encoded in UTF8.\\
             Interpretation of messages is implemented in both server and client, in the DefaultTransport- and SocketTransport classes, respectively.
 
     \section{Testing infrastructure}
@@ -131,6 +131,24 @@
             \item Fetches logs
             \item Generates graphs
         \end{itemize}
+        ~\\
+        The infrastructure consists of 4 files:
+        \begin{description}
+            \item[main.py] Interface to start tests, see servers currently running etc.
+            \item[infrastructure.py] Functions doing the actual infrastructure work
+            \item[droplets.py] Functions to start and stop servers (specific to DigitalOcean cloud provider)
+            \item[gnuplot.py] Plots data
+        \end{description}
+        ~\\
+        Tests are defined by creating a folder in the test-definitions directory, and creating three files: \textit{conf.txt}, which defines the configuration of a server, \textit{test.txt}, which defines the number of servers and clients to be deployed and the configuration of the clients, and \textit{gnuplot.sh} which should create the wanted gnuplots when called with the results of a test as an argument.\\
+        \\
+        Other than the files described above, a few python libraries are required: 
+        \begin{description}
+            \item[python-digitalocean] which can be installed via pip or found at \textit{https://pypi.python.org/pypi/python-digitalocean}.
+            \item[psycopg2] which can be found at \textit{https://pypi.python.org/pypi/psycopg2}.
+        \end{description}
+        ~\\
+        It should be noted that our testing infrastructure is pretty dumb, in that it doesn't check for errors while running. It just assumes that everything happens as it should and does its thing. We found this to be a somewhat of a mistake since it has caused us quite a bit of trouble during our testing.
 
     \section{Tests}
         In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we assume that these requests are vastly more frequent than all other types of requests, e.g. create queue, and that the performance of these three types of requests will greatly dominate the performance of the other types.\\
@@ -164,10 +182,6 @@
 
         \subsection{Standard test}
 
-        \subsection{Pure pop message}
-        \subsection{Pure send message}
-        \subsection{Pure peek message}
-
         \subsection{Mixed requests}
             \begin{itemize}
                 \item Simulation of 'real workload'?
@@ -178,6 +192,13 @@
 
         \subsection{Number of messages connections vs. time of reads}
             This is a $2^2$ test.
+
+        \subsection{Code characterization}
+            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We will perform profiling during multiple different tests, as described above, in order to see if there is any difference between them.
+
+            % Bottlenecks
+            % Most expensive operations that determine the overall performance
+
 
     \section{Results}
         TODO: Note that we're using a closed system which has an effect on the results\\
@@ -191,6 +212,21 @@
         \subsection{Time to perform peek}
 
         \subsection{Time to perform send}
+
+        \subsection{Code profiling}
+            We performed code profiling during multiple different tests. Every time we ran the profiler we got almost identical results. Almost all of the time, as shown on both Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, is spent communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put them together they add up to 83.1\% and 87.5\%, respectively.
+            \begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{code_profiling_send_pop_same_client}
+                \caption{3 minutes of profiling during 'Send message, pop message'}
+                \label{fig:code_profiling_send_pop_same_client}
+            \end{figure}
+            \begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{code_profiling_standard_test}
+                \caption{3 minutes of profiling during 'Standard test'}
+                \label{fig:code_profiling_standard_test}
+            \end{figure}
 
 
     \section{Analysis}
