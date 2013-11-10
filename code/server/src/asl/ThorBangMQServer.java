@@ -23,7 +23,7 @@ import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
 import asl.Persistence.LyingPersistence;
 import asl.infrastructure.PersistenceType;
-import asl.network.DefaultTransport;
+import asl.network.SocketTransport;
 import asl.network.ITransport;
 
 /*
@@ -190,7 +190,7 @@ public class ThorBangMQServer {
 				this.incompleteReads.remove(conn); // remove incomplete request from buffer
 			}
 			
-			ITransport transport = new DefaultTransport(this, conn);
+			ITransport transport = new SocketTransport(this, conn);
 
 			this.executor.execute(
 					new ClientRequestWorker(
