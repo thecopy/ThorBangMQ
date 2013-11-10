@@ -254,12 +254,13 @@ def starttest(testname, testid=None):
 def performtests(clients, servers, databaseip, testname, testdesc, testdir):
     assert(isinstance(clients, list))
     assert(isinstance(servers, list))
-    serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE)
     timestamp = datetime.strftime(datetime.now(), "%Y-%m-%d__%H_%M_%S")
     logdir = path.join(testdir, 'logs', timestamp)
+    base_serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE)
+    test_serverconfigfile = path.join(logdir, SERVER_CONFIG_FILE)
     mkdir_p(logdir)
-    shutil.copy(path.join(testdir, SERVER_CONFIG_FILE),
-                path.join(logdir, SERVER_CONFIG_FILE))
+    shutil.copy(base_serverconfigfile,
+                test_serverconfigfile)
     shutil.copy(path.join(testdir, TEST_CONFIG_FILE),
                 path.join(logdir, TEST_CONFIG_FILE))
 
@@ -268,10 +269,10 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
         for u, clientarg in enumerate(testdesc.get('clientargs')):
             u += 1
             # prepare server for test
-            updateserverconfigfile(serverconfigfile, databaseip=databaseip,
+            updateserverconfigfile(test_serverconfigfile, databaseip=databaseip,
                                    databasecons=serverarg['databaseconnections'],
                                    workerthreads=serverarg['workerthreads'])
-            scpuploadfile(servers, serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE))
+            scpuploadfile(servers, test_serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE))
             cleardatabase = serverarg.get('cleardatabase', False)
 
             # start test on server
