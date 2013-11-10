@@ -18,12 +18,12 @@ import java.util.logging.Logger;
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.ServerSettings;
-import asl.Persistence.DbPersistence;
+import asl.Persistence.PostgresPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
 import asl.Persistence.LyingPersistence;
 import asl.infrastructure.PersistenceType;
-import asl.network.DefaultTransport;
+import asl.network.SocketTransport;
 import asl.network.ITransport;
 
 /*
@@ -65,7 +65,7 @@ public class ThorBangMQServer {
 		IPersistence persistence = settings.PERSISTENCE_TYPE.equals(PersistenceType.MEMORY)
 				? new InMemoryPersistence()
 				: settings.PERSISTENCE_TYPE.equals(PersistenceType.POSTGRES)
-				? new DbPersistence(connectionPool,logger)
+				? new PostgresPersistence(connectionPool,logger)
 				: new LyingPersistence();
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
@@ -190,7 +190,7 @@ public class ThorBangMQServer {
 				this.incompleteReads.remove(conn); // remove incomplete request from buffer
 			}
 			
-			ITransport transport = new DefaultTransport(this, conn);
+			ITransport transport = new SocketTransport(this, conn);
 
 			this.executor.execute(
 					new ClientRequestWorker(
