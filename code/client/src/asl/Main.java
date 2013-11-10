@@ -74,7 +74,7 @@ public class Main {
 				String helpText = "Type any message to send to the ThorBangMQ server.\n"
 						+ "Special commands: \n"
 						+ "stdmsg\t\tSends a message to yourself in queue 1\n"
-						+ "stdmsg number\tSend a message to yourself in queue 1 with message length number bytes\n"
+						+ "stdmsg <number prio>\tSend a message to yourself in queue 1 with message length number bytes\n"
 						+ "pop\t\tPops queue 1\n"
 						+ "r! number cmd\tRepeat <cmd> <number> of times. <cmd> can be any command including a special command. r! will log all the request durations into a log file.";
 				System.out.println(helpText);
@@ -89,7 +89,7 @@ public class Main {
 
 				MemoryLogger mlogger = new MemoryLogger(false);
 				mlogger.setLevel(Level.ALL);
-				
+				System.out.println(command);
 				for(int i = 0;i<repeats;i++){
 					StopWatch w = new StopWatch();
 					w.start();
@@ -101,7 +101,7 @@ public class Main {
 						mlogger.log("," + times[i]);
 				}
 				if(log){
-					String fileName = "repeatlog_" + repeats + "_" + command + ".log";
+					String fileName = "repeatlog_" + repeats + "_" + input + ".log";
 					System.out.println("Durations saved to file: " + System.getProperty("user.dir") + "/" + fileName);
 					mlogger.dumpToFile(fileName);
 				}
@@ -129,10 +129,12 @@ public class Main {
 	private static String transformCommand(String input){
 		if(input.startsWith("stdmsg")){
 			if(input.length() > 6){
+				String[] params = input.split(" ");
 				//     MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
-				int length = Integer.parseInt(input.substring(7));
+				int length = Integer.parseInt(params[1]);
+				int prio = Integer.parseInt(params[2]);
 				String content = StringUtils.leftPad("", length, 'M');
-				input = String.format("MSG,%d,%d,1,1,0,%s", 1,1,content);
+				input = String.format("MSG,%d,%d,1,%d,0,%s", 1,1,prio,content);
 			}else{
 				input = String.format("MSG,%d,%d,1,1,0,%s", 1,1,"Standard Message");
 			}

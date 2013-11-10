@@ -93,7 +93,7 @@ public class ThorBangMQServer {
 					pendingWriteConn = (SocketChannel)itsc.next().channel();
 					itsc.remove();
 					SelectionKey key = pendingWriteConn.keyFor(this.selector);
-					if (key.isValid()) {
+					if (key != null && key.isValid()) {
 						key.interestOps(SelectionKey.OP_WRITE);
 					}
 				}

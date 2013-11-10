@@ -182,7 +182,8 @@ try{
 			if(m != null)
 				persistence.deleteMessage(m.id);
 
-			
+			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
+
 			logger.info(String.format("Sending popped message"));
 
 			transport.Send(this.formatMessage(m));

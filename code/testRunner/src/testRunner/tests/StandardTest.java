@@ -66,8 +66,8 @@ public class StandardTest extends testRunner.Test {
 				oneWayClients.add(new clientRunner(host,port,clients.get(i) ,
 						oneWayQueueId, numberOfOneWayClients, true, i == 0));
 			}
-			for(int i = 0; i < numberOfOneWayClients; i++){
-				twoWayClients.add(new clientRunner(host,port,clients.get(i)+numberOfOneWayClients, 
+			for(int i = numberOfOneWayClients; i < (numberOfOneWayClients+numberOfTwoWayClients); i++){
+				twoWayClients.add(new clientRunner(host,port,clients.get(i), 
 						twoWayQueueId, numberOfTwoWayClients, false, false));
 			}
 			
@@ -129,6 +129,7 @@ public class StandardTest extends testRunner.Test {
 				
 				client = ThorBangMQ.build(hostname, port, userId);
 				client.init();
+				System.out.println("yay im user " + userId);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -138,6 +139,9 @@ public class StandardTest extends testRunner.Test {
 		@Override
 		public void run() {
 			Random r = new Random();
+			MemoryLogger logger = new MemoryLogger(false);
+			StopWatch w = new StopWatch(); 
+			long sendDuration = 0;
 			try {
 				if(sendTheFirst){
 					int target = r.nextInt(numOfOneWayers)+1;
@@ -145,10 +149,12 @@ public class StandardTest extends testRunner.Test {
 				}
 				while (keepRunning) {
 					if(oneWay){
+						
 						Message msg = null;
 						do{
 							Thread.sleep(200);
 							msg = client.PopMessage(queue, true);
+							Counters.MessageRecieved.incrementAndGet();
 						}while(msg == null);
 						messageCounter = Long.parseLong(msg.content);
 
@@ -156,8 +162,9 @@ public class StandardTest extends testRunner.Test {
 						do{
 							target = r.nextInt(numOfOneWayers)+1;
 						}while(target == userId);
-						
-						client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
+						System.out.println("From " + userId + " to " + target);
+						client.SendMessage(target, queue, 2, 0, String.valueOf(++messageCounter));
+						Counters.MessagesSent.incrementAndGet();
 						
 					}else{ // Two-Way
 						if(userId%2 == 1){ // Sender

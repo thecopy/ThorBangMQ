@@ -80,7 +80,7 @@ public class DbPersistence implements IPersistence {
 	@Override
 	public Message getMessageByPriority(long queueId, long recieverId) throws InvalidQueueException, PersistenceException {
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL)  AND queue_id = ? ORDER BY priority DESC LIMIT 1";
+				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = -1)  AND queue_id = ? ORDER BY priority DESC LIMIT 1";
 
 		
 		ArrayList<Object[]> s;
@@ -105,7 +105,7 @@ public class DbPersistence implements IPersistence {
 	public Message getMessageByTimestamp(long queueId, long recieverId) throws InvalidQueueException, InvalidMessageException, PersistenceException {
 		
 		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL)  AND queue_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
+				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = -1)  AND queue_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
 		logger.info(String.format("SELECT message where queue %d for user %d by time", queueId, recieverId));
 		ArrayList<Object[]> s;
 		try {
@@ -128,7 +128,7 @@ public class DbPersistence implements IPersistence {
 	@Override
 	public Message getMessageBySender(long queueId, long receiverId, long senderId, boolean getByTimestampInsteadOfPriority) throws InvalidQueueException, InvalidClientException, PersistenceException {
 		final String query = String.format("SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL) AND queue_id = ? AND sender_id = ? ORDER BY %s LIMIT 1",
+				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = -1) AND queue_id = ? AND sender_id = ? ORDER BY %s LIMIT 1",
 				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC");
 
 		ArrayList<Object[]> s;

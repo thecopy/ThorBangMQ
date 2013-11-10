@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import asl.Message;
 import asl.ThorBangMQ;
 import asl.network.ITransport;
 import static org.junit.Assert.*;
@@ -94,17 +95,4 @@ public class ThorBangMQTests {
 		assertEquals(id, 55);
 	}
 	
-	@Test
-	public void should_pop_msg() throws IOException, InvalidQueueException, InvalidClientException, ServerException {
-		//Arrange
-		ITransport transport = mock(ITransport.class);
-		ThorBangMQ mq = new ThorBangMQ(transport,1);
-		when(transport.SendAndGetResponse(anyString())).thenReturn("55");
-		//Act
-		long id = mq.PopMessage(2,true);
-		
-		//Assert
-		verify(transport).SendAndGetResponse("CREATEQUEUE,name");
-		assertEquals(id, 55);
-	}
 }
