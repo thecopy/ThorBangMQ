@@ -22,7 +22,7 @@ import asl.infrastructure.exceptions.InvalidMessageException;
 import asl.infrastructure.exceptions.InvalidQueueException;
 import asl.infrastructure.exceptions.PersistenceException;
 
-public class DbPersistence implements IPersistence {
+public class PostgresPersistence implements IPersistence {
 
 	private PoolingDataSource connectionPool;
 	private Logger logger;
@@ -32,7 +32,7 @@ public class DbPersistence implements IPersistence {
 	private Pattern readExceptionStringPattern = Pattern.compile("Key \\((?<name>[\\w_-]+)\\)=\\((?<id>\\d+)\\)");
 	
 
-	public DbPersistence(PoolingDataSource connectionPool, Logger logger) {
+	public PostgresPersistence(PoolingDataSource connectionPool, Logger logger) {
 		this.logger = logger;
 		this.connectionPool = connectionPool;
 		System.out.println("connectionPool is null = "  + (null == connectionPool));

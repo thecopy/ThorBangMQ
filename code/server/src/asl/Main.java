@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
-import asl.Persistence.DbPersistence;
+import asl.Persistence.PostgresPersistence;
 import asl.infrastructure.Bootstrapper2;
 import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.exceptions.PersistenceException;
@@ -20,7 +20,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {		
 		testLogger.setLevel(Level.ALL);
-		applicationLogger.setLevel(Level.ALL);
+		applicationLogger.setLevel(Level.SEVERE);
 
 		// Read configuration file
 		ServerSettings settings = Bootstrapper2.StrapTheBoot(applicationLogger);
@@ -143,7 +143,7 @@ public class Main {
 			connectionPool.setMaxConnections(settings.DB_MAX_CONNECTIONS);
 		}
 		
-		DbPersistence dbPersistence = new DbPersistence(connectionPool, null);
+		PostgresPersistence dbPersistence = new PostgresPersistence(connectionPool, null);
 		
 		try {
 			System.out.println("Deleting asl schema...");

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.ServerSettings;
-import asl.Persistence.DbPersistence;
+import asl.Persistence.PostgresPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.InMemoryPersistence;
 import asl.Persistence.LyingPersistence;
@@ -65,7 +65,7 @@ public class ThorBangMQServer {
 		IPersistence persistence = settings.PERSISTENCE_TYPE.equals(PersistenceType.MEMORY)
 				? new InMemoryPersistence()
 				: settings.PERSISTENCE_TYPE.equals(PersistenceType.POSTGRES)
-				? new DbPersistence(connectionPool,logger)
+				? new PostgresPersistence(connectionPool,logger)
 				: new LyingPersistence();
 
 		ExecutorService threadpool = Executors.newFixedThreadPool(settings.NUM_CLIENTREQUESTWORKER_THREADS);
