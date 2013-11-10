@@ -116,13 +116,16 @@
                 \caption{Database schema}
                 \label{fig:database_schema}
             \end{figure}
+            ~\\
             In order to allow clients to send messages to multiple queues at once, we have chosen to replicate messages in queues rather than having a many-to-many relationship in the database. This could obviously have an impact on performance.\\
             \\
-            Communication between the middleware and our database is done using JDBC, making SQL queries directly from our Java code. We decided not to use stored procedures even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code. 
+            Communication between the middleware and our database is done using JDBC, making SQL queries directly from our Java code. We decided not to use stored procedures even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code.\\
+            \\
+            TODO: Write something about how our tests have been done without any indexes.
 
         \subsection{Communication protocol}
             We have chosen to use a very simple messaging protocol between the clients and the middleware. We have chosen to use an end of message token to differentiate messages from each other, as we found it simpler to implement than defining packets with headers etc. We decided that our end of message token should be null, i.e. "\textbackslash0". All messages should be encoded in UTF8.\\
-            Interpretation of messages is implemented in both server and client, in the DefaultTransport- and SocketTransport classes, respectively.
+            Interpretation of messages is implemented in both server and client, in the SocketTransport classes. The full description of the communication protocol can be found in Appendix \ref{sec:message_protocol}.
 
     \section{Testing infrastructure}
         Our testing infrastructure is written in Python and does the following:
@@ -242,6 +245,7 @@
     \clearpage
     \appendix
         \section{Message protocol}
+        \label{sec:message_protocol}
             \subsection{Exceptions}
                 If a request cannot be fulfilled by the server, it will respond with an exception.  Exceptions have the following format:\\
                 \\
