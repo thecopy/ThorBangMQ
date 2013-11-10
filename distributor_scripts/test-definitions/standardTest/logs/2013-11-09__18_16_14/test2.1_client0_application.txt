@@ -1,0 +1,4 @@
+1384021150159	numberOfOneWayClients: 200
+1384021150159	numberOfTwoWayClients: 100
+1384021150160	lengthOfExperiment: 1200000
+1384021150754	Starting all clients...

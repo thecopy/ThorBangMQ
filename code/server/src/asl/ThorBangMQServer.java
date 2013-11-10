@@ -35,6 +35,7 @@ public class ThorBangMQServer {
 	private ServerSocketChannel serverChannel;
 	private ExecutorService executor;
 	private ByteBuffer readBuffer;
+	private HashMap<SelectionKey, Long> thinkTimeMeasurement = new HashMap<SelectionKey, Long>();
 	private HashMap<SelectionKey, String> incompleteReads = new HashMap<SelectionKey, String>();
 	private LinkedList<SelectionKey> pendingWriteChannels = new LinkedList<SelectionKey>();
 	private HashMap<SelectionKey, String> pendingWrites = new HashMap<SelectionKey, String>();
@@ -153,6 +154,8 @@ public class ThorBangMQServer {
 	 * @param conn
 	 */
 	private void read(SelectionKey conn) {
+		thinkTimeMeasurement.put(conn, System.nanoTime());
+
 		this.readBuffer.clear();
 		this.readBuffer.limit(settings.MESSAGE_MAX_LENGTH);
 		SocketChannel clientChannel = (SocketChannel)conn.channel();
@@ -191,7 +194,8 @@ public class ThorBangMQServer {
 			}
 			
 			ITransport transport = new SocketTransport(this, conn);
-
+			
+			
 			this.executor.execute(
 					new ClientRequestWorker(
 							logger,
@@ -213,6 +217,7 @@ public class ThorBangMQServer {
 		// Write pending message to client.
 		String reply, clientAddress = "NO_CLIENT";  // Initialize such that variable can be used if there is an exception.
 		synchronized(this.pendingWriteChannels) {
+
 			reply = this.pendingWrites.get(conn);
 			try {
 				clientAddress = ((SocketChannel)conn.channel()).getRemoteAddress().toString();
@@ -221,6 +226,12 @@ public class ThorBangMQServer {
 				do{
 					channel.write(dataToWrite);
 				}while(dataToWrite.remaining() > 0);
+				
+				long now = System.nanoTime();
+				long started = thinkTimeMeasurement.get(conn);
+				
+				GlobalCounters.totalThinkTime.addAndGet(now-started);
+				GlobalCounters.totalThinkOperations.incrementAndGet();
 				
 			} catch (IOException e) {
 				this.unexpectedDisconnect(conn, clientAddress);

@@ -1,0 +1,8 @@
+1384100804456	numberOfClients: 25
+1384100804456	lengthOfExperiment: 300000
+1384100804457	Connecting 25 clients to 10.128.6.216:8123...
+1384100804540	OK Done! Sending messages...
+1384101104813	OK Done!
+1384101104813	-------------------------------------------
+1384101104813	Number of Clients:	25
+1384101104814	Total Time:		300251.0ms

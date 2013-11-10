@@ -1,0 +1,988 @@
+2706LISTENING_PORT	8123
+
+2708PERSISTENCE_TYPE	POSTGRES
+
+2708MESSAGE_MAX_LENGTH	4096
+
+2708NUM_CLIENTREQUESTWORKER_THREADS	50
+
+2708DB_SERVER_NAME	10.128.7.104
+
+2708DB_DATABASE_NAME	asl
+
+2709DB_DATA_SOURCE_NAME	asl
+
+2709DB_PORT_NUMBER	5432
+
+2709DB_USERNAME	asl
+
+2709DB_PASSWORD	asl2013
+
+2709DB_MAX_CONNECTIONS	50
+
+2709DB_DEFAULT_AUTO_COMMIT	false
+
+2709APPLICATION_LOG_PATH	application_log.txt
+
+2709TEST_LOG_PATH	test_log.txt
+
+2709LOG_INTERVAL	10000
+
+7824Client connect. There are now 1 clients connected.
+7824Accepted connection from /10.128.6.206:45357
+7828Interpreting message: "CREATECLIENT,client_0"
+7839Interpreting message: "CREATECLIENT,client_1"
+7843Interpreting message: "CREATECLIENT,client_2"
+7847Interpreting message: "CREATECLIENT,client_3"
+7850Interpreting message: "CREATECLIENT,client_4"
+7853Interpreting message: "CREATECLIENT,client_5"
+7856Interpreting message: "CREATECLIENT,client_6"
+7860Interpreting message: "CREATECLIENT,client_7"
+7863Interpreting message: "CREATECLIENT,client_8"
+7866Interpreting message: "CREATECLIENT,client_9"
+7872Interpreting message: "CREATEQUEUE,oneway_queue"
+7875Interpreting message: "CREATEQUEUE,twoway_queue"
+7885Client connect. There are now 2 clients connected.
+7885Accepted connection from /10.128.6.206:45358
+7886Interpreting message: "HELLO"
+7888Client connect. There are now 3 clients connected.
+7888Accepted connection from /10.128.6.206:45359
+7888Interpreting message: "HELLO"
+7890Client connect. There are now 4 clients connected.
+7890Accepted connection from /10.128.6.206:45360
+7890Interpreting message: "HELLO"
+7892Client connect. There are now 5 clients connected.
+7892Accepted connection from /10.128.6.206:45361
+7892Interpreting message: "HELLO"
+7901Client connect. There are now 6 clients connected.
+7901Accepted connection from /10.128.6.206:45362
+7902Interpreting message: "HELLO"
+7903Client connect. There are now 7 clients connected.
+7903Accepted connection from /10.128.6.206:45363
+7904Interpreting message: "HELLO"
+7905Client connect. There are now 8 clients connected.
+7905Accepted connection from /10.128.6.206:45364
+7906Interpreting message: "HELLO"
+7907Client connect. There are now 9 clients connected.
+7907Accepted connection from /10.128.6.206:45365
+7908Interpreting message: "HELLO"
+7909Client connect. There are now 10 clients connected.
+7909Accepted connection from /10.128.6.206:45366
+7910Interpreting message: "HELLO"
+7911Client connect. There are now 11 clients connected.
+7911Accepted connection from /10.128.6.206:45367
+7911Interpreting message: "HELLO"
+7914Interpreting message: "MSG,1,2,2,1,0,1"
+7915Interpreting message: "MSG,8,7,3,1,-497862631593632608,1"
+7916Interpreting message: "MSG,10,9,3,1,179288921855880088,1"
+7918Interpreting message: "MSG,12,11,3,1,-462219893174563482,1"
+7931Invalid id: sender_id: 12
+8115Interpreting message: "POPQ,3,2,1"
+8115Interpreting message: "POPQ,4,2,1"
+8115Popping queue 2 for user 3 ordered by time
+8115Popping queue 2 for user 4 ordered by time
+8116SELECT message where queue 2 for user 3 by time
+8116SELECT message where queue 2 for user 4 by time
+8124Interpreting message: "POPQ,5,2,1"
+8125Popping queue 2 for user 5 ordered by time
+8125SELECT message where queue 2 for user 5 by time
+8127Interpreting message: "POPQ,6,2,1"
+8127Popping queue 2 for user 6 ordered by time
+8128SELECT message where queue 2 for user 6 by time
+8128Interpreting message: "POPQ,2,2,1"
+8128Popping queue 2 for user 2 ordered by time
+8128SELECT message where queue 2 for user 2 by time
+8133Interpreting message: "POPQ,11,3,1"
+8133Interpreting message: "POPQ,7,3,1"
+8133Popping queue 3 for user 11 ordered by time
+8134SELECT message where queue 3 for user 11 by time
+8134Popping queue 3 for user 7 ordered by time
+8134SELECT message where queue 3 for user 7 by time
+8136Interpreting message: "POPQ,9,3,1"
+8136Popping queue 3 for user 9 ordered by time
+8136SELECT message where queue 3 for user 9 by time
+8163Sending popped message
+8163Sending popped message
+8163Sending popped message
+8163Sending popped message
+8164Deleting message 25002
+8170Sending popped message
+8170Sending popped message
+8171Deleting message 25004
+8173Sending popped message
+8173Interpreting message: "MSG,8,7,3,1,-2888575674059611073,2"
+8174Deleting message 25001
+8188Sending popped message
+8189Interpreting message: "MSG,10,9,3,1,-4131165143587967370,2"
+8191Interpreting message: "MSG,1,2,2,1,0,2"
+8217Interpreting message: "POPQ,8,3,1"
+8217Popping queue 3 for user 8 ordered by time
+8217SELECT message where queue 3 for user 8 by time
+8217Interpreting message: "POPQ,10,3,1"
+8217Popping queue 3 for user 10 ordered by time
+8217SELECT message where queue 3 for user 10 by time
+8224Sending popped message
+8224Sending popped message
+8365Interpreting message: "POPQ,6,2,1"
+8366Interpreting message: "POPQ,5,2,1"
+8366Popping queue 2 for user 6 ordered by time
+8366SELECT message where queue 2 for user 6 by time
+8366Popping queue 2 for user 5 ordered by time
+8366SELECT message where queue 2 for user 5 by time
+8367Interpreting message: "POPQ,3,2,1"
+8367Interpreting message: "POPQ,4,2,1"
+8367Popping queue 2 for user 3 ordered by time
+8367SELECT message where queue 2 for user 3 by time
+8367Popping queue 2 for user 4 ordered by time
+8368SELECT message where queue 2 for user 4 by time
+8373Interpreting message: "POPQ,11,3,1"
+8373Popping queue 3 for user 11 ordered by time
+8373SELECT message where queue 3 for user 11 by time
+8377Sending popped message
+8377Sending popped message
+8378Sending popped message
+8379Sending popped message
+8380Sending popped message
+8388Interpreting message: "POPQ,7,3,1"
+8388Popping queue 3 for user 7 ordered by time
+8388SELECT message where queue 3 for user 7 by time
+8395Deleting message 25005
+8397Interpreting message: "POPQ,2,2,1"
+8397Popping queue 2 for user 2 ordered by time
+8398SELECT message where queue 2 for user 2 by time
+8398Interpreting message: "POPQ,9,3,1"
+8398Popping queue 3 for user 9 ordered by time
+8398SELECT message where queue 3 for user 9 by time
+8399Sending popped message
+8400Interpreting message: "MSG,8,7,3,1,-8599990953317028424,3"
+8404Deleting message 25007
+8406Sending popped message
+8407Deleting message 25006
+8408Interpreting message: "MSG,3,2,2,1,0,3"
+8409Sending popped message
+8411Interpreting message: "MSG,10,9,3,1,3988912906002868924,3"
+8526Interpreting message: "POPQ,8,3,1"
+8526Popping queue 3 for user 8 ordered by time
+8527SELECT message where queue 3 for user 8 by time
+8527Interpreting message: "POPQ,10,3,1"
+8527Popping queue 3 for user 10 ordered by time
+8528SELECT message where queue 3 for user 10 by time
+8534Sending popped message
+8534Sending popped message
+8579Interpreting message: "POPQ,4,2,1"
+8579Popping queue 2 for user 4 ordered by time
+8579SELECT message where queue 2 for user 4 by time
+8579Interpreting message: "POPQ,3,2,1"
+8580Popping queue 2 for user 3 ordered by time
+8580SELECT message where queue 2 for user 3 by time
+8580Interpreting message: "POPQ,5,2,1"
+8580Popping queue 2 for user 5 ordered by time
+8580SELECT message where queue 2 for user 5 by time
+8581Interpreting message: "POPQ,11,3,1"
+8581Popping queue 3 for user 11 ordered by time
+8581Interpreting message: "POPQ,6,2,1"
+8582SELECT message where queue 3 for user 11 by time
+8582Popping queue 2 for user 6 ordered by time
+8582SELECT message where queue 2 for user 6 by time
+8590Sending popped message
+8590Sending popped message
+8591Sending popped message
+8592Sending popped message
+8593Sending popped message
+8606Interpreting message: "POPQ,7,3,1"
+8606Popping queue 3 for user 7 ordered by time
+8606SELECT message where queue 3 for user 7 by time
+8611Interpreting message: "POPQ,2,2,1"
+8611Popping queue 2 for user 2 ordered by time
+8612SELECT message where queue 2 for user 2 by time
+8613Deleting message 25008
+8615Interpreting message: "POPQ,9,3,1"
+8615Popping queue 3 for user 9 ordered by time
+8615SELECT message where queue 3 for user 9 by time
+8618Deleting message 25009
+8619Sending popped message
+8619Sending popped message
+8621Deleting message 25010
+8622Interpreting message: "MSG,4,2,2,1,0,4"
+8622Interpreting message: "MSG,8,7,3,1,-5590776126421126010,4"
+8623Sending popped message
+8625Interpreting message: "MSG,10,9,3,1,948843015913757010,4"
+8792Interpreting message: "POPQ,11,3,1"
+8792Interpreting message: "POPQ,6,2,1"
+8792Popping queue 3 for user 11 ordered by time
+8792Popping queue 2 for user 6 ordered by time
+8792SELECT message where queue 3 for user 11 by time
+8792SELECT message where queue 2 for user 6 by time
+8793Interpreting message: "POPQ,3,2,1"
+8793Popping queue 2 for user 3 ordered by time
+8793SELECT message where queue 2 for user 3 by time
+8798Interpreting message: "POPQ,4,2,1"
+8798Popping queue 2 for user 4 ordered by time
+8798SELECT message where queue 2 for user 4 by time
+8799Interpreting message: "POPQ,5,2,1"
+8800Popping queue 2 for user 5 ordered by time
+8800SELECT message where queue 2 for user 5 by time
+8804Sending popped message
+8804Sending popped message
+8805Sending popped message
+8807Sending popped message
+8808Sending popped message
+8826Interpreting message: "POPQ,7,3,1"
+8826Popping queue 3 for user 7 ordered by time
+8826SELECT message where queue 3 for user 7 by time
+8827Interpreting message: "POPQ,2,2,1"
+8827Popping queue 2 for user 2 ordered by time
+8827SELECT message where queue 2 for user 2 by time
+8828Interpreting message: "POPQ,9,3,1"
+8828Popping queue 3 for user 9 ordered by time
+8829SELECT message where queue 3 for user 9 by time
+8835Deleting message 25013
+8835Deleting message 25011
+8836Interpreting message: "POPQ,8,3,1"
+8836Popping queue 3 for user 8 ordered by time
+8836SELECT message where queue 3 for user 8 by time
+8837Interpreting message: "POPQ,10,3,1"
+8837Popping queue 3 for user 10 ordered by time
+8837SELECT message where queue 3 for user 10 by time
+8838Deleting message 25012
+8842Sending popped message
+8842Sending popped message
+8843Sending popped message
+8843Sending popped message
+8843Sending popped message
+8844Interpreting message: "MSG,10,9,3,1,-6174661130224139625,5"
+8844Interpreting message: "MSG,5,2,2,1,0,5"
+8845Interpreting message: "MSG,8,7,3,1,6462504686056085999,5"
+9006Interpreting message: "POPQ,3,2,1"
+9007Popping queue 2 for user 3 ordered by time
+9007SELECT message where queue 2 for user 3 by time
+9007Interpreting message: "POPQ,4,2,1"
+9007Popping queue 2 for user 4 ordered by time
+9008SELECT message where queue 2 for user 4 by time
+9008Interpreting message: "POPQ,6,2,1"
+9008Popping queue 2 for user 6 ordered by time
+9009SELECT message where queue 2 for user 6 by time
+9009Interpreting message: "POPQ,11,3,1"
+9009Popping queue 3 for user 11 ordered by time
+9009SELECT message where queue 3 for user 11 by time
+9010Interpreting message: "POPQ,5,2,1"
+9010Popping queue 2 for user 5 ordered by time
+9010SELECT message where queue 2 for user 5 by time
+9017Sending popped message
+9018Sending popped message
+9019Sending popped message
+9021Sending popped message
+9022Sending popped message
+9048Interpreting message: "POPQ,2,2,1"
+9048Interpreting message: "POPQ,9,3,1"
+9048Popping queue 2 for user 2 ordered by time
+9048Popping queue 3 for user 9 ordered by time
+9048SELECT message where queue 2 for user 2 by time
+9048SELECT message where queue 3 for user 9 by time
+9049Interpreting message: "POPQ,7,3,1"
+9049Popping queue 3 for user 7 ordered by time
+9049SELECT message where queue 3 for user 7 by time
+9056Deleting message 25016
+9056Deleting message 25014
+9059Sending popped message
+9060Sending popped message
+9060Deleting message 25015
+9061Interpreting message: "MSG,10,9,3,1,-2281784547791846154,6"
+9062Interpreting message: "MSG,8,7,3,1,-3389947442321428416,6"
+9062Sending popped message
+9064Interpreting message: "MSG,5,2,2,1,0,6"
+9144Interpreting message: "POPQ,8,3,1"
+9144Popping queue 3 for user 8 ordered by time
+9144SELECT message where queue 3 for user 8 by time
+9145Interpreting message: "POPQ,10,3,1"
+9145Popping queue 3 for user 10 ordered by time
+9145SELECT message where queue 3 for user 10 by time
+9151Sending popped message
+9151Sending popped message
+9220Interpreting message: "POPQ,4,2,1"
+9221Popping queue 2 for user 4 ordered by time
+9221SELECT message where queue 2 for user 4 by time
+9221Interpreting message: "POPQ,6,2,1"
+9222Popping queue 2 for user 6 ordered by time
+9222SELECT message where queue 2 for user 6 by time
+9222Interpreting message: "POPQ,11,3,1"
+9222Popping queue 3 for user 11 ordered by time
+9223SELECT message where queue 3 for user 11 by time
+9223Interpreting message: "POPQ,5,2,1"
+9223Popping queue 2 for user 5 ordered by time
+9223SELECT message where queue 2 for user 5 by time
+9223Interpreting message: "POPQ,3,2,1"
+9224Popping queue 2 for user 3 ordered by time
+9224SELECT message where queue 2 for user 3 by time
+9232Sending popped message
+9232Sending popped message
+9233Sending popped message
+9234Sending popped message
+9234Sending popped message
+9267Interpreting message: "POPQ,9,3,1"
+9267Popping queue 3 for user 9 ordered by time
+9267SELECT message where queue 3 for user 9 by time
+9267Interpreting message: "POPQ,7,3,1"
+9267Popping queue 3 for user 7 ordered by time
+9267SELECT message where queue 3 for user 7 by time
+9268Interpreting message: "POPQ,2,2,1"
+9268Popping queue 2 for user 2 ordered by time
+9268SELECT message where queue 2 for user 2 by time
+9274Deleting message 25018
+9274Deleting message 25017
+9278Sending popped message
+9278Sending popped message
+9279Deleting message 25019
+9280Interpreting message: "MSG,10,9,3,1,3438210670442707991,7"
+9281Interpreting message: "MSG,8,7,3,1,-6563510107562890622,7"
+9281Sending popped message
+9283Interpreting message: "MSG,3,2,2,1,0,7"
+9434Interpreting message: "POPQ,3,2,1"
+9434Popping queue 2 for user 3 ordered by time
+9434SELECT message where queue 2 for user 3 by time
+9435Interpreting message: "POPQ,6,2,1"
+9435Popping queue 2 for user 6 ordered by time
+9435SELECT message where queue 2 for user 6 by time
+9436Interpreting message: "POPQ,5,2,1"
+9436Popping queue 2 for user 5 ordered by time
+9436SELECT message where queue 2 for user 5 by time
+9436Interpreting message: "POPQ,11,3,1"
+9436Popping queue 3 for user 11 ordered by time
+9437SELECT message where queue 3 for user 11 by time
+9437Interpreting message: "POPQ,4,2,1"
+9437Popping queue 2 for user 4 ordered by time
+9437SELECT message where queue 2 for user 4 by time
+9446Sending popped message
+9446Sending popped message
+9449Sending popped message
+9449Sending popped message
+9449Sending popped message
+9453Interpreting message: "POPQ,8,3,1"
+9453Popping queue 3 for user 8 ordered by time
+9453SELECT message where queue 3 for user 8 by time
+9453Interpreting message: "POPQ,10,3,1"
+9454Popping queue 3 for user 10 ordered by time
+9454SELECT message where queue 3 for user 10 by time
+9460Sending popped message
+9460Sending popped message
+9484Interpreting message: "POPQ,9,3,1"
+9484Popping queue 3 for user 9 ordered by time
+9484SELECT message where queue 3 for user 9 by time
+9485Interpreting message: "POPQ,7,3,1"
+9485Popping queue 3 for user 7 ordered by time
+9485SELECT message where queue 3 for user 7 by time
+9486Interpreting message: "POPQ,2,2,1"
+9486Popping queue 2 for user 2 ordered by time
+9486SELECT message where queue 2 for user 2 by time
+9491Deleting message 25020
+9491Deleting message 25021
+9494Sending popped message
+9494Sending popped message
+9495Deleting message 25022
+9496Interpreting message: "MSG,10,9,3,1,-7078805194369537428,8"
+9497Sending popped message
+9497Interpreting message: "MSG,8,7,3,1,1594970870750362573,8"
+9499Interpreting message: "MSG,5,2,2,1,0,8"
+9647Interpreting message: "POPQ,5,2,1"
+9648Popping queue 2 for user 5 ordered by time
+9648SELECT message where queue 2 for user 5 by time
+9649Interpreting message: "POPQ,6,2,1"
+9649Popping queue 2 for user 6 ordered by time
+9649SELECT message where queue 2 for user 6 by time
+9650Interpreting message: "POPQ,4,2,1"
+9650Popping queue 2 for user 4 ordered by time
+9650SELECT message where queue 2 for user 4 by time
+9651Interpreting message: "POPQ,3,2,1"
+9651Popping queue 2 for user 3 ordered by time
+9651SELECT message where queue 2 for user 3 by time
+9652Interpreting message: "POPQ,11,3,1"
+9652Popping queue 3 for user 11 ordered by time
+9652SELECT message where queue 3 for user 11 by time
+9657Sending popped message
+9658Sending popped message
+9660Sending popped message
+9661Sending popped message
+9662Sending popped message
+9700Interpreting message: "POPQ,9,3,1"
+9700Popping queue 3 for user 9 ordered by time
+9700SELECT message where queue 3 for user 9 by time
+9700Interpreting message: "POPQ,7,3,1"
+9701Popping queue 3 for user 7 ordered by time
+9701SELECT message where queue 3 for user 7 by time
+9702Interpreting message: "POPQ,2,2,1"
+9702Popping queue 2 for user 2 ordered by time
+9702SELECT message where queue 2 for user 2 by time
+9707Deleting message 25024
+9707Deleting message 25023
+9711Sending popped message
+9711Sending popped message
+9711Deleting message 25025
+9713Interpreting message: "MSG,10,9,3,1,8587203267000799292,9"
+9713Sending popped message
+9713Interpreting message: "MSG,8,7,3,1,-2395867563577718357,9"
+9715Interpreting message: "MSG,5,2,2,1,0,9"
+9761Interpreting message: "POPQ,8,3,1"
+9762Popping queue 3 for user 8 ordered by time
+9762SELECT message where queue 3 for user 8 by time
+9762Interpreting message: "POPQ,10,3,1"
+9763Popping queue 3 for user 10 ordered by time
+9763SELECT message where queue 3 for user 10 by time
+9768Sending popped message
+9769Sending popped message
+9859Interpreting message: "POPQ,11,3,1"
+9859Interpreting message: "POPQ,6,2,1"
+9860Popping queue 2 for user 6 ordered by time
+9860Popping queue 3 for user 11 ordered by time
+9860SELECT message where queue 2 for user 6 by time
+9860SELECT message where queue 3 for user 11 by time
+9862Interpreting message: "POPQ,3,2,1"
+9862Popping queue 2 for user 3 ordered by time
+9862SELECT message where queue 2 for user 3 by time
+9862Interpreting message: "POPQ,5,2,1"
+9862Popping queue 2 for user 5 ordered by time
+9862SELECT message where queue 2 for user 5 by time
+9863Interpreting message: "POPQ,4,2,1"
+9863Popping queue 2 for user 4 ordered by time
+9863SELECT message where queue 2 for user 4 by time
+9870Sending popped message
+9872Sending popped message
+9872Sending popped message
+9872Sending popped message
+9875Sending popped message
+9917Interpreting message: "POPQ,9,3,1"
+9917Popping queue 3 for user 9 ordered by time
+9917Interpreting message: "POPQ,7,3,1"
+9917SELECT message where queue 3 for user 9 by time
+9917Popping queue 3 for user 7 ordered by time
+9917SELECT message where queue 3 for user 7 by time
+9918Interpreting message: "POPQ,2,2,1"
+9918Popping queue 2 for user 2 ordered by time
+9919SELECT message where queue 2 for user 2 by time
+9924Deleting message 25026
+9928Deleting message 25027
+9928Sending popped message
+9928Deleting message 25028
+9929Sending popped message
+9930Interpreting message: "MSG,10,9,3,1,5672627752383178319,10"
+9930Sending popped message
+9931Interpreting message: "MSG,8,7,3,1,5334042599580337958,10"
+9932Interpreting message: "MSG,1,2,2,1,0,10"
+10070Interpreting message: "POPQ,8,3,1"
+10071Popping queue 3 for user 8 ordered by time
+10071SELECT message where queue 3 for user 8 by time
+10071Interpreting message: "POPQ,10,3,1"
+10072Interpreting message: "POPQ,5,2,1"
+10072Popping queue 3 for user 10 ordered by time
+10072SELECT message where queue 3 for user 10 by time
+10072Popping queue 2 for user 5 ordered by time
+10072SELECT message where queue 2 for user 5 by time
+10073Interpreting message: "POPQ,11,3,1"
+10074Popping queue 3 for user 11 ordered by time
+10074SELECT message where queue 3 for user 11 by time
+10077Interpreting message: "POPQ,4,2,1"
+10077Interpreting message: "POPQ,3,2,1"
+10077Popping queue 2 for user 4 ordered by time
+10077Popping queue 2 for user 3 ordered by time
+10077SELECT message where queue 2 for user 4 by time
+10077SELECT message where queue 2 for user 3 by time
+10078Interpreting message: "POPQ,6,2,1"
+10079Popping queue 2 for user 6 ordered by time
+10079SELECT message where queue 2 for user 6 by time
+10079Sending popped message
+10079Sending popped message
+10086Sending popped message
+10089Sending popped message
+10089Sending popped message
+10089Sending popped message
+10089Sending popped message
+10134Interpreting message: "POPQ,9,3,1"
+10134Popping queue 3 for user 9 ordered by time
+10134SELECT message where queue 3 for user 9 by time
+10136Interpreting message: "POPQ,7,3,1"
+10136Popping queue 3 for user 7 ordered by time
+10136SELECT message where queue 3 for user 7 by time
+10137Interpreting message: "POPQ,2,2,1"
+10137Popping queue 2 for user 2 ordered by time
+10137SELECT message where queue 2 for user 2 by time
+10144Deleting message 25031
+10144Deleting message 25030
+10145Deleting message 25029
+10148Sending popped message
+10148Sending popped message
+10148Sending popped message
+10149Interpreting message: "MSG,4,2,2,1,0,11"
+10150Interpreting message: "MSG,8,7,3,1,716875046399847021,11"
+10151Interpreting message: "MSG,10,9,3,1,-248009261124775958,11"
+10282Interpreting message: "POPQ,11,3,1"
+10282Interpreting message: "POPQ,5,2,1"
+10282Popping queue 3 for user 11 ordered by time
+10282Popping queue 2 for user 5 ordered by time
+10282SELECT message where queue 3 for user 11 by time
+10282SELECT message where queue 2 for user 5 by time
+10287Interpreting message: "POPQ,4,2,1"
+10287Popping queue 2 for user 4 ordered by time
+10288SELECT message where queue 2 for user 4 by time
+10291Interpreting message: "POPQ,3,2,1"
+10291Popping queue 2 for user 3 ordered by time
+10291Interpreting message: "POPQ,6,2,1"
+10291SELECT message where queue 2 for user 3 by time
+10291Popping queue 2 for user 6 ordered by time
+10291SELECT message where queue 2 for user 6 by time
+10292Sending popped message
+10297Sending popped message
+10297Sending popped message
+10297Sending popped message
+10298Sending popped message
+10353Interpreting message: "POPQ,2,2,1"
+10353Popping queue 2 for user 2 ordered by time
+10353SELECT message where queue 2 for user 2 by time
+10353Interpreting message: "POPQ,7,3,1"
+10353Popping queue 3 for user 7 ordered by time
+10353SELECT message where queue 3 for user 7 by time
+10355Interpreting message: "POPQ,9,3,1"
+10355Popping queue 3 for user 9 ordered by time
+10355SELECT message where queue 3 for user 9 by time
+10362Deleting message 25034
+10364Deleting message 25033
+10365Deleting message 25032
+10366Sending popped message
+10367Sending popped message
+10367Sending popped message
+10368Interpreting message: "MSG,10,9,3,1,6720359184714913474,12"
+10369Interpreting message: "MSG,1,2,2,1,0,12"
+10369Interpreting message: "MSG,8,7,3,1,1079916094101603652,12"
+10391Interpreting message: "POPQ,8,3,1"
+10391Popping queue 3 for user 8 ordered by time
+10391Interpreting message: "POPQ,10,3,1"
+10391SELECT message where queue 3 for user 8 by time
+10391Popping queue 3 for user 10 ordered by time
+10391SELECT message where queue 3 for user 10 by time
+10398Sending popped message
+10398Sending popped message
+10494Interpreting message: "POPQ,11,3,1"
+10494Popping queue 3 for user 11 ordered by time
+10494SELECT message where queue 3 for user 11 by time
+10499Interpreting message: "POPQ,5,2,1"
+10499Popping queue 2 for user 5 ordered by time
+10499Interpreting message: "POPQ,3,2,1"
+10499SELECT message where queue 2 for user 5 by time
+10499Popping queue 2 for user 3 ordered by time
+10499SELECT message where queue 2 for user 3 by time
+10500Interpreting message: "POPQ,4,2,1"
+10500Interpreting message: "POPQ,6,2,1"
+10500Popping queue 2 for user 4 ordered by time
+10500SELECT message where queue 2 for user 4 by time
+10500Popping queue 2 for user 6 ordered by time
+10500SELECT message where queue 2 for user 6 by time
+10509Sending popped message
+10509Sending popped message
+10509Sending popped message
+10509Sending popped message
+10510Sending popped message
+10572Interpreting message: "POPQ,9,3,1"
+10572Popping queue 3 for user 9 ordered by time
+10572SELECT message where queue 3 for user 9 by time
+10573Interpreting message: "POPQ,7,3,1"
+10573Popping queue 3 for user 7 ordered by time
+10573SELECT message where queue 3 for user 7 by time
+10573Interpreting message: "POPQ,2,2,1"
+10573Popping queue 2 for user 2 ordered by time
+10573SELECT message where queue 2 for user 2 by time
+10579Deleting message 25035
+10580Deleting message 25037
+10583Sending popped message
+10583Deleting message 25036
+10583Sending popped message
+10585Interpreting message: "MSG,10,9,3,1,1111462816688649473,13"
+10585Interpreting message: "MSG,8,7,3,1,3621339046402402449,13"
+10585Sending popped message
+10586Interpreting message: "MSG,1,2,2,1,0,13"
+10700Interpreting message: "POPQ,8,3,1"
+10700Interpreting message: "POPQ,10,3,1"
+10700Popping queue 3 for user 8 ordered by time
+10700Popping queue 3 for user 10 ordered by time
+10700SELECT message where queue 3 for user 8 by time
+10700SELECT message where queue 3 for user 10 by time
+10707Sending popped message
+10711Interpreting message: "POPQ,3,2,1"
+10711Popping queue 2 for user 3 ordered by time
+10711Interpreting message: "POPQ,4,2,1"
+10711SELECT message where queue 2 for user 3 by time
+10711Popping queue 2 for user 4 ordered by time
+10711SELECT message where queue 2 for user 4 by time
+10711Sending popped message
+10711Interpreting message: "POPQ,6,2,1"
+10712Popping queue 2 for user 6 ordered by time
+10712SELECT message where queue 2 for user 6 by time
+10712Interpreting message: "POPQ,11,3,1"
+10712Popping queue 3 for user 11 ordered by time
+10712SELECT message where queue 3 for user 11 by time
+10713Interpreting message: "POPQ,5,2,1"
+10713Popping queue 2 for user 5 ordered by time
+10713SELECT message where queue 2 for user 5 by time
+10721Sending popped message
+10721Sending popped message
+10722Sending popped message
+10724Sending popped message
+10725Sending popped message
+10789Interpreting message: "POPQ,7,3,1"
+10789Popping queue 3 for user 7 ordered by time
+10789SELECT message where queue 3 for user 7 by time
+10789Interpreting message: "POPQ,2,2,1"
+10790Interpreting message: "POPQ,9,3,1"
+10790Popping queue 2 for user 2 ordered by time
+10790Popping queue 3 for user 9 ordered by time
+10790SELECT message where queue 2 for user 2 by time
+10790SELECT message where queue 3 for user 9 by time
+10799Deleting message 25040
+10799Deleting message 25039
+10800Deleting message 25038
+10803Sending popped message
+10803Sending popped message
+10803Sending popped message
+10805Interpreting message: "MSG,3,2,2,1,0,14"
+10805Interpreting message: "MSG,10,9,3,1,2797580075928200355,14"
+10805Interpreting message: "MSG,8,7,3,1,-89998126565722686,14"
+10922Interpreting message: "POPQ,5,2,1"
+10923Popping queue 2 for user 5 ordered by time
+10923SELECT message where queue 2 for user 5 by time
+10923Interpreting message: "POPQ,6,2,1"
+10923Popping queue 2 for user 6 ordered by time
+10923SELECT message where queue 2 for user 6 by time
+10924Interpreting message: "POPQ,11,3,1"
+10924Popping queue 3 for user 11 ordered by time
+10924SELECT message where queue 3 for user 11 by time
+10926Interpreting message: "POPQ,4,2,1"
+10926Popping queue 2 for user 4 ordered by time
+10926SELECT message where queue 2 for user 4 by time
+10926Interpreting message: "POPQ,3,2,1"
+10926Popping queue 2 for user 3 ordered by time
+10926SELECT message where queue 2 for user 3 by time
+10932Sending popped message
+10932Sending popped message
+10934Sending popped message
+10934Sending popped message
+10938Sending popped message
+11009Interpreting message: "POPQ,10,3,1"
+11009Interpreting message: "POPQ,2,2,1"
+11009Popping queue 3 for user 10 ordered by time
+11009SELECT message where queue 3 for user 10 by time
+11009Popping queue 2 for user 2 ordered by time
+11009SELECT message where queue 2 for user 2 by time
+11010Interpreting message: "POPQ,9,3,1"
+11010Popping queue 3 for user 9 ordered by time
+11010SELECT message where queue 3 for user 9 by time
+11010Interpreting message: "POPQ,7,3,1"
+11010Popping queue 3 for user 7 ordered by time
+11010SELECT message where queue 3 for user 7 by time
+11013Interpreting message: "POPQ,8,3,1"
+11013Popping queue 3 for user 8 ordered by time
+11014SELECT message where queue 3 for user 8 by time
+11020Sending popped message
+11020Deleting message 25042
+11020Deleting message 25041
+11024Deleting message 25043
+11024Sending popped message
+11024Sending popped message
+11025Sending popped message
+11025Sending popped message
+11026Interpreting message: "MSG,1,2,2,1,0,15"
+11027Interpreting message: "MSG,10,9,3,1,1542917350851096746,15"
+11027Interpreting message: "MSG,8,7,3,1,6490477812174267627,15"
+11134Interpreting message: "POPQ,4,2,1"
+11134Popping queue 2 for user 4 ordered by time
+11134SELECT message where queue 2 for user 4 by time
+11135Interpreting message: "POPQ,3,2,1"
+11135Popping queue 2 for user 3 ordered by time
+11135SELECT message where queue 2 for user 3 by time
+11136Interpreting message: "POPQ,6,2,1"
+11136Interpreting message: "POPQ,5,2,1"
+11136Popping queue 2 for user 6 ordered by time
+11136SELECT message where queue 2 for user 6 by time
+11136Popping queue 2 for user 5 ordered by time
+11136SELECT message where queue 2 for user 5 by time
+11140Interpreting message: "POPQ,11,3,1"
+11140Popping queue 3 for user 11 ordered by time
+11140SELECT message where queue 3 for user 11 by time
+11145Sending popped message
+11145Sending popped message
+11149Sending popped message
+11149Sending popped message
+11150Sending popped message
+11230Interpreting message: "POPQ,9,3,1"
+11230Interpreting message: "POPQ,7,3,1"
+11231Popping queue 3 for user 7 ordered by time
+11231Popping queue 3 for user 9 ordered by time
+11231SELECT message where queue 3 for user 7 by time
+11231SELECT message where queue 3 for user 9 by time
+11231Interpreting message: "POPQ,2,2,1"
+11231Popping queue 2 for user 2 ordered by time
+11231SELECT message where queue 2 for user 2 by time
+11238Deleting message 25044
+11238Deleting message 25045
+11241Sending popped message
+11242Deleting message 25046
+11242Sending popped message
+11243Interpreting message: "MSG,1,2,2,1,0,16"
+11243Sending popped message
+11244Interpreting message: "MSG,10,9,3,1,-1234552148264080385,16"
+11245Interpreting message: "MSG,8,7,3,1,-3972107773014498111,16"
+11322Interpreting message: "POPQ,8,3,1"
+11322Popping queue 3 for user 8 ordered by time
+11322SELECT message where queue 3 for user 8 by time
+11326Interpreting message: "POPQ,10,3,1"
+11326Popping queue 3 for user 10 ordered by time
+11326SELECT message where queue 3 for user 10 by time
+11329Sending popped message
+11332Sending popped message
+11347Interpreting message: "POPQ,4,2,1"
+11347Interpreting message: "POPQ,5,2,1"
+11347Popping queue 2 for user 4 ordered by time
+11347SELECT message where queue 2 for user 4 by time
+11347Popping queue 2 for user 5 ordered by time
+11347SELECT message where queue 2 for user 5 by time
+11351Interpreting message: "POPQ,3,2,1"
+11351Popping queue 2 for user 3 ordered by time
+11351Interpreting message: "POPQ,6,2,1"
+11351SELECT message where queue 2 for user 3 by time
+11351Popping queue 2 for user 6 ordered by time
+11351SELECT message where queue 2 for user 6 by time
+11352Interpreting message: "POPQ,11,3,1"
+11352Popping queue 3 for user 11 ordered by time
+11352SELECT message where queue 3 for user 11 by time
+11357Sending popped message
+11358Sending popped message
+11360Sending popped message
+11361Sending popped message
+11361Sending popped message
+11447Interpreting message: "POPQ,9,3,1"
+11448Popping queue 3 for user 9 ordered by time
+11448SELECT message where queue 3 for user 9 by time
+11448Interpreting message: "POPQ,2,2,1"
+11448Popping queue 2 for user 2 ordered by time
+11449SELECT message where queue 2 for user 2 by time
+11449Interpreting message: "POPQ,7,3,1"
+11449Popping queue 3 for user 7 ordered by time
+11449SELECT message where queue 3 for user 7 by time
+11455Deleting message 25049
+11455Deleting message 25047
+11458Deleting message 25048
+11459Sending popped message
+11459Sending popped message
+11460Sending popped message
+11461Interpreting message: "MSG,5,2,2,1,0,17"
+11462Interpreting message: "MSG,8,7,3,1,9157630512958497249,17"
+11462Interpreting message: "MSG,10,9,3,1,-4402939691049792780,17"
+11467Client disconnect. There are now 10 clients connected.
+11559Interpreting message: "POPQ,6,2,1"
+11559Popping queue 2 for user 6 ordered by time
+11559SELECT message where queue 2 for user 6 by time
+11560Interpreting message: "POPQ,4,2,1"
+11560Popping queue 2 for user 4 ordered by time
+11560SELECT message where queue 2 for user 4 by time
+11563Interpreting message: "POPQ,5,2,1"
+11563Popping queue 2 for user 5 ordered by time
+11563SELECT message where queue 2 for user 5 by time
+11563Interpreting message: "POPQ,3,2,1"
+11563Popping queue 2 for user 3 ordered by time
+11563SELECT message where queue 2 for user 3 by time
+11564Interpreting message: "POPQ,11,3,1"
+11564Popping queue 3 for user 11 ordered by time
+11564SELECT message where queue 3 for user 11 by time
+11569Sending popped message
+11569Sending popped message
+11571Sending popped message
+11572Sending popped message
+11573Sending popped message
+11631Interpreting message: "POPQ,8,3,1"
+11631Popping queue 3 for user 8 ordered by time
+11631SELECT message where queue 3 for user 8 by time
+11633Interpreting message: "POPQ,10,3,1"
+11634Popping queue 3 for user 10 ordered by time
+11634SELECT message where queue 3 for user 10 by time
+11637Sending popped message
+11640Sending popped message
+11667Interpreting message: "POPQ,7,3,1"
+11667Interpreting message: "POPQ,2,2,1"
+11667Popping queue 3 for user 7 ordered by time
+11667Popping queue 2 for user 2 ordered by time
+11667SELECT message where queue 3 for user 7 by time
+11667SELECT message where queue 2 for user 2 by time
+11668Interpreting message: "POPQ,9,3,1"
+11668Popping queue 3 for user 9 ordered by time
+11668SELECT message where queue 3 for user 9 by time
+11674Deleting message 25051
+11674Deleting message 25052
+11676Sending popped message
+11677Sending popped message
+11678Interpreting message: "MSG,10,9,3,1,6647423779003135943,18"
+11679Deleting message 25050
+11679Interpreting message: "MSG,8,7,3,1,936248806879233291,18"
+11681Sending popped message
+11682Interpreting message: "MSG,1,2,2,1,0,18"
+11771Interpreting message: "POPQ,5,2,1"
+11771Popping queue 2 for user 5 ordered by time
+11771SELECT message where queue 2 for user 5 by time
+11771Interpreting message: "POPQ,3,2,1"
+11771Popping queue 2 for user 3 ordered by time
+11772SELECT message where queue 2 for user 3 by time
+11773Interpreting message: "POPQ,4,2,1"
+11773Popping queue 2 for user 4 ordered by time
+11773SELECT message where queue 2 for user 4 by time
+11774Interpreting message: "POPQ,6,2,1"
+11774Popping queue 2 for user 6 ordered by time
+11774SELECT message where queue 2 for user 6 by time
+11774Interpreting message: "POPQ,11,3,1"
+11774Popping queue 3 for user 11 ordered by time
+11775SELECT message where queue 3 for user 11 by time
+11782Sending popped message
+11783Sending popped message
+11783Sending popped message
+11784Sending popped message
+11785Sending popped message
+11882Interpreting message: "POPQ,9,3,1"
+11882Popping queue 3 for user 9 ordered by time
+11882SELECT message where queue 3 for user 9 by time
+11882Interpreting message: "POPQ,7,3,1"
+11882Popping queue 3 for user 7 ordered by time
+11882SELECT message where queue 3 for user 7 by time
+11885Interpreting message: "POPQ,2,2,1"
+11885Popping queue 2 for user 2 ordered by time
+11885SELECT message where queue 2 for user 2 by time
+11891Deleting message 25054
+11891Deleting message 25055
+11892Deleting message 25053
+11894Sending popped message
+11895Sending popped message
+11895Sending popped message
+11896Interpreting message: "MSG,8,7,3,1,-5602254448683801555,19"
+11896Interpreting message: "MSG,1,2,2,1,0,19"
+11897Interpreting message: "MSG,10,9,3,1,-2509411742709651554,19"
+11939Interpreting message: "POPQ,8,3,1"
+11939Popping queue 3 for user 8 ordered by time
+11939SELECT message where queue 3 for user 8 by time
+11941Interpreting message: "POPQ,10,3,1"
+11942Popping queue 3 for user 10 ordered by time
+11942SELECT message where queue 3 for user 10 by time
+11946Sending popped message
+11948Sending popped message
+11983Interpreting message: "POPQ,6,2,1"
+11983Popping queue 2 for user 6 ordered by time
+11983SELECT message where queue 2 for user 6 by time
+11984Interpreting message: "POPQ,11,3,1"
+11985Popping queue 3 for user 11 ordered by time
+11985SELECT message where queue 3 for user 11 by time
+11985Interpreting message: "POPQ,3,2,1"
+11986Interpreting message: "POPQ,5,2,1"
+11986Popping queue 2 for user 3 ordered by time
+11986Popping queue 2 for user 5 ordered by time
+11986SELECT message where queue 2 for user 3 by time
+11986SELECT message where queue 2 for user 5 by time
+11986Interpreting message: "POPQ,4,2,1"
+11986Popping queue 2 for user 4 ordered by time
+11986SELECT message where queue 2 for user 4 by time
+11992Sending popped message
+11995Sending popped message
+11996Sending popped message
+11997Sending popped message
+11998Sending popped message
+12100Interpreting message: "POPQ,7,3,1"
+12100Popping queue 3 for user 7 ordered by time
+12100SELECT message where queue 3 for user 7 by time
+12100Interpreting message: "POPQ,2,2,1"
+12100Popping queue 2 for user 2 ordered by time
+12101SELECT message where queue 2 for user 2 by time
+12101Interpreting message: "POPQ,9,3,1"
+12101Popping queue 3 for user 9 ordered by time
+12101SELECT message where queue 3 for user 9 by time
+12107Deleting message 25057
+12110Deleting message 25058
+12111Deleting message 25056
+12112Sending popped message
+12113Sending popped message
+12113Sending popped message
+12114Interpreting message: "MSG,5,2,2,1,0,20"
+12114Interpreting message: "MSG,8,7,3,1,-8215672636496902022,20"
+12115Interpreting message: "MSG,10,9,3,1,-6293142439040318268,20"
+12194Interpreting message: "POPQ,4,2,1"
+12194Popping queue 2 for user 4 ordered by time
+12194SELECT message where queue 2 for user 4 by time
+12197Interpreting message: "POPQ,11,3,1"
+12197Popping queue 3 for user 11 ordered by time
+12197SELECT message where queue 3 for user 11 by time
+12198Interpreting message: "POPQ,3,2,1"
+12198Popping queue 2 for user 3 ordered by time
+12198SELECT message where queue 2 for user 3 by time
+12199Interpreting message: "POPQ,6,2,1"
+12199Popping queue 2 for user 6 ordered by time
+12200SELECT message where queue 2 for user 6 by time
+12200Interpreting message: "POPQ,5,2,1"
+12200Popping queue 2 for user 5 ordered by time
+12200SELECT message where queue 2 for user 5 by time
+12207Sending popped message
+12207Sending popped message
+12208Sending popped message
+12208Sending popped message
+12209Sending popped message
+12248Interpreting message: "POPQ,8,3,1"
+12248Popping queue 3 for user 8 ordered by time
+12248SELECT message where queue 3 for user 8 by time
+12249Interpreting message: "POPQ,10,3,1"
+12249Popping queue 3 for user 10 ordered by time
+12249SELECT message where queue 3 for user 10 by time
+12255Sending popped message
+12255Sending popped message
+12318Interpreting message: "POPQ,7,3,1"
+12318Popping queue 3 for user 7 ordered by time
+12318SELECT message where queue 3 for user 7 by time
+12318Interpreting message: "POPQ,2,2,1"
+12319Popping queue 2 for user 2 ordered by time
+12319SELECT message where queue 2 for user 2 by time
+12319Interpreting message: "POPQ,9,3,1"
+12319Popping queue 3 for user 9 ordered by time
+12320SELECT message where queue 3 for user 9 by time
+12326Deleting message 25061
+12327Deleting message 25059
+12328Deleting message 25060
+12329Sending popped message
+12330Sending popped message
+12330Sending popped message
+12331Interpreting message: "MSG,10,9,3,1,2993273535178605622,21"
+12331Interpreting message: "MSG,1,2,2,1,0,21"
+12332Interpreting message: "MSG,8,7,3,1,-5157931010792449055,21"
+12409Interpreting message: "POPQ,6,2,1"
+12409Popping queue 2 for user 6 ordered by time
+12409SELECT message where queue 2 for user 6 by time
+12410Interpreting message: "POPQ,3,2,1"
+12410Interpreting message: "POPQ,11,3,1"
+12410Popping queue 2 for user 3 ordered by time
+12410Popping queue 3 for user 11 ordered by time
+12410SELECT message where queue 2 for user 3 by time
+12410SELECT message where queue 3 for user 11 by time
+12411Interpreting message: "POPQ,5,2,1"
+12411Interpreting message: "POPQ,4,2,1"
+12411Popping queue 2 for user 5 ordered by time
+12411SELECT message where queue 2 for user 5 by time
+12411Popping queue 2 for user 4 ordered by time
+12411SELECT message where queue 2 for user 4 by time
+12417Sending popped message
+12417Sending popped message
+12423Sending popped message
+12423Sending popped message
+12425Sending popped message
+12535Interpreting message: "POPQ,9,3,1"
+12535Popping queue 3 for user 9 ordered by time
+12535SELECT message where queue 3 for user 9 by time
+12536Interpreting message: "POPQ,2,2,1"
+12536Popping queue 2 for user 2 ordered by time
+12536SELECT message where queue 2 for user 2 by time
+12536Interpreting message: "POPQ,7,3,1"
+12537Popping queue 3 for user 7 ordered by time
+12537SELECT message where queue 3 for user 7 by time
+12546Deleting message 25063
+12546Deleting message 25064
+12546Deleting message 25062
+12549Sending popped message
+12550Sending popped message
+12550Sending popped message
+12551I

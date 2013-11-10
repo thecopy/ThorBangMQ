@@ -1,0 +1,8 @@
+1384099068974	numberOfClients: 25
+1384099068974	lengthOfExperiment: 300000
+1384099068974	Connecting 25 clients to 10.128.6.216:8123...
+1384099069043	OK Done! Sending messages...
+1384099369252	OK Done!
+1384099369252	-------------------------------------------
+1384099369252	Number of Clients:	25
+1384099369253	Total Time:		300195.0ms

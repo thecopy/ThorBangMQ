@@ -1,0 +1,4 @@
+1384091114503	numberOfOneWayClients: 50
+1384091114504	numberOfTwoWayClients: 30
+1384091114504	lengthOfExperiment: 60000
+1384091114844	Starting all clients...

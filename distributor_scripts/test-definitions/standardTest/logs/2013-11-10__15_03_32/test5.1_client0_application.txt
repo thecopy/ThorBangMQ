@@ -1,0 +1,6 @@
+1384092619645	numberOfOneWayClients: 50
+1384092619645	numberOfTwoWayClients: 30
+1384092619645	lengthOfExperiment: 60000
+1384092619809	Starting all clients...
+1384092679838	OK DONE:) Shutting down all clients...
+1384092679839	OK

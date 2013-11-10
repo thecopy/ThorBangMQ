@@ -163,6 +163,10 @@ public class Main {
 		try {
 			dbPersistence.createClient("defaultclient");
 			dbPersistence.createQueue("defaultqueue");
+			dbPersistence.createClient("defaultclient2");
+			dbPersistence.createQueue("defaultqueue2");
+			dbPersistence.createClient("defaultclient3");
+			dbPersistence.createQueue("defaultqueue3");
 			dbPersistence.fillDb();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
