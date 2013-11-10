@@ -105,7 +105,7 @@ try{
 			for(String queueStr : msgArgs[2].split(";")){
 				long queue = Long.parseLong(queueStr);
 
-				persistence.storeMessage(reciever, sender, queue, context, prio, content);
+				persistence.storeMessage(sender, reciever, queue, context, prio, content);
 				
 				GlobalCounters.numberOfMessagesPersisted.incrementAndGet();
 			}
@@ -182,7 +182,6 @@ try{
 			if(m != null)
 				persistence.deleteMessage(m.id);
 
-			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 			
 			logger.info(String.format("Sending popped message"));
 
