@@ -4,11 +4,11 @@ import java.nio.channels.SelectionKey;
 
 import asl.ThorBangMQServer;
 
-public class DefaultTransport implements ITransport {
+public class SocketTransport implements ITransport {
 	private ThorBangMQServer server;
 	private SelectionKey conn;
 
-	public DefaultTransport(ThorBangMQServer server, SelectionKey conn){
+	public SocketTransport(ThorBangMQServer server, SelectionKey conn){
 		this.server = server;
 		this.conn = conn;
 		
