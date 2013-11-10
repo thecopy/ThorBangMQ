@@ -38,14 +38,74 @@
 
 
         \subsection{Client}
-            We decided to keep the implementation of our client as simple as possible. This means that our client implementation only consists of code that implements the API described earlier. Basically, our client code can be used directly as a library to communicate with our middleware.
+            We decided to keep the implementation of our client as simple as possible. This means that our client implementation only consists of code that implements the API described earlier. Basically, our client code is a library that can be used in other Java applications to communicate with our middleware.\\
+            \\
+            The client has the following important Java \textbf{packets} and \textit{classes}:
+            \begin{itemize}
+                \item \textbf{asl}
+                    \begin{itemize}
+                        \item \textit{ThorBangMQ} - Main class
+                        \item \textit{Message} - Representation of a message
+                    \end{itemize}
+                \item \textbf{asl.network}
+                \begin{itemize}
+                     \item \textit{SocketTransport} - Transport layer using sockets
+                 \end{itemize} 
+                \item \textbf{asl.infrastructure}
+                 \begin{itemize}
+                    \item \textit{MemoryLogger} - Logging to memory, dump to file later
+                \end{itemize}
+                \item \textbf{asl.infrastructure.exceptions}
+                \begin{itemize}
+                    \item \textit{InvalidClientException} - Invalid client id
+                    \item \textit{InvalidQueueException} - Invalid queue id
+                    \item \textit{InvalidMessageException} - Invalid message id
+                    \item \textit{ServerException} - Unknown exception at server, something is very wrong
+                \end{itemize}
+            \end{itemize}
 
         \subsection{Middleware}
-            We have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it will have a smaller impact on the server when a client connects, and that we can support many more clients simultaneously, since the amount of threads in our program will not be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets, though, which is that it can be harder to think about, implement, and work with non-blocking sockets.\\
+            In our middleware we have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it will have a smaller impact on the server when a client connects, and that we can support many more clients simultaneously, since the amount of threads in our program doesn't have to be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets though, which is that it can be harder to think about, implement, and work with non-blocking sockets.\\
             \\
-            We chose to use a thread-pool for request interpretation in order to serve multiple requests simultaneously. At the same time, this gives us an obvious place to wait (block) while we wait for the database to answer queries. With regard to the database, we chose to use a connection-pool to avoid the overhead of setting up a new connection to the database each time we query it.\\
+            In an attempt to make our implementation simpler, we decided to perform all network i/o in one thread of our program. Since we want to be able to handle multiple requests simultaneously, we pass data from the network i/o-thread to worker threads for interpretation and handling. These worker threads interpret incoming data and perform database queries needed to complete the request. Afterwards they put the response in a response queue, which the network i/o-thread will read in order to send replies to the requesting clients.\\
             \\
-            In an attempt to make our implementation simpler, we decided to perform all network i/o in the main thread. In order to have the blocking database calls out of the main thread, we use worker threads (as described above) which interpret requests and perform the blocking calls to the database. These worker threads put responses in a response queue which the main thread empties by sending responses on to the clients.
+            By moving interpretation and handling of requests to a thread different from the network i/o-thread, we have a place to perform our (blocking) queries to the database without blocking the whole system.\\
+            We have chosen to use a thread-pool for request interpretation in order to avoid the overhead of creating and deleting threads all of the time, and at the same time bound the maximum number of threads our program will spawn. This should make our system able to handle many more clients than we have threads at the cost of slower response times.\\
+            \\
+            With regard to database connections, we have chosen to use a connection-pool to avoid the overhead of setting up a new connection to the database each time we query it.\\
+            \\
+            The middleware consists of the following important Java \textbf{packets} and \textit{classes}:
+            \begin{itemize}
+                \item \textbf{asl}
+                \begin{itemize}
+                    \item \textit{Main} - Entry point of the program
+                    \item \textit{IntervalLogger} - Logs test data every x second, configurable
+                    \item \textit{GlobalCounters} - Holds global counters used during tests
+                    \item \textit{Message} - Representation of a message
+                    \item \textit{ServerSettings} - Configurable parameters of the server
+                \end{itemize}
+                \item \textbf{asl.infrastructure}
+                \begin{itemize}
+                    \item \textit{MemoryLogger} - Logging to memory, dump to file later
+                \end{itemize}
+                \item \textbf{asl.infrastructure.exceptions}
+                \begin{itemize}
+                    \item \textit{InvalidClientException} - Invalid client id
+                    \item \textit{InvalidQueueException} - Invalid queue id
+                    \item \textit{InvalidMessageException} - Invalid message id
+                    \item \textit{ServerException} - Unknown exception at server, something is very wrong
+                \end{itemize}
+                \item \textbf{asl.network}
+                \begin{itemize}
+                    \item \textit{SocketTransport} - Transport layer using sockets
+                \end{itemize}
+                \item \textbf{asl.persistence}
+                \begin{itemize}
+                    \item \textit{PostgresPersistence} - Uses Postgres as storage
+                    \item \textit{InMemoryPersistence} - Uses local memory as storage
+                    \item \textit{LyingPersistence} - Doesn't store anything
+                \end{itemize}
+            \end{itemize}
 
         \subsection{Database}
             We have chosen to use a simple database schema with three tables: messages, queues, and clients. We have put indexes on all fields that will be used to filter messages. These fields are indicated with a plus sign ($+$) on Figure \ref{fig:database_schema}. 
@@ -55,7 +115,6 @@
                 \caption{Database schema}
                 \label{fig:database_schema}
             \end{figure}
-             \\
             In order to allow clients to send messages to multiple queues at once, we have chosen to replicate messages in queues rather than having a many-to-many relationship in the database. This could obviously have an impact on performance.\\
             \\
             Communication between the middleware and our database is done using JDBC, making SQL queries directly from our Java code. We decided not to use stored procedures even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code. 
@@ -74,11 +133,12 @@
         \end{itemize}
 
     \section{Tests}
-        In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we assume that these requests are sent vastly more than other requests, e.g. create queue, and that the performance of these three types of requests will dominate the performance of the other types.\\
+        In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we assume that these requests are vastly more frequent than all other types of requests, e.g. create queue, and that the performance of these three types of requests will greatly dominate the performance of the other types.\\
         \\
-        We have performed our tests using machines form the cloud host DigitalOcean.com, where we got a 200\$ coupon to run experiments.\\
+        We have performed our tests using machines from the cloud hosting provider DigitalOcean.com, where we got a 200\$ coupon to run experiments. Running our tests on a cloud host has some obvious downsides w.r.t. our test results since we can't know for sure which hardware our tests are run on, and if we have any neighbors on this hardware.\\
+        We have run all of our experiments on machines with: 4GB memory, SSD storage, and 2 logical CPU cores. Due to the way DigitalOcean provides their servers, we can't really tell how much computing power these logical CPUs provide, or whether there are any neighbors on the hardware. In order to compensate for this we've run all of our experiments for at least 10 minutes each, to check that the performance is somewhat consistent.
         \\
-        To test and explain the performance of our system, we have identified the following parameters which we wish to test.
+        To explain the performance of our system, we have identified the following parameters which we wish to test.
         \begin{itemize}
             \item Client
             \begin{itemize}
@@ -122,6 +182,16 @@
     \section{Results}
         TODO: Note that we're using a closed system which has an effect on the results\\
         TODO: Show raw data, graphs, do statistical treatment of data
+
+        \subsection{Time spent in each part of the system}
+            % Use test sendAndPopSameClient 2013-11-09__22_23_35 and 2013-11-09__22_24_23 to infer this.
+
+        \subsection{Time to perform pop}
+
+        \subsection{Time to perform peek}
+
+        \subsection{Time to perform send}
+
 
     \section{Analysis}
         TODO: Interpret results showed above
