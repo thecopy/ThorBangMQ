@@ -40,7 +40,7 @@
         \subsection{Client}
             We decided to keep the implementation of our client as simple as possible. This means that our client implementation only consists of code that implements the API described earlier. Basically, our client code is a library that can be used in other Java applications to communicate with our middleware.\\
             \\
-            The client has the following important Java \textbf{packets} and \textit{classes}:
+            The client has the following important Java \textbf{packages} and \textit{classes}:
             \begin{itemize}
                 \item \textbf{asl}
                     \begin{itemize}
@@ -65,6 +65,7 @@
             \end{itemize}
 
         \subsection{Middleware}
+            \label{sec:description_middleware}
             In our middleware we have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it will have a smaller impact on the server when a client connects, and that we can support many more clients simultaneously, since the amount of threads in our program doesn't have to be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets though, which is that it can be harder to think about, implement, and work with non-blocking sockets.\\
             \\
             In an attempt to make our implementation simpler, we decided to perform all network i/o in one thread of our program. Since we want to be able to handle multiple requests simultaneously, we pass data from the network i/o-thread to worker threads for interpretation and handling. These worker threads interpret incoming data and perform database queries needed to complete the request. Afterwards they put the response in a response queue, which the network i/o-thread will read in order to send replies to the requesting clients.\\
@@ -74,7 +75,7 @@
             \\
             With regard to database connections, we have chosen to use a connection-pool to avoid the overhead of setting up a new connection to the database each time we query it.\\
             \\
-            The middleware consists of the following important Java \textbf{packets} and \textit{classes}:
+            The middleware consists of the following important Java \textbf{packages} and \textit{classes}:
             \begin{itemize}
                 \item \textbf{asl}
                 \begin{itemize}
@@ -115,13 +116,16 @@
                 \caption{Database schema}
                 \label{fig:database_schema}
             \end{figure}
+            ~\\
             In order to allow clients to send messages to multiple queues at once, we have chosen to replicate messages in queues rather than having a many-to-many relationship in the database. This could obviously have an impact on performance.\\
             \\
-            Communication between the middleware and our database is done using JDBC, making SQL queries directly from our Java code. We decided not to use stored procedures even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code. 
+            Communication between the middleware and our database is done using JDBC, making SQL queries directly from our Java code. We decided not to use stored procedures even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code.\\
+            \\
+            TODO: Write something about how our tests have been done without any indexes.
 
         \subsection{Communication protocol}
-            We have chosen to use a very simple messaging protocol between the clients and the middleware. We have chosen to use an end of message token to differentiate messages from each other, as we found it simpler to implement than defining packets with headers etc. We decided that our end of message token should be null, i.e. "\textbackslash\textbackslash0". All messages should be encoded in UTF8.\\
-            Interpretation of messages is implemented in both server and client, in the DefaultTransport- and SocketTransport classes, respectively.
+            We have chosen to use a very simple messaging protocol between the clients and the middleware. We have chosen to use an end of message token to differentiate messages from each other, as we found it simpler to implement than defining packets with headers etc. We decided that our end of message token should be null, i.e. "\textbackslash0". All messages should be encoded in UTF8.\\
+            Interpretation of messages is implemented in both server and client, in the SocketTransport classes. The full description of the communication protocol can be found in Appendix \ref{sec:message_protocol}.
 
     \section{Testing infrastructure}
         Our testing infrastructure is written in Python and does the following:
@@ -131,6 +135,24 @@
             \item Fetches logs
             \item Generates graphs
         \end{itemize}
+        ~\\
+        The infrastructure consists of 4 files:
+        \begin{description}
+            \item[main.py] Interface to start tests, see servers currently running etc.
+            \item[infrastructure.py] Functions doing the actual infrastructure work
+            \item[droplets.py] Functions to start and stop servers (specific to DigitalOcean cloud provider)
+            \item[gnuplot.py] Plots data
+        \end{description}
+        ~\\
+        Tests are defined by creating a folder in the test-definitions directory, and creating three files: \textit{conf.txt}, which defines the configuration of a server, \textit{test.txt}, which defines the number of servers and clients to be deployed and the configuration of the clients, and \textit{gnuplot.sh} which should create the wanted gnuplots when called with the results of a test as an argument.\\
+        \\
+        Other than the files described above, a few python libraries are required: 
+        \begin{description}
+            \item[python-digitalocean] which can be installed via pip or found at \textit{https://pypi.python.org/pypi/python-digitalocean}.
+            \item[psycopg2] which can be found at \textit{https://pypi.python.org/pypi/psycopg2}.
+        \end{description}
+        ~\\
+        It should be noted that our testing infrastructure is pretty dumb, in that it doesn't check for errors while running. It just assumes that everything happens as it should and does its thing. We found this to be a somewhat of a mistake since it has caused us quite a bit of trouble during our testing.
 
     \section{Tests}
         In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we assume that these requests are vastly more frequent than all other types of requests, e.g. create queue, and that the performance of these three types of requests will greatly dominate the performance of the other types.\\
@@ -164,20 +186,23 @@
 
         \subsection{Standard test}
 
-        \subsection{Pure pop message}
-        \subsection{Pure send message}
-        \subsection{Pure peek message}
-
         \subsection{Mixed requests}
             \begin{itemize}
                 \item Simulation of 'real workload'?
             \end{itemize}
 
         \subsection{Database connections vs. worker threads}
+            This is a $2^2$ test. Use data from 2H standardTests.
+
+        \subsection{Number of messages vs. time of reads}
             This is a $2^2$ test.
 
-        \subsection{Number of messages connections vs. time of reads}
-            This is a $2^2$ test.
+        \subsection{Code characterization}
+            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We will perform profiling during multiple different tests, as described above, in order to see if there is any difference between them.
+
+            % Bottlenecks
+            % Most expensive operations that determine the overall performance
+
 
     \section{Results}
         TODO: Note that we're using a closed system which has an effect on the results\\
@@ -192,6 +217,24 @@
 
         \subsection{Time to perform send}
 
+        \subsection{Code profiling}
+            We performed code profiling during multiple different tests. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending messages of around 5 bytes in each test, and show the general results we got.  Our code spends almost all of the time, as shown on both Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% and 87.5\% respectively.
+            \begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{code_profiling_send_pop_same_client}
+                \caption{3 minutes of profiling during 'Send message, pop message' with 80 clients}
+                \label{fig:code_profiling_send_pop_same_client}
+            \end{figure}
+            \begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{code_profiling_standard_test}
+                \caption{3 minutes of profiling during 'Standard test' with 80 clients}
+                \label{fig:code_profiling_standard_test}
+            \end{figure}
+            ~\\
+            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for 'Send message, pop message' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets the clients' requests and 'send' sends replies to clients.\\
+            \\
+            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'Send message, pop message' and 'Standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed in worker threads.
 
     \section{Analysis}
         TODO: Interpret results showed above
@@ -199,20 +242,22 @@
     \section{Conclusion}
         TODO: Say something about performance of system\\
         TODO: Say something about what we could've done differently
-    \section{Appendix}
-        \subsection{Message protocol}
-            \subsubsection{Exceptions}
+    \clearpage
+    \appendix
+        \section{Message protocol}
+        \label{sec:message_protocol}
+            \subsection{Exceptions}
                 If a request cannot be fulfilled by the server, it will respond with an exception.  Exceptions have the following format:\\
                 \\
                 \indent\textit{FAIL $<$type$>$ $<$id$>$}\\
                 \\
                 Where $<$type$>$ is either QUEUE, CLIENT, MESSAGE, or UNKNOWN, and where $<$id$>$ is the id of the queue, client or message that ‘failed’. For instance, if a client tries to send a message to the queue with id 5 and if that queue doesn’t exist, the server will respond with “FAIL QUEUE 5”.
 
-            \subsubsection{Handshake}
+            \subsection{Handshake}
                 The client should send HELLO when first connecting to the server. The server should respond with OK if it accepts the client, otherwise the server should respond with something else. The client must disconnect if it receives anything other than OK from the server.
 
 
-            \subsubsection{Send Message}
+            \subsection{Send Message}
                 \indent\indent\textit{MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content}\\
                 \\
                 \textbf{Response}\\
@@ -221,12 +266,12 @@
                 \textbf{Remarks}\\
                 To send a message to multiple queues, separate the QueueIds with a semicolon, e.g. 1;2;3 to send the message to queues 1, 2 and 3.
 
-            \subsubsection{Message Response}
+            \subsection{Message Response}
                 \indent\indent\textit{MSG,SenderId,Context,MessageId,Content}\\
                 \\
                 This is here to save space in the definitions below. This is how the server should return a message upon request from the client.
 
-            \subsubsection{Peek Queue}
+            \subsection{Peek Queue}
                 \indent\indent \textit{PEEKQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority}\\
                 \\
                 \textbf{Response}\\
@@ -234,7 +279,7 @@
                 \textbf{Remarks}\\
                 OrderByTimestampInsteadPriority is either 1 or 0.
 
-            \subsubsection{Peek Queue with Specific Sender}
+            \subsection{Peek Queue with Specific Sender}
                 \indent\indent\textit{PEEKS,ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority}\\
             \\
             \textbf{Response}\\
@@ -244,7 +289,7 @@
             OrderByTimestampInsteadPriority is either 1 or 0.
 
 
-            \subsubsection{Pop Queue}
+            \subsection{Pop Queue}
                 \indent\indent\textit{POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority}\\
                 \\
                 \textbf{Response}\\
@@ -253,7 +298,7 @@
                 \textbf{Remarks}\\
                 OrderByTimestampInsteadPriority is either 1 or 0.
 
-            \subsubsection{Pop Queue with Specific Sender}
+            \subsection{Pop Queue with Specific Sender}
                 \indent\indent\textit{POPS,ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority}\\
                 \\
                 \textbf{Response}\\
@@ -262,13 +307,13 @@
                 \textbf{Remarks}\\
                 OrderByTimestampInsteadPriority is either 1 or 0.
 
-            \subsubsection{Create Queue}
+            \subsection{Create Queue}
                 \indent\indent\textit{CREATEQUEUE,NameOfQueue}\\
                 \\
                 \textbf{Response}\\
                 The server should respond with the id (long) of the queue, if a queue with the same name exists the server should respond with FAIL.
 
-            \subsubsection{Remove Queue}
+            \subsection{Remove Queue}
                 \indent\indent\textit{REMOVEQUEUE,QueueId}\\
                 \\
                 \textbf{Response}\\
