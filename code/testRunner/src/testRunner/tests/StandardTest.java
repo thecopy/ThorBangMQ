@@ -66,7 +66,7 @@ public class StandardTest extends testRunner.Test {
 				oneWayClients.add(new clientRunner(host,port,clients.get(i) ,
 						oneWayQueueId, numberOfOneWayClients, true, i == 0));
 			}
-			for(int i = 0; i < numberOfOneWayClients; i++){
+			for(int i = 0; i < numberOfTwoWayClients; i++){
 				twoWayClients.add(new clientRunner(host,port,clients.get(i)+numberOfOneWayClients, 
 						twoWayQueueId, numberOfTwoWayClients, false, false));
 			}
