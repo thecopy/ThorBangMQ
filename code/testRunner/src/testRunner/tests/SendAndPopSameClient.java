@@ -19,14 +19,18 @@ public class SendAndPopSameClient extends testRunner.Test {
 	int lengthOfExperiment = 0;
 	int poppers = 1;
 	int msgSize = 0;
+	int numQueues = 1;
+	
 	ArrayList<Integer> clientIds;
-	long queueId;
+	ArrayList<Long> queueIds;
 	
 	@Override
 	public String[] getArgsDescriptors() {
-		String[] descriptors = new String[2];
+		String[] descriptors = new String[4];
 		descriptors[0] = "Number of clients";
 		descriptors[1] = "Length of experiment";
+		descriptors[2] = "Message size";
+		descriptors[3] = "Number of queues";
 		
 		return descriptors;
 	}
@@ -35,15 +39,29 @@ public class SendAndPopSameClient extends testRunner.Test {
 	public void init(String[] args) throws Exception {
 		this.numberOfClients = Integer.parseInt(args[0]);
 		this.lengthOfExperiment = Integer.parseInt(args[1]);
-		this.msgSize = Integer.parseInt(args[2]);
-		clientIds = new ArrayList<Integer>();
+		try {
+			this.msgSize = Integer.parseInt(args[2]);
+		} catch (Exception e) {
+			this.msgSize = 1024;
+		}
+
+		try {
+			this.numQueues = Integer.parseInt(args[3]);
+		} catch (Exception e) {
+			this.numQueues = 1;
+		}
+
+		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);
 		
-		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);		
-		for(int i = 0; i < numberOfClients; i += 1) {
+		clientIds = new ArrayList<Integer>();
+		for(int i = 0; i < this.numberOfClients; i += 1) {
 			clientIds.add((int)api.createClient("client_" + i));
 		}
-		this.queueId = api.createQueue("writetest_queue");
-
+		
+		this.queueIds = new ArrayList<Long>();
+		for (int i = 0; i < this.numQueues; i += 1) {
+			this.queueIds.add(api.createQueue("writetest_queue_" + i));
+		}
 	}
 
 	@Override
@@ -51,11 +69,13 @@ public class SendAndPopSameClient extends testRunner.Test {
 		applicationLogger.log(String.format("numberOfClients: %d", this.numberOfClients));
 		applicationLogger.log(String.format("lengthOfExperiment: %d", this.lengthOfExperiment));
 		applicationLogger.log(String.format("msgSize: %d", this.msgSize));
+		applicationLogger.log(String.format("numQueues: %d", this.numQueues));
 		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 
 		Thread[] clients = new Thread[numberOfClients];
 		clientRunner[] runners = new clientRunner[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
+			long queueId = this.queueIds.get((i + 1) % this.numQueues);
 			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId, this.msgSize);
 			clients[i] = new Thread(runners[i]);
 		}
@@ -90,6 +110,8 @@ public class SendAndPopSameClient extends testRunner.Test {
 
 		applicationLogger.log("Number of Clients:\t" + numberOfClients + "");
 		applicationLogger.log("Total Time:\t\t" + totalTimeInMs + "ms");
+		
+		logIndividualResults(testLogger, clients, runners);
 	}
 
 	@Override
@@ -101,20 +123,61 @@ public class SendAndPopSameClient extends testRunner.Test {
 	public String getIdentifier() {
 		return "sendAndPopSameClient";
 	}
+	
+	private void logIndividualResults(MemoryLogger testLogger, Thread[] clients, clientRunner[] runners) {
+		for (int i = 0; i < clients.length;i++) {
+			float totalSendTime = 0;
+			float minSendTime = Long.MAX_VALUE;
+			float maxSendTime = Long.MIN_VALUE;
+			for (int z = 0; z < runners[i].sendTime.size(); z += 1) {
+			    long cSendTime = runners[i].sendTime.get(z);
+			    totalSendTime += cSendTime;
+			    if (cSendTime < minSendTime) {
+			        minSendTime = cSendTime;
+			    }
+			    if (cSendTime > maxSendTime) {
+			        maxSendTime = cSendTime;
+			    }
+			}
+			float avgSendTime = totalSendTime / (float)runners[i].sendTime.size();
+			
+			float totalPopTime = 0;
+			float minPopTime = Long.MAX_VALUE;
+			float maxPopTime = Long.MIN_VALUE;
+			for (int z = 0; z < runners[i].popTime.size(); z += 1) {
+				float cPopTime = runners[i].popTime.get(z);
+				totalPopTime += cPopTime;
+				if (cPopTime < minPopTime) {
+					minPopTime = cPopTime;
+				}
+				if (cPopTime > maxPopTime) {
+					maxPopTime = cPopTime;
+				}
+			}
+			float avgPopTime = totalPopTime / (float)runners[i].popTime.size();
+			
+			testLogger.info(String.format("Client: %s, #send: %d, total time: %f, avg: %f, min: %f, max: %f",
+					                      clients[i].getName(), runners[i].sendTime.size(), totalSendTime / (float)1000000, avgSendTime / (float)1000000, minSendTime / (float)1000000, maxSendTime / (float)1000000));
+			testLogger.info(String.format("Client: %s, #pop: %d, total time: %f, avg: %f, min: %f, max: %f",
+	                                      clients[i].getName(), runners[i].popTime.size(), totalPopTime / (float)1000000, avgPopTime / (float)1000000, minPopTime / (float)1000000, maxPopTime / (float)1000000));
+			testLogger.info(String.format("Client: %s, #fails: %d", clients[i].getName(), runners[i].numberOfFails));
+		}
+	}
 
 	class clientRunner implements Runnable{
 		
 		ThorBangMQ client;
-		private int queue;
+		private int queueId;
 		private int userId;
 		
-		public int numberOfMessagesSent = 0;
-		public int numberOfMessagesPoped = 0;
+		public ArrayList<Long> popTime = new ArrayList<Long>();
+		public ArrayList<Long> sendTime = new ArrayList<Long>();
 		public int msgSize = 0;
+		public int numberOfFails = 0;
 		
 		public Boolean keepRunning = true;
-		public clientRunner(String hostname, int port, int userId, int queue, int msgSize){
-			this.queue = queue;
+		public clientRunner(String hostname, int port, int userId, int queueId, int msgSize){
+			this.queueId = queueId;
 			this.userId = userId;
 			this.msgSize = msgSize;
 			
@@ -132,14 +195,29 @@ public class SendAndPopSameClient extends testRunner.Test {
 		public void run() {
 			try {
 				String msg = StringUtils.repeat("*", this.msgSize);
+				StopWatch w = new StopWatch();
 				while (keepRunning) {
-					client.SendMessage(userId, queue, 1, 0, msg);
-					numberOfMessagesSent++;
-					client.PopMessage(queue, true);
-					numberOfMessagesPoped++;
+					w.reset();
+					try {
+						w.start();
+						client.SendMessage(userId, queueId, 1, 0, msg);
+						w.stop();
+						this.sendTime.add(w.getNanoTime());
+					} catch (InvalidQueueException | InvalidClientException | ServerException | IOException e) {
+						this.numberOfFails += 1;
+						w.stop();
+					}
+					w.reset();
+					try {
+						w.start();
+						client.PopMessage(queueId, true);
+						w.stop();
+						this.popTime.add(w.getNanoTime());
+					} catch (InvalidQueueException | ServerException | IOException e) {
+						this.numberOfFails += 1;
+						w.stop();
+					}
 				}
-			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
-				e.printStackTrace();
 			} finally {
 				client.stop();
 			}
