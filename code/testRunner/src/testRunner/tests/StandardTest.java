@@ -129,7 +129,6 @@ public class StandardTest extends testRunner.Test {
 				
 				client = ThorBangMQ.build(hostname, port, userId);
 				client.init();
-				System.out.println("yay im user " + userId);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -139,9 +138,6 @@ public class StandardTest extends testRunner.Test {
 		@Override
 		public void run() {
 			Random r = new Random();
-			MemoryLogger logger = new MemoryLogger(false);
-			StopWatch w = new StopWatch(); 
-			long sendDuration = 0;
 			try {
 				if(sendTheFirst){
 					int target = r.nextInt(numOfOneWayers)+1;
@@ -149,7 +145,6 @@ public class StandardTest extends testRunner.Test {
 				}
 				while (keepRunning) {
 					if(oneWay){
-						
 						Message msg = null;
 						do{
 							Thread.sleep(200);
@@ -161,12 +156,8 @@ public class StandardTest extends testRunner.Test {
 						do{
 							target = r.nextInt(numOfOneWayers)+1;
 						}while(target == userId);
-						System.out.println("From " + userId + " to " + target);
-						w.reset();
-						w.start();
-						client.SendMessage(target, queue, 2, 0, String.valueOf(++messageCounter));
-						w.stop();
-						logger.log("," + w.getNanoTime() / (float) 1000 / 1000);
+						
+						client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
 						
 					}else{ // Two-Way
 						if(userId%2 == 1){ // Sender
