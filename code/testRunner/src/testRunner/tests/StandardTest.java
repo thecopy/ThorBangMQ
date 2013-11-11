@@ -199,6 +199,7 @@ public class StandardTest extends testRunner.Test {
 				e.printStackTrace();
 			} finally {
 				client.stop();
+				l.log("log_client" + userId + ".log");
 			}
 		}
 
