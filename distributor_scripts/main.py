@@ -1,7 +1,7 @@
 import logging
 from os import listdir
 
-from utils import buildjavafiles, distributejavafiles, starttest
+from infrastructure import buildjavafiles, distributejavafiles, starttest
 from droplets import getdroplets, getclients, getservers, createclient, createserver, destroyalldroplets
 
 logger = logging.getLogger('distributor')
@@ -51,8 +51,8 @@ def main():
             for testname in gettests():
                 print testname
         elif choice == "7":
-            for droplet in getdroplets():
-                logger.info('{name}: ({globalip}, {localip})'.format(name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))
+            for i, droplet in enumerate(getdroplets()):
+                logger.info('{number}: {name}: ({globalip}, {localip})'.format(number=i, name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))
         elif choice.startswith("999"):
             __, testid = choice.split(' ')
             destroyalldroplets(testid)

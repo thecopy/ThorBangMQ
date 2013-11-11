@@ -1,0 +1,11 @@
+USE THIS TEST TO SHOW WHAT THE FREQUENCY OF REQUESTS MAKES OF DIFFERENCE
+numclients=1
+numservers=1
+serverargs=databaseconnections:30,workerthreads:30,cleardatabase:true
+clientargs=100,600000,1024,10,250
+clientargs=100,600000,1024,10,200
+clientargs=100,600000,1024,10,150
+clientargs=100,600000,1024,10,100
+clientargs=100,600000,1024,10,50
+clientargs=100,600000,1024,10,0
+testtime=605

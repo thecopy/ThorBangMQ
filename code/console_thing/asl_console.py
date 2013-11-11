@@ -2,7 +2,6 @@ from functools import partial
 import psycopg2
 
 conn = psycopg2.connect(host="localhost", database="asl", user="asl", password="asl2013")
-cur = conn.cursor()
 
 OPTIONS = ()  # this is defined at bottom of file
 
@@ -23,7 +22,7 @@ def main():
             continue
         args = input_[1:] if len(input_) > 1 else []
 
-        parse_perform_command(cur, choice, args)
+        parse_perform_command(choice, args)
 
 
 def printoptions():
@@ -32,11 +31,13 @@ def printoptions():
         print "{id}: {description}".format(id=i, description=option)
 
 
-def parse_perform_command(cur, choice, args):
+def parse_perform_command(choice, args):
     assert(choice <= len(OPTIONS))
     option, fun = OPTIONS[choice]
     try:
+        cur = conn.cursor()
         res = fun(cur, *args)
+        cur.close()
     except TypeError:
         res = "Wrong number of arguments!"
     print "---------"

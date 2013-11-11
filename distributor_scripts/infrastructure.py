@@ -126,7 +126,10 @@ def parsetestfile(testfile):
         for line in f:
             line = line.strip()
             splitline = line.split('=')
-            typ, args = splitline
+            try:
+                typ, args = splitline
+            except Exception:
+                continue
             if typ == "testtime" or typ.startswith('num'):
                 testdesc[typ] = int(args)
             elif typ == "clientargs":
