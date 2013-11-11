@@ -1,7 +1,7 @@
 import logging
 from os import listdir
 
-from utils import buildjavafiles, distributejavafiles, starttest
+from infrastructure import buildjavafiles, distributejavafiles, starttest
 from droplets import getdroplets, getclients, getservers, createclient, createserver, destroyalldroplets
 
 logger = logging.getLogger('distributor')
