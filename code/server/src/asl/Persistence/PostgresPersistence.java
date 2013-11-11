@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.Client;
+import asl.GlobalCounters;
 import asl.Message;
 import asl.infrastructure.exceptions.InvalidClientException;
 import asl.infrastructure.exceptions.InvalidMessageException;
@@ -40,6 +41,8 @@ public class PostgresPersistence implements IPersistence {
 
 	@Override
 	public void deleteMessage(long messageId) throws PersistenceException, InvalidMessageException {
+		long started = System.nanoTime();
+		
 		final String query = "DELETE FROM messages WHERE id = ?";
 		logger.info(String.format("Deleting message %d", messageId));
 
@@ -52,6 +55,8 @@ public class PostgresPersistence implements IPersistence {
 			} else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
 	}
 
@@ -60,6 +65,7 @@ public class PostgresPersistence implements IPersistence {
 			int priority, String content) throws PersistenceException, InvalidQueueException, InvalidClientException {
 		final String query = "INSERT INTO messages (sender_id, receiver_id, queue_id, context_id, priority, message) "
 				+ " VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+		long started = System.nanoTime();
 
 		try {
 			return (long) executeScalar(query, logger, senderId,
@@ -74,18 +80,23 @@ public class PostgresPersistence implements IPersistence {
 			} else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
 	}
 
 	@Override
 	public Message getMessageByPriority(long queueId, long recieverId) throws InvalidQueueException, PersistenceException {
-		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL)  AND queue_id = ? ORDER BY priority DESC LIMIT 1";
-
+		final String query = " (select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "+
+				"where receiver_id = ?  and queue_id = ? order by priority DESC limit 1) "
+			   +"union all "
+			   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
+			   	+ "where receiver_id = -1 and queue_id = ? order by priority DESC limit 1) order by priority DESC limit 1;";
+		long started = System.nanoTime();
 		
 		ArrayList<Object[]> s;
 		try {
-			s = executeQuery(query, logger, recieverId, queueId);
+			s = executeQuery(query, logger, recieverId, queueId,queueId);
 		} catch (SQLException e) {
 			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
@@ -93,6 +104,8 @@ public class PostgresPersistence implements IPersistence {
 			} else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
 
 		if (s.size() > 0)
@@ -104,12 +117,18 @@ public class PostgresPersistence implements IPersistence {
 	@Override
 	public Message getMessageByTimestamp(long queueId, long recieverId) throws InvalidQueueException, InvalidMessageException, PersistenceException {
 		
-		final String query = "SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL)  AND queue_id = ? ORDER BY time_of_arrival ASC LIMIT 1";
+		final String query = " (select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "+
+					" where receiver_id = ?  and queue_id = ? order by time_of_arrival limit 1) "
+				   +"union all "
+				   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
+				   	+ "where receiver_id = -1 and queue_id = ? order by time_of_arrival limit 1) order by time_of_arrival limit 1;";
 		logger.info(String.format("SELECT message where queue %d for user %d by time", queueId, recieverId));
+		long started = System.nanoTime();
+
 		ArrayList<Object[]> s;
+		
 		try {
-			s = executeQuery(query, logger, recieverId, queueId);
+			s = executeQuery(query, logger, recieverId, queueId,queueId);
 		} catch (SQLException e) {
 			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
@@ -117,8 +136,9 @@ public class PostgresPersistence implements IPersistence {
 			} else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
-
 		if (s.size() > 0)
 			return getMessage(s.get(0));
 
@@ -127,13 +147,19 @@ public class PostgresPersistence implements IPersistence {
 
 	@Override
 	public Message getMessageBySender(long queueId, long receiverId, long senderId, boolean getByTimestampInsteadOfPriority) throws InvalidQueueException, InvalidClientException, PersistenceException {
-		final String query = String.format("SELECT receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message"
-				+ " FROM messages WHERE (receiver_id = ? OR receiver_id = NULL) AND queue_id = ? AND sender_id = ? ORDER BY %s LIMIT 1",
+		final String query = String.format(" (select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages"+
+				" where receiver_id = ?  and queue_id = ? and sender_id = ? order by %s limit 1) "
+				   +"union all "
+				   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
+				   	+ " where receiver_id = -1 and queue_id = ? and sender_id = ? order by %s limit 1) order by %s limit 1;",
+				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC",
+				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC",
 				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC");
+		long started = System.nanoTime();
 
 		ArrayList<Object[]> s;
 		try {
-			s = executeQuery(query, logger, receiverId, queueId, senderId);
+			s = executeQuery(query, logger, receiverId, queueId, senderId, queueId, senderId);
 		} catch (SQLException e) {
 			long id = this.getIdOfExceptionString(e.getMessage());
 			if (e.getMessage().contains(this.queueExceptionString)) {
@@ -144,6 +170,8 @@ public class PostgresPersistence implements IPersistence {
 			else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
 
 		if (s.size() > 0)
@@ -155,18 +183,23 @@ public class PostgresPersistence implements IPersistence {
 	@Override
 	public long createQueue(String name) throws PersistenceException {
 		final String query = "INSERT INTO queues(name) VALUES(?) RETURNING id";
-		
+		long started = System.nanoTime();
+
 		try {
-			return (long)executeScalar(query, logger, name);
+			long id =  (long)executeScalar(query, logger, name);
+			return id;
 		} catch (SQLException e) {
 			throw new PersistenceException(e);
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
 	}
 
 	@Override
 	public void removeQueue(long queueId) throws PersistenceException, InvalidQueueException {
 		final String query = "DELETE FROM queues WHERE id = ?";
-		
+		long started = System.nanoTime();
+
 		try {
 			executeStatement(query, logger, queueId);
 		} catch (SQLException e) {
@@ -176,6 +209,8 @@ public class PostgresPersistence implements IPersistence {
 			} else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
 	}
 
@@ -190,6 +225,7 @@ public class PostgresPersistence implements IPersistence {
 		final String query = "SELECT receiver_id, \"sender_id\", \"time_of_arrival\", \"queue_id\","
 				+ "id, priority, \"context_id\", message "
 				+ " FROM messages WHERE id = ?";
+		long started = System.nanoTime();
 
 		ArrayList<Object[]> s;
 		try {
@@ -201,8 +237,9 @@ public class PostgresPersistence implements IPersistence {
 			} else {
 				throw new PersistenceException(e);
 			}
+		}finally{
+			GlobalCounters.totalThinkTimeInPersistence.addAndGet(System.nanoTime()-started);
 		}
-
 		if (s.size() > 0)
 			return getMessage(s.get(0));
 
@@ -414,15 +451,15 @@ public class PostgresPersistence implements IPersistence {
 				+ "REFERENCES clients (id) MATCH SIMPLE "
 				+ "ON UPDATE NO ACTION ON DELETE NO ACTION " + ") " + "WITH ( "
 				+ "OIDS=FALSE " + "); " + "ALTER TABLE messages "
-				+ "OWNER TO asl; " + " "
-				+ "CREATE INDEX time_of_arrival " +
-					"ON asl.messages "+
-					"USING btree "+
-					"(time_of_arrival NULLS FIRST);" +
-				"CREATE INDEX receiver_toa_queue "+
+				+ "OWNER TO asl; " + " " +
+				"CREATE INDEX receiver_queue_toa "+
 					"ON asl.messages "+
 					" USING btree "+
-					" (receiver_id, time_of_arrival, queue_id);";
+					" (receiver_id, queue_id,time_of_arrival);" +
+				"CREATE INDEX receiver_queue_prio "+
+					"ON asl.messages "+
+					" USING btree "+
+					" (receiver_id, queue_id,priority);";
 		try {
 			executeStatement(sql, logger);
 		} catch (SQLException e) {
@@ -431,17 +468,47 @@ public class PostgresPersistence implements IPersistence {
 	}
 	
 	public void fillDb() throws PersistenceException{
+
+		
+		try {
 		String sql = "DO "+
 					"$do$ "+
 					"BEGIN  "+
-					"FOR i IN 1..25000 LOOP "+
+					"FOR i IN 1..5000 LOOP "+
+					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
+					"	VALUES(2,1,1,1,1,'some message'); "+
+					"END LOOP; "+
+					"END "+
+					"$do$";
+			executeStatement(sql, logger);
+			sql = "DO "+
+					"$do$ "+
+					"BEGIN  "+
+					"FOR i IN 1..5000 LOOP "+
+					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
+					"	VALUES(2,2,1,1,1,'some message'); "+
+					"END LOOP; "+
+					"END "+
+					"$do$";
+			executeStatement(sql, logger);
+			sql = "DO "+
+					"$do$ "+
+					"BEGIN  "+
+					"FOR i IN 1..5000 LOOP "+
+					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
+					"	VALUES(1,2,1,1,1,'some message'); "+
+					"END LOOP; "+
+					"END "+
+					"$do$";
+			executeStatement(sql, logger);sql = "DO "+
+					"$do$ "+
+					"BEGIN  "+
+					"FOR i IN 1..5000 LOOP "+
 					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
 					"	VALUES(1,1,1,1,1,'some message'); "+
 					"END LOOP; "+
 					"END "+
 					"$do$";
-		
-		try {
 			executeStatement(sql, logger);
 		} catch (SQLException e) {
 			throw new PersistenceException(e);

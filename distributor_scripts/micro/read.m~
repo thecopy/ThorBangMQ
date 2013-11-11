@@ -1,0 +1,42 @@
+sizes = [10 50000 500000 1000000 3300000 5000000 10000000]';
+sizes = sizes./1000; % kB
+push = zeros(7, 1000);
+pop = zeros(7, 1000);
+peek = zeros(7, 1000);
+
+push(1,:) = csvread('repeat_msg.log',0,1, [0 1 999 1])';
+push(2,:) = csvread('repeat_push_50k.log',0,1, [0 1 999 1])';
+push(3,:) = csvread('repeat_push_500k.log',0,1, [0 1 999 1])';
+push(4,:) = csvread('repeat_push_1M.log',0,1, [0 1 999 1])';
+push(5,:) = csvread('repeat_push_3.3M.log',0,1, [0 1 999 1])';
+push(6,:) = csvread('repeat_push_5M.log',0,1, [0 1 999 1])';
+push(7,:) = csvread('repeat_push_10M.log',0,1, [0 1 999 1])';
+
+pop(1,:) = csvread('repeat_pop.log',0,1, [0 1 999 1])';
+pop(2,:) = csvread('repeat_pop_50k.log',0,1, [0 1 999 1])';
+pop(3,:) = csvread('repeat_pop_500k.log',0,1, [0 1 999 1])';
+pop(4,:) = csvread('repeat_pop_1M.log',0,1, [0 1 999 1])';
+pop(5,:) = csvread('repeat_pop_3.3M.log',0,1, [0 1 999 1])';
+pop(6,:) = csvread('repeat_pop_5M.log',0,1, [0 1 999 1])';
+pop(7,:) = csvread('repeat_pop_10M.log',0,1, [0 1 999 1])';
+
+peek(1,:) = csvread('repeat_peek.log',0,1, [0 1 999 1])';
+peek(2,:) = csvread('repeat_peek_50k.log',0,1, [0 1 999 1])';
+peek(3,:) = csvread('repeat_peek_500k.log',0,1, [0 1 999 1])';
+peek(4,:) = csvread('repeat_peek_1M.log',0,1, [0 1 999 1])';
+peek(5,:) = csvread('repeat_peek_3.3M.log',0,1, [0 1 999 1])';
+peek(6,:) = csvread('repeat_peek_5M.log',0,1, [0 1 999 1])';
+peek(7,:) = csvread('repeat_peek_10M.log',0,1, [0 1 999 1])';
+
+hold off
+h = errorbar(sizes, mean(push,2), std(push,0,2), 'r*-');
+hold on
+errorbar(sizes, mean(pop,2), std(pop,0,2), 'b+-');
+errorbar(sizes, mean(peek,2), std(peek,0,2), 'go-');
+hold off
+set(get(h,'Parent'), 'XScale', 'log')
+legend Push Pop Peek
+legend('Location','NorthWest')
+grid on
+
+xlabel 'Message size

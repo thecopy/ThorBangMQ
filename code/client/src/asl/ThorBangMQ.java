@@ -12,6 +12,10 @@ import asl.network.ITransport;
 import asl.network.SocketTransport;
 
 public class ThorBangMQ {
+	private long messagesPushed = 0;
+	private long messagesPopped = 0;
+	private long messagesPeeked = 0;
+	
 	// MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
 	private final static String SendMessageStringFormat = "MSG,%d,%d,%s,%d,%d,%s";
 	
@@ -100,6 +104,7 @@ public class ThorBangMQ {
 			throw new InvalidClientException(Long.parseLong(resp[2]));
 		}
 	}
+	messagesPushed++;
 }
 	
 	public void BroadcastMessage(long priority, long context, String content, long... queues)
@@ -127,7 +132,7 @@ public class ThorBangMQ {
 		if(response.startsWith("MSG0")) {
 			return null;
 		}
-		
+		messagesPeeked++;
 		return parseMessage(response);
 	}
 	
@@ -152,7 +157,8 @@ public class ThorBangMQ {
 		if(response.startsWith("MSG0")) {
 			return null;
 		}
-		
+
+		messagesPeeked++;
 		return parseMessage(response);
 	}
 	
@@ -174,7 +180,8 @@ public class ThorBangMQ {
 		if(response.startsWith("MSG0")) {
 			return null;
 		}
-		
+
+		messagesPopped++;
 		return parseMessage(response);
 	}
 	
@@ -199,7 +206,8 @@ public class ThorBangMQ {
 		if (response.startsWith("MSG0")) {
 			return null;
 		}
-		
+
+		messagesPopped++;
 		return parseMessage(response);
 	}
 	
@@ -265,4 +273,16 @@ public class ThorBangMQ {
 	public ITransport getTransport(){
 		return transport;
 	}
+	
+	public long getMessagesPushed()
+	{
+		return messagesPushed;
+	}
+	public long getMessagesPeeked(){
+		return messagesPeeked;
+	}
+	public long getMessagesPopped(){
+		return messagesPopped;
+	}
 }
+

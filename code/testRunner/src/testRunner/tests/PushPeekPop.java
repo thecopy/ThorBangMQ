@@ -111,7 +111,7 @@ public class PushPeekPop extends testRunner.Test {
 					w.start();
 					client.SendMessage(userId, queue, 1, 0, content);
 					w.stop();
-					logger.log("," + w.getNanoTime()/(float)1000*1000);
+					logger.log("," + w.getNanoTime()/(float)1000/1000);
 				}
 				logger.dumpToFile("push.log");
 				logger.clear();
@@ -121,7 +121,7 @@ public class PushPeekPop extends testRunner.Test {
 					w.start();
 					client.PeekMessage(queue, i%2==0);
 					w.stop();
-					logger.log("," + w.getNanoTime());
+					logger.log("," + w.getNanoTime()/(float)1000/1000);
 				}
 				logger.dumpToFile("peek.log");
 				logger.clear();
@@ -131,7 +131,7 @@ public class PushPeekPop extends testRunner.Test {
 					w.start();
 					client.PopMessage(queue, i%2==0);
 					w.stop();
-					logger.log("," + w.getNanoTime());
+					logger.log("," + w.getNanoTime()/(float)1000/1000);
 				}
 				logger.dumpToFile("pop.log");
 				logger.clear();

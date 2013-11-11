@@ -40,7 +40,7 @@ public class ClientRequestWorkerTests {
 		
 		// Assert
 		verify(persistence, times(1)).storeMessage(
-				eq(reciever), eq(sender),
+				eq(sender), eq(reciever),
 				eq(queue), eq(context),
 				eq(prio), eq(content));
 		verify(transport, times(1)).Send("OK");

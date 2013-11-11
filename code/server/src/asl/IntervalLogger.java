@@ -31,7 +31,13 @@ public class IntervalLogger implements Runnable {
 			}
 			
 			// the first comma (,) is to make the file a CSV file.
-			logger.log(this.level, "," + GlobalCounters.numberOfMessagesPersisted.getAndSet(0) + "," + GlobalCounters.numberOfMessagesReturned.getAndSet(0));
+			logger.log(this.level, ","
+					+ GlobalCounters.numberOfMessagesPersisted.getAndSet(0) + ","
+					+ GlobalCounters.numberOfMessagesReturned.getAndSet(0) + ","
+					+ GlobalCounters.totalThinkOperations.getAndSet(0) + ","
+					+ GlobalCounters.totalThinkTime.getAndSet(0) + ","
+					+ GlobalCounters.totalThinkTimeInClientRequestWorker.getAndSet(0) + ","
+					+ GlobalCounters.totalThinkTimeInPersistence.getAndSet(0));
 		}
 	}
 

@@ -39,10 +39,13 @@ public class ClientRequestWorker implements Runnable{
 
 	@Override
 	public void run() {
+		long start = System.nanoTime();
 		try {
 			interpreter(requestString);
 		} catch (IOException e) {
 			logger.severe("Error while writing to client: " + e);
+		}finally{
+			GlobalCounters.totalThinkTimeInClientRequestWorker.addAndGet(System.nanoTime()-start);
 		}
 	}
 
@@ -182,7 +185,8 @@ try{
 			if(m != null)
 				persistence.deleteMessage(m.id);
 
-			
+			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
+
 			logger.info(String.format("Sending popped message"));
 
 			transport.Send(this.formatMessage(m));

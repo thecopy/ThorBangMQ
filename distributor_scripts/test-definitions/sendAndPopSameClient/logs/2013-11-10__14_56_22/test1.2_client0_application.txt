@@ -1,0 +1,8 @@
+1384091944751	numberOfClients: 5
+1384091944753	lengthOfExperiment: 120000
+1384091944753	Connecting 5 clients to 10.128.22.68:8123...
+1384091944785	OK Done! Sending messages...
+1384092064809	OK Done!
+1384092064810	-------------------------------------------
+1384092064810	Number of Clients:	5
+1384092064812	Total Time:		120021.0ms
