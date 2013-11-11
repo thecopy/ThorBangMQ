@@ -1,0 +1,6 @@
+1384180598208	numberOfOneWayClients: 100
+1384180598208	numberOfTwoWayClients: 50
+1384180598208	lengthOfExperiment: 7200000
+1384180598473	Starting all clients...
+1384187798521	OK DONE:) Shutting down all clients...
+1384187798522	OK
