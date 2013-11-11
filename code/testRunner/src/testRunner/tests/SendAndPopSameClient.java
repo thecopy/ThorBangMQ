@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
 import asl.ThorBangMQ;
@@ -17,6 +18,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 	int numberOfClients = 0;
 	int lengthOfExperiment = 0;
 	int poppers = 1;
+	int msgSize = 0;
 	ArrayList<Integer> clientIds;
 	long queueId;
 	
@@ -31,8 +33,9 @@ public class SendAndPopSameClient extends testRunner.Test {
 
 	@Override
 	public void init(String[] args) throws Exception {
-		numberOfClients = Integer.parseInt(args[0]);
-		lengthOfExperiment = Integer.parseInt(args[1]);
+		this.numberOfClients = Integer.parseInt(args[0]);
+		this.lengthOfExperiment = Integer.parseInt(args[1]);
+		this.msgSize = Integer.parseInt(args[2]);
 		clientIds = new ArrayList<Integer>();
 		
 		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);		
@@ -47,12 +50,13 @@ public class SendAndPopSameClient extends testRunner.Test {
 	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception {
 		applicationLogger.log(String.format("numberOfClients: %d", this.numberOfClients));
 		applicationLogger.log(String.format("lengthOfExperiment: %d", this.lengthOfExperiment));
+		applicationLogger.log(String.format("msgSize: %d", this.msgSize));
 		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 
 		Thread[] clients = new Thread[numberOfClients];
 		clientRunner[] runners = new clientRunner[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
-			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId);
+			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId, this.msgSize);
 			clients[i] = new Thread(runners[i]);
 		}
 		
@@ -106,11 +110,13 @@ public class SendAndPopSameClient extends testRunner.Test {
 		
 		public int numberOfMessagesSent = 0;
 		public int numberOfMessagesPoped = 0;
+		public int msgSize = 0;
 		
 		public Boolean keepRunning = true;
-		public clientRunner(String hostname, int port, int userId, int queue){
+		public clientRunner(String hostname, int port, int userId, int queue, int msgSize){
 			this.queue = queue;
 			this.userId = userId;
+			this.msgSize = msgSize;
 			
 			try {
 				
@@ -125,8 +131,9 @@ public class SendAndPopSameClient extends testRunner.Test {
 		@Override
 		public void run() {
 			try {
+				String msg = StringUtils.repeat("*", this.msgSize);
 				while (keepRunning) {
-					client.SendMessage(userId, queue, 1, 0, "message");
+					client.SendMessage(userId, queue, 1, 0, msg);
 					numberOfMessagesSent++;
 					client.PopMessage(queue, true);
 					numberOfMessagesPoped++;
