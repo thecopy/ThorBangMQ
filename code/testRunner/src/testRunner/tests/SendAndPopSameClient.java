@@ -20,17 +20,19 @@ public class SendAndPopSameClient extends testRunner.Test {
 	int poppers = 1;
 	int msgSize = 0;
 	int numQueues = 1;
+	int sleepBetweenRequests = 0;
 	
 	ArrayList<Integer> clientIds;
 	ArrayList<Long> queueIds;
 	
 	@Override
 	public String[] getArgsDescriptors() {
-		String[] descriptors = new String[4];
+		String[] descriptors = new String[5];
 		descriptors[0] = "Number of clients";
 		descriptors[1] = "Length of experiment";
 		descriptors[2] = "Message size";
 		descriptors[3] = "Number of queues";
+		descriptors[4] = "Sleep time between requests";
 		
 		return descriptors;
 	}
@@ -49,6 +51,12 @@ public class SendAndPopSameClient extends testRunner.Test {
 			this.numQueues = Integer.parseInt(args[3]);
 		} catch (Exception e) {
 			this.numQueues = 1;
+		}
+		
+		try {
+			this.sleepBetweenRequests = Integer.parseInt(args[4]);
+		} catch (Exception e) {
+			this.sleepBetweenRequests = 0;
 		}
 
 		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);
@@ -70,13 +78,14 @@ public class SendAndPopSameClient extends testRunner.Test {
 		applicationLogger.log(String.format("lengthOfExperiment: %d", this.lengthOfExperiment));
 		applicationLogger.log(String.format("msgSize: %d", this.msgSize));
 		applicationLogger.log(String.format("numQueues: %d", this.numQueues));
+		applicationLogger.log(String.format("sleepBetweenRequests: %d", this.sleepBetweenRequests));
 		applicationLogger.log("Connecting " + numberOfClients + " clients to " + host + ":" + port + "...");
 
 		Thread[] clients = new Thread[numberOfClients];
 		clientRunner[] runners = new clientRunner[numberOfClients];
 		for(int i = 0; i < numberOfClients;i++){
 			long queueId = this.queueIds.get((i + 1) % this.numQueues);
-			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId, this.msgSize);
+			runners[i] = new clientRunner(host, port, clientIds.get(i), (int)queueId, this.msgSize, this.sleepBetweenRequests);
 			clients[i] = new Thread(runners[i]);
 		}
 		
@@ -174,12 +183,14 @@ public class SendAndPopSameClient extends testRunner.Test {
 		public ArrayList<Long> sendTime = new ArrayList<Long>();
 		public int msgSize = 0;
 		public int numberOfFails = 0;
+		public int sleepBetweenRequests = 0;
 		
 		public Boolean keepRunning = true;
-		public clientRunner(String hostname, int port, int userId, int queueId, int msgSize){
+		public clientRunner(String hostname, int port, int userId, int queueId, int msgSize, int sleepBetweenRequests){
 			this.queueId = queueId;
 			this.userId = userId;
 			this.msgSize = msgSize;
+			this.sleepBetweenRequests = sleepBetweenRequests;
 			
 			try {
 				
@@ -207,6 +218,9 @@ public class SendAndPopSameClient extends testRunner.Test {
 						this.numberOfFails += 1;
 						w.stop();
 					}
+					if (this.sleepBetweenRequests > 0)  {
+						Thread.sleep(this.sleepBetweenRequests);
+					}
 					w.reset();
 					try {
 						w.start();
@@ -217,7 +231,12 @@ public class SendAndPopSameClient extends testRunner.Test {
 						this.numberOfFails += 1;
 						w.stop();
 					}
+					if (this.sleepBetweenRequests > 0)  {
+						Thread.sleep(this.sleepBetweenRequests);
+					}
 				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			} finally {
 				client.stop();
 			}
