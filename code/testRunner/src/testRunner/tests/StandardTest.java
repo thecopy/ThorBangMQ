@@ -154,7 +154,6 @@ public class StandardTest extends testRunner.Test {
 						do{
 							Thread.sleep(200);
 							msg = client.PopMessage(queue, true);
-							Counters.MessageRecieved.incrementAndGet();
 						}while(msg == null);
 						messageCounter = Long.parseLong(msg.content);
 
@@ -163,8 +162,11 @@ public class StandardTest extends testRunner.Test {
 							target = r.nextInt(numOfOneWayers)+1;
 						}while(target == userId);
 						System.out.println("From " + userId + " to " + target);
+						w.reset();
+						w.start();
 						client.SendMessage(target, queue, 2, 0, String.valueOf(++messageCounter));
-						Counters.MessagesSent.incrementAndGet();
+						w.stop();
+						logger.log("," + w.getNanoTime() / (float) 1000 / 1000);
 						
 					}else{ // Two-Way
 						if(userId%2 == 1){ // Sender
