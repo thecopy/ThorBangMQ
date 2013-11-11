@@ -137,18 +137,25 @@ public class StandardTest extends testRunner.Test {
 
 		@Override
 		public void run() {
+			MemoryLogger l = new MemoryLogger(false);
 			Random r = new Random();
 			try {
 				if(sendTheFirst){
 					int target = r.nextInt(numOfOneWayers)+1;
 					client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
 				}
+				long pop = 0;
+				long push = 0;
 				while (keepRunning) {
+					l.log(","+push+","+pop);
 					if(oneWay){
 						Message msg = null;
 						do{
 							Thread.sleep(200);
-							msg = client.PopMessage(queue, true);
+							pop = System.nanoTime();
+								msg = client.PopMessage(queue, true);
+							pop = System.nanoTime() - pop;
+							
 						}while(msg == null);
 						messageCounter = Long.parseLong(msg.content);
 
@@ -156,27 +163,35 @@ public class StandardTest extends testRunner.Test {
 						do{
 							target = r.nextInt(numOfOneWayers)+1;
 						}while(target == userId);
-						
-						client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
-						
+						push = System.nanoTime();
+							client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
+						push = push - System.nanoTime();
 					}else{ // Two-Way
 						if(userId%2 == 1){ // Sender
 							long context = r.nextLong();
-							client.SendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
+							push = System.nanoTime();
+								client.SendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
+							push = push - System.nanoTime();
 							Message msg = null;
 							do{
 								Thread.sleep(200);
-								msg = client.PopMessage(queue, true);
+								pop = System.nanoTime();
+									msg = client.PopMessage(queue, true);
+								pop = System.nanoTime() - pop;
 							}while(msg == null || msg.context != context);
 							
 						}else{ // Receiver
 							Message msg = null;
 							do{
 								Thread.sleep(300);
-								msg = client.PopMessage(queue, true);
+								pop = System.nanoTime();
+									msg = client.PopMessage(queue, true);
+								pop = System.nanoTime() - pop;
 							}while(msg == null);
 							messageCounter = Long.parseLong(msg.content);
-							client.SendMessage(msg.sender, queue, 1, msg.context, String.valueOf(++messageCounter));
+							push = System.nanoTime();
+								client.SendMessage(msg.sender, queue, 1, msg.context, String.valueOf(++messageCounter));
+							push = push - System.nanoTime();
 						}
 					}
 				}
