@@ -146,14 +146,15 @@ def parsetestfile(testfile):
     return testdesc
 
 
-def serversstarttest(servers, cleardatabase=False):
+def serversstarttest(servers, cleardatabase=False, databasemessages=20000):
     logger.info("Starting test on {numservers} servers".format(numservers=len(servers)))
     for globalip, localip in servers:
         killallscreens(globalip)
         cmd = SSH_COMMAND.format(ip=globalip).split(' ')
-        cmd += ["{screen} java -jar {file} cleardb={cleardb}".format(screen=SCREEN_COMMAND.format(name="server"),
-                                                                     file=REMOTE_SERVER_FILE,
-                                                                     cleardb='true' if cleardatabase else 'false')]
+        cmd += ["{screen} java -jar {file} nummsgs={nummsgs} cleardb={cleardb}".format(screen=SCREEN_COMMAND.format(name="server"),
+                                                                                       file=REMOTE_SERVER_FILE,
+                                                                                       nummsgs=databasemessages,
+                                                                                       cleardb='true' if cleardatabase else 'false')]
         logger.debug("Start servers call: {}".format(cmd))
         call(cmd)
 
@@ -280,7 +281,7 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
 
             # start test on server
             serversstarttest(servers=servers, cleardatabase=cleardatabase)
-            sleep(5)
+            sleep(60)
             # start test on client
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
@@ -290,6 +291,7 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
 
             # stop test on clients and fetch their logs
             stoptest(clients, servers)
+            sleep(30)
             fetchlogs(clients=clients, servers=servers, logdir=logdir, testnum=i + u * 0.1)
             doplots(logdir)
 

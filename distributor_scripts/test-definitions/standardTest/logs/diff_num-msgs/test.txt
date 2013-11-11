@@ -1,0 +1,11 @@
+USE THIS TEST TO SHOW THE DIFFERENCE IN MESSAGES IN THE DATABASE. NOTE: THIS USES 10 SECOND LOGGING POINTS
+numclients=1
+numservers=1
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true,nummsgs:1000000
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true,nummsgs:200000
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true,nummsgs:0
+clientargs=1000,500,600000
+clientargs=200,100,600000
+clientargs=50,30,600000
+clientargs=5,5,600000
+testtime=600
