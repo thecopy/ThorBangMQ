@@ -282,7 +282,7 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
 
             # start test on server
             serversstarttest(servers=servers, cleardatabase=cleardatabase, databasemessages=databasemessages)
-            sleep(60*5)
+            sleep(10)
             # start test on client
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
