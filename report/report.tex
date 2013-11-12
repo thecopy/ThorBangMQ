@@ -155,36 +155,46 @@
         It should be noted that our testing infrastructure is very simple in that, for instance, it doesn't check for errors while running; it just assumes that everything executes successfully and continues on, even though that is not the case. We found this to be a somewhat of a mistake since it has caused us quite a bit of trouble during our testing.
 
     \section{Tests and results}
+        \label{sec:tests_and_results}
         In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we assume that these requests are vastly more frequent than all other types of requests, e.g. create queue, and that the performance of the system as a whole will be dominated by these three types of requests.\\
         \\
         We have performed our tests using machines from the cloud hosting provider DigitalOcean.com, from whom we got a 200\$ coupon to run experiments. Running our tests on a cloud host has some obvious downsides w.r.t. our test results since we can't know for sure which hardware our tests are run on, and if we have any neighbors on this hardware.\\
-        We have run all of our experiments on machines with: 4GB memory, SSD storage, and 2 logical CPU cores. Due to the way DigitalOcean provide their servers, we can't really tell how much computing power these logical CPUs provide, or whether there are any neighbors on the hardware. In order to compensate for this we've run all of our experiments for at least 10 minutes each, to check that the performance is somewhat consistent.
+        We have run all of our experiments on machines with: 4GB memory, SSD storage, and 2 logical CPU cores. Due to the way DigitalOcean provide their servers, we can't really tell how much computing power these logical CPUs provide, or whether there are any neighbors on the hardware. In order to compensate for this we've run all of our experiments for at least 10 minutes each, to verify that the observed performance is somewhat consistent.\\
+        \\
+        It is important to note that all of the following tests use blocking sockets to send requests; each of our clients can not have more than one request simultaneously. In the literature this is referred to as a closed system.\\
         \\
         In order to try to explain the performance of our system, we have identified the following parameters which we wish to test.
         \begin{itemize}
             \item Client
             \begin{itemize}
-                \item Number of clients per server
-                \item Total number of clients
-                \item Type of test performed
+                \item Client threads per client machine
             \end{itemize}
             \item Middleware
             \begin{itemize}
-                \item Number of connections to database
+                \item Size of messages
+                \item Total number of clients
+                \item Frequency of requests
+                \item Number of middleware instances
+                \item Number of database connections
                 \item Number of worker threads
                 \item Impact of using database vs. not storing messages at all
             \end{itemize}
             \item Database
             \begin{itemize}
-                \item Indexes
+                \item Size of dataset
+                \item Number of queues which messages are distributed over
             \end{itemize}
         \end{itemize}
 
         \subsection{Send message, pop message}
-            We want to use this test to see how the amount of clients as well the ratio between database connections and worker threads impacts the performance of our system.\\
-            In this test all clients continuously send 'SendMessage' and 'PopMessage' requests to the server. It should be noted that the clients will block until receiving a response from a request, meaning that the throughput of both types of requests should be the same. Sending requests in this manner ensures that we keep the amount of messages in the database consistent.
+            In this test all client threads continuously send 'SendMessage'- and 'PopMessage' requests to the server (described in Appendix \ref{sec:message_protocol_api}). Each client thread sends a message to itself, then pops the message, and then repeats.\\ The test is configurable in: the number of (identical) threads it spawns, time it should run, size of messages, the number of queues being used, and the amount of time each thread should sleep between sending requests.\\
+            \\
+            It should be noted that the clients will block until receiving a response from a request, meaning that the throughput of both types of requests should be very close. Sending requests in this manner ensures that we keep the amount of messages in the database consistent.
 
         \subsection{Standard test}
+            This test is an implementation of the test described in the project description, which we're supposed to be using for the traces.\\
+            \\
+            The test is configurable in the amount of one-way clients and two-way clients it should use. Only too late did we realize that it would have been nice to be able to configure the size of messages sent, and the number of queues the messages are distributed over.
 
         \subsection{Pure send message}
             In this test we performed $500000$ send message requests within 
@@ -197,7 +207,7 @@
 
 
         \subsection{Code profiling}
-            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler, we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes), and show the general results we got with all other tests and configurations.  Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% and 87.5\% respectively.
+            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes). These two tests show the general results we got with all tests and configurations, which we found yielded the same results.  Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% for 'send message, pop message' and 87.5\% for 'standard test'.
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{code_profiling_send_pop_same_client}
@@ -213,26 +223,50 @@
             ~\\
             On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for 'Send message, pop message' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
             \\
-            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'Send message, pop message' and 'Standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed in worker threads.
+            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'send message, pop message' and 'standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed by worker threads when they are done handling a client's request.
 
             % Bottlenecks
             % Most expensive operations that determine the overall performance
 
-    \section{Results}
-        TODO: Note that we're using a closed system which has an effect on the results\\
-        TODO: Show raw data, graphs, do statistical treatment of data
+        \subsection{Difference is message size}
+            % TODO: plot graphs for diff_clients_msgsize-10b, diff_clients_msgsize-1mb, diff_clients_msgsize-10mb
+            %       with error bars
 
-        \subsection{Time spent in each part of the system}
-            % Use test sendAndPopSameClient 2013-11-09__22_23_35 and 2013-11-09__22_24_23 to infer this.
+        \subsection{Difference in worker threads}
+            % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
 
-        \subsection{Time to perform pop}
+        \subsection{Difference in database connections} 
+            % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
 
-        \subsection{Time to perform peek}
+        \subsection{Difference in request frequency}
+            % TODO: plot graphs for diff_sleep-time-between-requests
 
-        \subsection{Time to perform send}
 
     \section{Analysis}
         TODO: Interpret results showed above
+
+        \subsection{Time spent in each part of the system}
+            In order to determine how much time we spent in each part of our system, we will use
+
+            % USE:
+            %     1) diff_db-cons_worker-threads_i-fooled-you VS diff_num-db-threads
+            %     2) Code profiling above
+            %     3) Plots showing CRW, IO, and DB
+            % SHOW:
+            %     1 -> we have WAY better performance with i_fooled_you
+            %     2 -> our profiling shows that we spend WAY more time doing db-stuff than anything else
+            %     3 -> our measurements show that we wait a lot for the database, compared to anything else
+            % CONCLUDE:
+            %     We spend a lot of time in the database, which might be because of bad configuration, indexes etc.
+
+        \subsection{Size of messages}
+            % USE: 
+            %     1) diff_clients_msgsize-10b VS diff_clients_msgsize-1mb VS diff_clients_msgsize-10mb
+            % SHOW:
+            %     1 -> it doesn't seem to matter much
+            % CONCLUDE:
+            %     THIS MIGHT BE A BIT TOO CONTRIVED:
+            %     We have one component that performs so poorly that our other configurations don't really seem to matter
 
     \section{Conclusion}
         TODO: Say something about performance of system\\
