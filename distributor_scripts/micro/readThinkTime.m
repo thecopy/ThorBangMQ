@@ -1,4 +1,4 @@
-testdata = csvread('peek_log_emptydb.log',0,3);
+testdata = csvread('thinkTime_pop.log',0,3);
 testdata = sum(testdata,1);
 ops=testdata(1);
 total=testdata(2)./1000./1000;

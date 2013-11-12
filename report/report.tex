@@ -228,20 +228,96 @@
             % Bottlenecks
             % Most expensive operations that determine the overall performance
 
-        \subsection{Difference is message size}
-            % TODO: plot graphs for diff_clients_msgsize-10b, diff_clients_msgsize-1mb, diff_clients_msgsize-10mb
-            %       with error bars
+    \section{Results}
+        TODO: Note that we're using a closed system which has an effect on the results\\
+        TODO: Show raw data, graphs, do statistical treatment of data
+        
+        \subsection{Micro Benchmarks}
 
+        \subsection{Micro Benchmarks}
+            % Use test sendAndPopSameClient 2013-11-09__22_23_35 and 2013-11-09__22_24_23 to infer this.
         \subsection{Difference in worker threads}
             % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
 
         \subsection{Difference in database connections} 
             % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
 
-        \subsection{Difference in request frequency}
-            % TODO: plot graphs for diff_sleep-time-between-requests
-
-
+        \subsubsection{Pop a Message}
+        
+			\begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{thinktime_500k_pop}
+                \caption{The think time in the server for pop queue request. Each data point represents an individual request. A total of 500 000 requests.}
+                \label{fig:thinktime_500k_pop}
+            \end{figure}
+            
+			\begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{responsetime_500k_pop}
+                \caption{The response time for pop queue request. Each data point represents an individual request. A total of 500 000 requests.}
+                \label{fig:responsetime_500k_pop}
+            \end{figure}
+            
+            \begin{tabular}{|c|c|c|}
+            	\hline 
+            \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
+            \hline 
+            Socket I/O & 12.3624 & 4.941 ms \\ 
+            \hline 
+            CRW & 7.4868 ms & 3.7579 ms \\ 
+            \hline 
+            IPersistence & 400.027 ms & 111.707 ms \\ 
+            \hline 
+            \end{tabular} 
+            
+            
+        \subsubsection{Peek a Queue}
+        
+			\begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{thinktime_500k_peek}
+                \caption{The think time in the server for peek queue request. Each data point represents an individual request. A total of 500 000 requests.}
+                \label{fig:thinktime_500k_peek}
+            \end{figure}
+            
+			\begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{responsetime_500k_peek}
+                \caption{The response time for send message request. Each data point represents an individual request. A total of 500 000 requests.}
+                \label{fig:responsetime_500k_peek}
+            \end{figure}
+            	
+            	\begin{tabular}{|c|c|c|}
+            	\hline 
+            \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
+            \hline 
+            Socket I/O &25.091 &7.4437\\ 
+            \hline 
+		    CRW &12.7541 &4.009\\ 
+            \hline 
+			IPersistence &344.9903 &76.7847\\ 
+            \hline 
+            \end{tabular} 
+            
+        \subsubsection{Push to a Queue}
+        
+			\begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{thinktime_500k_push}
+                \caption{The think time for send message request. Each data point represents an individual request. A total of 500 000 requests.}
+                \label{fig:thinktime_500k_push}
+            \end{figure}
+            
+			\begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{responsetime_500k_push}
+                \caption{The response time for send message request. Each data point represents an individual request. A total of 500 000 requests.}
+                \label{fig:responsetime_500k_push}
+            \end{figure}
+            
+            
+    \section{Analysis}
+        \subsection{Time to perform send}
     \section{Analysis}
         TODO: Interpret results showed above
 

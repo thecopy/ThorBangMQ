@@ -15,7 +15,6 @@ logger = logging.getLogger('distributor')
 
 from droplets import (createclient, createserver, createdatabase, getclients, destroyalldroplets,
                       getservers, getdatabase, DEFAULT_DROPLET_SIZE, getnewtestid)
-from gnuplot import doplots
 
 ROOT = path.dirname(path.realpath(__file__))
 
@@ -294,7 +293,6 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
             stoptest(clients, servers)
             sleep(30)
             fetchlogs(clients=clients, servers=servers, logdir=logdir, testnum=i + u * 0.1)
-            doplots(logdir)
 
 
 def wait(waittime):

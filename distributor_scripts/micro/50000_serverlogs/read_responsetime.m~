@@ -1,0 +1,20 @@
+testdata = csvread('500k_push.log',0,0);
+
+msgs = cumsum(testdata(:,2))+20000;
+
+ops=testdata(:,4);
+total=testdata(:,5)./1000./1000;
+crw=testdata(:,6)./1000./1000;
+db=testdata(:,7)./1000./1000;
+
+hold off
+plot(time, (total-crw)./ops,...
+     time, (crw-db)./ops,...
+     time, (db)./ops)
+addaxis(time, msgs, 'black--');
+addaxislabel(2,'# of Messages in Db');
+ 
+ columnlegend(2, [{'Socket I/O*'}; {'Client Request Worker'}; {'Db'}; {'Msg in DB'}],...
+                    'Location','NorthWest');
+ xlabel Minutes
+ ylabel 'Think Time / ms'
