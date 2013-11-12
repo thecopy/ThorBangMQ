@@ -1,12 +1,11 @@
+USE THIS TEST TO SHOW DIFFERENCE IN SIZE OF DATABASE
 numclients=1
 numservers=1
-serverargs=databaseconnections:100,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:20,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:5,workerthreads:50,cleardatabase:true
-clientargs=1000,500,1200000
-clientargs=200,100,1200000
-clientargs=50,30,1200000
-clientargs=5,5,1200000
-testtime=1200
-destroydroplets=true
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true,nummsgs:1000000
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true,nummsgs:200000
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true,nummsgs:0
+clientargs=400,200,600000
+clientargs=200,100,600000
+clientargs=100,50,600000
+clientargs=50,30,600000
+testtime=600

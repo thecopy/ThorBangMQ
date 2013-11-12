@@ -278,10 +278,11 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
                                    workerthreads=serverarg['workerthreads'])
             scpuploadfile(servers, test_serverconfigfile, path.join(REMOTE_SERVER_DIR, SERVER_CONFIG_FILE))
             cleardatabase = serverarg.get('cleardatabase', False)
+            databasemessages = serverarg.get('nummsgs', 20000)
 
             # start test on server
-            serversstarttest(servers=servers, cleardatabase=cleardatabase)
-            sleep(60)
+            serversstarttest(servers=servers, cleardatabase=cleardatabase, databasemessages=databasemessages)
+            sleep(60*5)
             # start test on client
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)

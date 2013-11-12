@@ -1,8 +1,0 @@
-1384095588482	numberOfClients: 25
-1384095588483	lengthOfExperiment: 300000
-1384095588483	Connecting 25 clients to 10.128.6.216:8123...
-1384095588553	OK Done! Sending messages...
-1384095888746	OK Done!
-1384095888747	-------------------------------------------
-1384095888747	Number of Clients:	25
-1384095888747	Total Time:		300180.0ms
