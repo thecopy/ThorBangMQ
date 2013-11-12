@@ -1,0 +1,300 @@
+1384189885400	Client: Thread-3, #send: 5922, total time: 275584.968750, avg: 46.535797, min: 16.077770, max: 184.262650
+1384189885400	Client: Thread-3, #pop: 5922, total time: 324555.468750, avg: 54.805042, min: 8.060829, max: 526.594604
+1384189885400	Client: Thread-3, #fails: 0
+1384189885404	Client: Thread-4, #send: 5952, total time: 278422.093750, avg: 46.777905, min: 17.619228, max: 474.429138
+1384189885404	Client: Thread-4, #pop: 5952, total time: 321808.687500, avg: 54.067322, min: 16.712347, max: 289.533630
+1384189885404	Client: Thread-4, #fails: 0
+1384189885408	Client: Thread-5, #send: 5985, total time: 279089.093750, avg: 46.631428, min: 14.858727, max: 257.419739
+1384189885408	Client: Thread-5, #pop: 5985, total time: 321205.750000, avg: 53.668465, min: 15.449841, max: 583.535156
+1384189885408	Client: Thread-5, #fails: 0
+1384189885412	Client: Thread-6, #send: 5891, total time: 279664.187500, avg: 47.473129, min: 17.926435, max: 577.998413
+1384189885412	Client: Thread-6, #pop: 5891, total time: 320613.437500, avg: 54.424286, min: 18.338505, max: 198.218155
+1384189885412	Client: Thread-6, #fails: 0
+1384189885416	Client: Thread-7, #send: 5975, total time: 278493.968750, avg: 46.609867, min: 13.167819, max: 231.435394
+1384189885417	Client: Thread-7, #pop: 5975, total time: 321803.718750, avg: 53.858364, min: 17.652580, max: 448.544434
+1384189885417	Client: Thread-7, #fails: 0
+1384189885421	Client: Thread-8, #send: 5954, total time: 278915.125000, avg: 46.845001, min: 13.530249, max: 257.380951
+1384189885421	Client: Thread-8, #pop: 5954, total time: 321428.468750, avg: 53.985294, min: 18.534494, max: 536.708435
+1384189885421	Client: Thread-8, #fails: 0
+1384189885425	Client: Thread-9, #send: 5967, total time: 279839.000000, avg: 46.897774, min: 13.218852, max: 239.781067
+1384189885425	Client: Thread-9, #pop: 5967, total time: 320521.875000, avg: 53.715748, min: 13.678502, max: 585.922241
+1384189885425	Client: Thread-9, #fails: 0
+1384189885429	Client: Thread-10, #send: 5954, total time: 278688.156250, avg: 46.806881, min: 11.098714, max: 459.564636
+1384189885429	Client: Thread-10, #pop: 5954, total time: 321740.093750, avg: 54.037636, min: 18.038185, max: 245.821091
+1384189885429	Client: Thread-10, #fails: 0
+1384189885433	Client: Thread-11, #send: 5945, total time: 276660.406250, avg: 46.536655, min: 9.658979, max: 328.900665
+1384189885433	Client: Thread-11, #pop: 5945, total time: 323800.843750, avg: 54.466084, min: 16.980490, max: 353.041016
+1384189885433	Client: Thread-11, #fails: 0
+1384189885437	Client: Thread-12, #send: 5901, total time: 277972.750000, avg: 47.106041, min: 13.197591, max: 216.669159
+1384189885437	Client: Thread-12, #pop: 5901, total time: 322560.437500, avg: 54.661991, min: 19.898384, max: 532.362366
+1384189885437	Client: Thread-12, #fails: 0
+1384189885441	Client: Thread-13, #send: 5924, total time: 278782.343750, avg: 47.059814, min: 16.723814, max: 253.439880
+1384189885441	Client: Thread-13, #pop: 5924, total time: 321770.593750, avg: 54.316441, min: 20.603060, max: 440.626465
+1384189885441	Client: Thread-13, #fails: 0
+1384189885445	Client: Thread-14, #send: 5965, total time: 278219.406250, avg: 46.641975, min: 14.417678, max: 233.650940
+1384189885445	Client: Thread-14, #pop: 5965, total time: 322413.062500, avg: 54.050808, min: 16.469330, max: 528.915222
+1384189885445	Client: Thread-14, #fails: 0
+1384189885449	Client: Thread-15, #send: 5978, total time: 279029.937500, avg: 46.676136, min: 16.945108, max: 253.641983
+1384189885449	Client: Thread-15, #pop: 5978, total time: 321690.218750, avg: 53.812347, min: 17.181496, max: 472.658569
+1384189885449	Client: Thread-15, #fails: 0
+1384189885453	Client: Thread-16, #send: 5978, total time: 279750.406250, avg: 46.796658, min: 4.814882, max: 496.824402
+1384189885453	Client: Thread-16, #pop: 5978, total time: 321001.781250, avg: 53.697189, min: 16.319954, max: 222.742874
+1384189885453	Client: Thread-16, #fails: 0
+1384189885457	Client: Thread-17, #send: 5990, total time: 280108.968750, avg: 46.762764, min: 17.187040, max: 511.932678
+1384189885457	Client: Thread-17, #pop: 5990, total time: 320742.625000, avg: 53.546349, min: 17.280949, max: 253.148941
+1384189885457	Client: Thread-17, #fails: 0
+1384189885461	Client: Thread-18, #send: 5937, total time: 280819.500000, avg: 47.299900, min: 10.339886, max: 589.129883
+1384189885461	Client: Thread-18, #pop: 5937, total time: 320097.031250, avg: 53.915619, min: 13.726214, max: 250.210098
+1384189885461	Client: Thread-18, #fails: 0
+1384189885465	Client: Thread-19, #send: 6038, total time: 278717.593750, avg: 46.160583, min: 16.084572, max: 515.938843
+1384189885466	Client: Thread-19, #pop: 6038, total time: 322219.875000, avg: 53.365334, min: 14.564790, max: 247.695007
+1384189885466	Client: Thread-19, #fails: 0
+1384189885469	Client: Thread-20, #send: 6009, total time: 279573.843750, avg: 46.525852, min: 10.255153, max: 510.762054
+1384189885470	Client: Thread-20, #pop: 6009, total time: 321399.500000, avg: 53.486351, min: 12.557138, max: 235.058975
+1384189885470	Client: Thread-20, #fails: 0
+1384189885470	Client: Thread-21, #send: 5992, total time: 277149.125000, avg: 46.253193, min: 14.833270, max: 509.426880
+1384189885471	Client: Thread-21, #pop: 5992, total time: 323850.218750, avg: 54.047096, min: 19.317772, max: 259.498230
+1384189885471	Client: Thread-21, #fails: 0
+1384189885471	Client: Thread-22, #send: 6021, total time: 278447.531250, avg: 46.246059, min: 8.920198, max: 502.596558
+1384189885471	Client: Thread-22, #pop: 6021, total time: 322599.500000, avg: 53.579056, min: 14.042290, max: 205.891434
+1384189885471	Client: Thread-22, #fails: 0
+1384189885472	Client: Thread-23, #send: 6013, total time: 276780.937500, avg: 46.030422, min: 12.602669, max: 509.251587
+1384189885472	Client: Thread-23, #pop: 6013, total time: 324371.093750, avg: 53.944969, min: 11.712471, max: 245.356400
+1384189885472	Client: Thread-23, #fails: 0
+1384189885473	Client: Thread-24, #send: 6013, total time: 280271.687500, avg: 46.610954, min: 12.289241, max: 510.136536
+1384189885473	Client: Thread-24, #pop: 6013, total time: 320974.343750, avg: 53.380070, min: 15.688239, max: 210.208206
+1384189885473	Client: Thread-24, #fails: 0
+1384189885473	Client: Thread-25, #send: 6025, total time: 279254.281250, avg: 46.349255, min: 14.781153, max: 507.031982
+1384189885474	Client: Thread-25, #pop: 6025, total time: 321987.375000, avg: 53.441887, min: 15.425662, max: 261.204590
+1384189885474	Client: Thread-25, #fails: 0
+1384189885474	Client: Thread-26, #send: 6026, total time: 278456.937500, avg: 46.209248, min: 12.516119, max: 507.063263
+1384189885474	Client: Thread-26, #pop: 6026, total time: 322831.250000, avg: 53.573059, min: 17.011292, max: 265.641937
+1384189885474	Client: Thread-26, #fails: 0
+1384189885475	Client: Thread-27, #send: 6010, total time: 278719.218750, avg: 46.375912, min: 15.109527, max: 506.987793
+1384189885475	Client: Thread-27, #pop: 6010, total time: 322597.750000, avg: 53.676830, min: 15.119088, max: 190.388657
+1384189885475	Client: Thread-27, #fails: 0
+1384189885476	Client: Thread-28, #send: 5948, total time: 279296.437500, avg: 46.956364, min: 16.636150, max: 504.991486
+1384189885476	Client: Thread-28, #pop: 5948, total time: 322052.718750, avg: 54.144707, min: 18.548306, max: 197.870422
+1384189885476	Client: Thread-28, #fails: 0
+1384189885476	Client: Thread-29, #send: 5910, total time: 279956.437500, avg: 47.369953, min: 12.557905, max: 506.167603
+1384189885477	Client: Thread-29, #pop: 5910, total time: 321466.437500, avg: 54.393642, min: 15.458990, max: 246.014999
+1384189885477	Client: Thread-29, #fails: 0
+1384189885477	Client: Thread-30, #send: 5933, total time: 278112.437500, avg: 46.875515, min: 13.118212, max: 510.111755
+1384189885477	Client: Thread-30, #pop: 5933, total time: 323327.500000, avg: 54.496460, min: 15.910871, max: 280.153229
+1384189885477	Client: Thread-30, #fails: 0
+1384189885478	Client: Thread-31, #send: 5982, total time: 279892.812500, avg: 46.789173, min: 15.522159, max: 509.069519
+1384189885478	Client: Thread-31, #pop: 5982, total time: 321620.937500, avg: 53.764786, min: 14.235917, max: 213.025116
+1384189885478	Client: Thread-31, #fails: 0
+1384189885479	Client: Thread-32, #send: 5951, total time: 278680.031250, avg: 46.829113, min: 15.464577, max: 360.983612
+1384189885479	Client: Thread-32, #pop: 5951, total time: 322887.968750, avg: 54.257767, min: 12.498648, max: 335.656097
+1384189885479	Client: Thread-32, #fails: 0
+1384189885480	Client: Thread-33, #send: 5966, total time: 279315.687500, avg: 46.817917, min: 13.649350, max: 502.299622
+1384189885480	Client: Thread-33, #pop: 5966, total time: 322333.937500, avg: 54.028484, min: 17.011616, max: 238.006531
+1384189885480	Client: Thread-33, #fails: 0
+1384189885480	Client: Thread-34, #send: 5961, total time: 277420.531250, avg: 46.539261, min: 12.883363, max: 507.222137
+1384189885481	Client: Thread-34, #pop: 5961, total time: 324267.281250, avg: 54.398136, min: 15.156336, max: 249.796997
+1384189885481	Client: Thread-34, #fails: 0
+1384189885481	Client: Thread-35, #send: 5952, total time: 279508.562500, avg: 46.960442, min: 15.426346, max: 247.274643
+1384189885481	Client: Thread-35, #pop: 5952, total time: 322187.625000, avg: 54.130985, min: 17.318695, max: 481.256561
+1384189885481	Client: Thread-35, #fails: 0
+1384189885482	Client: Thread-36, #send: 6029, total time: 280221.625000, avg: 46.478954, min: 10.948694, max: 514.166138
+1384189885482	Client: Thread-36, #pop: 6029, total time: 321497.500000, avg: 53.325176, min: 12.093782, max: 199.981003
+1384189885482	Client: Thread-36, #fails: 0
+1384189885483	Client: Thread-37, #send: 6031, total time: 279819.156250, avg: 46.396809, min: 3.781690, max: 513.686707
+1384189885483	Client: Thread-37, #pop: 6031, total time: 321899.718750, avg: 53.374187, min: 15.085309, max: 255.901123
+1384189885483	Client: Thread-37, #fails: 0
+1384189885483	Client: Thread-38, #send: 5919, total time: 279767.062500, avg: 47.265930, min: 12.605418, max: 512.805847
+1384189885484	Client: Thread-38, #pop: 5919, total time: 321998.656250, avg: 54.400852, min: 19.386267, max: 230.375641
+1384189885484	Client: Thread-38, #fails: 0
+1384189885484	Client: Thread-39, #send: 5932, total time: 277859.937500, avg: 46.840851, min: 10.657182, max: 510.932373
+1384189885484	Client: Thread-39, #pop: 5932, total time: 323920.718750, avg: 54.605652, min: 18.632708, max: 242.510834
+1384189885484	Client: Thread-39, #fails: 0
+1384189885485	Client: Thread-40, #send: 6053, total time: 278897.156250, avg: 46.075855, min: 10.701720, max: 510.702393
+1384189885485	Client: Thread-40, #pop: 6053, total time: 322943.250000, avg: 53.352596, min: 13.945970, max: 218.549149
+1384189885485	Client: Thread-40, #fails: 0
+1384189885486	Client: Thread-41, #send: 6006, total time: 278811.468750, avg: 46.422157, min: 9.334585, max: 508.474792
+1384189885486	Client: Thread-41, #pop: 6006, total time: 323035.093750, avg: 53.785400, min: 16.720896, max: 208.890717
+1384189885486	Client: Thread-41, #fails: 0
+1384189885486	Client: Thread-42, #send: 5975, total time: 279551.281250, avg: 46.786823, min: 9.319045, max: 508.840393
+1384189885487	Client: Thread-42, #pop: 5975, total time: 322424.875000, avg: 53.962318, min: 19.173815, max: 244.302551
+1384189885487	Client: Thread-42, #fails: 0
+1384189885487	Client: Thread-43, #send: 6024, total time: 279846.281250, avg: 46.455227, min: 8.848382, max: 518.363281
+1384189885487	Client: Thread-43, #pop: 6024, total time: 322164.343750, avg: 53.480141, min: 14.844928, max: 260.658264
+1384189885487	Client: Thread-43, #fails: 0
+1384189885488	Client: Thread-44, #send: 5949, total time: 279126.562500, avg: 46.919914, min: 12.201035, max: 520.253784
+1384189885488	Client: Thread-44, #pop: 5949, total time: 322892.468750, avg: 54.276764, min: 11.195358, max: 283.020935
+1384189885488	Client: Thread-44, #fails: 0
+1384189885489	Client: Thread-45, #send: 6014, total time: 280386.062500, avg: 46.622227, min: 6.196846, max: 518.716614
+1384189885489	Client: Thread-45, #pop: 6014, total time: 321685.062500, avg: 53.489368, min: 12.387510, max: 280.369537
+1384189885489	Client: Thread-45, #fails: 0
+1384189885490	Client: Thread-46, #send: 6029, total time: 280256.937500, avg: 46.484814, min: 7.110331, max: 518.510376
+1384189885490	Client: Thread-46, #pop: 6029, total time: 321818.187500, avg: 53.378372, min: 10.414350, max: 287.912933
+1384189885490	Client: Thread-46, #fails: 0
+1384189885490	Client: Thread-47, #send: 6049, total time: 279639.500000, avg: 46.229046, min: 11.385251, max: 516.048401
+1384189885490	Client: Thread-47, #pop: 6049, total time: 322441.718750, avg: 53.304958, min: 14.388163, max: 258.700806
+1384189885491	Client: Thread-47, #fails: 0
+1384189885491	Client: Thread-48, #send: 5918, total time: 276516.343750, avg: 46.724628, min: 7.592648, max: 515.813293
+1384189885491	Client: Thread-48, #pop: 5918, total time: 325616.687500, avg: 55.021408, min: 17.048775, max: 219.571609
+1384189885491	Client: Thread-48, #fails: 0
+1384189885492	Client: Thread-49, #send: 5953, total time: 277986.093750, avg: 46.696804, min: 8.980645, max: 514.205200
+1384189885492	Client: Thread-49, #pop: 5953, total time: 324174.687500, avg: 54.455685, min: 14.077217, max: 233.852921
+1384189885492	Client: Thread-49, #fails: 0
+1384189885493	Client: Thread-50, #send: 6032, total time: 278453.625000, avg: 46.162735, min: 12.482959, max: 490.760590
+1384189885493	Client: Thread-50, #pop: 6032, total time: 323701.843750, avg: 53.664097, min: 16.176327, max: 279.823608
+1384189885493	Client: Thread-50, #fails: 0
+1384189885493	Client: Thread-51, #send: 5993, total time: 279821.625000, avg: 46.691406, min: 14.090002, max: 461.111389
+1384189885493	Client: Thread-51, #pop: 5993, total time: 322337.093750, avg: 53.785595, min: 14.990014, max: 250.112640
+1384189885493	Client: Thread-51, #fails: 0
+1384189885494	Client: Thread-52, #send: 6041, total time: 279641.406250, avg: 46.290581, min: 5.287305, max: 521.081177
+1384189885494	Client: Thread-52, #pop: 6041, total time: 322570.968750, avg: 53.396954, min: 16.939344, max: 223.606873
+1384189885494	Client: Thread-52, #fails: 0
+1384189885495	Client: Thread-53, #send: 5963, total time: 279928.500000, avg: 46.944241, min: 13.141043, max: 489.103790
+1384189885495	Client: Thread-53, #pop: 5963, total time: 322280.718750, avg: 54.046741, min: 9.944557, max: 250.837051
+1384189885495	Client: Thread-53, #fails: 0
+1384189885496	Client: Thread-54, #send: 5937, total time: 279591.187500, avg: 47.093006, min: 7.195479, max: 489.465759
+1384189885496	Client: Thread-54, #pop: 5937, total time: 322635.437500, avg: 54.343178, min: 6.580125, max: 244.425461
+1384189885496	Client: Thread-54, #fails: 0
+1384189885496	Client: Thread-55, #send: 5950, total time: 280635.593750, avg: 47.165649, min: 7.993571, max: 477.620758
+1384189885497	Client: Thread-55, #pop: 5950, total time: 321645.125000, avg: 54.058002, min: 13.191444, max: 257.455902
+1384189885497	Client: Thread-55, #fails: 0
+1384189885497	Client: Thread-56, #send: 5998, total time: 281167.812500, avg: 46.876926, min: 10.641363, max: 496.202087
+1384189885497	Client: Thread-56, #pop: 5998, total time: 321110.906250, avg: 53.536327, min: 5.726242, max: 252.131332
+1384189885497	Client: Thread-56, #fails: 0
+1384189885498	Client: Thread-57, #send: 5987, total time: 279948.093750, avg: 46.759327, min: 12.396095, max: 512.650330
+1384189885498	Client: Thread-57, #pop: 5987, total time: 322377.468750, avg: 53.846249, min: 11.205892, max: 248.751526
+1384189885498	Client: Thread-57, #fails: 0
+1384189885499	Client: Thread-58, #send: 5934, total time: 278143.343750, avg: 46.872826, min: 10.968979, max: 493.091522
+1384189885499	Client: Thread-58, #pop: 5934, total time: 324222.062500, avg: 54.638027, min: 15.285122, max: 224.001083
+1384189885499	Client: Thread-58, #fails: 0
+1384189885500	Client: Thread-59, #send: 6036, total time: 280917.031250, avg: 46.540260, min: 8.087332, max: 491.567993
+1384189885500	Client: Thread-59, #pop: 6036, total time: 321463.437500, avg: 53.257694, min: 7.070845, max: 239.749329
+1384189885500	Client: Thread-59, #fails: 0
+1384189885500	Client: Thread-60, #send: 5959, total time: 279879.437500, avg: 46.967522, min: 4.768442, max: 497.939545
+1384189885500	Client: Thread-60, #pop: 5959, total time: 322518.375000, avg: 54.122906, min: 11.860120, max: 266.060913
+1384189885500	Client: Thread-60, #fails: 0
+1384189885501	Client: Thread-61, #send: 5969, total time: 279312.687500, avg: 46.793884, min: 5.637472, max: 513.586914
+1384189885501	Client: Thread-61, #pop: 5969, total time: 323074.281250, avg: 54.125362, min: 8.894382, max: 255.088882
+1384189885501	Client: Thread-61, #fails: 0
+1384189885502	Client: Thread-62, #send: 5923, total time: 280131.062500, avg: 47.295471, min: 5.127650, max: 514.461304
+1384189885502	Client: Thread-62, #pop: 5923, total time: 322353.406250, avg: 54.424007, min: 8.880981, max: 229.495865
+1384189885502	Client: Thread-62, #fails: 0
+1384189885503	Client: Thread-63, #send: 5976, total time: 280206.781250, avg: 46.888683, min: 4.721330, max: 493.223083
+1384189885503	Client: Thread-63, #pop: 5976, total time: 322302.750000, avg: 53.932858, min: 10.021488, max: 242.495728
+1384189885503	Client: Thread-63, #fails: 0
+1384189885503	Client: Thread-64, #send: 6079, total time: 279779.281250, avg: 46.023899, min: 3.175022, max: 493.896393
+1384189885504	Client: Thread-64, #pop: 6079, total time: 322804.000000, avg: 53.101498, min: 14.281632, max: 263.085846
+1384189885504	Client: Thread-64, #fails: 0
+1384189885504	Client: Thread-65, #send: 5931, total time: 281041.250000, avg: 47.385136, min: 10.927531, max: 493.892609
+1384189885504	Client: Thread-65, #pop: 5931, total time: 321553.093750, avg: 54.215664, min: 6.626555, max: 244.886765
+1384189885504	Client: Thread-65, #fails: 0
+1384189885505	Client: Thread-66, #send: 5989, total time: 279049.593750, avg: 46.593689, min: 2.536992, max: 442.360474
+1384189885505	Client: Thread-66, #pop: 5989, total time: 323539.656250, avg: 54.022320, min: 4.909834, max: 262.479980
+1384189885505	Client: Thread-66, #fails: 0
+1384189885506	Client: Thread-67, #send: 6005, total time: 280764.812500, avg: 46.755173, min: 4.819269, max: 514.998169
+1384189885506	Client: Thread-67, #pop: 6005, total time: 321832.375000, avg: 53.594067, min: 8.941904, max: 210.210358
+1384189885506	Client: Thread-67, #fails: 0
+1384189885507	Client: Thread-68, #send: 6016, total time: 282088.281250, avg: 46.889671, min: 3.143249, max: 512.661682
+1384189885507	Client: Thread-68, #pop: 6016, total time: 320511.156250, avg: 53.276455, min: 7.205958, max: 209.440460
+1384189885507	Client: Thread-68, #fails: 0
+1384189885507	Client: Thread-69, #send: 6005, total time: 280457.062500, avg: 46.703922, min: 3.686735, max: 510.756165
+1384189885508	Client: Thread-69, #pop: 6005, total time: 322218.843750, avg: 53.658428, min: 5.607382, max: 258.248932
+1384189885508	Client: Thread-69, #fails: 0
+1384189885508	Client: Thread-70, #send: 5985, total time: 279023.656250, avg: 46.620491, min: 3.034544, max: 511.312622
+1384189885508	Client: Thread-70, #pop: 5985, total time: 323658.406250, avg: 54.078262, min: 6.767626, max: 191.618973
+1384189885508	Client: Thread-70, #fails: 0
+1384189885509	Client: Thread-71, #send: 5995, total time: 279442.437500, avg: 46.612579, min: 2.569337, max: 506.993500
+1384189885509	Client: Thread-71, #pop: 5995, total time: 323261.843750, avg: 53.921913, min: 5.149884, max: 264.364380
+1384189885509	Client: Thread-71, #fails: 0
+1384189885510	Client: Thread-72, #send: 6012, total time: 280129.062500, avg: 46.594990, min: 3.025605, max: 511.891998
+1384189885510	Client: Thread-72, #pop: 6012, total time: 322581.281250, avg: 53.656231, min: 4.131002, max: 295.294312
+1384189885510	Client: Thread-72, #fails: 0
+1384189885511	Client: Thread-73, #send: 5985, total time: 280813.062500, avg: 46.919479, min: 4.064601, max: 512.073914
+1384189885511	Client: Thread-73, #pop: 5985, total time: 321914.000000, avg: 53.786804, min: 4.978107, max: 214.396881
+1384189885511	Client: Thread-73, #fails: 0
+1384189885511	Client: Thread-74, #send: 6001, total time: 280298.125000, avg: 46.708569, min: 4.119626, max: 465.397064
+1384189885512	Client: Thread-74, #pop: 6001, total time: 322431.718750, avg: 53.729664, min: 5.508350, max: 245.695877
+1384189885512	Client: Thread-74, #fails: 0
+1384189885512	Client: Thread-75, #send: 6064, total time: 280823.125000, avg: 46.309883, min: 7.610056, max: 504.120331
+1384189885512	Client: Thread-75, #pop: 6064, total time: 321912.781250, avg: 53.085880, min: 6.984610, max: 272.651459
+1384189885512	Client: Thread-75, #fails: 0
+1384189885513	Client: Thread-76, #send: 6038, total time: 282362.750000, avg: 46.764282, min: 6.633465, max: 597.098267
+1384189885513	Client: Thread-76, #pop: 6038, total time: 320395.781250, avg: 53.063229, min: 10.351730, max: 280.399200
+1384189885513	Client: Thread-76, #fails: 0
+1384189885514	Client: Thread-77, #send: 6071, total time: 279417.406250, avg: 46.024940, min: 3.522865, max: 575.486450
+1384189885514	Client: Thread-77, #pop: 6071, total time: 323360.875000, avg: 53.263199, min: 5.217922, max: 259.475739
+1384189885514	Client: Thread-77, #fails: 0
+1384189885514	Client: Thread-78, #send: 6015, total time: 278383.625000, avg: 46.281567, min: 7.534373, max: 603.989685
+1384189885515	Client: Thread-78, #pop: 6015, total time: 324396.218750, avg: 53.931210, min: 7.277546, max: 235.172318
+1384189885515	Client: Thread-78, #fails: 0
+1384189885515	Client: Thread-79, #send: 6016, total time: 280964.281250, avg: 46.702835, min: 2.909268, max: 587.006531
+1384189885515	Client: Thread-79, #pop: 6016, total time: 321825.250000, avg: 53.494888, min: 4.712216, max: 248.595169
+1384189885515	Client: Thread-79, #fails: 0
+1384189885516	Client: Thread-80, #send: 5945, total time: 280567.812500, avg: 47.193913, min: 5.075179, max: 503.315277
+1384189885516	Client: Thread-80, #pop: 5945, total time: 322242.531250, avg: 54.203960, min: 6.153883, max: 242.827545
+1384189885516	Client: Thread-80, #fails: 0
+1384189885517	Client: Thread-81, #send: 6066, total time: 280684.343750, avg: 46.271732, min: 2.723732, max: 505.788391
+1384189885517	Client: Thread-81, #pop: 6066, total time: 322156.250000, avg: 53.108517, min: 7.955345, max: 196.058517
+1384189885517	Client: Thread-81, #fails: 0
+1384189885518	Client: Thread-82, #send: 6049, total time: 280121.937500, avg: 46.308800, min: 5.014049, max: 576.892029
+1384189885518	Client: Thread-82, #pop: 6049, total time: 322599.437500, avg: 53.331039, min: 7.424077, max: 270.584351
+1384189885518	Client: Thread-82, #fails: 0
+1384189885518	Client: Thread-83, #send: 5992, total time: 281178.375000, avg: 46.925629, min: 4.067492, max: 502.303009
+1384189885518	Client: Thread-83, #pop: 5992, total time: 321686.031250, avg: 53.685925, min: 3.878465, max: 214.337753
+1384189885519	Client: Thread-83, #fails: 0
+1384189885519	Client: Thread-84, #send: 6033, total time: 280159.187500, avg: 46.437794, min: 2.184940, max: 572.467468
+1384189885519	Client: Thread-84, #pop: 6033, total time: 322745.468750, avg: 53.496681, min: 5.032125, max: 208.238480
+1384189885519	Client: Thread-84, #fails: 0
+1384189885520	Client: Thread-85, #send: 5936, total time: 281733.843750, avg: 47.461903, min: 2.617658, max: 467.496155
+1384189885520	Client: Thread-85, #pop: 5936, total time: 321175.656250, avg: 54.106411, min: 4.016192, max: 254.217300
+1384189885520	Client: Thread-85, #fails: 0
+1384189885521	Client: Thread-86, #send: 5995, total time: 282742.468750, avg: 47.163044, min: 3.203162, max: 580.919312
+1384189885521	Client: Thread-86, #pop: 5995, total time: 320184.125000, avg: 53.408527, min: 6.224353, max: 190.409042
+1384189885521	Client: Thread-86, #fails: 0
+1384189885521	Client: Thread-87, #send: 5951, total time: 280581.000000, avg: 47.148548, min: 2.349684, max: 580.651917
+1384189885522	Client: Thread-87, #pop: 5951, total time: 322364.343750, avg: 54.169777, min: 4.626657, max: 220.988205
+1384189885522	Client: Thread-87, #fails: 0
+1384189885522	Client: Thread-88, #send: 5951, total time: 280843.312500, avg: 47.192627, min: 2.821761, max: 496.012604
+1384189885523	Client: Thread-88, #pop: 5951, total time: 322115.156250, avg: 54.127899, min: 4.641666, max: 244.089264
+1384189885523	Client: Thread-88, #fails: 0
+1384189885523	Client: Thread-89, #send: 6004, total time: 281064.906250, avg: 46.812939, min: 2.122775, max: 464.503845
+1384189885523	Client: Thread-89, #pop: 6004, total time: 321879.000000, avg: 53.610764, min: 3.826124, max: 194.449478
+1384189885523	Client: Thread-89, #fails: 0
+1384189885524	Client: Thread-90, #send: 6020, total time: 282695.718750, avg: 46.959423, min: 3.423792, max: 569.100342
+1384189885524	Client: Thread-90, #pop: 6020, total time: 320266.562500, avg: 53.200428, min: 4.929511, max: 257.022156
+1384189885524	Client: Thread-90, #fails: 0
+1384189885525	Client: Thread-91, #send: 6013, total time: 282121.406250, avg: 46.918575, min: 2.428129, max: 562.382568
+1384189885525	Client: Thread-91, #pop: 6013, total time: 320850.593750, avg: 53.359489, min: 3.641355, max: 290.712372
+1384189885525	Client: Thread-91, #fails: 0
+1384189885526	Client: Thread-92, #send: 5998, total time: 282339.500000, avg: 47.072277, min: 3.392024, max: 569.058105
+1384189885526	Client: Thread-92, #pop: 5998, total time: 320632.156250, avg: 53.456512, min: 3.566917, max: 274.333832
+1384189885526	Client: Thread-92, #fails: 0
+1384189885526	Client: Thread-93, #send: 6026, total time: 280135.750000, avg: 46.487846, min: 2.696497, max: 496.973206
+1384189885526	Client: Thread-93, #pop: 6026, total time: 322840.468750, avg: 53.574589, min: 4.088042, max: 207.968445
+1384189885527	Client: Thread-93, #fails: 0
+1384189885527	Client: Thread-94, #send: 5997, total time: 281233.937500, avg: 46.895771, min: 2.573289, max: 492.586517
+1384189885527	Client: Thread-94, #pop: 5997, total time: 321744.062500, avg: 53.650841, min: 4.517113, max: 210.510025
+1384189885527	Client: Thread-94, #fails: 0
+1384189885528	Client: Thread-95, #send: 5964, total time: 280243.312500, avg: 46.989151, min: 2.795962, max: 482.769440
+1384189885528	Client: Thread-95, #pop: 5964, total time: 322739.593750, avg: 54.114620, min: 4.222681, max: 282.771118
+1384189885528	Client: Thread-95, #fails: 0
+1384189885529	Client: Thread-96, #send: 5966, total time: 281901.437500, avg: 47.251328, min: 2.614326, max: 581.673706
+1384189885529	Client: Thread-96, #pop: 5966, total time: 321086.062500, avg: 53.819321, min: 4.761862, max: 219.330963
+1384189885529	Client: Thread-96, #fails: 0
+1384189885529	Client: Thread-97, #send: 6018, total time: 280628.125000, avg: 46.631458, min: 2.259090, max: 485.117035
+1384189885530	Client: Thread-97, #pop: 6018, total time: 322361.093750, avg: 53.566151, min: 3.216775, max: 199.126160
+1384189885530	Client: Thread-97, #fails: 0
+1384189885530	Client: Thread-98, #send: 6027, total time: 280614.312500, avg: 46.559532, min: 3.144609, max: 561.739014
+1384189885530	Client: Thread-98, #pop: 6027, total time: 322380.156250, avg: 53.489326, min: 5.131842, max: 244.395813
+1384189885530	Client: Thread-98, #fails: 0
+1384189885531	Client: Thread-99, #send: 6010, total time: 280066.562500, avg: 46.600094, min: 2.605948, max: 569.622437
+1384189885531	Client: Thread-99, #pop: 6010, total time: 322931.218750, avg: 53.732315, min: 3.527032, max: 252.656433
+1384189885531	Client: Thread-99, #fails: 0
+1384189885532	Client: Thread-100, #send: 6019, total time: 280804.437500, avg: 46.653004, min: 2.259596, max: 462.016663
+1384189885532	Client: Thread-100, #pop: 6019, total time: 322178.718750, avg: 53.526947, min: 4.157565, max: 211.617905
+1384189885532	Client: Thread-100, #fails: 0
+1384189885532	Client: Thread-101, #send: 6040, total time: 279500.875000, avg: 46.274979, min: 2.034867, max: 460.466278
+1384189885533	Client: Thread-101, #pop: 6040, total time: 323500.750000, avg: 53.559723, min: 3.261963, max: 234.576828
+1384189885533	Client: Thread-101, #fails: 0
+1384189885533	Client: Thread-102, #send: 6044, total time: 282368.750000, avg: 46.718853, min: 1.962176, max: 485.543427
+1384189885533	Client: Thread-102, #pop: 6044, total time: 320640.843750, avg: 53.051102, min: 3.091810, max: 313.244965
+1384189885533	Client: Thread-102, #fails: 0
