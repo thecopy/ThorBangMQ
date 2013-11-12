@@ -228,129 +228,17 @@
             % Bottlenecks
             % Most expensive operations that determine the overall performance
 
+<<<<<<< HEAD
     \section{Results}
         TODO: Note that we're using a closed system which has an effect on the results\\
         TODO: Show raw data, graphs, do statistical treatment of data
         
-        \subsection{2 hour Traces}
-        The figures in this section shows the overall stability of the system while under moderate to high system load for 2 hours.
-        
-        \begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.750]{2h_30threads_standardTest_500_250}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 500 one-way clients and 250 two-way clients. Using 1 middleware with 30 worker threads and 30 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:2h_30threads_standardTest_500_250}
-            \end{figure}
-            
-        \begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.750]{2h_100threads_standardTest_100_50}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 100 one-way clients and 50 two-way clients. Using 1 middleware with 100 worker threads and 100 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:2h_100threads_standardTest_100_50}
-            \end{figure}
-            
-        \begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.750]{2h_100threads_standardTest_500_250}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 500 one-way clients and 250 two-way clients. Using 1 middleware with 100 worker threads and 100 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:2h_100threads_standardTest_500_250}
-            \end{figure}
-            
-            
-            
-            \begin{tabular}{|c|c|c|c|c|}
-            	\hline 
-            \textbf{OW} & \textbf{TW} & \textbf{Threads/Db-conns} & \textbf{Throughput (msgs/s)} & \textbf{Standard Deviation} \\ 
-            \hline 
-            500 & 250 & 100/100 &618.45 &52.9\\
-            \hline 
-            500 & 250 & 30/30 &701.79 &59.7\\
-            \hline
-            100 & 50 & 100/100 &310.2587 &13.1658\\
-            \hline
-            \end{tabular} 
+        \subsection{Micro Benchmarks}
 
         \subsection{Micro Benchmarks}
             % Use test sendAndPopSameClient 2013-11-09__22_23_35 and 2013-11-09__22_24_23 to infer this.
-        \subsection{Impact of Message Size}
-        
-        \begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.60]{responsetime_msgsize}
-                \caption{The response time for pushing, peeking and popping as a function of the message size. The peeking and popping curves are also shown again in the lower graph without the push-response time for clarity.}
-                \label{fig:responsetime_msgsize}
-            \end{figure}
-        \subsection{Difference in worker threads}
-            % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
 
-        \subsection{Difference in database messages} 
 
-		       
-			\begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.55]{msg_db_clients}
-                \caption{The throughput when running \textit{Standard Test} varying number of client and number of messages stored in database prior to test start. Using 1 middleware}
-                \label{fig:msg_db_clients}
-            \end{figure}
-        
-        \subsection{Difference in database connections} 
-            % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
-            
-        \subsection{Impact of number of middlewares}
-			\begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.40]{throughout-thinktime_middleware_clients}
-                \caption{The throughput when running \textit{SendAndPopSameClient} varying number of clients and number of middlewares.}
-                \label{fig:throughout_middleware_clients}
-                \end{figure}
-			\begin{table}
-			
-            \begin{tabular}{|c|c|c|c|}
-            \hline
-            \textbf{1 Middleware} & & &\\
-            \hline
-            Clients & Socket I/O & Client Request Worker & IPersistence \\ \hline
-  			1&  111.77 &    48.33 &  2380.06\\ \hline  
- 2& 139.26 &    62.93 &  2266.02\\ \hline  
- 3& 138.36 &    45.89 &  2553.87\\ \hline  
- 4& 153.40 &    47.68 &  2541.67\\ \hline  
- 5& 152.72 &    47.07 &  3062.58\\ \hline  
- 6& 244.52 &    60.62 &  3974.65\\ \hline  
- 7& 345.78 &    76.72 &  4247.42\\ \hline    
-   			\textbf{2 Middlewares} & & & \\  
-            	\hline
-            	Clients &	Socket I/O & Client Request Worker & IPersistence \\ \hline
- 2& 106.68 &    47.79 &  2540.22\\ \hline  
- 4& 129.81 &    36.00 &  2537.58\\ \hline  
- 6& 147.75 &    49.79 &  4351.00\\ \hline  
-			\end{tabular}
-			\caption{Average think time for middleware components when varying number of clients for 1 and 2 middlewares.}
-			\label{table:thinktime_middleware_clients}
-			\end{table}                
-                
-            \begin{table}
-            \begin{tabular}{|c|c|c|c|}
-            \hline
-            \textbf{1 Middleware} & & &\\
-            \hline
-            Clients & Socket I/O & Client Request Worker & IPersistence \\ \hline
-  			1&	 15.62 &     6.49 &   158.56 \\ \hline  
-  			2&	 28.52 &    11.77 &   147.64 \\ \hline  
-  			3&	 32.15 &    11.71 &   362.91 \\ \hline  
-   			4&     41.51 &    13.32 &   487.37 \\ \hline  
-  			5&	 24.99 &     9.88 &   441.94 \\ \hline  
-   			6&	 48.75 &    23.97 &   485.21 \\ \hline  
-   			7&	 61.23 &    24.84 &   587.43 \\ \hline      
-   			\textbf{2 Middlewares} & & & \\  
-            	\hline
-            	Clients &	Socket I/O & Client Request Worker & IPersistence \\ \hline
-   			2&	29.02 &    12.97 &   549.87 \\ \hline  
-   			4&	37.73 &    10.67 &   428.83 \\ \hline  
-   			6&	35.89 &    10.64 &   708.21 \\ \hline 
-			\end{tabular}
-			\caption{Think time standard deviation for middleware components when varying number of clients for 1 and 2 middlewares.}
-			\label{table:thinktime_std_middleware_clients}
-			\end{table}
         \subsubsection{Pop a Message}
         
 			\begin{figure}[H]
@@ -363,7 +251,7 @@
 			\begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{responsetime_500k_pop}
-                \caption{The response time for pop queue request. Each data point represents an individual request. A total of 500 000 requests sent sequential each after the other.}
+                \caption{The response time for pop queue request. Each data point represents an individual request. A total of 500 000 requests.}
                 \label{fig:responsetime_500k_pop}
             \end{figure}
             
@@ -371,11 +259,11 @@
             	\hline 
             \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
             \hline 
-            Socket I/O & 12.3624 & 4.941 \\ 
+            Socket I/O & 12.3624 & 4.941 ms \\ 
             \hline 
-            CRW & 7.4868 & 3.7579 \\ 
+            CRW & 7.4868 ms & 3.7579 ms \\ 
             \hline 
-            IPersistence & 400.027 & 111.707 \\ 
+            IPersistence & 400.027 ms & 111.707 ms \\ 
             \hline 
             \end{tabular} 
             
@@ -385,14 +273,14 @@
 			\begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{thinktime_500k_peek}
-                \caption{The think time in the server for peek queue request. Each data point represents an individual request. A total of 500 000 requests sent sequential each after the other.}
+                \caption{The think time in the server for peek queue request. Each data point represents an individual request. A total of 500 000 requests.}
                 \label{fig:thinktime_500k_peek}
             \end{figure}
             
 			\begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{responsetime_500k_peek}
-                \caption{The response time for send message request. Each data point represents an individual request. A total of 500 000 requests sent sequential each after the other.}
+                \caption{The response time for send message request. Each data point represents an individual request. A total of 500 000 requests.}
                 \label{fig:responsetime_500k_peek}
             \end{figure}
             	
@@ -413,33 +301,36 @@
 			\begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{thinktime_500k_push}
-                \caption{The think time for send message request. Each data point represents an individual request. A total of 500 000 requests sent sequential each after the other.}
+                \caption{The think time for send message request. Each data point represents an individual request. A total of 500 000 requests.}
                 \label{fig:thinktime_500k_push}
             \end{figure}
             
 			\begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{responsetime_500k_push}
-                \caption{The response time for send message request. Each data point represents an individual request. A total of 500 000 requests sent sequential each after the other.}
+                \caption{The response time for send message request. Each data point represents an individual request. A total of 500 000 requests.}
                 \label{fig:responsetime_500k_push}
             \end{figure}
-            
-            	
-            	\begin{tabular}{|c|c|c|}
-            	\hline 
-            \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
-            \hline 
-            Socket I/O &8.4467 &12.0007\\ 
-            \hline 
-			CRW &2.3654 &3.384\\ 
-            \hline 
-			IPersistence &125.6863 &174.7623\\ 
-            \hline 
-            \end{tabular} 
             
             
     \section{Analysis}
         \subsection{Time to perform send}
+=======
+        \subsection{Difference is message size}
+            % TODO: plot graphs for diff_clients_msgsize-10b, diff_clients_msgsize-1mb, diff_clients_msgsize-10mb
+            %       with error bars
+
+        \subsection{Difference in worker threads}
+            % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
+
+        \subsection{Difference in database connections} 
+            % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
+
+        \subsection{Difference in request frequency}
+            % TODO: plot graphs for diff_sleep-time-between-requests
+
+
+>>>>>>> 5e2644cc7dbb593690127fe1c74a74dc1864529b
     \section{Analysis}
         TODO: Interpret results showed above
 
