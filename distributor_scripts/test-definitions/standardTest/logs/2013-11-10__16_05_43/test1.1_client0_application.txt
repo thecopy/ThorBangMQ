@@ -1,4 +1,0 @@
-1384095957356	numberOfOneWayClients: 500
-1384095957356	numberOfTwoWayClients: 300
-1384095957356	lengthOfExperiment: 7200000
-1384095958940	Starting all clients...

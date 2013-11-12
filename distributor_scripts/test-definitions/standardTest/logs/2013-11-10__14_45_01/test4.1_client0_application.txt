@@ -1,6 +1,0 @@
-1384091384337	numberOfOneWayClients: 50
-1384091384337	numberOfTwoWayClients: 30
-1384091384338	lengthOfExperiment: 60000
-1384091384655	Starting all clients...
-1384091444729	OK DONE:) Shutting down all clients...
-1384091444730	OK

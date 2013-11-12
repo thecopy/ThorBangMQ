@@ -1,6 +1,0 @@
-numclients=1
-numservers=1
-serverargs=databaseconnections:15,workerthreads:8,cleardatabase:true
-clientargs=50,30,7200000
-testtime=7200
-destroydroplets=true

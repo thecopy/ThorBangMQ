@@ -1,0 +1,13 @@
+USE THIS TEST TO SHOW WHAT THE NUMBER OF DATABASE CONNECTIONS MAKES OF DIFFERENCE. COMPARE WITH 16_01_45
+numclients=1
+numservers=1
+serverargs=databaseconnections:100,workerthreads:100,cleardatabase:true
+serverargs=databaseconnections:75,workerthreads:75,cleardatabase:true
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true
+serverargs=databaseconnections:25,workerthreads:25,cleardatabase:true
+clientargs=200,600000,1024,10
+clientargs=150,600000,1024,10
+clientargs=100,600000,1024,10
+clientargs=50,600000,1024,10
+clientargs=1,600000,1024,10
+testtime=605

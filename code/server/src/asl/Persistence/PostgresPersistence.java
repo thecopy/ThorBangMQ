@@ -467,14 +467,16 @@ public class PostgresPersistence implements IPersistence {
 		}
 	}
 	
-	public void fillDb() throws PersistenceException{
+	public void fillDb(int numMessages) throws PersistenceException{
 
+		int numLoops = 4;
+		String msgsPerLoop = String.valueOf(numMessages / numLoops);
 		
 		try {
 		String sql = "DO "+
 					"$do$ "+
 					"BEGIN  "+
-					"FOR i IN 1..5000 LOOP "+
+					"FOR i IN 1.." + msgsPerLoop + " LOOP "+
 					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
 					"	VALUES(2,1,1,1,1,'some message'); "+
 					"END LOOP; "+
@@ -484,7 +486,7 @@ public class PostgresPersistence implements IPersistence {
 			sql = "DO "+
 					"$do$ "+
 					"BEGIN  "+
-					"FOR i IN 1..5000 LOOP "+
+					"FOR i IN 1.." + msgsPerLoop + " LOOP "+
 					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
 					"	VALUES(2,2,1,1,1,'some message'); "+
 					"END LOOP; "+
@@ -494,7 +496,7 @@ public class PostgresPersistence implements IPersistence {
 			sql = "DO "+
 					"$do$ "+
 					"BEGIN  "+
-					"FOR i IN 1..5000 LOOP "+
+					"FOR i IN 1.." + msgsPerLoop + " LOOP "+
 					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
 					"	VALUES(1,2,1,1,1,'some message'); "+
 					"END LOOP; "+
@@ -503,7 +505,7 @@ public class PostgresPersistence implements IPersistence {
 			executeStatement(sql, logger);sql = "DO "+
 					"$do$ "+
 					"BEGIN  "+
-					"FOR i IN 1..5000 LOOP "+
+					"FOR i IN 1.." + msgsPerLoop + " LOOP "+
 					"   INSERT INTO asl.messages (receiver_id,sender_id,queue_id,context_id,priority,message) "+
 					"	VALUES(1,1,1,1,1,'some message'); "+
 					"END LOOP; "+

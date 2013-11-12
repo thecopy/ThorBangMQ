@@ -154,13 +154,13 @@
         ~\\
         It should be noted that our testing infrastructure is very simple in that, for instance, it doesn't check for errors while running; it just assumes that everything executes successfully and continues on, even though that is not the case. We found this to be a somewhat of a mistake since it has caused us quite a bit of trouble during our testing.
 
-    \section{Tests}
+    \section{Tests and results}
         In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we assume that these requests are vastly more frequent than all other types of requests, e.g. create queue, and that the performance of the system as a whole will be dominated by these three types of requests.\\
         \\
-        We have performed our tests using machines from the cloud hosting provider DigitalOcean.com, where we got a 200\$ coupon to run experiments. Running our tests on a cloud host has some obvious downsides w.r.t. our test results since we can't know for sure which hardware our tests are run on, and if we have any neighbors on this hardware.\\
-        We have run all of our experiments on machines with: 4GB memory, SSD storage, and 2 logical CPU cores. Due to the way DigitalOcean provides their servers, we can't really tell how much computing power these logical CPUs provide, or whether there are any neighbors on the hardware. In order to compensate for this we've run all of our experiments for at least 10 minutes each, to check that the performance is somewhat consistent.
+        We have performed our tests using machines from the cloud hosting provider DigitalOcean.com, from whom we got a 200\$ coupon to run experiments. Running our tests on a cloud host has some obvious downsides w.r.t. our test results since we can't know for sure which hardware our tests are run on, and if we have any neighbors on this hardware.\\
+        We have run all of our experiments on machines with: 4GB memory, SSD storage, and 2 logical CPU cores. Due to the way DigitalOcean provide their servers, we can't really tell how much computing power these logical CPUs provide, or whether there are any neighbors on the hardware. In order to compensate for this we've run all of our experiments for at least 10 minutes each, to check that the performance is somewhat consistent.
         \\
-        To explain the performance of our system, we have identified the following parameters which we wish to test.
+        In order to try to explain the performance of our system, we have identified the following parameters which we wish to test.
         \begin{itemize}
             \item Client
             \begin{itemize}
@@ -186,10 +186,8 @@
 
         \subsection{Standard test}
 
-        \subsection{Mixed requests}
-            \begin{itemize}
-                \item Simulation of 'real workload'?
-            \end{itemize}
+        \subsection{Pure send message}
+            In this test we performed $500000$ send message requests within 
 
         \subsection{Database connections vs. worker threads}
             This is a $2^2$ test. Use data from 2H standardTests.
@@ -197,12 +195,28 @@
         \subsection{Number of messages vs. time of reads}
             This is a $2^2$ test.
 
-        \subsection{Code characterization}
-            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We will perform profiling during multiple different tests, as described above, in order to see if there is any difference between them.
+
+        \subsection{Code profiling}
+            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler, we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes), and show the general results we got with all other tests and configurations.  Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% and 87.5\% respectively.
+            \begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{code_profiling_send_pop_same_client}
+                \caption{3 minutes of profiling during 'Send message, pop message' with 80 clients, very small messages}
+                \label{fig:code_profiling_send_pop_same_client}
+            \end{figure}
+            \begin{figure}[H]
+                \hspace{-1.5cm}
+                \includegraphics[scale=0.50]{code_profiling_standard_test}
+                \caption{3 minutes of profiling during 'Standard test' with 80 clients, very small messages}
+                \label{fig:code_profiling_standard_test}
+            \end{figure}
+            ~\\
+            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for 'Send message, pop message' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
+            \\
+            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'Send message, pop message' and 'Standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed in worker threads.
 
             % Bottlenecks
             % Most expensive operations that determine the overall performance
-
 
     \section{Results}
         TODO: Note that we're using a closed system which has an effect on the results\\
@@ -216,25 +230,6 @@
         \subsection{Time to perform peek}
 
         \subsection{Time to perform send}
-
-        \subsection{Code profiling}
-            We performed code profiling during multiple different tests. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending messages of around 5 bytes in each test, and show the general results we got.  Our code spends almost all of the time, as shown on both Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% and 87.5\% respectively.
-            \begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.50]{code_profiling_send_pop_same_client}
-                \caption{3 minutes of profiling during 'Send message, pop message' with 80 clients}
-                \label{fig:code_profiling_send_pop_same_client}
-            \end{figure}
-            \begin{figure}[H]
-                \hspace{-1.5cm}
-                \includegraphics[scale=0.50]{code_profiling_standard_test}
-                \caption{3 minutes of profiling during 'Standard test' with 80 clients}
-                \label{fig:code_profiling_standard_test}
-            \end{figure}
-            ~\\
-            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for 'Send message, pop message' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets the clients' requests and 'send' sends replies to clients.\\
-            \\
-            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'Send message, pop message' and 'Standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed in worker threads.
 
     \section{Analysis}
         TODO: Interpret results showed above

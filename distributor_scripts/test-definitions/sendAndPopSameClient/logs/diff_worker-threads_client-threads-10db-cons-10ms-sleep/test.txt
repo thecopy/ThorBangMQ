@@ -1,0 +1,13 @@
+USE THIS TEST TO SHOW WHAT THE AMOUNT OF WORKER THREADS MAKES OF DIFFERENCE. COMPARE WITH 15_52_26
+numclients=1
+numservers=1
+serverargs=databaseconnections:10,workerthreads:100,cleardatabase:true
+serverargs=databaseconnections:10,workerthreads:75,cleardatabase:true
+serverargs=databaseconnections:10,workerthreads:50,cleardatabase:true
+serverargs=databaseconnections:10,workerthreads:25,cleardatabase:true
+clientargs=200,600000,1024,10
+clientargs=150,600000,1024,10
+clientargs=100,600000,1024,10
+clientargs=50,600000,1024,10
+clientargs=1,600000,1024,10
+testtime=605

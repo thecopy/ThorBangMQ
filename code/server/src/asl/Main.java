@@ -17,6 +17,7 @@ import asl.infrastructure.exceptions.PersistenceException;
 public class Main {
 	static final MemoryLogger testLogger = new MemoryLogger(false /*output to console*/);
 	static final MemoryLogger applicationLogger = new MemoryLogger(false /*output to console*/);
+	static int numMsgs = 20000;
 
 	public static void main(String[] args) throws Exception {		
 		testLogger.setLevel(Level.ALL);
@@ -126,7 +127,11 @@ public class Main {
 			clearDb(s, false);
 			System.out.println("Db clean!");
 		}
-		else{
+		else if (arg.toLowerCase().startsWith("nummsgs")){
+			String[] tmp = arg.split("=");
+			System.out.println("Setting numMsgs to " + tmp[1]);
+			numMsgs = Integer.parseInt(tmp[1]);
+		} else {
 			System.out.println("Unkown argument " + arg);
 		}
 	}
@@ -167,7 +172,7 @@ public class Main {
 			dbPersistence.createQueue("defaultqueue2");
 			dbPersistence.createClient("defaultclient3");
 			dbPersistence.createQueue("defaultqueue3");
-			dbPersistence.fillDb();
+			dbPersistence.fillDb(numMsgs);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 		}

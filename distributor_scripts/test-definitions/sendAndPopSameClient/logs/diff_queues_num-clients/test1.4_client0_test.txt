@@ -1,0 +1,30 @@
+1384194998076	Client: Thread-3, #send: 54999, total time: 241116.312500, avg: 4.384013, min: 1.686923, max: 151.916458
+1384194998076	Client: Thread-3, #pop: 54999, total time: 358694.625000, avg: 6.521839, min: 2.703939, max: 269.950897
+1384194998076	Client: Thread-3, #fails: 0
+1384194998100	Client: Thread-4, #send: 56689, total time: 239341.984375, avg: 4.222018, min: 1.609140, max: 1033.024780
+1384194998100	Client: Thread-4, #pop: 56689, total time: 360447.062500, avg: 6.358325, min: 2.558151, max: 268.046875
+1384194998100	Client: Thread-4, #fails: 0
+1384194998122	Client: Thread-5, #send: 55785, total time: 241691.171875, avg: 4.332548, min: 1.636508, max: 1033.884521
+1384194998122	Client: Thread-5, #pop: 55785, total time: 358129.781250, avg: 6.419823, min: 2.739349, max: 117.238037
+1384194998122	Client: Thread-5, #fails: 0
+1384194998125	Client: Thread-6, #send: 55621, total time: 241284.796875, avg: 4.338016, min: 1.673712, max: 153.341339
+1384194998125	Client: Thread-6, #pop: 55621, total time: 358533.375000, avg: 6.446007, min: 2.745598, max: 269.230469
+1384194998125	Client: Thread-6, #fails: 0
+1384194998127	Client: Thread-7, #send: 55452, total time: 241229.156250, avg: 4.350234, min: 1.683373, max: 266.408203
+1384194998128	Client: Thread-7, #pop: 55452, total time: 358585.125000, avg: 6.466586, min: 2.720298, max: 155.695007
+1384194998128	Client: Thread-7, #fails: 0
+1384194998130	Client: Thread-8, #send: 54793, total time: 242506.968750, avg: 4.425875, min: 1.637344, max: 403.478485
+1384194998130	Client: Thread-8, #pop: 54793, total time: 357324.593750, avg: 6.521355, min: 2.664648, max: 267.090332
+1384194998130	Client: Thread-8, #fails: 0
+1384194998133	Client: Thread-9, #send: 57131, total time: 238170.062500, avg: 4.168841, min: 1.641656, max: 402.525269
+1384194998133	Client: Thread-9, #pop: 57131, total time: 361660.875000, avg: 6.330379, min: 2.706052, max: 269.720154
+1384194998133	Client: Thread-9, #fails: 0
+1384194998135	Client: Thread-10, #send: 56361, total time: 240138.687500, avg: 4.260725, min: 1.692684, max: 400.253418
+1384194998135	Client: Thread-10, #pop: 56361, total time: 359687.500000, avg: 6.381851, min: 2.774038, max: 268.018158
+1384194998135	Client: Thread-10, #fails: 0
+1384194998138	Client: Thread-11, #send: 55953, total time: 239796.687500, avg: 4.285680, min: 1.647411, max: 152.633270
+1384194998138	Client: Thread-11, #pop: 55953, total time: 360044.781250, avg: 6.434772, min: 2.601156, max: 268.689636
+1384194998138	Client: Thread-11, #fails: 0
+1384194998140	Client: Thread-12, #send: 56167, total time: 239939.000000, avg: 4.271885, min: 1.710065, max: 153.042084
+1384194998140	Client: Thread-12, #pop: 56167, total time: 359887.750000, avg: 6.407460, min: 2.720151, max: 269.354706
+1384194998140	Client: Thread-12, #fails: 0

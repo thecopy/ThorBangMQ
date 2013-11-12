@@ -1,0 +1,8 @@
+2^k TEST TO SHOW WHAT DIFFERENCE IT MAKES TO HAVE MORE DB THREADS
+numclients=1
+numservers=1
+serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true
+serverargs=databaseconnections:5,workerthreads:50,cleardatabase:true
+serverargs=databaseconnections:5,workerthreads:5,cleardatabase:true
+clientargs=50,600000,1024,5,0
+testtime=605
