@@ -7,7 +7,7 @@
 \usepackage{amssymb}
 \usepackage{float}
 \usepackage{graphics}
-\usepackage{changepage}
+%\usepackage{changepage}
 \usepackage{epstopdf}
 \usepackage{graphicx}
     \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
@@ -623,7 +623,7 @@
             % SHOW:
             %   1 & 2 -> throughput increases with the number of clients
             %   1 & 2 -> response time decreases with the number of middleware. This is because of #worker-threads which limits the amount of simultaneous requests.
-
+		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see that while the troughput is the same for the system the response time is lower
         \subsection{Number of clients}
             % USE
             %   1) 2H tests
