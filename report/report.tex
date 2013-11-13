@@ -110,10 +110,10 @@
                 \end{itemize}
             \end{itemize}
             ~\\
-            It should be noted that in our implementation of 'Pop message' we are using 'Peek message'. This causes two accesses to the database whenever a client performs a 'Pop message'-request that returns a message. We only realized this after doing our tests, which is why we kept the implementation as described.
+            It should be noted that in our implementation of \textit{Pop message} we are using 'Peek message'. This causes two accesses to the database whenever a client performs a \textit{Pop message}-request that returns a message. We only realized this after doing our tests, which is why we kept the implementation as described.
 
         \subsection{Database}
-            We have chosen to use a simple database schema with three tables: messages, queues, and clients. We have used the following two multicolumn-indexes on the 'messages'-table:  on all fields that will be used to filter messages. These fields are indicated with a plus sign ($+$) on Figure \ref{fig:database_schema}. 
+            We have chosen to use a simple database schema with three tables: messages, queues, and clients. This schema is illustrated on Figure \ref{fig:database_schema}. We have used the following two multicolumn-indexes on the \textit{messages}-table: \textit{(receiver\_id, queue\_id, time\_of\_arrival)} and \textit{(receiver\_id, queue\_id, priority)}. 
             \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.50]{database_schema}
@@ -177,7 +177,7 @@
 
         \subsection{Standard test}
             \label{sec:standard_test}
-            This test is an implementation of the test described in the project description, which we're supposed to be using for the traces. Our interpretation of the description, and our implementation, is as follows: A number of one-way clients bounce a single message randomly between each other, incrementing a counter in the message. Each one-way client keeps performing 'Pop message'-requests, checking if he got the message. A number of two-way clients each have a partner assigned, with whom they keep sending messages back and forth. Each two-way client keeps sending 'Pop message'-requests until he receives a message from his partner, and then sends a reply back. From this description we should note that the amount of 'Send message'-requests doesn't change when incrementing the number of one-way clients increases, but it does when the number of two-way clients increases. Also to be noted, the number of 'Pop message'-requests increases when incrementing either of the two types of clients.\\
+            This test is an implementation of the test described in the project description, which we're supposed to be using for the traces. Our interpretation of the description, and our implementation, is as follows: A number of one-way clients bounce a single message randomly between each other, incrementing a counter in the message. Each one-way client keeps performing \textit{Pop message}-requests, checking if he got the message. A number of two-way clients each have a partner assigned, with whom they keep sending messages back and forth. Each two-way client keeps sending \textit{Pop message}-requests until he receives a message from his partner, and then sends a reply back. From this description we should note that the amount of \textit{Send Message}-requests doesn't change when incrementing the number of one-way clients increases, but it does when the number of two-way clients increases. Also to be noted, the number of \textit{Pop message}-requests increases when incrementing either of the two types of clients.\\
             \\
             The test is configurable in the amount of one-way clients and two-way clients it should use. Only too late did we realize that it would have been nice to be able to configure the size of messages sent, and the number of queues the messages are distributed over.\\
             \\
@@ -187,7 +187,7 @@
             In this test a single client performs a configurable amount of a single type of request. This test is used for micro benchmarking each type of request.
             The test can be configured in: the type of requests sent and the amount of requests sent. This test can't be configured from the command line, and must be performed manually.\\
             \\
-            Depending on the request being benchmarked, the amount of messages will differ. 'Send message' requests, for instance, will increase the amount of messages in the system, while 'Pop message' will decrease the amount of messages in the system.
+            Depending on the request being benchmarked, the amount of messages will differ. \textit{Send Message} requests, for instance, will increase the amount of messages in the system, while \textit{Pop message} will decrease the amount of messages in the system.
 
         \subsection{Timing measurements on the middleware}
             On the middleware we perform some timing measurements, measuring how much time is spent in different parts of our system. These names that we use for these parts are:\\
@@ -240,11 +240,11 @@
         \end{itemize}
 
         \subsection{Code profiling}
-            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes). These two tests show the general results we got with all configurations of these two types of tests. Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% for 'Send and pop same client' and 87.5\% for 'standard test'.
+            In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes). These two tests show the general results we got with all configurations of these two types of tests. Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% for 'Send and Pop Same Client' and 87.5\% for 'standard test'.
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.50]{code_profiling_send_pop_same_client}
-                \caption{3 minutes of profiling during 'Send and pop same client' with 80 clients, very small messages}
+                \caption{3 minutes of profiling during 'Send and Pop Same Client' with 80 clients, very small messages}
                 \label{fig:code_profiling_send_pop_same_client}
             \end{figure}
             \begin{figure}[H]
@@ -254,9 +254,9 @@
                 \label{fig:code_profiling_standard_test}
             \end{figure}
             ~\\
-            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for 'Send and pop same client' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
+            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for 'Send and Pop Same Client' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
             \\
-            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'Send and pop same client' and 'Standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed by worker threads when they are done handling a client's request.
+            The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of 'Send and Pop Same Client' and 'Standard test' respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed by worker threads when they are done handling a client's request.
 
             % Bottlenecks
             % Most expensive operations that determine the overall performance
@@ -454,7 +454,7 @@
             \end{itemize}
 
         \subsection{Difference in size of dataset}
-            In this test we want to see what the difference of the size of the dataset matters to our system's performance. In this test we're using \textit{send and pop same client}, varying the number of messages initially stored in the database. From this test we expect that an increase in the size of the data set will increase the think-time of the database, resulting in a lower throughput.
+            In this test we want to see what the difference of the size of the dataset matters to our system's performance. In this test we're using \textit{Send and Pop Same Client}, varying the number of messages initially stored in the database. From this test we expect that an increase in the size of the data set will increase the think-time of the database, resulting in a lower throughput.
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.55]{msg_db_clients}
@@ -475,7 +475,7 @@
 
         \subsection{Difference in frequency of requests}
             \label{sec:difference_in_frequency_of_requests}
-            In this test we want to measure the impact on the server when we differ the frequency of requests. We performed 6 \textit{Send and pop same client}-tests, differing only the wait time between requests. The tests were performed using one middleware with 30 database connections and 30 worker threads, and 100 client threads on the client machine.\\
+            In this test we want to measure the impact on the server when we differ the frequency of requests. We performed 6 \textit{Send and Pop Same Client}-tests, differing only the wait time between requests. The tests were performed using one middleware with 30 database connections and 30 worker threads, and 100 client threads on the client machine.\\
             \\
             In this test we expect to see that the throughput increases with the number of requests, possibly reaching a point where it starts becoming unstable.\\
             \\
@@ -489,7 +489,7 @@
                 \begin{adjustwidth}{-2.5cm}{}
                     \centering
                     \includegraphics[scale=0.65]{sleep_time_between_requests_100clients_30_30}
-                    \caption{\textit{Send and pop same client} test differing the amount of wait time between requests. On the left side we have plotted the throughput when increasing the wait time. In the top right corner we have plotted the average time of Socket IO \& Queue. In the lower right corner we have plotted the sum of \textit{IPersistence} and \textit{Client request worker}}
+                    \caption{\textit{Send and Pop Same Client} test differing the amount of wait time between requests. On the left side we have plotted the throughput when increasing the wait time. In the top right corner we have plotted the average time of Socket IO \& Queue. In the lower right corner we have plotted the sum of \textit{IPersistence} and \textit{Client request worker}}
                     \label{fig:sleep_time_between_requests_100clients_30_30}
                 \end{adjustwidth}
              \end{figure}
@@ -600,12 +600,12 @@
 
         \subsection{Difference in database connections and worker threads}
             \label{sec:difference_in_dbcons_and_worker_threads}
-            In this test we perform 3 \textit{Send and pop same client}-tests, differing the amount of worker threads and database connections. As explained in Section \ref{sec:description_middleware} we expect that the throughput of the middleware is bounded by the minimum of the number of worker threads and the number database connections.
+            In this test we perform 3 \textit{Send and Pop Same Client}-tests, differing the amount of worker threads and database connections. As explained in Section \ref{sec:description_middleware} we expect that the throughput of the middleware is bounded by the minimum of the number of worker threads and the number database connections.
 
              \begin{figure}[H]
                  \centering
                  \includegraphics[scale=0.50]{throughput_vs_dbconns}
-                 \caption{The combined throughput of 'Send Message'- and 'Pop message' requests of the system while performing it \textit{send and pop same client}, differing the number of database connections and worker threads on the middleware, performed on a single middleware.}
+                 \caption{The combined throughput of \textit{Send Message}- and \textit{Pop message} requests of the system while performing \textit{Send and Pop Same Client}, differing the number of database connections and worker threads on the middleware, performed on a single middleware.}
                  \label{fig:throughput_vs_dbconns}
              \end{figure}
              ~\\
@@ -666,6 +666,7 @@
             %   1 -> throughput goes up as number of clients increases
 
         \subsection{Frequency of requests}
+            \label{sec:frequency_of_requests}
             % USE
             %   'Difference in number of clients'
             %   'Differency in frequency of requests'
@@ -678,7 +679,8 @@
             Finally we note that our system seems to be performing best (in this particular setup) when the wait time between requests is around 50-60 milliseconds, an average of 1500-1600 requests per second (when the distribution of requests is half \textit{Pop message} and half \textit{Send message}), since this is the point where the throughput is relatively high while the average response time hasn't begun increasing drastically yet.
 
         \subsection{Bound on throughput of middleware}
-            On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a stable think time in the database and similar types of requests over some time interval) seems to be bounded by the minimum of the number of database connections and the number of worker threads.
+            \label{sec:analysis_bound_on_throughput}
+            On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a high enough frequency of requests) is bounded by the minimum of the number of database connections and the number of worker threads. This is a very intuitive result since each worker thread will use exactly one database connection per (well formed) request. This means that if we want to keep the utilization of both worker threads and database connections high, we should keep the ratio between them 1, as other ratios would leave one of the resources idle.\\
             This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
             \\
             In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.
@@ -687,11 +689,17 @@
             If we look at the measured think-time of the database during the long traces, we see that this confirms our suspicion; the think-time of the database increases when we increase the amount of worker threads and database threads.
 
         \subsection{Micro benchmarks}
+            \label{sec:analysis_micro_benchmarks}
             TODO: say something about postgres VACUUM maybe affecting performance of \textit{pop message}.
 
     \section{Conclusion}
-        TODO: Say something about performance of system\\
-        TODO: Say something about what we could've done differently
+        TODO: Say something about the database configuration and how we possibly should've chosen different indexes
+% More middleware does not increase throughput because the database is the bottle neck, and is shared among all middleware.
+% Increasing # middleware can give a lower response time, if there are enough requests (vs worker threads and db cons) to form queues in the middleware
+
+        In Section \ref{sec:difference_in_dbcons_and_worker_threads} we found that the performance of our middleware depends on the ratio between the amount of worker threads and database connections it has. Here, we found that this ratio should be 1 to get the best performance while not having idle resources. This was exactly the result we expected to see.
+% It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
+        TODO: Say something about what we could've done differently, for instance tested with different indexes on the database
     \clearpage
     \appendix
         \section{Message protocol and API}
