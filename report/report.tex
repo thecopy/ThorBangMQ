@@ -479,7 +479,7 @@
             \\
             In this test we expect to see that the throughput increases with the number of requests, possibly reaching a point where it starts becoming unstable.\\
             \\
-            On the left of Figure \ref{fig:sleep_time_between_requests_100clients_30_30} we see that the throughput increases as the wait time decreases, which is another way of saying that the throughput increases when the frequency of requests increases.\\
+            On the left of Figure \ref{fig:sleep_time_between_requests_100clients_30_30} we see that the throughput increases as the wait time decreases, which is another way of saying that the throughput increases when the frequency of requests increases. We also see that the standard deviation increases slightly as the throughput decreases\\
             \\
             In the top right corner of the graph we see that the average time requests spend queuing (waiting to get handed to a worker thread) is higher when the wait time between requests is zero.\\
             \\
@@ -495,7 +495,7 @@
              \end{figure}
              ~\\
              \\
-             On figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30} we see that the average response time goes up when we increase the frequency of requests. We also see that the deviation of response time increases when the frequency of requests increases.\\
+             On figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30} we see that the average response time goes up when we increase the frequency of requests. We also see that the standard deviation of response time increases when the frequency of requests increases.\\
              \\
               \begin{figure}[H]
                 \begin{adjustwidth}{-2.5cm}{}
@@ -609,7 +609,7 @@
                  \label{fig:throughput_vs_dbconns}
              \end{figure}
              ~\\
-             On Figure \ref{fig:throughput_vs_dbconns} we see that the result seems to be matching our expectations; the throughput is higher when both the number of database connections and worker threads is 50, but stays lower when either the number of database connections or worker threads is 5. Also we notice that the deviation of our results seem to increase as the maximum of the number of database connections and worker threads increases.
+             On Figure \ref{fig:throughput_vs_dbconns} we see that the result seems to be matching our expectations; the throughput is higher when both the number of database connections and worker threads is 50, but stays lower when either the number of database connections or worker threads is 5. Also we notice that the standard deviation of our results seem to increase as the maximum of the number of database connections and worker threads increases.
             % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
             The raw data from these tests can be found in the log-folder, in the subfolders
             \begin{itemize}
@@ -671,13 +671,15 @@
             %   'Differency in frequency of requests'
             % SHOW
             %   We've shown that the system didn't reach its' limit yet, but the big deviation we get with many requests (many clients) shows that we might reach that point
-            As noted in Section \ref{sec:difference_in_frequency_of_requests} we see on Figure \ref{fig:sleep_time_between_requests_100clients_30_30} that the throughput of our system goes up when the frequency of requests increases. This seems reasonable, and points to the fact that our system can handle more load than the test produces when the wait time is relatively high. What seemed to be counter-intuitive to us in the beginning was that the average response time (as shown on Figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30}) is much higher when the wait time is lower, even though the throughput is much higher at the same time! After plotting the top right part of Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, we realized that this must be because there are many requests queued, waiting to be served. This gives a higher throughput since the server always has a new request to process and at the same time gives a higher average response time since there are requests are waiting to be served in the queue.\\
+            As noted in Section \ref{sec:difference_in_frequency_of_requests} we see on Figure \ref{fig:sleep_time_between_requests_100clients_30_30} that the throughput of our system goes up when the frequency of requests increases. This seems reasonable, and points to the fact that our system can handle more load than the test produces when the wait time is relatively high. What seemed to be counter-intuitive to us in the beginning was that the average response time (as shown on Figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30}) is much higher when the wait time is lower, even though the throughput is much higher at the same time! After plotting the top right part of Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, we realized that this must be because there are many requests queued, waiting to be served. This gives a higher throughput since the server always has a new request to process and at the same time gives a higher average response time since there are requests waiting to be served in the queue.\\
             \\
-            Finally we note that our system seems to be performing best (in this particular setup) when the wait time between requests is around 50-60 milliseconds, an average of 1500-1600 requests per second (half of which is \textit{Pop message} and half of which \textit{Send message}), since this is the point where the throughput is relatively high while the average response time hasn't begun increasing drastically yet.
+            As we also noted in Section \ref{sec:difference_in_frequency_of_requests} the standard deviation of response time becomes higher as the average response becomes lower, and the frequency of messages decreases. What's happening at this point is that the requests are so infrequent that there is (almost) no queuing in the middleware, causing requests to be processed immediately. When the average response time becomes as low as 10 milliseconds, it is seems very reasonable to us that the standard deviation increases, since things such as network i/o will play a big part in the result.\\
+            \\
+            Finally we note that our system seems to be performing best (in this particular setup) when the wait time between requests is around 50-60 milliseconds, an average of 1500-1600 requests per second (when the distribution of requests is half \textit{Pop message} and half \textit{Send message}), since this is the point where the throughput is relatively high while the average response time hasn't begun increasing drastically yet.
 
         \subsection{Bound on throughput of middleware}
-            On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a stable think time in the database and the same type of requests) seems to be bounded by the minimum of the number of database connections and the number of worker threads.
-            This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher deviation in throughput.\\
+            On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a stable think time in the database and similar types of requests over some time interval) seems to be bounded by the minimum of the number of database connections and the number of worker threads.
+            This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
             \\
             In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.
 
