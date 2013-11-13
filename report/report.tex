@@ -196,7 +196,7 @@
             \\
             \indent \textbf{Client Request Worker} which interprets user requests. Time spent in this class includes: string manipulation to interpret user requests, calling of methods in IPersistence, creating a response for the client and putting it in the response queue. The time spent in IPersistence is subtracted from the time measured in this class such that time measured for this class doesn't include the time it takes to perform calls in IPersistence.\\
             \\
-            \indent \textbf{Socket I/O} which handles communication with clients. Time spent in this class includes: reading from and writing to a client socket, and handing data read from client sockets to a worker thread.
+            \indent \textbf{Socket I/O \& Queuing} which handles communication with clients. Time spent in this class includes: reading from and writing to a client socket, handing data read from client sockets to a worker thread, and the time requests spend waiting to get handed to a worker thread.
             \\
             \\
             Figure \ref{fig:timing_measurements} is a graphical representation of these measurements.\\
@@ -445,7 +445,7 @@
             \begin{figure}[H]
                     \hspace{-1.5cm}
                     \includegraphics[scale=0.60]{responsetime_msgsize}
-                    \caption{The response time for pushing, peeking and popping as a function of the message size. The peeking and popping curves are also shown again in the lower graph without the push-response time for clarity.}
+                    \caption{The response time for \textit{send message}, \textit{peek message}, and \textit{pop message} as a function of the message size. The peeking and popping curves are also shown again in the lower graph without response time of \textit{send message} for clarity.}
                     \label{fig:responsetime_msgsize}
                 \end{figure}
             The raw data from these tests can be found in the log-folder, in the subfolders
@@ -458,7 +458,7 @@
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.55]{msg_db_clients}
-                \caption{The throughput when running \textit{Standard Test} varying number of client and number of messages stored in database prior to test start. Run on one middleware having 50 worker threads and 50 database connections.}
+                \caption{The throughput when running \textit{Standard Test} varying number of clients and number of messages stored in database prior to test start. Run on one middleware having 50 worker threads and 50 database connections.}
                 \label{fig:msg_db_clients}
             \end{figure}
             ~\\
@@ -471,7 +471,41 @@
             \end{itemize}
 
         \subsection{Difference in number of clients}
-            On Figure \ref{fig:msg_db_clients}, looking at tests with the same size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests. We 
+            On Figure \ref{fig:msg_db_clients}, looking at tests with the same initial size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests. 
+
+        \subsection{Difference in frequency of requests}
+            \label{sec:difference_in_frequency_of_requests}
+            In this test we want to measure the impact on the server when we differ the frequency of requests. We performed 6 \textit{Send and pop same client}-tests, differing only the wait time between requests. The tests were performed using one middleware with 30 database connections and 30 worker threads, and 100 client threads on the client machine.\\
+            \\
+            In this test we expect to see that the throughput increases with the number of requests, possibly reaching a point where it starts becoming unstable.\\
+            \\
+            On the left of Figure \ref{fig:sleep_time_between_requests_100clients_30_30} we see that the throughput increases as the wait time decreases, which is another way of saying that the throughput increases when the frequency of requests increases.\\
+            \\
+            In the top right corner of the graph we see that the average time requests spend queuing (waiting to get handed to a worker thread) is higher when the wait time between requests is zero.\\
+            \\
+            In the lower right corner we see that the combined time spent in Client Request Worker and IPersistence is going up when the frequency of requests increases.
+
+             \begin{figure}[H]
+                \begin{adjustwidth}{-2.5cm}{}
+                    \centering
+                    \includegraphics[scale=0.65]{sleep_time_between_requests_100clients_30_30}
+                    \caption{\textit{Send and pop same client} test differing the amount of wait time between requests. On the left side we have plotted the throughput when increasing the wait time. In the top right corner we have plotted the average time of Socket IO \& Queue. In the lower right corner we have plotted the sum of \textit{IPersistence} and \textit{Client request worker}}
+                    \label{fig:sleep_time_between_requests_100clients_30_30}
+                \end{adjustwidth}
+             \end{figure}
+             ~\\
+             \\
+             On figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30} we see that the average response time goes up when we increase the frequency of requests. We also see that the deviation of response time increases when the frequency of requests increases.\\
+             \\
+              \begin{figure}[H]
+                \begin{adjustwidth}{-2.5cm}{}
+                      \centering
+                      \includegraphics[scale=0.60]{sleep_time_between_requests_respTime_100clients_30_30}
+                      \caption{Same test as Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, this time plotting total response time when increasing wait time}
+                      \label{fig:sleep_time_between_requests_respTime_100clients_30_30}
+                \end{adjustwidth}
+              \end{figure}
+
 
         \subsection{Difference in data store}
             In this test we measure the difference between using Postgres and not storing anything at all. We expect to see an an increase in throughput since we don't have to communicate with the database at all and thus don't have to wait for the network or database think time.
@@ -631,11 +665,21 @@
             % SHOW:
             %   1 -> throughput goes up as number of clients increases
 
+        \subsection{Frequency of requests}
+            % USE
+            %   'Difference in number of clients'
+            %   'Differency in frequency of requests'
+            % SHOW
+            %   We've shown that the system didn't reach its' limit yet, but the big deviation we get with many requests (many clients) shows that we might reach that point
+            As noted in Section \ref{sec:difference_in_frequency_of_requests} we see on Figure \ref{fig:sleep_time_between_requests_100clients_30_30} that the throughput of our system goes up when the frequency of requests increases. This seems reasonable, and points to the fact that our system can handle more load than the test produces when the wait time is relatively high. What seemed to be counter-intuitive to us in the beginning was that the average response time (as shown on Figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30}) is much higher when the wait time is lower, even though the throughput is much higher at the same time! After plotting the top right part of Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, we realized that this must be because there are many requests queued, waiting to be served. This gives a higher throughput since the server always has a new request to process and at the same time gives a higher average response time since there are requests are waiting to be served in the queue.\\
+            \\
+            Finally we note that our system seems to be performing best (in this particular setup) when the wait time between requests is around 50-60 milliseconds, an average of 1500-1600 requests per second (half of which is \textit{Pop message} and half of which \textit{Send message}), since this is the point where the throughput is relatively high while the average response time hasn't begun increasing drastically yet.
+
         \subsection{Bound on throughput of middleware}
             On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a stable think time in the database and the same type of requests) seems to be bounded by the minimum of the number of database connections and the number of worker threads.
             This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher deviation in throughput.\\
             \\
-            In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We think that this is caused by 'opening up' for more queries being sent simultaneously to the database, causing a higher response time of the database. 
+            In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.
 
             % TODO: PLOT DATA FOR THE FOLLOWING ARGUMENT
             If we look at the measured think-time of the database during the long traces, we see that this confirms our suspicion; the think-time of the database increases when we increase the amount of worker threads and database threads.
