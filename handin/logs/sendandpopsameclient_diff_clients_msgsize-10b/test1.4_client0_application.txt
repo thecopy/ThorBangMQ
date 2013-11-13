@@ -1,0 +1,10 @@
+1384182863506	numberOfClients: 10
+1384182863506	lengthOfExperiment: 600000
+1384182863507	msgSize: 10
+1384182863507	numQueues: 1
+1384182863507	Connecting 10 clients to 10.128.7.27:8123...
+1384182863533	OK Done! Sending messages...
+1384183463585	OK Done!
+1384183463586	-------------------------------------------
+1384183463586	Number of Clients:	10
+1384183463588	Total Time:		600042.0ms

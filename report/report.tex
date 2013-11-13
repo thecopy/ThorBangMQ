@@ -262,7 +262,7 @@
             % Most expensive operations that determine the overall performance
 
         \subsection{Long traces}
-            The figures in this section shows the overall stability of the system while under moderate to high system load for 2 hours or more. Each of the following tests are of the type \textit{Standard test} and have been run with different parameters, increasing the number of database connections and worker threads, and the number of clients. In these tests we expect to see that the system behaves in a somewhat stable manner (at least for lower numbers of clients) meaning that we have a low standard deviation of measurements. We expect that the throughput will go up as the number of clients and worker-threads and database connections increases since, as described in \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware.\\
+            The figures in this section show the overall stability of the system while under moderate to high system load for 2 hours or more. Each of the following tests are of the type \textit{Standard test} and have been run with different parameters, increasing the number of database connections and worker threads, and the number of clients. In these tests we expect to see that the system behaves in a somewhat stable manner (at least for lower numbers of clients) meaning that we have a low standard deviation of measurements. We expect that the throughput will go up as the number of clients and worker-threads and database connections increases since, as described in \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware.\\
             \\
             All of the following graphs have been plotted with the throughput of reads and writes individually, and all have many more reads than writes for the reasons described in Section \ref{sec:standard_test}.
             
@@ -298,8 +298,8 @@
             Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage} give a summary of the results of our long traces. In these summaries we see that the standard deviation of both types of requests increases as the number of clients increases. We also see that the throughput goes up as the number of clients increases.
 
             \begin{table}[H]
-                \label{table:long_trace_test_summary_sendmessage}
                 \caption{Summary of results of Send Message from long traces}
+                \label{table:long_trace_test_summary_sendmessage}
                 \begin{adjustwidth}{-2cm}{}
                     \begin{tabular}{|c|c|c|c|c|}
                         \hline 
@@ -318,8 +318,8 @@
             \end{table}
 
             \begin{table}[H]
-                \label{table:long_trace_test_summary_popmessage}
                 \caption{Summary of results of Pop Message from long traces}
+                \label{table:long_trace_test_summary_popmessage}
                 \begin{adjustwidth}{-2cm}{}
                     \begin{tabular}{|c|c|c|c|c|}
                         \hline 
@@ -343,7 +343,7 @@
             \subsubsection{Send message}
                 In this test a single client continuously sends \textit{send message} requests to the server. This means that the size of the dataset increases with time, since no other clients are sending any requests.\\
                 \\
-                On Figure \ref{fig:thinktime_500k_push} we see that the amount of time spent on each request is greatly dominated by database think-time.
+                On Figure \ref{fig:thinktime_500k_push} and in Table \ref{table:thinktime_500k_push} we see that the amount of time spent on each request is dominated by requests to the database, shown by the scattered dots in the top of the graph.
 
                 \begin{figure}[H]
                     \includegraphics[scale=0.50]{thinktime_500k_push}
@@ -355,13 +355,15 @@
                         \hline 
                         \textbf{Component} & \textbf{Average Think Time} (ms) & \textbf{Standard Deviation (ms)} \\ 
                         \hline 
-                        Socket I/O & $0.111 \pm 0.021$ &0.0145\\ 
+                        Socket I/O \& Queuing & $0.111 \pm 0.021$ &0.0145\\ 
                         \hline 
                         CRW & $0.0310 \pm0.099$ &0.0057\\ 
                         \hline 
                         IPersistence & $1.714 \pm 0.590$ &0.427\\ 
                         \hline 
                     \end{tabular}
+                    \caption{Average think time, confidence interval, and standard deviation for 500,000 \textit{Send message} requests}
+                    \label{table:thinktime_500k_push}
                 \end{table} 
                 
                 \begin{figure}[H]
@@ -388,7 +390,7 @@
                         \hline 
                         \textbf{Component} & \textbf{Average Think Time} (ms)  & \textbf{Standard Deviation (ms)} \\ 
                         \hline 
-                        Socket I/O & $0.118\pm0.021$ &0.014 \\ 
+                        Socket I/O \& Queuing & $0.118\pm0.021$ &0.014 \\ 
                         \hline 
                         CRW & $0.069\pm0.023$ &0.013 \\ 
                         \hline 
@@ -420,7 +422,7 @@
                         \hline 
                         \textbf{Component} & \textbf{Average Think Time} (ms)  & \textbf{Standard Deviation (ms)} \\ 
                         \hline 
-                        Socket I/O &$0.129\pm0.038$ &0.027\\ 
+                        Socket I/O \& Queuing &$0.129\pm0.038$ &0.027\\ 
                         \hline 
                         CRW &$0.066\pm0.022$ &0.016\\ 
                         \hline 
@@ -523,7 +525,7 @@
             \hline
             \textbf{1 Middleware} & & &\\
             \hline
-            Clients & Socket I/O & Client Request Worker & IPersistence \\ \hline
+            Clients & Socket I/O \& Queuing & Client Request Worker & IPersistence \\ \hline
             1&  111.77 &    48.33 &  2380.06\\ \hline  
  2& 139.26 &    62.93 &  2266.02\\ \hline  
  3& 138.36 &    45.89 &  2553.87\\ \hline  
@@ -533,7 +535,7 @@
  7& 345.78 &    76.72 &  4247.42\\ \hline    
             \textbf{2 Middlewares} & & & \\  
                 \hline
-                Clients &   Socket I/O & Client Request Worker & IPersistence \\ \hline
+                Clients &   Socket I/O \& Queuing & Client Request Worker & IPersistence \\ \hline
                  2& 106.68 &    47.79 &  2540.22\\ \hline  
                  4& 129.81 &    36.00 &  2537.58\\ \hline  
                  6& 147.75 &    49.79 &  4351.00\\ \hline  
@@ -547,7 +549,7 @@
                     \hline
                     \textbf{1 Middleware} & & &\\
                     \hline
-                    Clients & Socket I/O & Client Request Worker & IPersistence \\ \hline
+                    Clients & Socket I/O \& Queuing & Client Request Worker & IPersistence \\ \hline
                     1&   15.62 &     6.49 &   158.56 \\ \hline  
                     2&   28.52 &    11.77 &   147.64 \\ \hline  
                     3&   32.15 &    11.71 &   362.91 \\ \hline  
@@ -557,7 +559,7 @@
                     7&   61.23 &    24.84 &   587.43 \\ \hline      
                     \textbf{2 Middlewares} & & & \\  
                         \hline
-                        Clients &   Socket I/O & Client Request Worker & IPersistence \\ \hline
+                        Clients &   Socket I/O \& Queuing & Client Request Worker & IPersistence \\ \hline
                     2&  29.02 &    12.97 &   549.87 \\ \hline  
                     4&  37.73 &    10.67 &   428.83 \\ \hline  
                     6&  35.89 &    10.64 &   708.21 \\ \hline 
@@ -624,7 +626,7 @@
             In order to determine how much time is spent in each part of our system, we look at the results we measured during code profiling (Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}) and the data we have on the bottom of Figure \ref{fig:throughput_middleware_clients}.\\
             \\
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textbf{includes} the network delay between the middleware and the database, in both directions.\\
-            The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also see that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation.\\
+            The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation.\\
             \\
             This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network.
 
@@ -664,6 +666,8 @@
             %   2) 
             % SHOW:
             %   1 -> throughput goes up as number of clients increases
+        \subsection{Stability of the system}
+            
 
         \subsection{Frequency of requests}
             \label{sec:frequency_of_requests}
@@ -697,7 +701,9 @@
 % More middleware does not increase throughput because the database is the bottle neck, and is shared among all middleware.
 % Increasing # middleware can give a lower response time, if there are enough requests (vs worker threads and db cons) to form queues in the middleware
 
-        In Section \ref{sec:difference_in_dbcons_and_worker_threads} we found that the performance of our middleware depends on the ratio between the amount of worker threads and database connections it has. Here, we found that this ratio should be 1 to get the best performance while not having idle resources. This was exactly the result we expected to see.
+        In Section \ref{sec:difference_in_dbcons_and_worker_threads} we found that the performance of our middleware depends, among other things, on the ratio between the amount of worker threads and database connections it has. Here, we found that this ratio should be 1 to get the best performance while not having any worker threads or database connections that can't get utilized. This was very intuitive and was exactly what we expected to see.\\
+        \\
+        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections.
 % It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
         TODO: Say something about what we could've done differently, for instance tested with different indexes on the database
     \clearpage
