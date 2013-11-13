@@ -351,24 +351,25 @@
                     \caption{The think time for send message request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:thinktime_500k_push}
                 \end{figure}
+                \begin{table}[H]
+                    \begin{tabular}{|c|c|c|}
+                        \hline 
+                        \textbf{Component} & \textbf{Average Think Time} ($ms$)  & \textbf{Standard Deviation ($ms$)} \\ 
+                        \hline
+                        Socket I/O &0.11073 &0.014489\\
+                        \hline 
+                        CRW &0.031091 &0.0057283\\
+                        \hline 
+                        IPersistence &1.7142 &0.42669 \\
+                        \hline 
+                    \end{tabular}
+                \end{table} 
                 
                 \begin{figure}[H]
                     \includegraphics[scale=0.50]{responsetime_500k_push}
                     \caption{The response time for send message request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_push}
                 \end{figure}
-                    
-                \begin{tabular}{|c|c|c|}
-                    \hline 
-                    \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
-                    \hline 
-                    Socket I/O &8.4467 &12.0007\\ 
-                    \hline 
-                    CRW &2.3654 &3.384\\ 
-                    \hline 
-                    IPersistence &125.6863 &174.7623\\ 
-                    \hline 
-                \end{tabular} 
                 ~\\
                 \\
                 The raw data from this test can be found in the log-folder, in the subfolders
@@ -382,25 +383,28 @@
                     \caption{The think time in the server for \textit{pop message} request. Each data point represents an individual request. A total of 500,000 requests.}
                     \label{fig:thinktime_500k_pop}
                 \end{figure}
+
+                \begin{table}[H]
+                    \begin{tabular}{|c|c|c|}
+                        \hline 
+                        \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
+                        \hline 
+                        Socket I/O &0.11831 &0.013688\\
+                        \hline 
+                        CRW &0.069081 &0.013405\\
+                        \hline 
+                        IPersistence &3.8105 &0.60948\\
+                        \hline 
+                    \end{tabular}
+                \end{table}
                 
                 \begin{figure}[H]
                     \includegraphics[scale=0.50]{responsetime_500k_pop}
                     \caption{The response time for \textit{pop message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_pop}
-                \end{figure}
-                
-                \begin{tabular}{|c|c|c|}
-                    \hline 
-                \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
-                \hline 
-                Socket I/O & 12.3624 & 4.941 \\ 
-                \hline 
-                CRW & 7.4868 & 3.7579 \\ 
-                \hline 
-                IPersistence & 400.027 & 111.707 \\ 
-                \hline 
-                \end{tabular} 
-
+                \end{figure}                
+                ~\\
+                \\
                 The raw data from these tests can be found in the log-folder, in the subfolders
                 \begin{itemize}
                     \item folders
@@ -412,25 +416,27 @@
                     \caption{The think time in the server for \textit{peek message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:thinktime_500k_peek}
                 \end{figure}
-                
+                \begin{table}[H]
+                    \begin{tabular}{|c|c|c|}
+                        \hline 
+                        \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
+                        \hline 
+                        Socket I/O &0.12924 &0.027456\\
+                        \hline 
+                        CRW &0.065817 &0.0161\\
+                        \hline 
+                        IPersistence &1.8264 &0.45206\\
+                        \hline 
+                    \end{tabular}
+                \end{table} 
+
                 \begin{figure}[H]
                     \includegraphics[scale=0.50]{responsetime_500k_peek}
                     \caption{The response time for send message request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_peek}
                 \end{figure}
-                    
-                    \begin{tabular}{|c|c|c|}
-                    \hline 
-                \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
-                \hline 
-                Socket I/O &25.091 &7.4437\\ 
-                \hline 
-                CRW &12.7541 &4.009\\ 
-                \hline 
-                IPersistence &344.9903 &76.7847\\ 
-                \hline 
-                \end{tabular} 
-
+                ~\\
+                \\
                 The raw data from these tests can be found in the log-folder, in the subfolders
                 \begin{itemize}
                     \item folders
