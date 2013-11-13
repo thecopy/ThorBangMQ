@@ -58,10 +58,12 @@ def main():
         elif choice.startswith("8"):
             __, testid = choice.split(' ')
             for client in getclients(testid):
+                print "killing screns on {}".format(client[0])
                 killallscreens(client[0])
             for server in getservers(testid):
+                print "killing screns on {}".format(client[0])
                 killallscreens(server[0])
-        elif choice.startswith("9"):
+        elif choice.startswith("9") and not choice.startswith("999"):
             __, testid = choice.split(' ')
             servers, clients = getservers(testid), getclients(testid)
             logdir = path.dirname(path.realpath(__file__))
