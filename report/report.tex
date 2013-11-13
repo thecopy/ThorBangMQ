@@ -33,7 +33,7 @@
              \item Depending on the result of the query, worker thread Y figures out what to respond to the client and puts the response in the response queue
              \item Next time the network i/o thread goes through the response queue, it will find response Y and send it to client X
          \end{enumerate}
-         ~\\
+         
          There can, of course, be more than one middleware in our system. In this case the figure would be the same, as seen from the viewpoint of a client, because each client is connected to exactly one middleware.\\
          \\
         In the following subsections we explain our design decisions with regard to each component of our system: client, middleware, and database.
@@ -319,7 +319,6 @@
 
         \subsection{Difference in database messages} 
 
-               
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.55]{msg_db_clients}
@@ -401,18 +400,17 @@
                 \label{fig:responsetime_500k_pop}
             \end{figure}
             
-            \begin{tabular}{|c|c|c|}
+            \begin{tabular}{|c|c|}
                 \hline 
             \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
             \hline 
-            Socket I/O & 12.3624 & 4.941 \\ 
+            Socket I/O & $0.118 \pm 0.0137$ & 4.941 \\ 
             \hline 
-            CRW & 7.4868 & 3.7579 \\ 
+            CRW & $0.069081 \pm 0.013405$ & 3.7579 \\ 
             \hline 
-            IPersistence & 400.027 & 111.707 \\ 
+            IPersistence & $3.8105 \pm 0.60948$ & 111.707 \\ 
             \hline 
             \end{tabular} 
-            
             
         \subsubsection{Peek a Queue}
         
@@ -458,17 +456,46 @@
                 \label{fig:responsetime_500k_push}
             \end{figure}
                 
-            \begin{tabular}{|c|c|c|}
+            \begin{tabular}{|c|c|}
                 \hline 
-                \textbf{Component} & \textbf{Average Think Time} ($\mu s$)  & \textbf{Standard Deviation ($\mu s$)} \\ 
+                \textbf{Component} & \textbf{Average Think Time} (ms) \\ 
                 \hline 
-                Socket I/O &8.4467 &12.0007\\ 
+                Socket I/O & $0.111 \pm 0.0145$\\ 
                 \hline 
-                CRW &2.3654 &3.384\\ 
+                CRW & $0.0311 \pm 0.0058$\\ 
                 \hline 
-                IPersistence &125.6863 &174.7623\\ 
+                IPersistence & $1.7142 \pm 0.4267$\\ 
                 \hline 
             \end{tabular} 
+            
+            
+            
+            \begin{tabular}{|c|c|}
+                \hline 
+            \textbf{Type of Request} & \textbf{Response Time} (ms) \\ 
+            \hline 
+            Pop & $3.997 \pm 0.021$ \\ 
+            \hline 
+            Peek & $2.022 \pm 0.038$ \\ 
+            \hline 
+            Push & $1.856 \pm 0.61294$ \\ 
+            \hline 
+            \end{tabular} 
+		\subsection{$2^2$ Tests}
+		\subsubsection{Worker-threads vs Clients}
+		\begin{table}
+			\begin{tabular}{|c|c|c|}
+			\hline 
+			• & 500/250 & 100/50 \\ 
+			\hline 
+			100/100 & $309.29 \pm 47.7$ & $350.94 \pm 0.68$ \\ 
+			\hline 
+			30/30 & $405.10 \pm 72.90$ & $793.39 \pm 1.32$ \\ 
+			\hline 
+			\end{tabular} 
+            \caption{$2^2$ testing for throughput, varying number of client and numer of threads. Test used: SendAndPopSameClient}
+            \label{table:2k2-threads-clients}
+            \end{table}
 
     \section{Results}
         TODO: Note that we're using a closed system which has an effect on the results\\
@@ -476,7 +503,6 @@
             
     \section{Analysis}
         TODO: Interpret results showed above
-
         \subsection{Time spent in each part of the system}
             % TODO USE DATA FROM diff_db-cons_worker-threads_i-fooled-you VS diff_num-db-threads AS WELL
             In order to determine how much time is spent in each part of our system, we look at the results we measured during code profiling (Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}) and the data we have on the bottom of Figure \ref{fig:throughput_middleware_clients}.\\
