@@ -622,6 +622,7 @@
         In this section we interpret and compare the results shown in \ref{sec:tests_and_results} above, in order to figure out what the different performance metrics of our system are.
 
         \subsection{Time spent in each part of the system}
+            \label{sec:time_spent_in_each_part_of_the_system}
             % TODO USE DATA FROM diff_db-cons_worker-threads_i-fooled-you VS diff_num-db-threads AS WELL
             In order to determine how much time is spent in each part of our system, we look at the results we measured during code profiling (Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}) and the data we have on the bottom of Figure \ref{fig:throughput_middleware_clients}.\\
             \\
@@ -667,7 +668,7 @@
             % SHOW:
             %   1 -> throughput goes up as number of clients increases
         \subsection{Stability of the system}
-            
+
 
         \subsection{Frequency of requests}
             \label{sec:frequency_of_requests}
@@ -687,9 +688,8 @@
             On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a high enough frequency of requests) is bounded by the minimum of the number of database connections and the number of worker threads. This is a very intuitive result since each worker thread will use exactly one database connection per (well formed) request. This means that if we want to keep the utilization of both worker threads and database connections high, we should keep the ratio between them 1, as other ratios would leave one of the resources idle.\\
             This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
             \\
-            In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.
-
-            % TODO: PLOT DATA FOR THE FOLLOWING ARGUMENT
+            In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.\\
+            \\
             If we look at the measured think-time of the database during the long traces, we see that this confirms our suspicion; the think-time of the database increases when we increase the amount of worker threads and database threads.
 
         \subsection{Micro benchmarks}
@@ -697,15 +697,16 @@
             TODO: say something about postgres VACUUM maybe affecting performance of \textit{pop message}.
 
     \section{Conclusion}
-        TODO: Say something about the database configuration and how we possibly should've chosen different indexes
-% More middleware does not increase throughput because the database is the bottle neck, and is shared among all middleware.
-% Increasing # middleware can give a lower response time, if there are enough requests (vs worker threads and db cons) to form queues in the middleware
+        % More middleware does not increase throughput because the database is the bottle neck, and is shared among all middleware.
+        % Increasing # middleware can give a lower response time, if there are enough requests (vs worker threads and db cons) to form queues in the middleware
 
         In Section \ref{sec:difference_in_dbcons_and_worker_threads} we found that the performance of our middleware depends, among other things, on the ratio between the amount of worker threads and database connections it has. Here, we found that this ratio should be 1 to get the best performance while not having any worker threads or database connections that can't get utilized. This was very intuitive and was exactly what we expected to see.\\
         \\
-        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections.
-% It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
-        TODO: Say something about what we could've done differently, for instance tested with different indexes on the database
+        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections.\\
+        \\
+        In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the IPersistence class or, more specifically, waiting for responses from the database. This result is consistent with all other tests that put a 'reasonable' load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset and the type of queries our system has and performs.\\
+        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from configuring the database better.
+        % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
     \clearpage
     \appendix
         \section{Message protocol and API}
