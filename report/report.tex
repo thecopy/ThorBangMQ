@@ -141,6 +141,13 @@
             \item Generates graphs
         \end{itemize}
         ~\\
+        Figure \ref{fig:testing_infrastructure} gives a graphical interpretation of our testing infrastructure.\\
+         \begin{figure}[H]
+             \centering
+             \includegraphics[scale=0.50]{testing_infrastructure}
+             \caption{Graphical representation of our testing infrastructure}
+             \label{fig:testing_infrastructure}
+         \end{figure}
         The infrastructure consists of 4 files:
         \begin{description}
             \item[main.py] Interface to start tests, see servers currently running etc.
@@ -160,6 +167,7 @@
         It should be noted that our testing infrastructure is very simple in that, for instance, it doesn't check for errors while running; it just assumes that everything executes successfully and continues on, even though that is not the case. We found this to be a somewhat of a mistake since it has caused us quite a bit of trouble during our testing.
 
     \section{Test definitions}
+        \label{sec:test_definitions}
         This section contains a description of the tests that we performed during our measurements of our system. These tests can be configured in various ways in order to test different parts of our system. For all tests where nothing else is mentioned, the amount of messages in the database has been kept steady at around 20,000 messages, and the size of messages is very low (around 5 bytes).
 
         \subsection{Send and Pop Same Client}
@@ -182,16 +190,25 @@
             \\
             Depending on the request being benchmarked, the amount of messages will differ. 'Send message' requests, for instance, will increase the amount of messages in the system, while 'Pop message' will decrease the amount of messages in the system.
 
-        \subsection{Timing measurements on the server}
-            On the server we perform some timing measurements, measuring how much time is spent in different parts of our system. These names that we use for these parts are:\\
+        \subsection{Timing measurements on the middleware}
+            On the middleware we perform some timing measurements, measuring how much time is spent in different parts of our system. These names that we use for these parts are:\\
             \\
-            \indent \textbf{IPersistence} which uses JDBC to query our database. Time spent in this class includes: think time for a database query and network delays from our server to the database and back again.\\
+            \indent \textbf{IPersistence} which uses JDBC to query our database. Time spent in this class includes: think time for a database query and network delays from our middleware to the database and back again.\\
             \\
             \indent \textbf{Client Request Worker} which interprets user requests. Time spent in this class includes: string manipulation to interpret user requests, calling of methods in IPersistence, creating a response for the client and putting it in the response queue. The time spent in IPersistence is subtracted from the time measured in this class such that time measured for this class doesn't include the time it takes to perform calls in IPersistence.\\
             \\
             \indent \textbf{Socket I/O} which handles communication with clients. Time spent in this class includes: reading from and writing to a client socket, and handing data read from client sockets to a worker thread.
+            \\
+            \\
+            Figure \ref{fig:timing_measurements} is a graphical representation of these measurements.\\
+            \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.50]{timing_measurements}
+                \caption{Graphical representation of timing measurements done on middleware}
+                \label{fig:timing_measurements}
+            \end{figure}
 
-    \section{Results}
+    \section{Tests and results}
         \label{sec:tests_and_results}
         In our tests we have focused on peeking, popping, and sending messages. We decided to have this focus because we work under the assumption that these types of requests are vastly more frequent than all other types of requests (create queue, remove queue etc.), and that the performance of the system as a whole will be dominated by these three types of requests.\\
         \\
@@ -246,7 +263,7 @@
             % Most expensive operations that determine the overall performance
 
         \subsection{Long traces}
-            The figures in this section shows the overall stability of the system while under moderate to high system load for 2 hours or more. Each of the following tests are of the type \textit{Standard test} and have been run with different parameters, increasing the number of database connections and worker threads, and the number of clients. In these tests we expect to see that the system behaves in a stable manner, meaning that we have a low standard deviation of measurements. We expect that the throughput will go up as the number of clients and worker-threads and database connections increases since, as described in \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware.\\
+            The figures in this section shows the overall stability of the system while under moderate to high system load for 2 hours or more. Each of the following tests are of the type \textit{Standard test} and have been run with different parameters, increasing the number of database connections and worker threads, and the number of clients. In these tests we expect to see that the system behaves in a somewhat stable manner (at least for lower numbers of clients) meaning that we have a low standard deviation of measurements. We expect that the throughput will go up as the number of clients and worker-threads and database connections increases since, as described in \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware.\\
             \\
             All of the following graphs have been plotted with the throughput of reads and writes individually, and all have many more reads than writes for the reasons described in Section \ref{sec:standard_test}.
             
@@ -502,7 +519,7 @@
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textbf{includes} the network delay between the middleware and the database twice.\\
             The results from the code profiling are backed up with our own logging data, where we also have measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also see that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation.\\
             \\
-            This all points to the database or the network being the bottleneck in these particular tests. This could be caused by choosing bad indexes for our data, having a misconfigured database, or having a slow network.
+            This all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly database in general, or having a slow network.
 
             % USE:
             %   1) diff_db-cons_worker-threads_i-fooled-you VS diff_num-db-threads
@@ -540,6 +557,13 @@
             %   2) 
             % SHOW:
             %   1 -> throughput goes up as number of clients increases
+
+        \subsection{Number of database connections and worker threads}
+            % USE
+            %   1) 2H tests
+            %   2) more tests that Erik performed
+            % SHOW:
+            %   1 -> when the number of database connections and worker threads increases, the standard deviation increases. This might be because of scheduling contention of the worker threads.
 
 
     \section{Conclusion}
