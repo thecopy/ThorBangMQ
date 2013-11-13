@@ -1,7 +1,7 @@
 import logging
-from os import listdir
+from os import listdir, path
 
-from infrastructure import buildjavafiles, distributejavafiles, starttest
+from infrastructure import buildjavafiles, distributejavafiles, starttest, killallscreens, fetchlogs
 from droplets import getdroplets, getclients, getservers, createclient, createserver, destroyalldroplets
 
 logger = logging.getLogger('distributor')
@@ -19,6 +19,8 @@ def main():
         print "5) start test <testname> [<testid>]"
         print "6) list available tests"
         print "7) list running droplets"
+        print "8) kill screens <testid>"
+        print "9) fetch logs <testid>"
         print "999) destroy all droplets <testid>"
 
         choice = raw_input()
@@ -53,6 +55,17 @@ def main():
         elif choice == "7":
             for i, droplet in enumerate(getdroplets()):
                 logger.info('{number}: {name}: ({globalip}, {localip})'.format(number=i, name=droplet.name, globalip=droplet.ip_address, localip=droplet.private_ip_address))
+        elif choice.startswith("8"):
+            __, testid = choice.split(' ')
+            for client in getclients(testid):
+                killallscreens(client[0])
+            for server in getservers(testid):
+                killallscreens(server[0])
+        elif choice.startswith("9"):
+            __, testid = choice.split(' ')
+            servers, clients = getservers(testid), getclients(testid)
+            logdir = path.dirname(path.realpath(__file__))
+            fetchlogs(clients=clients, servers=servers, logdir=logdir)
         elif choice.startswith("999"):
             __, testid = choice.split(' ')
             destroyalldroplets(testid)
