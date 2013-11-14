@@ -16,7 +16,13 @@
 \begin{document}
     \maketitle
     \tableofcontents
-
+	\subsection{Notation}
+		In this report the following notation is used:
+		\begin{itemize}
+		\item Confidence Intervals for Normal\footnote{For all metrics which are assumed to be normally distributed there is a histogram of the values in the appenix.} Distribution: $10 \pm 5$ - the 90\% confidence interval is [5,15].
+		\item Confidence Intervals for Unkown and Asymmetrical Distributions: $10 \pm [-3,5]$ - the 90\% confidence interval is [7,15].
+		\item Standard deviation: The standard deviation is represented by the error bars in the figures and graphs.
+		\end{itemize}
     \section{Implementation description}
         In our message passing system we have decided to make the client as simple as possible by placing as little logic as possible here. The middleware provides a well-defined API that the clients can use to interact with the messaging service. The middleware interacts with a database using SQL. Figure \ref{fig:implementation_high_level} is a graphical representation of our system. In the following we give an explanation of the life of a request, starting from and ending at the client. The reader can follow these steps on Figure \ref{fig:implementation_high_level}.
          \begin{figure}[H]
@@ -368,11 +374,11 @@
                         \hline 
                         \textbf{Component} & \textbf{Average Think Time} (ms) & \textbf{Standard Deviation (ms)} \\ 
                         \hline 
-                        Socket I/O \& Queuing & $0.111 \pm 0.021$ &0.0145\\ 
+                        Socket I/O \& Queuing & $0.111 \pm [-0.0163 , 0.0299]$ &0.0145\\ 
                         \hline 
-                        CRW & $0.0310 \pm0.099$ &0.0057\\ 
+                        CRW & $0.0310 \pm [-0.0052 , 0.0098]$ &0.0057\\ 
                         \hline 
-                        IPersistence & $1.714 \pm 0.590$ &0.427\\ 
+                        IPersistence & $1.714 \pm [-0.5508 , 0.5903]$ &0.427\\ 
                         \hline 
                     \end{tabular}
                     \caption{Average think time, confidence interval, and standard deviation for 500,000 \textit{Send message} requests}
@@ -406,13 +412,13 @@
                 \begin{table}[H]
                     \begin{tabular}{|c|c|c|}
                         \hline 
-                        \textbf{Component} & \textbf{Average Think Time} (ms)  & \textbf{Standard Deviation (ms)} \\ 
+                        \textbf{Component} & \textbf{Mean Think Time} (ms)\\ 
                         \hline 
-                        Socket I/O \& Queuing & $0.118\pm0.021$ &0.014 \\ 
+                        Socket I/O \& Queuing & $0.118\pm0.021$ \\ 
                         \hline 
-                        CRW & $0.069\pm0.023$ &0.013 \\ 
+                        CRW & $0.069\pm [-0.0192 , 0.0227]$ \\ 
                         \hline 
-                        IPersistence & $3.810\pm1.164$ &0.609 \\ 
+                        IPersistence & $3.810\pm1.164$ \\ 
                         \hline 
                     \end{tabular}
                 \end{table}
@@ -435,25 +441,28 @@
                     \caption{The think time in the server for \textit{peek message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:thinktime_500k_peek}
                 \end{figure}
-                \begin{table}[H]
-                    \begin{tabular}{|c|c|c|}
-                        \hline 
-                        \textbf{Component} & \textbf{Average Think Time} (ms)  & \textbf{Standard Deviation (ms)} \\ 
-                        \hline 
-                        Socket I/O \& Queuing &$0.129\pm0.038$ &0.027\\ 
-                        \hline 
-                        CRW &$0.066\pm0.022$ &0.016\\ 
-                        \hline 
-                        IPersistence &$1.826\pm0.653$ &0.452\\ 
-                        \hline 
-                    \end{tabular}
-                \end{table} 
 
                 \begin{figure}[H]
                     \includegraphics[scale=0.50]{responsetime_500k_peek}
                     \caption{The response time for send message request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_peek}
                 \end{figure}
+                
+                \begin{table}[H]
+                    \begin{tabular}{|c|c|c|}
+                        \hline 
+                        \textbf{Component} & \textbf{Mean Think Time} (ms)\\ 
+                        \hline 
+                        Socket I/O \& Queuing & $0.1292\pm [-0.0342 , 0.0381]$\\ 
+                        \hline 
+                        CRW & $0.0658\pm [-0.0194 , 0.0220]$\\ 
+                        \hline 
+                        IPersistence &$1.8264\pm [-0.6189 , 0.6532]$\\ 
+                        \hline 
+                    \end{tabular}
+                    \caption{Average think time, confidence interval, and standard deviation for 500,000 \textit{Send message} requests}
+                    \label{table:thinktime_500k_push}
+                \end{table} 
                 ~\\
                 \\
                 The raw data from these tests can be found in the log-folder, in the subfolders
@@ -606,18 +615,25 @@
                     \caption{The response times for the requests: pop push and peek. Using 50 worker threads, 50 db connections, 1 client and 1 middleware.}
                     \label{tbl:response_times_requests}
                 \end{table}
-		\subsection{$2^2$ Tests}
     		\subsubsection{Worker-threads vs Clients}
     		\begin{table}
-    			\begin{tabular}{|c|c|c|}
-        			\hline 
-        			• & 500/250 & 100/50 \\ 
-        			\hline 
-        			100/100 & $309.29 \pm 47.7$ & $350.94 \pm 0.68$ \\ 
-        			\hline 
-        			30/30 & $405.10 \pm 72.90$ & $793.39 \pm 1.32$ \\ 
-        			\hline 
-			    \end{tabular} 
+    			\begin{tabular}{|c|c|c|c|}
+    			\hline 
+    			Configuration & Mean Push Throughput & Mean Pop Throughput & Mean Response Time \\ 
+    			\hline 
+    			100/100 + 500/250 & $335.95 \pm [-62.20, 70.30]$ & $2173.2  \pm  [-242.2, 265.0]$ & $113.16 \dfrac{•}{•} [-32.18, 36.47]$ \\ 
+    			\hline 
+    			100/100 + 300/125 & $147.39 \pm [-26.39, 28.95]$ & $1613.72 \pm [-115.92, 69.28]$ & $15.79 \pm [-6.6, 12.21]$ \\ 
+    			\hline 
+    			100/100 + 100/50 & 163.22 \pm [-9.22, 8.78] & $690.85 \pm [-16.85, 12.85]$ & $3.90 \pm [-0.87 , 1.71]$ \\ 
+    			\hline 
+    			30/30 + 500/250 & $325.95 \pm [-45.95, 51.05]$ & $1945.82 \pm [-165.72, 161.18 ]$ & $147.39 \pm [-26.39, 28.95]$ \\ 
+    			\hline 
+    			30/30 + 300/125 & $376.53 \pm [-43.63, 29.47]$ & $376.53 \pm [-43.63, 29.47]$ & $13.14 \pm [-7.14, 13.73]$ \\ 
+    			\hline 
+    			30/30 + 100/50 & $160.36 \pm [-12.36 , 2.83]$ & $638.58 \pm [-26.58, 19.12]$ & $5.40 \pm [-2.63, 2.83]$ \\ 
+    			\hline 
+    			\end{tabular} 
                 \caption{$2^2$ testing for throughput, varying number of client and numer of threads. Test used: Standard test}
                 \label{table:2k2-threads-clients}
             \end{table}
@@ -816,4 +832,51 @@
                 \textbf{Response}\\
                 The server should respond with OK or FAIL.
 
+        \section{Sample Distributions}
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_1middleware_push_rop_total_resptime.eps}
+        \caption{The distribution for push throughput (top left), pop throughput (top right), total throughput (bottom left) and response time for 50 SendAndPopSameClient clients using 50 db-connections and 50 worker threads using one (1) middleware.}
+        \end{figure}
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_10middleware_push_rop_total_resptime.eps}
+        \caption{The distribution for push throughput (top left), pop throughput (top right), total throughput (bottom left) and response time for 50 SendAndPopSameClient clients using 50 db-connections and 50 worker threads using two (2) middleware.}
+        \end{figure}
+        
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_i_fooled_you_50_thrds}
+        \caption{The distribution for push throughput (top left), pop throughput (top right), response time (botto) for 50 SendAndPopSameClient clients and 50 worker threads using one (1) middleware with \textit{I fooled you}-peristence.}
+        \end{figure}
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_i_fooled_you_5_thrds}
+        \caption{The distribution for push throughput (top left), pop throughput (top right), response time (botto) for 50 SendAndPopSameClient clients and 5 worker threads using one (1) middleware with \textit{I fooled you}-peristence.}
+        \end{figure}
+        
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_peek_io_crw_db}
+        \caption{The distribution for peek throughput (top left), Socket I/O and Job Creation response time (top right), Client Request Worker response time (bottom left) and Persistence response time (bottom right) for micro benchmarking peek requests.}
+        \end{figure}
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_pop_io_crw_db}
+        \caption{The distribution for peek throughput (top left), Socket I/O and Job Creation response time (top right), Client Request Worker response time (bottom left) and Persistence response time (bottom right) for micro benchmarking pop requests.}
+        \end{figure}
+        
+        \begin{figure}[hbtp]
+        \centering
+        \includegraphics[scale=1]{img/histfit_push_io_crw_db}
+        \caption{The distribution for peek throughput (top left), Socket I/O and Job Creation response time (top right), Client Request Worker response time (bottom left) and Persistence response time (bottom right) for micro benchmarking peek requests.}
+        \end{figure}
+        
+        
 \end{document}
