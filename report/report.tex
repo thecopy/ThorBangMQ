@@ -167,7 +167,7 @@
 
     \section{Test definitions}
         \label{sec:test_definitions}
-        This section contains a description of the tests that we performed during our measurements of our system. These tests can be configured in various ways in order to test different parts of our system. For all tests where nothing else is mentioned, the amount of messages in the database has been kept steady at around 20,000 messages, and the size of messages is very low (around 5 bytes).
+        This section contains a description of the tests that we performed during our measurements of our system. These tests can be configured in various ways in order to test different properties of our system.
 
         \subsection{Send and Pop Same Client}
             In this test all client threads continuously send 'SendMessage' and 'PopMessage' requests to the server (described in Appendix \ref{sec:message_protocol_api}). Each client thread sends a message to itself, then pops the message it just sent, and then repeats. This test is designed to keep the amount of messages in the database stable, while potentially putting a lot of load on the database - depending on the configuration of the parameters. The test is configurable in: the number of (identical) threads to be spawned, time the test should run, the size of messages sent, the number of queues being used, and the amount of time each thread should sleep between sending requests. In all tests where nothing else is mentioned, the waiting time between requests is 0.\\
@@ -216,7 +216,9 @@
         We have performed our tests using machines from the cloud hosting provider DigitalOcean.com, from whom we got a 200\$ coupon to run experiments. Running our tests on a cloud host has some obvious downsides w.r.t. the results of our tests, since we can't know for sure which hardware our tests are run on, and if we are sharing this hardware with anyone.\\
         We have run all of our experiments on machines with: 4GB memory, SSD storage, and 2 logical CPU cores. Due to the way DigitalOcean provide their servers, we can't really tell how much computing power these logical CPUs provide, or whether there are any neighbors on the hardware. In order to compensate for this we've run all of our experiments for at least 10 minutes each, to see whether the observed performance is somewhat consistent.\\
         \\
-        It is important to note that all of the following tests use blocking sockets (on the client side) to send requests. This means that each of our clients can not have more than one request simultaneously. In the literature this is referred to as a closed system.\\
+        For all tests where nothing else is mentioned, the amount of messages in the database has been kept steady at around 20,000 messages, and the size of messages is very low (around 5 bytes)\\
+        \\
+        It is important to note that all of the following tests use blocking sockets (on the client side) to send requests. This means that each of our clients can not have more than one ongoing request or, put a different way, the total number of simultaneous requests is at most the number of clients. In the literature this is referred to as a closed system.\\
         \\
         In order to try to explain the performance of our system, we have identified the following parameters that we wish to test.
         \begin{itemize}
@@ -276,7 +278,7 @@
             \end{figure}
             ~\\
             \\
-            On Figure \ref{fig:2h_100threads_standardTest_100_50}, where we have a total of 150 clients, using 100 worker threads and database connections in the middleware, we see that the throughput of both \textit{Pop message} and \textit{Send message} stays very stable throughout the whole test, showing [TODO] \textit{Pop message} and [TODO] \textit{Send message} per second, with a standard deviation of [TODO] and [TODO] respectively.\\
+            On Figure \ref{fig:2h_100threads_standardTest_100_50}, where we have a total of 150 clients, using 100 worker threads and database connections in the middleware, we see that the throughput of both \textit{Pop message} and \textit{Send message} stays very stable throughout the whole test, showing (TODO) \textit{Pop message} and (TODO) \textit{Send message} per second, with a standard deviation of (TODO) and (TODO) respectively.\\
             \\
             On Figure \ref{fig:2h_30threads_standardTest_500_250}, where we have decreased the number of worker threads and database connections to 30 but increased the number of total clients to 750, we see that the throughput has gone up. This is especially the case for \textit{Pop message} requests, where we also see that standard deviation has increased significantly.
             \begin{figure}[H]
@@ -537,7 +539,6 @@
                 \caption{The throughput when running \textit{SendAndPopSameClient} varying number of clients and number of middlewares.}
                 \label{fig:throughput_middleware_clients}
                 \end{figure}
-            \begin{table}
             
             \begin{figure}[H]
                 \hspace{-1.5cm}
@@ -545,15 +546,13 @@
                 \caption{The response time when running \textit{SendAndPopSameClient} varying number of clients and number of middlewares. The figure show response time increasing asymptotically after certain threshold.}
                 \label{fig:throughout_middleware_clients_respTime}
                 \end{figure}
-            \begin{table}
             
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \includegraphics[scale=0.40]{throughout_middleware_clients_thinkTime_wo_db}
                 \caption{The mean think time excluding the persisting component for a request when varying number of clients and middleware.}
                 \label{fig:throughout_middleware_clients_thinkTime_wo_db}
-                \end{figure}
-            \begin{table}
+            \end{figure}
             
             
         \subsubsection{Response Times for Requests}
