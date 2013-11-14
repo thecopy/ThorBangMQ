@@ -1,0 +1,7 @@
+*_test.txt
+*_application.txt
+*.png
+logs/
+test-definitions/
+server/
+client/
