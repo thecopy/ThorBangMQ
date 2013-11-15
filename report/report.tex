@@ -5,12 +5,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{listings}
 \usepackage{float}
 \usepackage{graphics}
 \usepackage{epstopdf}
 \usepackage{graphicx}
     \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
     \graphicspath{{img/}}
+    \DeclareUnicodeCharacter{00A0}{ }
 
 \begin{document}
     \maketitle
@@ -131,7 +133,7 @@
                 \label{fig:middleware_flow}
             \end{figure}
         \subsection{Database}
-            We have chosen to use a simple database schema with three tables: messages, queues, and clients. This schema is illustrated on Figure \ref{fig:database_schema}. We have used the following two multicolumn-indexes on the \textit{messages}-table: \textit{(receiver\_id, queue\_id, time\_of\_arrival)} and \textit{(receiver\_id, queue\_id, priority)}. 
+            We have chosen to use a simple database schema with three tables: messages, queues, and clients. This schema is illustrated on Figure \ref{fig:database_schema}. We have used the following two multicolumn-indexes on the \textit{messages}-table: \textit{(receiver\_id, queue\_id, time\_of\_arrival)},\textit{(receiver\_id, queue\_id, priority)},\textit{(receiver\_id, queue\_id, priority)} and \textit{(receiver\_id, queue\_id, priority)}. 
             \begin{figure}[H]
                 \centering
                 \centerline{\includegraphics[scale=0.50]{database_schema}}
@@ -240,18 +242,17 @@
         \begin{itemize}
             \item Client
             \begin{itemize}
-                \item Client threads per client machine
+                \item Size of messages
+                \item Frequency of requests
+                \item Total number of clients
+                \item Type of Requests
             \end{itemize}
             \item Middleware
             \begin{itemize}
-                \item Size of messages
-                \item Total number of clients
-                \item Frequency of requests
                 \item Number of middleware instances
                 \item Number of database connections
                 \item Number of worker threads
                 \item Impact of using database vs. not storing messages at all
-                \item Frequency of requests
             \end{itemize}
             \item Database
             \begin{itemize}
@@ -337,6 +338,7 @@
                     \caption{Breakdown of the think times in the system while under load from \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
                     \label{table:thinktimes_4h_test_components}
                 \end{table} 
+        The logs for this test can be found in the \textit{4h-trace} folder.
 
 
         \subsection{Micro benchmarks}
@@ -380,10 +382,38 @@
                 \end{figure}
                 ~\\
                 \\
-                The raw data from this test can be found in the log-folder, in the subfolders
-                \begin{itemize}
-                    \item folders
-                \end{itemize}
+
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
+
+
+        \subsection{Response Times for Requests}
+                \begin{table}
+                    \begin{tabular}{|c|c|}
+                        \hline 
+                        \textbf{Type of Request} & \textbf{Response Time} (ms) \\ 
+                        \hline 
+                        Pop & $3.997 \pm 0.021$ \\ 
+                        \hline 
+                        Peek & $2.022 \pm 0.038$ \\ 
+                        \hline 
+                        Push & $1.856 \pm 0.61294$ \\ 
+                        \hline 
+                    \end{tabular} 
+                    \caption{The response times for the requests: \textit{Pop message}, \textit{Send message}, and \textit{Peek message}. Using 50 worker threads, 50 db connections, 1 client and 1 middleware.}
+                    \label{tbl:response_times_requests}
+                \end{table}
+
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
+
+        \subsection{Breakdown of Think Times}
+            \begin{figure}[H]
+                    \centering
+                    \centerline{\includegraphics[scale=0.50]{thinktime_push_peek_pop}}
+                    \caption{Breakdown of the thinktime for Send Message, Peek, and Pop requests. Using 1 client sending these requests sequentially to 1 middleware with only this client.}
+                    \label{fig:thinktime_push_peek_pop}
+             \end{figure}
+
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
 
             \subsubsection{Pop message}
                 In this test a single client continuously sends a total of 500,000 \textit{Pop message} requests. This test was run after the \textit{Send message} test described in the last subsection, which means that there was a total of 520,000 messages in the database when this test was started. In this test the amount of messages in the database goes from 520,000 to 20,000.\\
@@ -417,18 +447,14 @@
                 
                 \begin{figure}[H]
                     \centering
-                    \hspace{-2cm}
                     \centerline{\includegraphics[scale=0.50]{responsetime_500k_pop}}
                     \caption{The response time for \textit{Pop message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_pop}
                 \end{figure}                
                 ~\\
-                \\
-                The raw data from these tests can be found in the log-folder, in the subfolders
-                \begin{itemize}
-                    \item folders
-                \end{itemize}               
+                \\           
                 
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
             \subsubsection{Peek message}
                 In this test a single client continuously sends \textit{Peek message}-requests to the middleware. The size of the dataset stays the same since \textit{Peek message} doesn't actually modify the dataset.\\
                 \\
@@ -471,17 +497,17 @@
                     \item folders
                 \end{itemize}
 
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
+
         \subsection{Difference in message size}
             \begin{figure}[H]
-                    \hspace{-1.5cm}
                     \centerline{\includegraphics[scale=0.60]{responsetime_msgsize}}
                     \caption{The response time for \textit{send message}, \textit{Peek message}, and \textit{Pop message} as a function of the message size. The peeking and popping curves are also shown again in the lower graph without response time of \textit{Send message} for clarity.}
                     \label{fig:responsetime_msgsize}
                 \end{figure}
-            The raw data from these tests can be found in the log-folder, in the subfolders
-            \begin{itemize}
-                \item folders
-            \end{itemize}
+
+        The logs for this test can be found in \textit{micro-benchmarks/message-content-size}.
+
 
         \subsection{Difference in size of dataset}
             In this test we want to see what the difference of the size of the dataset matters to our system's performance. In this test we're using \textit{Send and Pop Same Client}, varying the number of messages initially stored in the database. From this test we expect that an increase in the size of the data set will increase the think-time of the database, resulting in a lower throughput.
@@ -517,8 +543,11 @@
                 \caption{The response time as a function of number of messages in the database when performing sequential \textit{Send message}-requests using one (1) client and initially 20k messages in the database. The figure shows the total throughput (top left), think time in Socket I/O and job creation (top right), Client Request Worker (bottom left) and Persistence (bottom right)}
                 \label{fig:resptime_as_function_of_msgs_in_db_push}
             \end{figure}
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
         \subsection{Difference in number of clients}
             On Figure \ref{fig:msg_db_clients}, looking at tests with the same initial size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests. 
+
+        The logs for this test can be found in \textit{dataset-clients}.
 
         \subsection{Difference in frequency of requests}
             \label{sec:difference_in_frequency_of_requests}
@@ -549,6 +578,7 @@
                       \label{fig:sleep_time_between_requests_respTime_100clients_30_30}
               \end{figure}
 
+        The logs for this test can be found in \textit{request-frequency}.
 
         \subsection{Difference in data store}
             In this test we measure the difference between using Postgres and not storing anything at all. We expect to see an an increase in throughput since we don't have to communicate with the database at all and thus don't have to wait for the network or database think time.
@@ -573,6 +603,8 @@
                 \caption{The throughput and responsetime data and confidence interval when running \textit{SendAndPopSameClient} without any persistence and varying number of worker threads. Using 50 clients.}
                 \label{tbl:throughput_i-fooled-you_50-5-threads-50-clients-1kB-msg.eps}
             \end{table}
+
+        The logs for this test can be found in \textit{no-persistence}.
             
         \subsection{Difference in number of middlewares}
             \begin{figure}[H]
@@ -595,7 +627,9 @@
                 \caption{The mean think time excluding the persisting component for a request when varying number of clients and middleware.}
                 \label{fig:throughout_middleware_clients_thinkTime_wo_db}
             \end{figure}
-            
+
+        The logs for this test can be found in \textit{middleware-scaleout}
+
         \subsection{1 vs 10 middlewares}    
             In this test with \textit{StandardTest} 1000 one-way clients and 500 two-way clients were used and the difference in performance when going form 1 middleware to 10 middlewares were measured.
             
@@ -604,7 +638,7 @@
             	\hline 
             	Configuration & Mean Push Throughput & Mean Pop Throughput & Mean Response Time \\ 
             	\hline 
-            	10 Middlewares & $440.75  \pm 0.099$ & $2035.53 \pm 1.37$ & $1.155 \pm 0.011$ \\ 
+            	10 Middlewares & $440.75  \pm 0.099$ & $2035.53 \pm 1.37$ & $11.55 \pm 0.11$ \\ 
             	\hline 
             	1 Middleware & $324.84 \pm 3.20$ & $2081.93 \pm 16.05$ & $44.55 \pm 0.49$ \\ 
             	\hline 
@@ -613,22 +647,9 @@
                 \label{tbl:differnce_1_and_10_mw}
             \end{table}
             
-        \subsection{Response Times for Requests}
-                \begin{table}
-                    \begin{tabular}{|c|c|}
-                        \hline 
-                        \textbf{Type of Request} & \textbf{Response Time} (ms) \\ 
-                        \hline 
-                        Pop & $3.997 \pm 0.021$ \\ 
-                        \hline 
-                        Peek & $2.022 \pm 0.038$ \\ 
-                        \hline 
-                        Push & $1.856 \pm 0.61294$ \\ 
-                        \hline 
-                    \end{tabular} 
-                    \caption{The response times for the requests: \textit{Pop message}, \textit{Send message}, and \textit{Peek message}. Using 50 worker threads, 50 db connections, 1 client and 1 middleware.}
-                    \label{tbl:response_times_requests}
-                \end{table}
+        The logs for this test can be found in \textit{1-vs-10-middleware}.
+
+
     	\subsection{Worker-threads vs Clients}
             In this test the Standard Test was run for 10 minutes with the purpose of finding the limit on where contention in the middleware would appear. The configuration that was used in this test was 1 middleware, varying the number of clients and the number of worker threads and database connections. This can be seen as a $2^k$ test even though number of clients, number of database connections and number of worker threads are both varied due to the result which was that the ratio should be 1:1 between the number of worker threads and number of database connections in the system for best performance. The results are presented in Table \ref{table:2k2-threads-clients}.
     		\begin{table}[H]
@@ -652,6 +673,7 @@
                 \caption{$2^k$ testing for number of clients and number of database connections and worker threads. The configuration that was used in this test was 1 middleware and the test was Standard Test. The notation in the configuration-columns is so that 1/2 + 3/4 means 1 database connection, 2 worker threads, 3 one-way clients and 4 two-way clients.}
                 \label{table:2k2-threads-clients}
             \end{table}
+        The logs for this test can be found in \textit{threads-vs-clients}.
 
         \subsection{Difference in database connections and worker threads}
             \label{sec:difference_in_dbcons_and_worker_threads}
@@ -672,6 +694,7 @@
             \end{itemize}
             
         \subsection{Network Latency}
+        \label{sec:network_latency}
         By performing 500 000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean reasponse time on the middleware. The distribution of the response times can be seen in Figure \ref{fig:responsetime_dist_mw_and_client} and the measures difference can be seen in Table \ref{table:network_latency}.
 
             \begin{table}
@@ -686,7 +709,7 @@
                 \label{table:network_latency}
         \end{table}
 
-    
+        
         \begin{figure}[H]
                 \centerline{\includegraphics[scale=0.50]{responsetime_dist_mw_and_client}}
                 \caption{The distribution of the response times on the middleware (top) and client (bottom). Sampled using 500 000 peek (as to not to vary number of messages in the system) requests to the middleware using one (1) client and more than 500,000 messages in the database.}
@@ -694,6 +717,7 @@
         \end{figure}
             
  
+        The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
         \subsection{Neighbour Noise} 
         As discussed in Section \ref{sec:tests_and_results}, all our deployments live on a cloud hosting platform and thus are subject to neighbour noise. To demonstrate that the difference in computing power avaiable to our system varies over time an identical test were run on the evening (around 20:00) on day, and once again in the morning the next day (around 10:00). The difference in throughput and response time is presented in Figure \ref{fig:same_test_different_time_of_day} and \ref{fig:same_test_different_time_of_day_resp_time_over_time}.
 
@@ -710,6 +734,7 @@
                 \label{fig:same_test_different_time_of_day_resp_time_over_time}
         \end{figure}
 
+    The logs for this test cane be found in \textit{same-test-differente-times}
     \section{Analysis}
         \label{sec:analysis}
         In this section we interpret and compare the results shown in Section \ref{sec:tests_and_results} above, in order to figure out what the different performance metrics of our system are.
@@ -722,7 +747,11 @@
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textit{includes the network delay} between the middleware and the database, in both directions.\\
             The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation. Assuming that the VisualVM tool is correct this confirms that our measuring techniques employed are valid.\\
             \\
-            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network.
+            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5 from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher troughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a thoughput of around 17k messages per second and a response time of around 1.3 ms.
+
+            % DONE!!!!! ?
+
+
 
             % USE:
             %   1) diff_db-cons_worker-threads_i-fooled-you VS diff_num-db-threads
@@ -736,7 +765,11 @@
             % CONCLUDE:
             %   We spend a lot of time in the database, which might be because of bad configuration, indexes etc.
 
+
         \subsection{Size of messages}
+            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message onyl affects the push time, pop and peek seem unaffected by this. This is attributed to the implementation of the database and the conclusion can be drawn to say that the system handles big payloads well.
+
+
             % USE: 
             %   1) diff_clients_msgsize-10b VS diff_clients_msgsize-1mb VS diff_clients_msgsize-10mb
             %   2) fig:responsetime_msgsize
@@ -754,14 +787,10 @@
             % SHOW:
             %   1 & 2 -> throughput increases with the number of clients
             %   1 & 2 -> response time decreases with the number of middleware. This is because of #worker-threads which limits the amount of simultaneous requests.
-		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db} that while the troughput is the same for the system and the responsetime is increating with the same amount (Figure \ref{fig:throughout_middleware_clients_respTime}) the responsetime excluding the persistence component is increasing more for each additional client when running 1 middleware relative to distributing the clients to 2 middleware. This shows that while the system on the middleware is less stressed the database, which is the bottleneck in the whole system, is increasing for both configurations (1 vs 2 middleware). One can also see a tendency to the system with two middlewares having a slightly shorter response time overall -- which is expected (Figure \ref{fig:throughout_middleware_clients_respTime}). We can also see that the throughput will flatten out after a certain threshold, and that this threshold is the same as for then the response time start to behave asymptotically.
+		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db} that while the troughput is the same for the system and the responsetime is increasing with the same amount (Figure \ref{fig:throughout_middleware_clients_respTime}) the responsetime excluding the persistence component is increasing more for each additional client when running 1 middleware relative to distributing the clients to 2 middlewares. This shows that while the system on the middleware is less stressed, the think time in the database, which is the bottleneck in the whole system, is increasing for both configurations (1 vs 2 middleware). One can also see a tendency to the system with two middlewares having a slightly shorter response time overall -- which is expected (Figure \ref{fig:throughout_middleware_clients_respTime}). We can also see that the throughput will flatten out after a certain threshold, and that this threshold is the same as for when the response time start to behave asymptotically.
 
         \subsection{Number of clients}
-            % USE
-            %   1) 2H tests
-            %   2) 
-            % SHOW:
-            %   1 -> throughput goes up as number of clients increases
+        When increasing the number of clients (which perform the \textid{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behaviour, as is the observation that we hit a maximum quantity of these interacting clients connected to the middleware when increasing clients isnt going to increase throughput, just increase response time.
 
 
         \subsection{Stability of the system}
@@ -890,6 +919,23 @@
                 \textbf{Response}\\
                 The server should respond with OK or FAIL.
 
+        \section{Log Files}
+        In our tests we logged both at the client and at the client side. This section goes through how to parse the log files.
+
+            \subsection{Middleware Logs}
+            The middleware log on a set interval which can be configured in a configuration file which is read once at startup by the middleware, and each time this interval is hit, this is added to the log:
+            \begin{lstlisting}[breaklines]
+            [milliseconds since middleware start], [count of push requests], [count of pop/peek requests], [total number of requests received], [total time in Socket IO], [total time in CRW], [total time in persistence]
+            \end{lstlisting}
+            Note: All logged data except the first column is reset for each logging event. So the count of push requests is the count of push requests since $t-\Delta t$ where $\Delta t$ is the logging interval. Also note that Socket IO includes the amout of time the request spends in waiting in for a free worker thread.
+
+
+            \subsection{Client Logs}
+            The log files used in the tests described in this test have the follow formatting, and is logged every time a request finishes:
+            \begin{lstlisting}[breaklines]
+            [milliseconds since client start], [duration of request]
+            \end{lstlisting}
+
         \section{Sample Distributions}
         Here are some figures over the distributions of some of the samples collected during this project. Not all of these have a normal distribution and those that doesn't have the corresponding notation in the report is not assumed to be normally distributied, they are  in the appendix because it is also interesting to see the distribution of the asymmetrical distributions.
         \begin{figure}[hbtp]
@@ -935,6 +981,5 @@
         \centerline{\includegraphics[scale=0.5]{img/histfit_1_push_io_crw_db}}
         \caption{The distribution for peek throughput (top left), Socket I/O and Job Creation response time (top right), Client Request Worker response time (bottom left) and Persistence response time (bottom right) for micro benchmarking peek requests.}
         \end{figure}
-        
         
 \end{document}

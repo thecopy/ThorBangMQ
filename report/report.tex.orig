@@ -71,13 +71,13 @@
 
         \subsection{Middleware}
             \label{sec:description_middleware}
-            In our middleware we have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it has a very small impact on our server when a client connects, and that we can support many more clients simultaneously since the amount of threads in our program doesn't have to be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets though, which is that it can be harder to think about, implement, and work with non-blocking sockets.\\
+            In our middleware we have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it has a very small impact on our server when a client connects, and that we can support many more clients simultaneously since the amount of threads in our program doesn't have to be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets though, which is that it can be harder to think about, implement, and work with.\\
             \\
             In an attempt to make our implementation simpler we decided to perform all network i/o in one thread of our program. Since we want to be able to handle multiple requests simultaneously, we pass data from the network i/o-thread to worker threads for interpretation and handling. These worker threads interpret incoming data and perform the database queries needed to handle requests. Responses to these requests are put in a response queue, which the network i/o-thread will empty as often as it can, by sending sending replies directly to clients.\\
             \\
-            By moving interpretation and handling of requests to a thread different from the network i/o-thread, we have a place to perform our (blocking) calls to the database without blocking incoming requests. This is not entirely true though, since if there are more simultaneous requests than there are worker threads, the network i/o thread will be blocked when trying to spawn a new worker thread, since there are no more worker threads available.\\
+            By moving interpretation and handling of requests to a thread different from the network i/o-thread, we have a place to perform our (blocking) calls to the database without blocking incoming requests. This is not entirely true though, since if there are more simultaneous requests than there are worker threads, the incoming request will be placed in a the thread pool queue and will effectively be blocked, though not it is not technically blocking the flow of the program.\\
             \\
-            We have chosen to use a thread-pool for our worker threads in order to avoid the overhead of creating and deleting threads all of the time, and at the same time bound the  number of worker threads our program will spawn. This should make our system able to handle many requests than we have threads, at the cost of slower response times. It is important to note that this also means that the amount of simultaneous requests that our implementation can handle is equal to the minimum of the number of worker threads and the number of database connections. This is the case since a worker thread always needs a database connection to do its work (unless it received a malformed request, which shouldn't happen during our tests).\\
+            We have chosen to use a thread-pool for our worker threads in order to avoid the overhead of creating and deleting threads all of the time, and at the same time bound the  number of worker threads our program will spawn. This should make our system able to handle many requests than we have threads, at the cost of slower response times. It is important to note that this also means that the amount of simultaneous requests that our implementation can handle is equal to the minimum of the number of worker threads and the number of database connections given that no requests are invalid requests or HELLO requests (see A.1) since all but those go to the database. This is the case since a worker thread always needs a database connection to do its work (unless it received a malformed request, which shouldn't happen during our tests).\\
             \\
             With regard to database connections, we have chosen to use a connection-pool to avoid the overhead of setting up a new connection to the database each time we want to perform a query.\\
             \\
@@ -114,7 +114,15 @@
                 \end{itemize}
             \end{itemize}
             ~\\
-            It should be noted that in our implementation of \textit{Pop message} we are using 'Peek message'. This causes two accesses to the database whenever a client performs a \textit{Pop message}-request that returns a message. We only realized this after doing our tests, which is why we kept the implementation as described.
+            It should be noted that in our implementation of \textit{Pop message} we are using 'Peek message'. This causes two accesses to the database whenever a client performs a \textit{Pop message}-request that returns a message. We only realized this after doing our tests, which is why we kept the implementation as described.\\
+
+            The flow of an individual request can be seen in Figure \ref{fig:middleware_flow}. Some things to note about Figure \ref{fig:middleware_flow}:
+
+            \begin{itemize}
+                \item The last step in the ClientRequestWorker, \textit{Add To Response Queue}, does this by using the interface \textit{asl.network.ITransport} which is passed to the ClientRequestWorker by the Socket I/O component. The ITransport-inferface declares just one function \textit{void Send(String s)}. The production implementation of this interface, \textit{SocketTransport}, keeps a reference to the response-queue which is continuously polled by the non blocking socket I/O. This way the Client Request Worker and the underlying networking implementation is decoupled.
+
+                \item The Socket I/O and Job Creation component does more in one iteration than just check the response and requests queues. It also accepts client connections though this was omitted in the figure for clarity.
+            \end{itemize}
 
    \begin{figure}[H]
                 \centering
@@ -253,11 +261,8 @@
         \end{itemize}
 
         \subsection{Code profiling}
-<<<<<<< HEAD
             In order to figure out exactly where our code spends the most time and to confirm that out measurements were valid, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes). These two tests show the general results we got with all configurations of these two types of tests. Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% for 'Send and Pop Same Client' and 87.5\% for 'standard test'.
-=======
             In order to figure out exactly where our code spends the most time, we've used the code profiling tool VisualVM (\textit{http://visualvm.java.net/}). We have performed code profiling during multiple different tests with multiple different configurations. Every time we ran the profiler we got almost identical results. The profiling runs shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test} were run for approx. 3 minutes with 80 clients sending very small messages (around 5 bytes). These two tests show the general results we got with all configurations of these two types of tests. Our code spends almost all of the time, as shown on Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}, communicating with and waiting for the database. In fact, the top 3 most time consuming tasks are all due to communication with the database. If we put the time consumption of these tasks together, they add up to 83.1\% for \textit{Send and Pop Same Client} and 87.5\% for \textit{Standard test}.
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
             \begin{figure}[H]
                 \hspace{-1.5cm}
                 \centerline{\includegraphics[scale=0.50]{code_profiling_send_pop_same_client}}
@@ -271,27 +276,19 @@
                 \label{fig:code_profiling_standard_test}
             \end{figure}
             ~\\
-<<<<<<< HEAD
-            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} takes up some time: 8.8\% for 'Send and Pop Same Client' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
-=======
             On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} take up a lot of time: 8.8\% for \textit{Send and Pop Same Client} and 5.5\% for \textit{Standard test}. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
+            On both Figures we also see that \textit{ThorBangMQServer.read} and \textit{ThorBangMQServer.send} takes up some time: 8.8\% for 'Send and Pop Same Client' and 5.5\% for 'Standard test'. These two calls are responsible for communication with clients, where 'read' gets clients' requests and 'send' sends replies to clients.\\
             \\
             The last thing we note is that 'ThorBangMQServer.write' takes up 1.3\% and 1.4\% of \textit{Send and Pop Same Client} and \textit{Standard test} respectively. This method is responsible for putting responses into the response queue (as explained in Section \ref{sec:description_middleware}) and is performed by worker threads when they are done handling a client's request.
 
             % Bottlenecks
             % Most expensive operations that determine the overall performance
 
-        \subsection{Long traces}
-<<<<<<< HEAD
-            The figures in this section show the overall stability of the system while under moderate to high system load for 4 hours. The following test are of the type \textit{Standard test}. In this test we expect to see that the system behaves in a somewhat stable manner meaning that we have a low standard deviation of our measurements. We expect that the system will have queued jobs at all times and that the throughput will be stable and that the response times may vary since we are doing different types of calls: Send Message and Pop Message. Clients and worker-threads and database connections increases since, as described in Section \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware. We don't think that this will scaling though, since increasing the number of database connections gives the opportunity to put more load on the database which, at some point, will not be able to cope with the increased load.\\
-=======
-            The figures in this section show the overall stability of the system while under moderate to high load for 2 hours or more. Each of the following tests are of the type \textit{Standard test} and have been run with different parameters, increasing the number of database connections and worker threads, and the number of clients. In these tests we expect to see that the system behaves in a somewhat stable manner (at least for lower numbers of clients) meaning that we have a low standard deviation of our measurements. We expect that the throughput will go up as the number of clients and worker-threads and database connections increases since, as described in Section \ref{sec:description_middleware}, the minimum of the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware. This shouldn't scale infinitely though, since we put more load on both the middleware and the database by increasing these factors.\\
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
+        \subsection{Long trace}
+            The figures in this section show the overall stability of the system while under moderate to high system load for 4 hours. The following test are of the type \textit{Standard test}. In this test we expect to see that the system behaves in a somewhat stable manner meaning that we have a low standard deviation of our measurements. We expect that the system will have queued jobs at all times and that the throughput will be stable and that the response times may vary since we are doing different types of calls: \textit{Send Message} and \textit{Pop Message}. Clients and worker-threads and database connections increases since, as described in Section \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware. We don't think that this will keep scaling though, since increasing the number of database connections gives the opportunity to put more load on the database which, at some point, will not be able to cope with the increased load.\\
             \\
             The following figure have been plotted with the throughput of reads and writes individually, and have more reads than writes in the system for the reasons described in Section \ref{sec:standard_test}.\\
-
-<<<<<<< HEAD
+            \\
             On the longest running trace we have, running a total of 4 hours, we had a total of 300 clients and 50 worker threads and database connections in the middleware. The results of this test is shown on Figure \ref{fig:4h_throughput_respTime}. Here we see that the system behaves in a very stable manner throughout the test.
 
             \begin{figure}[H]
@@ -299,48 +296,10 @@
                 \centerline{\includegraphics[scale=0.5]{4h_throughput_respTime}}
                 \caption{The throughput of the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
                 \label{fig:4h_throughput_respTime}
-=======
-            \begin{figure}[H]
-                \centering
-                \centerline{\includegraphics[scale=0.70]{2h_100threads_standardTest_100_50}}
-                \caption{On the left we have plotted the throughput of the system while under load from \textit{Standard Test}, while on the right we have plotted the response time. The test was performed with 100 one-way clients and 50 two-way clients, using 1 middleware with 100 worker threads and 100 database connections. The dotted red line on the throughput graph shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:2h_100threads_standardTest_100_50}
-            \end{figure}
-            ~\\
-            \\
-            On Figure \ref{fig:2h_100threads_standardTest_100_50}, where we have a total of 150 clients, using 100 worker threads and database connections in the middleware, we see that the throughput of both \textit{Pop message} and \textit{Send message} stays very stable throughout the whole test, showing an average of (TODO) \textit{Pop message} and (TODO) \textit{Send message} per second, with a standard deviation of (TODO) and (TODO) respectively.\\
-            \\
-            On Figure \ref{fig:2h_30threads_standardTest_500_250}, where we have decreased the number of worker threads and database connections to 30 but increased the number of total clients to 750, we see that the throughput has gone up. This is especially the case for \textit{Pop message} requests, where we also see that standard deviation has increased significantly.
-            \begin{figure}[H]
-                \hspace{-1.5cm}
-                \centerline{\includegraphics[scale=0.700]{2h_30threads_standardTest_500_250}}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 500 one-way clients and 250 two-way clients. Using 1 middleware with 30 worker threads and 30 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:2h_30threads_standardTest_500_250}
-            \end{figure}
-            ~\\
-            \\
-            On Figure \ref{fig:2h_100threads_standardTest_500_250} we have increased the number of worker threads and database connections to 100, but kept the number of clients at 750. Here we see that the throughput total throughput of requests hasn't increased very much, but that the standard deviation of especially \textit{Pop message} requests has increased.
-                
-            \begin{figure}[H]
-                \centering
-                \centerline{\includegraphics[scale=0.700]{2h_100threads_standardTest_500_250}}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 500 one-way clients and 250 two-way clients. Using 1 middleware with 100 worker threads and 100 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:2h_100threads_standardTest_500_250}
-            \end{figure}
-            ~\\
-            \\
-            On the longest running trace we have, running a total of 4 hours, we had a total of 300 clients and 30 worker threads and database connections in the middleware. The results of this test is shown on Figure \ref{fig:4h_throughput}. Here we see that the system behaves in a very stable manner throughout the  test.
-
-            \begin{figure}[H]
-                \centering
-                \centerline{\includegraphics[scale=0.5]{4h_throughput}}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
-                \label{fig:4h_throughput}
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
             \end{figure}
             ~\\
             ~\\
-            Table \ref{table:throughput_4h_test} and Table \ref{table:thinktimes_4h_test_components} give a summary of the results of our long traces. In these summaries we see that the standard deviation of both types of requests increases as the number of clients increases. We also see that the throughput goes up as the number of clients increases.
+            Table \ref{table:throughput_4h_test} and Table \ref{table:thinktimes_4h_test_components} show the results from our long trace in numbers. We see that the confidence intervals are low, which means that the system behaves very stable. This is also evident when we look at Figure \ref{fig:4h_throughput_respTime}.\\
 
             \begin{table}[H]
                 \centering
@@ -355,7 +314,7 @@
                         Total & $1625.63 \pm [-77.48 , 59.37]$\\ 
                         \hline 
                     \end{tabular}
-                    \caption{Breakdown of the think times in the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
+                    \caption{Breakdown of the think times in the system while under load from \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
                     \label{table:throughput_4h_test}
                 \end{table} 
 
@@ -375,7 +334,7 @@
                         Total & $10.66 \pm [-4.54 , 7.06]$\\ 
                         \hline 
                     \end{tabular}
-                    \caption{Breakdown of the think times in the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
+                    \caption{Breakdown of the think times in the system while under load from \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
                     \label{table:thinktimes_4h_test_components}
                 \end{table} 
 
@@ -429,13 +388,13 @@
             \subsubsection{Pop message}
                 In this test a single client continuously sends a total of 500,000 \textit{Pop message} requests. This test was run after the \textit{Send message} test described in the last subsection, which means that there was a total of 520,000 messages in the database when this test was started. In this test the amount of messages in the database goes from 520,000 to 20,000.\\
                 \\
-                % On Figure \ref{fig:thinktime_500k_pop} we see that the think time has a very specific pattern over time. It seems that 
+                On Figure \ref{fig:thinktime_500k_pop} we see that the think time of the database (IPersistence) dominates the think time of the middleware. We also see that it has as specific pattern over time. We see that the think-time decreases and becomes more stable when the number of messages in the database decreases. On Table \ref{table:think_time_send_message} we see the numbers with 90\% confidence intervals.
 
 
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{thinktime_500k_pop}}
-                    \caption{The think time in the server for \textit{Pop message} request. Each data point represents an individual request. A total of 500,000 requests.}
+                    \caption{The think-time of the middleware during 500,000 \textit{Pop message} requests. Each data point represents an individual request.}
                     \label{fig:thinktime_500k_pop}
                 \end{figure}
 
@@ -452,6 +411,8 @@
                         IPersistence & $3.810\pm1.164$ \\ 
                         \hline 
                     \end{tabular}
+                    \caption{Think times of the three different components of our system which we measure.}
+                    \label{table:think_time_send_message}
                 \end{table}
                 
                 \begin{figure}[H]
@@ -469,6 +430,10 @@
                 \end{itemize}               
                 
             \subsubsection{Peek message}
+                In this test a single client continuously sends \textit{Peek message}-requests to the middleware. The size of the dataset stays the same since \textit{Peek message} doesn't actually modify the dataset.\\
+                \\
+                On Figure \ref{fig:thinktime_500k_peek} we see that the response time of the database dominates the think-time of the middleware. We see that the response time of the database varies consistently between around 1.25 and 2.5.
+
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{thinktime_500k_peek}}
@@ -479,7 +444,7 @@
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{responsetime_500k_peek}}
-                    \caption{The response time for \textit{Send message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
+                    \caption{The response time for \textit{Peek message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_peek}
                 \end{figure}
                 
@@ -549,7 +514,7 @@
 
             \begin{figure}[H]
                 \centerline{\includegraphics[scale=0.55]{resptime_as_function_of_msgs_in_db_push}}
-                \caption{The response time as a function of number of messages in the database when performing sequential pop-requests using one (1) client and initially 20k messages in the database. The figure shows the total throughput (top left), think time in Socket I/O and job creation (top right), Client Request Worker (bottom left) and Persistence (bottom right)}
+                \caption{The response time as a function of number of messages in the database when performing sequential \textit{Send message}-requests using one (1) client and initially 20k messages in the database. The figure shows the total throughput (top left), think time in Socket I/O and job creation (top right), Client Request Worker (bottom left) and Persistence (bottom right)}
                 \label{fig:resptime_as_function_of_msgs_in_db_push}
             \end{figure}
         \subsection{Difference in number of clients}
@@ -631,13 +596,8 @@
                 \label{fig:throughout_middleware_clients_thinkTime_wo_db}
             \end{figure}
             
-<<<<<<< HEAD
         \subsection{1 vs 10 middlewares}    
             In this test with \textit{StandardTest} 1000 one-way clients and 500 two-way clients were used and the difference in performance when going form 1 middleware to 10 middlewares were measured.
-=======
-        \subsubsection{1 vs 10 middlewares}    
-            In this test we we ran two \textit{Standard tests} with 1000 one-way clients and 500 two-way clients, measuring the difference in performance when going form 1 middleware to 10 middlewares.
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
             
             \begin{table}
             	\begin{tabular}{|c|c|c|c|}
@@ -669,14 +629,9 @@
                     \caption{The response times for the requests: \textit{Pop message}, \textit{Send message}, and \textit{Peek message}. Using 50 worker threads, 50 db connections, 1 client and 1 middleware.}
                     \label{tbl:response_times_requests}
                 \end{table}
-<<<<<<< HEAD
     	\subsection{Worker-threads vs Clients}
             In this test the Standard Test was run for 10 minutes with the purpose of finding the limit on where contention in the middleware would appear. The configuration that was used in this test was 1 middleware, varying the number of clients and the number of worker threads and database connections. This can be seen as a $2^k$ test even though number of clients, number of database connections and number of worker threads are both varied due to the result which was that the ratio should be 1:1 between the number of worker threads and number of database connections in the system for best performance. The results are presented in Table \ref{table:2k2-threads-clients}.
-    		\begin{table}
-=======
-    		\subsubsection{Worker-threads vs Clients}
     		\begin{table}[H]
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
     			\begin{tabular}{|c|c|c|c|}
     			\hline 
     			Configuration & Mean Push Throughput & Mean Pop Throughput & Mean Response Time \\ 
@@ -694,11 +649,7 @@
     			30/30 + 100/50 & $160.36 \pm [-12.36 , 2.83]$ & $638.58 \pm [-26.58, 19.12]$ & $5.40 \pm [-2.63, 2.83]$ \\ 
     			\hline 
     			\end{tabular} 
-<<<<<<< HEAD
                 \caption{$2^k$ testing for number of clients and number of database connections and worker threads. The configuration that was used in this test was 1 middleware and the test was Standard Test. The notation in the configuration-columns is so that 1/2 + 3/4 means 1 database connection, 2 worker threads, 3 one-way clients and 4 two-way clients.}
-=======
-                \caption{$2^2$ testing for throughput, varying number of client and number of threads. Test used: \textit{Standard test}}
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
                 \label{table:2k2-threads-clients}
             \end{table}
 
@@ -721,21 +672,7 @@
             \end{itemize}
             
         \subsection{Network Latency}
-<<<<<<< HEAD
         By performing 500 000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean reasponse time on the middleware. The distribution of the response times can be seen in Figure \ref{fig:responsetime_dist_mw_and_client} and the measures difference can be seen in Table \ref{table:network_latency}.
-
-        \begin{table}
-            \begin{tabular}{|c|c|c|}
-                \hline 
-                    MRT\footnote{Mean Response Time} on Client (ms) & MRT on Middleware (ms) & Mean Network Latency (ms)\\
-                \hline 
-                    $4.358 \pm [-0.724, 0.915]$ & $3.957 \pm [-0.652, 0.696]$ & $0.402$ \\ 
-                \hline 
-            \end{tabular} 
-            \caption{Network Latency approximated by subtracting the mean response time on the server with the mean response time on the client.}
-            \label{table:network_latency}
-=======
-            By performing 500,000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean reasponse time on the middleware:
 
             \begin{table}
                 \begin{tabular}{|c|c|c|}
@@ -747,7 +684,6 @@
                 \end{tabular} 
                 \caption{Network Latency approximated by subtracting the mean response time on the server with the mean response time on the client.}
                 \label{table:network_latency}
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
         \end{table}
 
     
@@ -776,16 +712,7 @@
 
     \section{Analysis}
         \label{sec:analysis}
-<<<<<<< HEAD
-        
-        In this section we interpret and compare the results shown in \ref{sec:tests_and_results} above, in order to figure out what the different performance metrics of our system are.
-=======
         In this section we interpret and compare the results shown in Section \ref{sec:tests_and_results} above, in order to figure out what the different performance metrics of our system are.
->>>>>>> 1f412643a7a84c439b7b7872606c98d1ef855bc2
-
-        \subsection{Long Trace}
-
-        % TODO: Use the response times and the stable thoughput to argue that the system was under high load.
 
         \subsection{Time spent in each part of the system}
             \label{sec:time_spent_in_each_part_of_the_system}
@@ -838,12 +765,17 @@
 
 
         \subsection{Stability of the system}
-            In our long trace tests we saw that our system behaved in a reasonably stable manner over both two and four hour tests.\\
+<<<<<<< HEAD
+            In our long trace test we saw that our system behaved in a reasonably stable manner over the four hour test.\\
             \\
-            When comparing the throughput and the response time of Figure \ref{fig:2h_30threads_standardTest_500_250} (750 clients, 100 worker threads) and \ref{fig:2h_100threads_standardTest_500_250} (750 clients, 30 worker threads), we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
+            When comparing the throughput and the response times in Table \ref{table:2k2-threads-clients} for 750 clients, 100 worker threads and 750 clients, 30 worker threads, we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
             \\
-            When we compare the throughput of Figure \ref{fig:2h_100threads_standardTest_100_50} and \ref{fig:2h_100threads_standardTest_500_250} we see that the throughput increases when the number of clients increases. We see that the standard deviation (see numbers in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}) increases 5 fold. This increase in standard variation shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The low standard deviation we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients.\\
+            When we compare the throughput from when 150 client and 100 worker threads where used, and 750 clients and 100 worker threads we see that the throughput seems is increasing when the number of clients increases. We see that the confidence interval (again, see numbers in Table \ref{table:2k2-threads-clients}) increases heavily. This increase in the CI shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The narrow confidence interval we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients. \\
+=======
+            In our long trace we saw that our system behaved in a stable manner over four hours. With this result we allowed ourselves to assume that some 10-minute tests which we performed with similar parameters will behave in a stable manner as well.\\
+>>>>>>> eb7a2bf65d41e2a0cb68086fc471ddf2958c9995
             \\
+            When comparing the throughput and the response time of Figure \ref{table:2k2-threads-clients} for 750 clients and 100 worker threads with the results for 750 clients and 30 worker threads, we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Seeing that the confidence interval stays low for both 750 clients and 425 clients, we see that the system stays stable also for these configurations, which means that we aren't putting enough load on the system to make it unstable. We note that the confidence interval for 750 clients is much bigger than it is for 425 and 150 clients, which shows that the amount of load we can put on the system without making it unstable is around 425 clients running \textit{Standard test}.
 
         \subsection{Frequency of requests}
             \label{sec:frequency_of_requests}
@@ -861,7 +793,7 @@
         \subsection{Bound on throughput of middleware}
             \label{sec:analysis_bound_on_throughput}
             On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a high enough frequency of requests) is bounded by the minimum of the number of database connections and the number of worker threads. This is a very intuitive result since each worker thread will use exactly one database connection per (well formed) request. This means that if we want to keep the utilization of both worker threads and database connections high, we should keep the ratio between them 1, as other ratios would leave one of the resources idle.\\
-            This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
+            This result is backed up by the results of our long traces where, in Table \ref{table:2k2-threads-clients} and \ref{table:2k2-threads-clients}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
             \\
             In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.\\
             \\
@@ -882,7 +814,9 @@
         Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. TODO: insert analysis on number of worker threads and database connections.\\
         \\
         In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the IPersistence class or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
-        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database.
+        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database.\\
+        \\
+        % TODO: 
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
     \clearpage
     \appendix
