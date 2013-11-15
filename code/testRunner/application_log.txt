@@ -1,11 +1,11 @@
-447numberOfClients: 50
-447lengthOfExperiment: 10000
-447msgSize: 1024
-448numQueues: 1
-448sleepBetweenRequests: 0
-448Connecting 50 clients to localhost:8123...
-514OK Done! Sending messages...
-12168OK Done!
-12168-------------------------------------------
-12168Number of Clients:	50
-12169Total Time:		11644.0ms
+381numberOfClients: 50
+382lengthOfExperiment: 10000
+382msgSize: 1024
+382numQueues: 1
+383sleepBetweenRequests: 0
+383Connecting 50 clients to localhost:8123...
+434OK Done! Sending messages...
+12098OK Done!
+12099-------------------------------------------
+12099Number of Clients:	50
+12100Total Time:		11658.0ms

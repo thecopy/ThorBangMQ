@@ -35,29 +35,7 @@ public class Main {
 		}
 		
 		System.out.println("Init successfull!");
-
-		System.out.println("Sending msg to self...");
-		
-		try {
-			client.SendMessage(1, 1, 1, 0, "HEJ");
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		
-		System.out.println("OK! Peeking...");
-		Message msg = null;
-		try {
-			msg = client.PopMessage(1, true);
-		} catch (NumberFormatException | InvalidQueueException
-				| ServerException e) {
-			e.printStackTrace();
-		}
-		
-		if (msg != null) {
-			System.out.println("OK! Got message: " + msg.content);
-		} else{
-			System.out.println("Did not get msg :(");
-		}	        
+		System.out.println("Enter 'help' for help.");
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while(true){
@@ -131,6 +109,8 @@ public class Main {
 			}
 		}else if(input.equals("pop")){
 			input = "POPQ,1,1,1";
+		}else if(input.equals("bc")){
+			input = "MSG,-1,1,5,5,0,STANDARD BC";
 		}
 		
 		return input;

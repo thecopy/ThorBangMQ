@@ -69,7 +69,7 @@ public class PostgresPersistence implements IPersistence {
 
 		try {
 			return (long) executeScalar(query, logger, senderId,
-					receiverId, queueId, contextId,
+					receiverId > 0 ? receiverId : null, queueId, contextId,
 					priority, content);
 		} catch (SQLException e) {
 			long id = this.getIdOfExceptionString(e.getMessage());
@@ -121,7 +121,7 @@ public class PostgresPersistence implements IPersistence {
 					" where receiver_id = ?  and queue_id = ? order by time_of_arrival limit 1) "
 				   +"union all "
 				   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
-				   	+ "where receiver_id = -1 and queue_id = ? order by time_of_arrival limit 1) order by time_of_arrival limit 1;";
+				   	+ "where receiver_id is null and queue_id = ? order by time_of_arrival limit 1) order by time_of_arrival limit 1;";
 		logger.info(String.format("SELECT message where queue %d for user %d by time", queueId, recieverId));
 		long started = System.nanoTime();
 
@@ -341,7 +341,7 @@ public class PostgresPersistence implements IPersistence {
 	}
 
 	private Message getMessage(Object[] cols) {
-		long receiver = (long) cols[0];
+		long receiver = (long) (cols[0] == null ? -1L : (long)cols[0]);
 		long sender = (long) cols[1];
 		long timestamp = ((Timestamp) cols[2]).getTime();
 		long queueId = (long) cols[3];
@@ -459,7 +459,15 @@ public class PostgresPersistence implements IPersistence {
 				"CREATE INDEX receiver_queue_prio "+
 					"ON asl.messages "+
 					" USING btree "+
-					" (receiver_id, queue_id,priority);";
+					" (receiver_id, queue_id,priority);" +
+				"CREATE INDEX sender_toa "+
+					"ON asl.messages "+
+					" USING btree "+
+					" (receiver_id, queue_id,sender_id, time_of_arrival);" +
+				"CREATE INDEX sender_prio "+
+					"ON asl.messages "+
+					" USING btree "+
+					" (receiver_id, queue_id,sender_id, priority);";
 		try {
 			executeStatement(sql, logger);
 		} catch (SQLException e) {

@@ -1,150 +1,150 @@
-12171Client: Thread-3, #send: 77, total time: 5029.497559, avg: 65.318146, min: 27.493000, max: 251.000992
-12171Client: Thread-3, #pop: 77, total time: 4949.567871, avg: 64.280106, min: 24.789000, max: 167.429993
-12172Client: Thread-3, #fails: 0
-12172Client: Thread-4, #send: 85, total time: 4855.356445, avg: 57.121841, min: 18.297001, max: 312.248993
-12172Client: Thread-4, #pop: 85, total time: 5209.869141, avg: 61.292580, min: 20.396999, max: 128.520996
-12172Client: Thread-4, #fails: 0
-12172Client: Thread-5, #send: 85, total time: 5036.941406, avg: 59.258133, min: 18.872000, max: 368.351990
-12172Client: Thread-5, #pop: 85, total time: 5086.646484, avg: 59.842896, min: 18.485001, max: 125.571999
-12173Client: Thread-5, #fails: 0
-12173Client: Thread-6, #send: 87, total time: 4873.023926, avg: 56.011772, min: 15.232000, max: 240.046005
-12173Client: Thread-6, #pop: 87, total time: 5354.927246, avg: 61.550888, min: 20.254000, max: 200.228989
-12173Client: Thread-6, #fails: 0
-12173Client: Thread-7, #send: 84, total time: 5306.022461, avg: 63.166931, min: 31.059000, max: 239.500000
-12174Client: Thread-7, #pop: 84, total time: 4923.197266, avg: 58.609493, min: 20.118000, max: 135.878006
-12174Client: Thread-7, #fails: 0
-12174Client: Thread-8, #send: 83, total time: 5090.182617, avg: 61.327499, min: 20.341999, max: 240.878006
-12174Client: Thread-8, #pop: 83, total time: 5245.352539, avg: 63.197018, min: 24.320000, max: 337.262024
-12174Client: Thread-8, #fails: 0
-12175Client: Thread-9, #send: 83, total time: 5092.236816, avg: 61.352253, min: 27.552999, max: 411.105988
-12175Client: Thread-9, #pop: 83, total time: 5244.336914, avg: 63.184784, min: 23.827999, max: 156.757996
-12175Client: Thread-9, #fails: 0
-12175Client: Thread-10, #send: 83, total time: 5160.359863, avg: 62.173012, min: 27.806000, max: 241.311996
-12175Client: Thread-10, #pop: 83, total time: 5176.932129, avg: 62.372681, min: 23.872999, max: 157.761993
-12175Client: Thread-10, #fails: 0
-12176Client: Thread-11, #send: 77, total time: 5172.513184, avg: 67.175499, min: 27.552999, max: 242.348007
-12176Client: Thread-11, #pop: 77, total time: 5225.484863, avg: 67.863441, min: 44.189999, max: 134.655014
-12176Client: Thread-11, #fails: 0
-12176Client: Thread-12, #send: 83, total time: 5205.268555, avg: 62.714081, min: 33.882000, max: 241.535004
-12177Client: Thread-12, #pop: 83, total time: 5239.937988, avg: 63.131783, min: 23.879000, max: 327.498993
-12177Client: Thread-12, #fails: 0
-12177Client: Thread-13, #send: 92, total time: 5155.492188, avg: 56.037960, min: 18.238001, max: 242.612000
-12177Client: Thread-13, #pop: 92, total time: 5394.005371, avg: 58.630497, min: 15.247000, max: 199.897995
-12177Client: Thread-13, #fails: 0
-12178Client: Thread-14, #send: 81, total time: 5071.789551, avg: 62.614689, min: 27.542999, max: 162.884995
-12178Client: Thread-14, #pop: 81, total time: 5503.541016, avg: 67.944954, min: 29.792000, max: 439.096008
-12178Client: Thread-14, #fails: 0
-12178Client: Thread-15, #send: 77, total time: 5392.551270, avg: 70.033134, min: 29.283001, max: 272.984009
-12178Client: Thread-15, #pop: 77, total time: 5252.551758, avg: 68.214958, min: 22.792000, max: 160.834000
-12178Client: Thread-15, #fails: 0
-12179Client: Thread-16, #send: 84, total time: 5310.539551, avg: 63.220711, min: 21.698000, max: 121.478996
-12179Client: Thread-16, #pop: 84, total time: 5364.279297, avg: 63.860470, min: 30.042999, max: 217.519012
-12179Client: Thread-16, #fails: 0
-12179Client: Thread-17, #send: 87, total time: 5398.692383, avg: 62.053936, min: 29.237000, max: 165.007004
-12179Client: Thread-17, #pop: 87, total time: 5334.595215, avg: 61.317184, min: 20.987000, max: 273.763000
-12179Client: Thread-17, #fails: 0
-12180Client: Thread-18, #send: 86, total time: 5267.165527, avg: 61.246113, min: 27.639999, max: 255.072998
-12180Client: Thread-18, #pop: 86, total time: 5539.768555, avg: 64.415909, min: 21.577000, max: 183.841995
-12180Client: Thread-18, #fails: 0
-12180Client: Thread-19, #send: 95, total time: 5409.072754, avg: 56.937607, min: 9.733000, max: 297.079987
-12180Client: Thread-19, #pop: 95, total time: 5457.778809, avg: 57.450298, min: 19.055000, max: 118.918999
-12180Client: Thread-19, #fails: 0
-12181Client: Thread-20, #send: 87, total time: 5454.433594, avg: 62.694641, min: 27.622000, max: 168.298004
-12181Client: Thread-20, #pop: 87, total time: 5415.948730, avg: 62.252285, min: 27.610001, max: 213.528000
-12181Client: Thread-20, #fails: 0
-12181Client: Thread-21, #send: 83, total time: 5297.664551, avg: 63.827286, min: 19.281000, max: 166.281998
-12181Client: Thread-21, #pop: 83, total time: 5602.056641, avg: 67.494659, min: 29.188999, max: 276.865997
-12181Client: Thread-21, #fails: 0
-12182Client: Thread-22, #send: 86, total time: 5321.081543, avg: 61.873039, min: 24.768000, max: 168.106003
-12182Client: Thread-22, #pop: 86, total time: 5636.016602, avg: 65.535072, min: 26.493999, max: 271.928986
-12182Client: Thread-22, #fails: 0
-12182Client: Thread-23, #send: 87, total time: 5457.926270, avg: 62.734783, min: 19.712999, max: 177.529999
-12182Client: Thread-23, #pop: 87, total time: 5579.349121, avg: 64.130447, min: 29.117001, max: 262.584015
-12183Client: Thread-23, #fails: 0
-12183Client: Thread-24, #send: 96, total time: 5373.269531, avg: 55.971558, min: 15.398000, max: 177.988007
-12183Client: Thread-24, #pop: 96, total time: 5694.107422, avg: 59.313622, min: 20.660000, max: 131.063004
-12183Client: Thread-24, #fails: 0
-12183Client: Thread-25, #send: 80, total time: 5454.242188, avg: 68.178032, min: 22.872000, max: 177.117996
-12184Client: Thread-25, #pop: 80, total time: 5644.397461, avg: 70.554970, min: 28.747000, max: 259.558014
-12184Client: Thread-25, #fails: 0
-12184Client: Thread-26, #send: 85, total time: 5347.719238, avg: 62.914345, min: 19.236000, max: 173.791016
-12184Client: Thread-26, #pop: 85, total time: 5769.208008, avg: 67.873032, min: 23.724001, max: 144.267014
-12184Client: Thread-26, #fails: 0
-12184Client: Thread-27, #send: 95, total time: 5362.202637, avg: 56.444241, min: 22.334000, max: 252.672989
-12185Client: Thread-27, #pop: 95, total time: 5796.836914, avg: 61.019337, min: 22.459000, max: 187.863007
-12185Client: Thread-27, #fails: 0
-12185Client: Thread-28, #send: 89, total time: 5536.649902, avg: 62.209549, min: 22.825001, max: 239.348007
-12185Client: Thread-28, #pop: 89, total time: 5649.329102, avg: 63.475609, min: 23.912001, max: 187.056000
-12185Client: Thread-28, #fails: 0
-12186Client: Thread-29, #send: 98, total time: 5237.522461, avg: 53.444107, min: 15.196000, max: 238.395996
-12186Client: Thread-29, #pop: 98, total time: 5969.650391, avg: 60.914795, min: 19.048000, max: 339.200012
-12186Client: Thread-29, #fails: 0
-12186Client: Thread-30, #send: 83, total time: 5350.284180, avg: 64.461258, min: 22.926001, max: 237.889999
-12187Client: Thread-30, #pop: 83, total time: 5881.810059, avg: 70.865173, min: 21.836000, max: 349.235992
-12187Client: Thread-30, #fails: 0
-12187Client: Thread-31, #send: 97, total time: 5733.920898, avg: 59.112583, min: 19.035000, max: 238.503998
-12187Client: Thread-31, #pop: 97, total time: 5551.619629, avg: 57.233192, min: 22.611000, max: 142.028992
-12187Client: Thread-31, #fails: 0
-12187Client: Thread-32, #send: 102, total time: 5540.747070, avg: 54.321053, min: 15.884000, max: 238.070007
-12188Client: Thread-32, #pop: 102, total time: 5746.805664, avg: 56.341232, min: 20.093000, max: 183.194000
-12188Client: Thread-32, #fails: 0
-12188Client: Thread-33, #send: 87, total time: 5680.213379, avg: 65.289810, min: 18.719000, max: 247.145996
-12188Client: Thread-33, #pop: 87, total time: 5639.679199, avg: 64.823898, min: 18.158001, max: 133.229996
-12188Client: Thread-33, #fails: 0
-12188Client: Thread-34, #send: 97, total time: 5739.601563, avg: 59.171146, min: 11.198000, max: 246.091003
-12189Client: Thread-34, #pop: 97, total time: 5601.411621, avg: 57.746513, min: 18.117001, max: 133.660995
-12189Client: Thread-34, #fails: 0
-12189Client: Thread-35, #send: 86, total time: 5775.405762, avg: 67.155884, min: 18.128000, max: 252.047012
-12189Client: Thread-35, #pop: 86, total time: 5592.592773, avg: 65.030151, min: 12.489000, max: 141.871002
-12189Client: Thread-35, #fails: 0
-12189Client: Thread-36, #send: 105, total time: 5554.001465, avg: 52.895252, min: 13.566000, max: 249.169998
-12190Client: Thread-36, #pop: 105, total time: 5853.788086, avg: 55.750362, min: 13.082000, max: 158.268997
-12190Client: Thread-36, #fails: 0
-12190Client: Thread-37, #send: 100, total time: 5550.594727, avg: 55.505943, min: 12.299000, max: 247.911011
-12190Client: Thread-37, #pop: 100, total time: 5881.401367, avg: 58.814011, min: 12.583000, max: 157.967010
-12190Client: Thread-37, #fails: 0
-12191Client: Thread-38, #send: 93, total time: 5764.235840, avg: 61.981030, min: 10.807000, max: 247.746002
-12191Client: Thread-38, #pop: 93, total time: 5686.386230, avg: 61.143936, min: 12.762000, max: 123.301003
-12191Client: Thread-38, #fails: 0
-12191Client: Thread-39, #send: 104, total time: 5586.276855, avg: 53.714199, min: 10.565000, max: 244.556992
-12191Client: Thread-39, #pop: 104, total time: 5873.739258, avg: 56.478264, min: 9.426000, max: 160.540985
-12191Client: Thread-39, #fails: 0
-12192Client: Thread-40, #send: 103, total time: 5534.133789, avg: 53.729450, min: 10.983000, max: 165.064987
-12192Client: Thread-40, #pop: 103, total time: 5995.966309, avg: 58.213268, min: 15.454000, max: 271.575989
-12192Client: Thread-40, #fails: 0
-12192Client: Thread-41, #send: 111, total time: 5687.065430, avg: 51.234825, min: 6.940000, max: 166.788986
-12192Client: Thread-41, #pop: 111, total time: 5856.385254, avg: 52.760223, min: 9.208000, max: 269.038025
-12193Client: Thread-41, #fails: 0
-12193Client: Thread-42, #send: 96, total time: 5564.730469, avg: 57.965939, min: 9.458000, max: 166.761993
-12193Client: Thread-42, #pop: 96, total time: 5990.997559, avg: 62.406223, min: 8.508000, max: 135.476990
-12193Client: Thread-42, #fails: 0
-12193Client: Thread-43, #send: 105, total time: 5517.650879, avg: 52.549057, min: 7.010000, max: 176.686005
-12194Client: Thread-43, #pop: 105, total time: 6041.896484, avg: 57.541870, min: 8.309000, max: 252.783997
-12194Client: Thread-43, #fails: 0
-12194Client: Thread-44, #send: 105, total time: 5770.163574, avg: 54.953941, min: 8.205000, max: 244.552994
-12194Client: Thread-44, #pop: 105, total time: 5795.326172, avg: 55.193581, min: 8.738000, max: 151.115997
-12194Client: Thread-44, #fails: 0
-12195Client: Thread-45, #send: 107, total time: 5572.259277, avg: 52.077187, min: 7.737000, max: 250.546005
-12195Client: Thread-45, #pop: 107, total time: 6008.706543, avg: 56.156136, min: 7.663000, max: 157.683014
-12195Client: Thread-45, #fails: 0
-12195Client: Thread-46, #send: 109, total time: 5924.403809, avg: 54.352329, min: 7.307000, max: 253.673996
-12195Client: Thread-46, #pop: 109, total time: 5667.524902, avg: 51.995644, min: 7.145000, max: 135.498001
-12195Client: Thread-46, #fails: 0
-12196Client: Thread-47, #send: 106, total time: 5786.043945, avg: 54.585320, min: 9.901000, max: 239.742004
-12198Client: Thread-47, #pop: 106, total time: 5807.395996, avg: 54.786751, min: 8.476000, max: 181.296997
-12198Client: Thread-47, #fails: 0
-12198Client: Thread-48, #send: 102, total time: 5857.212402, avg: 57.423653, min: 7.919000, max: 239.084000
-12198Client: Thread-48, #pop: 102, total time: 5740.452148, avg: 56.278942, min: 8.212000, max: 206.192993
-12199Client: Thread-48, #fails: 0
-12199Client: Thread-49, #send: 112, total time: 5743.698242, avg: 51.283020, min: 3.498000, max: 169.138000
-12199Client: Thread-49, #pop: 112, total time: 5864.262695, avg: 52.359489, min: 6.415000, max: 257.174011
-12199Client: Thread-49, #fails: 0
-12199Client: Thread-50, #send: 108, total time: 5489.132324, avg: 50.825298, min: 4.448000, max: 252.505997
-12200Client: Thread-50, #pop: 108, total time: 6127.457520, avg: 56.735718, min: 4.829000, max: 196.628006
-12200Client: Thread-50, #fails: 0
-12200Client: Thread-51, #send: 117, total time: 5652.726563, avg: 48.313904, min: 2.640000, max: 177.397995
-12200Client: Thread-51, #pop: 117, total time: 5979.035645, avg: 51.102867, min: 5.786000, max: 418.399994
-12200Client: Thread-51, #fails: 0
-12201Client: Thread-52, #send: 111, total time: 5553.588379, avg: 50.032330, min: 2.414000, max: 161.037994
-12201Client: Thread-52, #pop: 111, total time: 6085.878418, avg: 54.827732, min: 5.272000, max: 219.035004
-12201Client: Thread-52, #fails: 0
+12102Client: Thread-3, #send: 87, total time: 5036.761719, avg: 57.893810, min: 37.007000, max: 248.956985
+12102Client: Thread-3, #pop: 87, total time: 5055.222168, avg: 58.106003, min: 18.392000, max: 131.695007
+12102Client: Thread-3, #fails: 0
+12102Client: Thread-4, #send: 94, total time: 5148.734375, avg: 54.773773, min: 24.607000, max: 199.455002
+12103Client: Thread-4, #pop: 94, total time: 4998.687500, avg: 53.177528, min: 19.754999, max: 99.825996
+12103Client: Thread-4, #fails: 0
+12103Client: Thread-5, #send: 95, total time: 4977.745605, avg: 52.397320, min: 11.019000, max: 199.356995
+12103Client: Thread-5, #pop: 95, total time: 5230.496582, avg: 55.057861, min: 24.625000, max: 131.063004
+12103Client: Thread-5, #fails: 0
+12103Client: Thread-6, #send: 97, total time: 5070.040527, avg: 52.268459, min: 13.113000, max: 198.308990
+12103Client: Thread-6, #pop: 97, total time: 5178.467773, avg: 53.386269, min: 17.372999, max: 100.866997
+12103Client: Thread-6, #fails: 0
+12104Client: Thread-7, #send: 95, total time: 5233.004395, avg: 55.084259, min: 23.224001, max: 194.891006
+12104Client: Thread-7, #pop: 95, total time: 5056.298340, avg: 53.224197, min: 24.047001, max: 92.609001
+12104Client: Thread-7, #fails: 0
+12104Client: Thread-8, #send: 96, total time: 5124.016602, avg: 53.375172, min: 19.707001, max: 247.343002
+12104Client: Thread-8, #pop: 96, total time: 5268.229492, avg: 54.877392, min: 17.771999, max: 123.233002
+12104Client: Thread-8, #fails: 0
+12105Client: Thread-9, #send: 95, total time: 5270.405762, avg: 55.477955, min: 24.983000, max: 156.031998
+12105Client: Thread-9, #pop: 95, total time: 5194.494629, avg: 54.678886, min: 31.190001, max: 99.935997
+12105Client: Thread-9, #fails: 0
+12105Client: Thread-10, #send: 95, total time: 5194.379395, avg: 54.677677, min: 38.151001, max: 110.097000
+12105Client: Thread-10, #pop: 95, total time: 5331.160645, avg: 56.117481, min: 35.653999, max: 162.018005
+12105Client: Thread-10, #fails: 0
+12106Client: Thread-11, #send: 91, total time: 5287.308594, avg: 58.102295, min: 37.096001, max: 242.266006
+12106Client: Thread-11, #pop: 91, total time: 5269.381836, avg: 57.905293, min: 38.330002, max: 127.575996
+12106Client: Thread-11, #fails: 0
+12106Client: Thread-12, #send: 99, total time: 5394.136230, avg: 54.486225, min: 23.302999, max: 235.498001
+12106Client: Thread-12, #pop: 99, total time: 5201.820801, avg: 52.543644, min: 23.957001, max: 110.970001
+12106Client: Thread-12, #fails: 0
+12106Client: Thread-13, #send: 102, total time: 5087.284668, avg: 49.875340, min: 16.368000, max: 239.309998
+12107Client: Thread-13, #pop: 102, total time: 5537.572266, avg: 54.289925, min: 22.252001, max: 106.222000
+12107Client: Thread-13, #fails: 0
+12107Client: Thread-14, #send: 93, total time: 5169.458008, avg: 55.585571, min: 18.531000, max: 241.365997
+12107Client: Thread-14, #pop: 93, total time: 5507.043457, avg: 59.215519, min: 35.334000, max: 126.537003
+12107Client: Thread-14, #fails: 0
+12107Client: Thread-15, #send: 89, total time: 5359.717773, avg: 60.221546, min: 24.658001, max: 242.544998
+12107Client: Thread-15, #pop: 89, total time: 5366.201660, avg: 60.294403, min: 33.669998, max: 112.621002
+12107Client: Thread-15, #fails: 0
+12108Client: Thread-16, #send: 95, total time: 5339.099609, avg: 56.201050, min: 18.617001, max: 240.399002
+12108Client: Thread-16, #pop: 95, total time: 5416.003418, avg: 57.010563, min: 26.281000, max: 103.547997
+12108Client: Thread-16, #fails: 0
+12108Client: Thread-17, #send: 98, total time: 5408.423828, avg: 55.188000, min: 21.094000, max: 237.973999
+12108Client: Thread-17, #pop: 98, total time: 5382.638184, avg: 54.924881, min: 29.535999, max: 112.194000
+12108Client: Thread-17, #fails: 0
+12109Client: Thread-18, #send: 99, total time: 5418.237793, avg: 54.729675, min: 29.413000, max: 236.636002
+12109Client: Thread-18, #pop: 99, total time: 5406.913574, avg: 54.615288, min: 31.664000, max: 94.021004
+12109Client: Thread-18, #fails: 0
+12109Client: Thread-19, #send: 109, total time: 5480.870117, avg: 50.283207, min: 9.992000, max: 235.532990
+12109Client: Thread-19, #pop: 109, total time: 5431.204590, avg: 49.827564, min: 11.424000, max: 105.158997
+12109Client: Thread-19, #fails: 0
+12109Client: Thread-20, #send: 96, total time: 5438.520996, avg: 56.651260, min: 29.308001, max: 236.627014
+12110Client: Thread-20, #pop: 96, total time: 5473.326172, avg: 57.013813, min: 18.740000, max: 122.973999
+12110Client: Thread-20, #fails: 0
+12110Client: Thread-21, #send: 94, total time: 5365.157227, avg: 57.076145, min: 36.230999, max: 237.631012
+12110Client: Thread-21, #pop: 94, total time: 5579.929199, avg: 59.360947, min: 26.261999, max: 130.621994
+12110Client: Thread-21, #fails: 0
+12110Client: Thread-22, #send: 96, total time: 5527.794922, avg: 57.581196, min: 20.534000, max: 231.070007
+12111Client: Thread-22, #pop: 96, total time: 5450.119629, avg: 56.772079, min: 31.000000, max: 96.485001
+12111Client: Thread-22, #fails: 0
+12111Client: Thread-23, #send: 94, total time: 5632.660645, avg: 59.921921, min: 18.138000, max: 227.082001
+12111Client: Thread-23, #pop: 94, total time: 5341.097656, avg: 56.820183, min: 18.695999, max: 131.449997
+12111Client: Thread-23, #fails: 0
+12111Client: Thread-24, #send: 107, total time: 5495.996582, avg: 51.364452, min: 15.584000, max: 221.268997
+12112Client: Thread-24, #pop: 107, total time: 5523.332520, avg: 51.619930, min: 11.502000, max: 118.723999
+12112Client: Thread-24, #fails: 0
+12112Client: Thread-25, #send: 86, total time: 5656.764648, avg: 65.776329, min: 26.283001, max: 225.289993
+12112Client: Thread-25, #pop: 86, total time: 5378.235840, avg: 62.537628, min: 28.469999, max: 148.113998
+12112Client: Thread-25, #fails: 0
+12112Client: Thread-26, #send: 94, total time: 5613.196289, avg: 59.714855, min: 38.946999, max: 222.143997
+12113Client: Thread-26, #pop: 94, total time: 5473.529297, avg: 58.229034, min: 26.305000, max: 131.651001
+12113Client: Thread-26, #fails: 0
+12113Client: Thread-27, #send: 108, total time: 5488.062500, avg: 50.815392, min: 8.272000, max: 223.056992
+12113Client: Thread-27, #pop: 108, total time: 5658.948730, avg: 52.397671, min: 8.546000, max: 107.117996
+12113Client: Thread-27, #fails: 0
+12113Client: Thread-28, #send: 104, total time: 5555.637207, avg: 53.419586, min: 8.413000, max: 219.744995
+12113Client: Thread-28, #pop: 104, total time: 5628.703125, avg: 54.122147, min: 24.059000, max: 137.035995
+12113Client: Thread-28, #fails: 0
+12114Client: Thread-29, #send: 100, total time: 5703.884277, avg: 57.038845, min: 16.056000, max: 217.260986
+12114Client: Thread-29, #pop: 100, total time: 5523.229980, avg: 55.232304, min: 27.186001, max: 100.656998
+12114Client: Thread-29, #fails: 0
+12114Client: Thread-30, #send: 111, total time: 5476.642090, avg: 49.339119, min: 11.873000, max: 210.255005
+12115Client: Thread-30, #pop: 111, total time: 5785.541504, avg: 52.121998, min: 11.561000, max: 113.372002
+12115Client: Thread-30, #fails: 0
+12115Client: Thread-31, #send: 94, total time: 5239.812500, avg: 55.742687, min: 12.917000, max: 212.850006
+12115Client: Thread-31, #pop: 94, total time: 6020.240723, avg: 64.045113, min: 23.565001, max: 138.680984
+12115Client: Thread-31, #fails: 0
+12115Client: Thread-32, #send: 108, total time: 5711.703613, avg: 52.886143, min: 14.718000, max: 211.944000
+12116Client: Thread-32, #pop: 108, total time: 5589.495605, avg: 51.754593, min: 16.566000, max: 124.889000
+12116Client: Thread-32, #fails: 0
+12116Client: Thread-33, #send: 115, total time: 5734.769531, avg: 49.867565, min: 8.592000, max: 207.345993
+12116Client: Thread-33, #pop: 115, total time: 5635.176758, avg: 49.001541, min: 13.440000, max: 106.085999
+12116Client: Thread-33, #fails: 0
+12116Client: Thread-34, #send: 97, total time: 5727.279297, avg: 59.044117, min: 13.111000, max: 209.463013
+12117Client: Thread-34, #pop: 97, total time: 5677.456055, avg: 58.530472, min: 17.782000, max: 121.692001
+12117Client: Thread-34, #fails: 0
+12117Client: Thread-35, #send: 106, total time: 5876.433105, avg: 55.438049, min: 14.048000, max: 205.320007
+12117Client: Thread-35, #pop: 106, total time: 5563.336426, avg: 52.484303, min: 17.888000, max: 103.364998
+12117Client: Thread-35, #fails: 0
+12117Client: Thread-36, #send: 94, total time: 5607.255371, avg: 59.651657, min: 12.965000, max: 206.378006
+12117Client: Thread-36, #pop: 94, total time: 5858.040039, avg: 62.319572, min: 16.974001, max: 142.315994
+12117Client: Thread-36, #fails: 0
+12118Client: Thread-37, #send: 118, total time: 5630.374512, avg: 47.715034, min: 10.357000, max: 199.970001
+12118Client: Thread-37, #pop: 118, total time: 5849.629883, avg: 49.573132, min: 16.233999, max: 124.974998
+12118Client: Thread-37, #fails: 0
+12118Client: Thread-38, #send: 112, total time: 5795.344727, avg: 51.744152, min: 14.231000, max: 199.680984
+12118Client: Thread-38, #pop: 112, total time: 5699.390625, avg: 50.887417, min: 14.991000, max: 98.007004
+12118Client: Thread-38, #fails: 0
+12119Client: Thread-39, #send: 105, total time: 5775.202637, avg: 55.001930, min: 15.007000, max: 203.667007
+12119Client: Thread-39, #pop: 105, total time: 5732.014160, avg: 54.590611, min: 12.916000, max: 110.653000
+12119Client: Thread-39, #fails: 0
+12119Client: Thread-40, #send: 114, total time: 5651.280762, avg: 49.572639, min: 8.381000, max: 204.343002
+12119Client: Thread-40, #pop: 114, total time: 5855.361816, avg: 51.362823, min: 10.258000, max: 121.370003
+12119Client: Thread-40, #fails: 0
+12120Client: Thread-41, #send: 122, total time: 5793.605469, avg: 47.488571, min: 11.711000, max: 195.639999
+12120Client: Thread-41, #pop: 122, total time: 5751.022461, avg: 47.139526, min: 8.632000, max: 92.539001
+12120Client: Thread-41, #fails: 0
+12120Client: Thread-42, #send: 124, total time: 5618.909180, avg: 45.313786, min: 11.411000, max: 199.947006
+12120Client: Thread-42, #pop: 124, total time: 5927.344238, avg: 47.801163, min: 12.589000, max: 87.554001
+12120Client: Thread-42, #fails: 0
+12121Client: Thread-43, #send: 102, total time: 5717.514160, avg: 56.054062, min: 14.945000, max: 207.899994
+12121Client: Thread-43, #pop: 102, total time: 5833.449707, avg: 57.190681, min: 13.428000, max: 138.112000
+12121Client: Thread-43, #fails: 0
+12121Client: Thread-44, #send: 115, total time: 5897.427246, avg: 51.281975, min: 13.269000, max: 207.121994
+12121Client: Thread-44, #pop: 115, total time: 5665.334473, avg: 49.263775, min: 11.100000, max: 93.995003
+12121Client: Thread-44, #fails: 0
+12122Client: Thread-45, #send: 113, total time: 5748.261230, avg: 50.869568, min: 5.098000, max: 217.612991
+12122Client: Thread-45, #pop: 113, total time: 5836.972656, avg: 51.654625, min: 7.205000, max: 122.688004
+12122Client: Thread-45, #fails: 0
+12122Client: Thread-46, #send: 115, total time: 5759.013672, avg: 50.078381, min: 5.517000, max: 217.852005
+12122Client: Thread-46, #pop: 115, total time: 5841.748047, avg: 50.797810, min: 12.578000, max: 97.996002
+12122Client: Thread-46, #fails: 0
+12123Client: Thread-47, #send: 119, total time: 5820.037598, avg: 48.907879, min: 6.897000, max: 236.055008
+12123Client: Thread-47, #pop: 119, total time: 5799.381348, avg: 48.734299, min: 5.767000, max: 103.726997
+12123Client: Thread-47, #fails: 0
+12123Client: Thread-48, #send: 113, total time: 5712.798828, avg: 50.555740, min: 4.870000, max: 236.220001
+12123Client: Thread-48, #pop: 113, total time: 5916.198730, avg: 52.355743, min: 6.920000, max: 126.537003
+12123Client: Thread-48, #fails: 0
+12124Client: Thread-49, #send: 112, total time: 5721.574707, avg: 51.085491, min: 4.815000, max: 240.768005
+12124Client: Thread-49, #pop: 112, total time: 5915.301758, avg: 52.815197, min: 5.028000, max: 106.692001
+12124Client: Thread-49, #fails: 0
+12124Client: Thread-50, #send: 120, total time: 5725.344238, avg: 47.711205, min: 3.102000, max: 241.756989
+12124Client: Thread-50, #pop: 120, total time: 5914.430176, avg: 49.286915, min: 4.842000, max: 131.322006
+12124Client: Thread-50, #fails: 0
+12125Client: Thread-51, #send: 119, total time: 5753.300781, avg: 48.347069, min: 2.453000, max: 237.194000
+12125Client: Thread-51, #pop: 119, total time: 5892.869629, avg: 49.519913, min: 5.136000, max: 97.584999
+12125Client: Thread-51, #fails: 0
+12125Client: Thread-52, #send: 127, total time: 5710.973633, avg: 44.968296, min: 2.849000, max: 241.529999
+12125Client: Thread-52, #pop: 127, total time: 5939.404297, avg: 46.766964, min: 4.756000, max: 86.775002
+12125Client: Thread-52, #fails: 0
