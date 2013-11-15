@@ -7,7 +7,6 @@
 \usepackage{amssymb}
 \usepackage{float}
 \usepackage{graphics}
-\usepackage{changepage}
 \usepackage{epstopdf}
 \usepackage{graphicx}
     \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
@@ -241,6 +240,7 @@
                 \item Number of database connections
                 \item Number of worker threads
                 \item Impact of using database vs. not storing messages at all
+                \item Frequency of requests
             \end{itemize}
             \item Database
             \begin{itemize}
@@ -320,7 +320,6 @@
             \begin{table}[H]
                 \caption{Summary of results of Send Message from long traces}
                 \label{table:long_trace_test_summary_sendmessage}
-                \begin{adjustwidth}{-2cm}{}
                     \begin{tabular}{|c|c|c|c|c|}
                         \hline 
                         \textbf{1-way} & \textbf{2-way} & \textbf{Threads/DB-conns} & \textbf{Throughput Send Message (msgs/s)} & \textbf{Standard Deviation}\\ 
@@ -334,13 +333,11 @@
                         200 & 100 & 30/30 &292.69 &24.33\\
                         \hline
                     \end{tabular} 
-                \end{adjustwidth}
             \end{table}
 
             \begin{table}[H]
                 \caption{Summary of results of Pop Message from long traces}
                 \label{table:long_trace_test_summary_popmessage}
-                \begin{adjustwidth}{-2cm}{}
                     \begin{tabular}{|c|c|c|c|c|}
                         \hline 
                         \textbf{1-way} & \textbf{2-way} & \textbf{Threads/DB-conns} & \textbf{Throughput Pop Message (msgs/s)} & \textbf{Standard Deviation} \\ 
@@ -354,7 +351,6 @@
                         200 & 100 & 30/30 &1326.23 &90.21\\
                         \hline
                     \end{tabular} 
-                \end{adjustwidth}
             \end{table}
 
         \subsection{Micro benchmarks}
@@ -464,7 +460,7 @@
                         \hline 
                     \end{tabular}
                     \caption{Average think time, confidence interval, and standard deviation for 500,000 \textit{Send message} requests}
-                    \label{table:thinktime_500k_push}
+                    \label{table:thinktime_500k_peek}
                 \end{table} 
                 ~\\
                 \\
@@ -518,24 +514,20 @@
             In the lower right corner we see that the combined time spent in Client Request Worker and IPersistence is going up when the frequency of requests increases.
 
              \begin{figure}[H]
-                \begin{adjustwidth}{-2.5cm}{}
                     \centering
                     \includegraphics[scale=0.65]{sleep_time_between_requests_100clients_30_30}
                     \caption{\textit{Send and Pop Same Client} test differing the amount of wait time between requests. On the left side we have plotted the throughput when increasing the wait time. In the top right corner we have plotted the average time of Socket IO \& Queue. In the lower right corner we have plotted the sum of \textit{IPersistence} and \textit{Client request worker}}
                     \label{fig:sleep_time_between_requests_100clients_30_30}
-                \end{adjustwidth}
              \end{figure}
              ~\\
              \\
              On figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30} we see that the average response time goes up when we increase the frequency of requests. We also see that the standard deviation of response time increases when the frequency of requests increases.\\
              \\
               \begin{figure}[H]
-                \begin{adjustwidth}{-2.5cm}{}
                       \centering
                       \includegraphics[scale=0.60]{sleep_time_between_requests_respTime_100clients_30_30}
                       \caption{Same test as Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, this time plotting total response time when increasing wait time}
                       \label{fig:sleep_time_between_requests_respTime_100clients_30_30}
-                \end{adjustwidth}
               \end{figure}
 
 
@@ -624,11 +616,11 @@
     			\hline 
     			Configuration & Mean Push Throughput & Mean Pop Throughput & Mean Response Time \\ 
     			\hline 
-    			100/100 + 500/250 & $335.95 \pm [-62.20, 70.30]$ & $2173.2  \pm  [-242.2, 265.0]$ & $113.16 \dfrac{•}{•} [-32.18, 36.47]$ \\ 
+    			100/100 + 500/250 & $335.95 \pm [-62.20, 70.30]$ & $2173.2  \pm  [-242.2, 265.0]$ & $113.16 \pm [-32.18, 36.47]$ \\ 
     			\hline 
     			100/100 + 300/125 & $147.39 \pm [-26.39, 28.95]$ & $1613.72 \pm [-115.92, 69.28]$ & $15.79 \pm [-6.6, 12.21]$ \\ 
     			\hline 
-    			100/100 + 100/50 & 163.22 \pm [-9.22, 8.78] & $690.85 \pm [-16.85, 12.85]$ & $3.90 \pm [-0.87 , 1.71]$ \\ 
+    			100/100 + 100/50 & $163.22 \pm [-9.22, 8.78]$ & $690.85 \pm [-16.85, 12.85]$ & $3.90 \pm [-0.87 , 1.71]$ \\ 
     			\hline 
     			30/30 + 500/250 & $325.95 \pm [-45.95, 51.05]$ & $1945.82 \pm [-165.72, 161.18 ]$ & $147.39 \pm [-26.39, 28.95]$ \\ 
     			\hline 
@@ -892,7 +884,7 @@
         
         \begin{figure}[hbtp]
         \centering
-        \includegraphics[scale=0.7]{img/histfit_push_io_crw_db}
+        \includegraphics[scale=1]{img/histfit_1_push_io_crw_db}
         \caption{The distribution for peek throughput (top left), Socket I/O and Job Creation response time (top right), Client Request Worker response time (bottom left) and Persistence response time (bottom right) for micro benchmarking peek requests.}
         \end{figure}
         
