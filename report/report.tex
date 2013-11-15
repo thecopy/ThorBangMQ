@@ -380,13 +380,13 @@
             \subsubsection{Pop message}
                 In this test a single client continuously sends a total of 500,000 \textit{Pop message} requests. This test was run after the \textit{Send message} test described in the last subsection, which means that there was a total of 520,000 messages in the database when this test was started. In this test the amount of messages in the database goes from 520,000 to 20,000.\\
                 \\
-                % On Figure \ref{fig:thinktime_500k_pop} we see that the think time has a very specific pattern over time. It seems that 
+                On Figure \ref{fig:thinktime_500k_pop} we see that the think time of the database (IPersistence) dominates the think time of the middleware. We also see that it has as specific pattern over time. We see that the think-time decreases and becomes more stable when the number of messages in the database decreases. On Table \ref{table:think_time_send_message} we see the numbers with 90\% confidence intervals.
 
 
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{thinktime_500k_pop}}
-                    \caption{The think time in the server for \textit{Pop message} request. Each data point represents an individual request. A total of 500,000 requests.}
+                    \caption{The think-time of the middleware during 500,000 \textit{Pop message} requests. Each data point represents an individual request.}
                     \label{fig:thinktime_500k_pop}
                 \end{figure}
 
@@ -403,6 +403,8 @@
                         IPersistence & $3.810\pm1.164$ \\ 
                         \hline 
                     \end{tabular}
+                    \caption{Think times of the three different components of our system which we measure.}
+                    \label{table:think_time_send_message}
                 \end{table}
                 
                 \begin{figure}[H]
@@ -420,6 +422,10 @@
                 \end{itemize}               
                 
             \subsubsection{Peek message}
+                In this test a single client continuously sends \textit{Peek message}-requests to the middleware. The size of the dataset stays the same since \textit{Peek message} doesn't actually modify the dataset.\\
+                \\
+                On Figure \ref{fig:thinktime_500k_peek} we see that the response time of the database dominates the think-time of the middleware. We see that the response time of the database varies consistently between around 1.25 and 2.5.
+
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{thinktime_500k_peek}}
@@ -430,7 +436,7 @@
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{responsetime_500k_peek}}
-                    \caption{The response time for \textit{Send message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
+                    \caption{The response time for \textit{Peek message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:responsetime_500k_peek}
                 \end{figure}
                 
@@ -500,7 +506,7 @@
 
             \begin{figure}[H]
                 \centerline{\includegraphics[scale=0.55]{resptime_as_function_of_msgs_in_db_push}}
-                \caption{The response time as a function of number of messages in the database when performing sequential pop-requests using one (1) client and initially 20k messages in the database. The figure shows the total throughput (top left), think time in Socket I/O and job creation (top right), Client Request Worker (bottom left) and Persistence (bottom right)}
+                \caption{The response time as a function of number of messages in the database when performing sequential \textit{Send message}-requests using one (1) client and initially 20k messages in the database. The figure shows the total throughput (top left), think time in Socket I/O and job creation (top right), Client Request Worker (bottom left) and Persistence (bottom right)}
                 \label{fig:resptime_as_function_of_msgs_in_db_push}
             \end{figure}
         \subsection{Difference in number of clients}
@@ -792,7 +798,9 @@
         Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. TODO: insert analysis on number of worker threads and database connections.\\
         \\
         In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the IPersistence class or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
-        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database.
+        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database.\\
+        \\
+        % TODO: 
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
     \clearpage
     \appendix
