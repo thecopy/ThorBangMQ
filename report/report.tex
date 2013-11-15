@@ -73,7 +73,7 @@
 
         \subsection{Middleware}
             \label{sec:description_middleware}
-            In our middleware we have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it has a very small impact on our server when a client connects, and that we can support many more clients simultaneously since the amount of threads in our program doesn't have to be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets though, which is that it can be harder to think about, implement, and work with.\\
+            In our middleware we have chosen to use non-blocking sockets instead of blocking sockets since it as a few properties that we like, one of which is that we don't have to spawn a new thread for every client that connects. This means that it has a very small impact on our middleware when a client connects, and that we can support many more clients simultaneously since the amount of threads in our program doesn't have to be linear to the amount of clients currently connected. There is an obvious disadvantage to choosing non-blocking sockets over blocking sockets though, which is that it can be harder to think about, implement, and work with.\\
             \\
             In an attempt to make our implementation simpler we decided to perform all network i/o in one thread of our program. Since we want to be able to handle multiple requests simultaneously, we pass data from the network i/o-thread to worker threads for interpretation and handling. These worker threads interpret incoming data and perform the database queries needed to handle requests. Responses to these requests are put in a response queue, which the network i/o-thread will empty as often as it can, by sending sending replies directly to clients.\\
             \\
@@ -91,7 +91,7 @@
                     \item \textit{IntervalLogger} - Logs test data every x second, configurable
                     \item \textit{GlobalCounters} - Holds global counters used during tests
                     \item \textit{Message} - Representation of a message
-                    \item \textit{ServerSettings} - Configurable parameters of the server
+                    \item \textit{ServerSettings} - Configurable parameters of the middleware
                 \end{itemize}
                 \item \textbf{asl.infrastructure}
                 \begin{itemize}
@@ -102,7 +102,7 @@
                     \item \textit{InvalidClientException} - Invalid client id
                     \item \textit{InvalidQueueException} - Invalid queue id
                     \item \textit{InvalidMessageException} - Invalid message id
-                    \item \textit{ServerException} - Unknown exception at server, something is very wrong
+                    \item \textit{ServerException} - Unknown exception at middleware, something is very wrong
                 \end{itemize}
                 \item \textbf{asl.network}
                 \begin{itemize}
@@ -147,12 +147,12 @@
 
         \subsection{Communication protocol and API}
             We have chosen to use a very simple messaging protocol between the clients and the middleware. It uses an end of message token to differentiate messages from each other as we found it simpler to implement, compared to defining packets with headers containing message length and so on. We decided that our end of message token should be null, i.e. "\textbackslash0". All messages should be encoded in UTF8.\\
-            Interpretation of requests and responses using our protocol is implemented in both server and client, in the SocketTransport classes. The full description of the communication protocol and API can be found in Appendix \ref{sec:message_protocol_api}.
+            Interpretation of requests and responses in our protocol is implemented in both middleware and client, in the SocketTransport classes. The full description of the communication protocol and API can be found in Appendix \ref{sec:message_protocol_api}.
 
     \section{Testing infrastructure}
         Our testing infrastructure is written in Python and does the following:
         \begin{itemize}
-            \item Starts and stops servers
+            \item Starts and stops middlewares
             \item Starts and stops experiments
             \item Fetches logs
             \item Generates graphs
@@ -167,13 +167,13 @@
          \end{figure}
         The infrastructure consists of 4 files:
         \begin{description}
-            \item[main.py] Interface to start tests, see servers currently running etc.
+            \item[main.py] Interface to start tests, see droplets\footnote{A droplet is what the virtual machine on Digital Ocean is called.} currently running etc.
             \item[infrastructure.py] Functions doing the actual infrastructure work.
-            \item[droplets.py] Functions to start and stop servers (specific to DigitalOcean cloud provider).
+            \item[droplets.py] Functions to start and stop droplets (specific to DigitalOcean cloud provider).
             \item[gnuplot.py] Plots data.
         \end{description}
         ~\\
-        Tests are defined by creating a folder in the test-definitions directory and creating three files: \textit{conf.txt}, which defines the configuration of a server, \textit{test.txt}, which defines the configuration of the clients and the number of servers and clients the test should be deployed on, and \textit{gnuplot.sh} which generates gnuplots when called with a test-result file as an argument.\\
+        Tests are defined by creating a folder in the test-definitions directory and creating three files: \textit{conf.txt}, which defines the configuration of a middleware, \textit{test.txt}, which defines the configuration of the clients and the number of middlewares and clients the test should be deployed on, and \textit{gnuplot.sh} which generates gnuplots when called with a test-result file as an argument.\\
         \\
         Other than the files described above, our testing infrastructure relies on the following python libraries: 
         \begin{description}
@@ -188,10 +188,10 @@
         This section contains a description of the tests that we performed during our measurements of our system. These tests can be configured in various ways in order to test different properties of our system.
 
         \subsection{Send and Pop Same Client}
-            In this test all client threads continuously send 'SendMessage' and 'PopMessage' requests to the server (described in Appendix \ref{sec:message_protocol_api}). Each client thread sends a message to itself, then pops the message it just sent, and then repeats. This test is designed to keep the amount of messages in the database stable, while potentially putting a lot of load on the database - depending on the configuration of the parameters of the test. The test is configurable in: the number of (identical) threads to be spawned, time the test should run, the size of messages sent, the number of queues being used, and the amount of time each thread should sleep between sending requests. In all tests where nothing else is mentioned, the waiting time between requests is 0.\\
+            In this test all client threads continuously send 'SendMessage' and 'PopMessage' requests to the middleware (described in Appendix \ref{sec:message_protocol_api}). Each client thread sends a message to itself, then pops the message it just sent, and then repeats. This test is designed to keep the amount of messages in the database stable, while potentially putting a lot of load on the database - depending on the configuration of the parameters of the test. The test is configurable in: the number of (identical) threads to be spawned, time the test should run, the size of messages sent, the number of queues being used, and the amount of time each thread should sleep between sending requests. In all tests where nothing else is mentioned, the waiting time between requests is 0.\\
             \\
             \\
-            Tests of this type perform the same amount of 'SendMessage' and 'PopMessage' requests, which means that the amount of messages in the system is kept stable. We expect that this test could put a lot of load on the server, especially if the amount of sleep-time is very low.
+            Tests of this type perform the same amount of 'SendMessage' and 'PopMessage' requests, which means that the amount of messages in the system is kept stable. We expect that this test could put a lot of load on the middleware, especially if the amount of sleep-time is very low.
 
         \subsection{Standard test}
             \label{sec:standard_test}
@@ -463,7 +463,7 @@
                 \begin{figure}[H]
                     \centering
                     \centerline{\includegraphics[scale=0.50]{thinktime_500k_peek}}
-                    \caption{The think time in the server for \textit{Peek message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
+                    \caption{The think time in the middleware for \textit{Peek message} request. Each data point represents an individual request. A total of 500,000 requests sent sequentially each after the other.}
                     \label{fig:thinktime_500k_peek}
                 \end{figure}
 
@@ -519,7 +519,7 @@
             \end{figure}
             ~\\
             \\
-            The raw data from these tests can be found in the log-folder, in the subfolders
+            The raw data from these tests can be found in the log-folder, in the sub-folders
             \begin{itemize}
                 \item \textit{sendandpopsameclient\_diff\_clients\_msgsize-10b}
                 \item \textit{sendandpopsameclient\_diff\_clients\_msgsize-1mb}
@@ -553,7 +553,7 @@
 
         \subsection{Difference in frequency of requests}
             \label{sec:difference_in_frequency_of_requests}
-            In this test we want to measure the impact on the server when we differ the frequency of requests. We performed 6 \textit{Send and Pop Same Client}-tests, differing only the wait time between requests. The tests were performed using one middleware with 30 database connections and 30 worker threads, and 100 client threads on the client machine.\\
+            In this test we want to measure the impact on the middleware when we differ the frequency of requests. We performed 6 \textit{Send and Pop Same Client}-tests, differing only the wait time between requests. The tests were performed using one middleware with 30 database connections and 30 worker threads, and 100 client threads on the client machine.\\
             \\
             In this test we expect to see that the throughput increases with the number of requests, possibly reaching a point where it starts becoming unstable.\\
             \\
@@ -755,7 +755,7 @@
             
         \subsection{Network Latency}
         \label{sec:network_latency}
-        By performing 500 000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean reasponse time on the middleware. The distribution of the response times can be seen in Figure \ref{fig:responsetime_dist_mw_and_client} and the measures difference can be seen in Table \ref{table:network_latency}.
+        By performing 500 000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean response time on the middleware. The distribution of the response times can be seen in Figure \ref{fig:responsetime_dist_mw_and_client} and the measures difference can be seen in Table \ref{table:network_latency}.
 
             \begin{table}
                 \begin{tabular}{|c|c|c|}
@@ -765,7 +765,7 @@
                         $4.358 \pm [-0.724, 0.915]$ & $3.957 \pm [-0.652, 0.696]$ & $0.402$ \\ 
                     \hline 
                 \end{tabular} 
-                \caption{Network Latency approximated by subtracting the mean response time on the server with the mean response time on the client.}
+                \caption{Network Latency approximated by subtracting the mean response time on the middleware with the mean response time on the client.}
                 \label{table:network_latency}
         \end{table}
 
@@ -778,8 +778,8 @@
             
  
         The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
-        \subsection{Neighbour Noise} 
-        As discussed in Section \ref{sec:tests_and_results}, all our deployments live on a cloud hosting platform and thus are subject to neighbour noise. To demonstrate that the difference in computing power avaiable to our system varies over time an identical test were run on the evening (around 20:00) on day, and once again in the morning the next day (around 10:00). The difference in throughput and response time is presented in Figure \ref{fig:same_test_different_time_of_day} and \ref{fig:same_test_different_time_of_day_resp_time_over_time}.
+        \subsection{Neighbor Noise} 
+        As discussed in Section \ref{sec:tests_and_results}, all our deployments live on a cloud hosting platform and thus are subject to neighbor noise. To demonstrate that the difference in computing power available to our system varies over time an identical test were run on the evening (around 20:00) on day, and once again in the morning the next day (around 10:00). The difference in throughput and response time is presented in Figure \ref{fig:same_test_different_time_of_day} and \ref{fig:same_test_different_time_of_day_resp_time_over_time}.
 
     
         \begin{figure}[H]
@@ -805,7 +805,7 @@
             In order to determine how much time is spent in each part of our system, we look at the results we measured during code profiling (Figure \ref{fig:code_profiling_send_pop_same_client} and \ref{fig:code_profiling_standard_test}) and the data we have on the bottom of Figure \ref{fig:throughput_middleware_clients}.\\
             \\
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textit{includes the network delay} between the middleware and the database, in both directions.\\
-            The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation. Assuming that the VisualVM tool is correct this confirms that our measuring techniques employed are valid.\\
+            The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the middleware spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation. Assuming that the VisualVM tool is correct this confirms that our measuring techniques employed are valid.\\
             \\
             This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5 from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher throughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a throughput of around 17k messages per second and a response time of around 1.3 ms.
 
@@ -868,7 +868,7 @@
             %   'Differency in frequency of requests'
             % SHOW
             %   We've shown that the system didn't reach its' limit yet, but the big deviation we get with many requests (many clients) shows that we might reach that point
-            As noted in Section \ref{sec:difference_in_frequency_of_requests} we see on Figure \ref{fig:sleep_time_between_requests_100clients_30_30} that the throughput of our system goes up when the frequency of requests increases. This seems reasonable, and points to the fact that our system can handle more load than the test produces when the wait time is relatively high. What seemed to be counter-intuitive to us in the beginning was that the average response time (as shown on Figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30}) is much higher when the wait time is lower, even though the throughput is much higher at the same time. After plotting the top right part of Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, we realized that this must be because there are many requests queued, waiting to be served. This gives a higher throughput since the server always has a new request to process and at the same time gives a higher average response time since there are requests waiting to be served in the queue.\\
+            As noted in Section \ref{sec:difference_in_frequency_of_requests} we see on Figure \ref{fig:sleep_time_between_requests_100clients_30_30} that the throughput of our system goes up when the frequency of requests increases. This seems reasonable, and points to the fact that our system can handle more load than the test produces when the wait time is relatively high. What seemed to be counter-intuitive to us in the beginning was that the average response time (as shown on Figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30}) is much higher when the wait time is lower, even though the throughput is much higher at the same time. After plotting the top right part of Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, we realized that this must be because there are many requests queued, waiting to be served. This gives a higher throughput since the middleware always has a new request to process and at the same time gives a higher average response time since there are requests waiting to be served in the queue.\\
             \\
             As we also noted in Section \ref{sec:difference_in_frequency_of_requests} the standard deviation of response time becomes higher as the average response time becomes lower, and the frequency of messages decreases. What's believed to be happening at this point is that the requests are so infrequent that there is (almost) no queuing in the middleware, causing requests to be processed immediately. When the average response time becomes as low as 10 milliseconds, it is seems very reasonable to us that the standard deviation increases, since things such as network i/o will play a big part in the result.\\
             \\
@@ -911,21 +911,21 @@
         \section{Message protocol and API}
         \label{sec:message_protocol_api}
             \subsection{Exceptions}
-                If a request cannot be fulfilled by the server, the server will respond with an exception.  Exceptions have the following format:\\
+                If a request cannot be fulfilled by the middleware, the middleware should respond with an exception.  Exceptions have the following format:\\
                 \\
                 \indent\textit{FAIL $<$type$>$ $<$id$>$}\\
                 \\
-                Where $<$type$>$ is either QUEUE, CLIENT, MESSAGE, or UNKNOWN, and where $<$id$>$ is the id of the queue, client or message that ‘failed’. For instance, if a client tries to send a message to the queue with id 5 and if that queue doesn’t exist, the server will respond with “FAIL QUEUE 5”.
+                Where $<$type$>$ is either QUEUE, CLIENT, MESSAGE, or UNKNOWN, and where $<$id$>$ is the id of the queue, client or message that ‘failed’. For instance, if a client tries to send a message to the queue with id 5 and if that queue doesn't exist, the middleware will respond with “FAIL QUEUE 5”.
 
             \subsection{Handshake}
-                The client should send HELLO when first connecting to the server. The server should respond with OK if it accepts the client, otherwise the server should respond with something else. The client must disconnect if it receives anything other than OK from the server.
+                The client should send HELLO when first connecting to the middleware. The middleware should respond with OK if it accepts the client, otherwise the middleware should respond with something else. The client must disconnect if it receives anything other than OK from the middleware.
 
 
             \subsection{Send Message}
                 \indent\indent\textit{MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content}\\
                 \\
                 \textbf{Response}\\
-                The server should respond with OK if the message was inserted into the queue successfully, otherwise it should respond with FAIL.\\
+                The middleware should respond with OK if the message was inserted into the queue successfully, otherwise it should respond with FAIL.\\
                 \\
                 \textbf{Remarks}\\
                 To send a message to multiple queues, separate the QueueIds with a semicolon, e.g. 1;2;3 to send the message to queues 1, 2 and 3.
@@ -933,13 +933,13 @@
             \subsection{Message Response}
                 \indent\indent\textit{MSG,SenderId,Context,MessageId,Content}\\
                 \\
-                This is here to save space in the definitions below. This is how the server should return a message upon request from the client.
+                This is here to save space in the definitions below. This is how the middleware should return a message upon request from the client.
 
             \subsection{Peek Queue}
                 \indent\indent \textit{PEEKQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority}\\
                 \\
                 \textbf{Response}\\
-                The server should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
+                The middleware should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
                 \textbf{Remarks}\\
                 OrderByTimestampInsteadPriority is either 1 or 0.
 
@@ -947,7 +947,7 @@
                 \indent\indent\textit{PEEKS,ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority}\\
             \\
             \textbf{Response}\\
-            The server should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
+            The middleware should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
             \\
             \textbf{Remarks}\\
             OrderByTimestampInsteadPriority is either 1 or 0.
@@ -957,7 +957,7 @@
                 \indent\indent\textit{POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority}\\
                 \\
                 \textbf{Response}\\
-                The server should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
+                The middleware should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
                 \\
                 \textbf{Remarks}\\
                 OrderByTimestampInsteadPriority is either 1 or 0.
@@ -966,7 +966,7 @@
                 \indent\indent\textit{POPS,ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority}\\
                 \\
                 \textbf{Response}\\
-                The server should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
+                The middleware should respond with the message formatted as in section A.4 if there is a message in the queue. Otherwise the response should be MSG0.\\
                 \\
                 \textbf{Remarks}\\
                 OrderByTimestampInsteadPriority is either 1 or 0.
@@ -975,13 +975,13 @@
                 \indent\indent\textit{CREATEQUEUE,NameOfQueue}\\
                 \\
                 \textbf{Response}\\
-                The server should respond with the id (long) of the queue, if a queue with the same name exists the server should respond with FAIL.
+                The middleware should respond with the id (long) of the queue, if a queue with the same name exists the middleware should respond with FAIL.
 
             \subsection{Remove Queue}
                 \indent\indent\textit{REMOVEQUEUE,QueueId}\\
                 \\
                 \textbf{Response}\\
-                The server should respond with OK or FAIL.
+                The middleware should respond with OK or FAIL.
 
         \section{Log Files}
         In our tests we logged both at the client and at the client side. This section goes through how to parse the log files.
