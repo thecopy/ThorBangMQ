@@ -510,6 +510,7 @@
 
 
         \subsection{Difference in size of dataset}
+            \label{sec:difference_in_size_of_dataset}
             In this test we want to see what the difference of the size of the dataset matters to our system's performance. In this test we're using \textit{Send and Pop Same Client}, varying the number of messages initially stored in the database. From this test we expect that an increase in the size of the data set will increase the think-time of the database, resulting in a lower throughput.
             \begin{figure}[H]
                 \centerline{\includegraphics[scale=0.55]{msg_db_clients}}
@@ -544,10 +545,11 @@
                 \label{fig:resptime_as_function_of_msgs_in_db_push}
             \end{figure}
         The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
-        \subsection{Difference in number of clients}
-            On Figure \ref{fig:msg_db_clients}, looking at tests with the same initial size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests. 
 
-        The logs for this test can be found in \textit{dataset-clients}.
+        \subsection{Difference in number of clients}
+            The data needed for this test was gathered during the test described in Section \ref{sec:difference_in_size_of_dataset}. On Figure \ref{fig:msg_db_clients}, looking at tests with the same initial size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests.\\
+            \\
+            The logs for this test can be found in \textit{dataset-clients}.
 
         \subsection{Difference in frequency of requests}
             \label{sec:difference_in_frequency_of_requests}
@@ -747,7 +749,7 @@
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textit{includes the network delay} between the middleware and the database, in both directions.\\
             The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation. Assuming that the VisualVM tool is correct this confirms that our measuring techniques employed are valid.\\
             \\
-            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5 from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher troughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a thoughput of around 17k messages per second and a response time of around 1.3 ms.
+            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5 from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher throughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a throughput of around 17k messages per second and a response time of around 1.3 ms.
 
             % DONE!!!!! ?
 
@@ -767,7 +769,7 @@
 
 
         \subsection{Size of messages}
-            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message onyl affects the push time, pop and peek seem unaffected by this. This is attributed to the implementation of the database and the conclusion can be drawn to say that the system handles big payloads well.
+            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message only affects the time to perform \textit{Send message}. \textit{Pop message} and \textit{Peek message} seem unaffected by the size of the message. This is attributed to the implementation of the database and the conclusion can be drawn to say that the system handles big payloads well.
 
 
             % USE: 
@@ -790,7 +792,7 @@
 		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db} that while the troughput is the same for the system and the responsetime is increasing with the same amount (Figure \ref{fig:throughout_middleware_clients_respTime}) the responsetime excluding the persistence component is increasing more for each additional client when running 1 middleware relative to distributing the clients to 2 middlewares. This shows that while the system on the middleware is less stressed, the think time in the database, which is the bottleneck in the whole system, is increasing for both configurations (1 vs 2 middleware). One can also see a tendency to the system with two middlewares having a slightly shorter response time overall -- which is expected (Figure \ref{fig:throughout_middleware_clients_respTime}). We can also see that the throughput will flatten out after a certain threshold, and that this threshold is the same as for when the response time start to behave asymptotically.
 
         \subsection{Number of clients}
-        When increasing the number of clients (which perform the \textid{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behaviour, as is the observation that we hit a maximum quantity of these interacting clients connected to the middleware when increasing clients isnt going to increase throughput, just increase response time.
+        When increasing the number of clients (which perform the \textit{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behaviour, as is the observation that we hit a maximum quantity of these interacting clients connected to the middleware when increasing clients isnt going to increase throughput, just increase response time.
 
 
         \subsection{Stability of the system}
