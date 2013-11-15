@@ -128,9 +128,7 @@
             ~\\
             When clients send messages to multiple queues at once, we have chosen to replicate messages in queues rather than having a many-to-many relationship in the database. This decision could affect performance since we're inserting more messages than we would, had we chosen to use a many-to-many relationship.\\
             \\
-            Communication between the middleware and our database is done using JDBC, and we make SQL queries directly from our Java code. We decided not to use stored procedures, even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code.\\
-            \\
-            TODO: Write something about how our tests have been done without any indexes.
+            Communication between the middleware and our database is done using JDBC, and we make SQL queries directly from our Java code. We decided not to use stored procedures, even though it requires slightly less data to represent each query, because we found it easier to implement and debug SQL directly in our Java code.
 
         \subsection{Communication protocol and API}
             We have chosen to use a very simple messaging protocol between the clients and the middleware. It uses an end of message token to differentiate messages from each other as we found it simpler to implement, compared to defining packets with headers containing message length and so on. We decided that our end of message token should be null, i.e. "\textbackslash0". All messages should be encoded in UTF8.\\
@@ -175,16 +173,16 @@
         This section contains a description of the tests that we performed during our measurements of our system. These tests can be configured in various ways in order to test different properties of our system.
 
         \subsection{Send and Pop Same Client}
-            In this test all client threads continuously send 'SendMessage' and 'PopMessage' requests to the server (described in Appendix \ref{sec:message_protocol_api}). Each client thread sends a message to itself, then pops the message it just sent, and then repeats. This test is designed to keep the amount of messages in the database stable, while potentially putting a lot of load on the database - depending on the configuration of the parameters. The test is configurable in: the number of (identical) threads to be spawned, time the test should run, the size of messages sent, the number of queues being used, and the amount of time each thread should sleep between sending requests. In all tests where nothing else is mentioned, the waiting time between requests is 0.\\
+            In this test all client threads continuously send 'SendMessage' and 'PopMessage' requests to the server (described in Appendix \ref{sec:message_protocol_api}). Each client thread sends a message to itself, then pops the message it just sent, and then repeats. This test is designed to keep the amount of messages in the database stable, while potentially putting a lot of load on the database - depending on the configuration of the parameters of the test. The test is configurable in: the number of (identical) threads to be spawned, time the test should run, the size of messages sent, the number of queues being used, and the amount of time each thread should sleep between sending requests. In all tests where nothing else is mentioned, the waiting time between requests is 0.\\
             \\
             \\
             Tests of this type perform the same amount of 'SendMessage' and 'PopMessage' requests, which means that the amount of messages in the system is kept stable. We expect that this test could put a lot of load on the server, especially if the amount of sleep-time is very low.
 
         \subsection{Standard test}
             \label{sec:standard_test}
-            This test is an implementation of the test described in the project description, which we're supposed to be using for the traces. Our interpretation of the description, and our implementation, is as follows: A number of one-way clients bounce a single message randomly between each other, incrementing a counter in the message. Each one-way client keeps performing \textit{Pop message}-requests, checking if he got the message. A number of two-way clients each have a partner assigned, with whom they keep sending messages back and forth. Each two-way client keeps sending \textit{Pop message}-requests until he receives a message from his partner, and then sends a reply back. From this description we should note that the amount of \textit{Send Message}-requests doesn't change when incrementing the number of one-way clients increases, but it does when the number of two-way clients increases. Also to be noted, the number of \textit{Pop message}-requests increases when incrementing either of the two types of clients.\\
+            This test is an implementation of the test described in the project description, which we're supposed to be using for the traces. Our interpretation of the description, and our implementation, is as follows: A number of one-way clients bounce a single message randomly between each other, incrementing a counter in the message. Each one-way client keeps performing \textit{Pop message}-requests, checking if he got the message. A number of two-way clients each have a partner assigned, with whom they keep sending messages back and forth. Each two-way client keeps sending \textit{Pop message}-requests until he receives a message from his partner, and then sends a reply back. From this description we should note that the amount of \textit{Send Message}-requests doesn't change when the number of one-way clients increases, but it does when the number of two-way clients increases. Also to be noted, the number of \textit{Pop message}-requests increases when incrementing either of the two types of clients.\\
             \\
-            The test is configurable in the amount of one-way clients and two-way clients it should use. Only too late did we realize that it would have been nice to be able to configure the size of messages sent, and the number of queues the messages are distributed over.\\
+            The test is configurable in the amount of one-way clients and two-way clients it should use. Only too late to fix it did we realize that it would have been nice to be able to configure the size of messages sent, and the number of queues the messages are distributed over.\\
             \\
             Tests of this type perform many more 'PopMessage' requests than 'SendMessage' requests, but most of these 'PopMessage' requests will not actually find a message to pop, causing the total number of messages in the system to be kept stable.
 
@@ -192,7 +190,7 @@
             In this test a single client performs a configurable amount of a single type of request. This test is used for micro benchmarking each type of request.
             The test can be configured in: the type of requests sent and the amount of requests sent. This test can't be configured from the command line, and must be performed manually.\\
             \\
-            Depending on the request being benchmarked, the amount of messages will differ. \textit{Send Message} requests, for instance, will increase the amount of messages in the system, while \textit{Pop message} will decrease the amount of messages in the system.
+            Depending on the request being benchmarked, the amount of messages in the database may change over time. \textit{Send Message} requests, for instance, will increase the amount of messages in the system, while \textit{Pop message} will decrease the amount of messages in the system.
 
         \subsection{Timing measurements on the middleware}
             On the middleware we perform some timing measurements, measuring how much time is spent in different parts of our system. These names that we use for these parts are:\\
