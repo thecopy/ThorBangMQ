@@ -276,7 +276,7 @@
 
             \begin{figure}[H]
                 \centering
-                \centerline{\includegraphics[scale=0.75]{2h_100threads_standardTest_100_50}}
+                \centerline{\includegraphics[scale=0.70]{2h_100threads_standardTest_100_50}}
                 \caption{On the left we have plotted the throughput of the system while under load from \textit{Standard Test}, while on the right we have plotted the response time. The test was performed with 100 one-way clients and 50 two-way clients, using 1 middleware with 100 worker threads and 100 database connections. The dotted red line on the throughput graph shows the average throughput and the solid lines the standard deviation.}
                 \label{fig:2h_100threads_standardTest_100_50}
             \end{figure}
@@ -287,7 +287,7 @@
             On Figure \ref{fig:2h_30threads_standardTest_500_250}, where we have decreased the number of worker threads and database connections to 30 but increased the number of total clients to 750, we see that the throughput has gone up. This is especially the case for \textit{Pop message} requests, where we also see that standard deviation has increased significantly.
             \begin{figure}[H]
                 \hspace{-1.5cm}
-                \centerline{\includegraphics[scale=0.750]{2h_30threads_standardTest_500_250}}
+                \centerline{\includegraphics[scale=0.700]{2h_30threads_standardTest_500_250}}
                 \caption{The throughput of the system while under load from the \textit{Standard Test} with 500 one-way clients and 250 two-way clients. Using 1 middleware with 30 worker threads and 30 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
                 \label{fig:2h_30threads_standardTest_500_250}
             \end{figure}
@@ -297,7 +297,7 @@
                 
             \begin{figure}[H]
                 \centering
-                \centerline{\includegraphics[scale=0.750]{2h_100threads_standardTest_500_250}}
+                \centerline{\includegraphics[scale=0.700]{2h_100threads_standardTest_500_250}}
                 \caption{The throughput of the system while under load from the \textit{Standard Test} with 500 one-way clients and 250 two-way clients. Using 1 middleware with 100 worker threads and 100 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
                 \label{fig:2h_100threads_standardTest_500_250}
             \end{figure}
@@ -308,7 +308,7 @@
             \begin{figure}[H]
                 \centering
                 \centerline{\includegraphics[scale=0.5]{4h_throughput}}
-                \caption{The throughput of the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 30 worker threads and 30 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
+                \caption{The throughput of the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections. The dotted red line shows the average throughput and the solid lines the standard deviation.}
                 \label{fig:4h_throughput}
             \end{figure}
             ~\\
@@ -587,7 +587,7 @@
             \end{figure}
             
         \subsubsection{1 vs 10 middlewares}    
-            In this test with \textit{StandardTest} 1000 one-way clients and 500 two-way clients were used and the difference in performance when going form 1 middleware to 10 middlewares were measured.
+            In this test we we ran two \textit{Standard tests} with 1000 one-way clients and 500 two-way clients, measuring the difference in performance when going form 1 middleware to 10 middlewares.
             
             \begin{table}
             	\begin{tabular}{|c|c|c|c|}
@@ -657,35 +657,35 @@
             % TODO: plot graphs for diff_worker-threads_client-threads-10db-cons-10ms-sleep and diff_worker-threads_client-threads-same-as-db-cons-10ms-sleep
             The raw data from these tests can be found in the log-folder, in the subfolders
             \begin{itemize}
-                \item \textit{sendandpopsameclient_diff_worker-threads_db-connections}
+                \item \textit{sendandpopsameclient\_diff\_worker-threads\_db-connections}
             \end{itemize}
             
         \subsection{Network Latency}
-        By performing 500 000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean reasponse time on the middleware:
+            By performing 500,000 requests to the middleware and measuring the response time on the middleware and also on the client, we can calculate the network latency caused by the network by subtracting the mean response time of the client with the mean reasponse time on the middleware:
 
-        \begin{table}
-            \begin{tabular}{|c|c|c|}
-                \hline 
-                    MRT\footnote{Mean Response Time} on Client (ms) & MRT on Middleware (ms) & Mean Network Latency (ms)\\
-                \hline 
-                    $4.358 \pm [-0.724, 0.915]$ & $3.957 \pm [-0.652, 0.696]$ & $0.402$ \\ 
-                \hline 
-            \end{tabular} 
-            \caption{Network Latency approximated by subtracting the mean response time on the server with the mean response time on the client.}
-            \label{table:network_latency}
+            \begin{table}
+                \begin{tabular}{|c|c|c|}
+                    \hline 
+                        MRT\footnote{Mean Response Time} on Client (ms) & MRT on Middleware (ms) & Mean Network Latency (ms)\\
+                    \hline 
+                        $4.358 \pm [-0.724, 0.915]$ & $3.957 \pm [-0.652, 0.696]$ & $0.402$ \\ 
+                    \hline 
+                \end{tabular} 
+                \caption{Network Latency approximated by subtracting the mean response time on the server with the mean response time on the client.}
+                \label{table:network_latency}
         \end{table}
 
     
         \begin{figure}[H]
                 \hspace{-1.5cm}
                 \centerline{\includegraphics[scale=0.50]{responsetime_dist_mw_and_client}}
-                \caption{The distribution of the response times on the middleware (top) and client (bottom). Sampled using 500 000 peek (as to not to vary number of messages in the system) requests to the middleware using one (1) client and more than 500 000 messages in the database.}
+                \caption{The distribution of the response times on the middleware (top) and client (bottom). Sampled using 500 000 peek (as to not to vary number of messages in the system) requests to the middleware using one (1) client and more than 500,000 messages in the database.}
                 \label{fig:responsetime_dist_mw_and_client}
         \end{figure}
             
  
-        \subsection{Neightbour Nouise} 
-        As discussed in Section \ref{sec:tests_and_results}, all our deployments live on a cloud hosting platform and thus are subject to neighbour noise. To demonstrate that the difference in computing power avaiable to our system varies over time an identical test were run on the evening (~20:00) on day, and once again in the morning the next day (~10:00). The difference in throughput and response time is presented in Figure \ref{fig:same_test_different_time_of_day} and \ref{fig:same_test_different_time_of_day_resp_time_over_time}.
+        \subsection{Neighbour Noise} 
+        As discussed in Section \ref{sec:tests_and_results}, all our deployments live on a cloud hosting platform and thus are subject to neighbour noise. To demonstrate that the difference in computing power avaiable to our system varies over time an identical test were run on the evening (around 20:00) on day, and once again in the morning the next day (around 10:00). The difference in throughput and response time is presented in Figure \ref{fig:same_test_different_time_of_day} and \ref{fig:same_test_different_time_of_day_resp_time_over_time}.
 
     
         \begin{figure}[H]
@@ -702,7 +702,7 @@
 
     \section{Analysis}
         \label{sec:analysis}
-        In this section we interpret and compare the results shown in \ref{sec:tests_and_results} above, in order to figure out what the different performance metrics of our system are.
+        In this section we interpret and compare the results shown in Section \ref{sec:tests_and_results} above, in order to figure out what the different performance metrics of our system are.
 
         \subsection{Time spent in each part of the system}
             \label{sec:time_spent_in_each_part_of_the_system}
@@ -755,13 +755,12 @@
 
 
         \subsection{Stability of the system}
-            In our long trace tests we saw that our system behaved in a reasonably stable manner over both two and four hour tests.
-
-            150 clients: This data shows that we are not yet pushing the system to the point of making it unstable, low standard deviation\\
+            In our long trace tests we saw that our system behaved in a reasonably stable manner over both two and four hour tests.\\
             \\
-            750 clients 100 dbcons: At this point we see a significant increase in the standard deviation. We note that the throughput is much higher, which is caused by the increased amount of requests. Here we could reference \ref{sec:frequency_of_requests}, saying that there are always requests in the queue, and we don't have any wait time.\\
+            When comparing the throughput and the response time of Figure \ref{fig:2h_30threads_standardTest_500_250} (750 clients, 100 worker threads) and \ref{fig:2h_100threads_standardTest_500_250} (750 clients, 30 worker threads), we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
             \\
-            Increased throughput when decreasing num-dbcons and wthreads, but increased number of clients. The reason is queuing in the middleware.
+            When we compare the throughput of Figure \ref{fig:2h_100threads_standardTest_100_50} and \ref{fig:2h_100threads_standardTest_500_250} we see that the throughput increases when the number of clients increases. We see that the standard deviation (see numbers in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}) increases 5 fold. This increase in standard variation shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The low standard deviation we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients.\\
+            \\
 
         \subsection{Frequency of requests}
             \label{sec:frequency_of_requests}
@@ -797,9 +796,9 @@
 
         In Section \ref{sec:difference_in_dbcons_and_worker_threads} we found that the performance of our middleware depends, among other things, on the ratio between the amount of worker threads and database connections. In this section we found that the ratio should be 1 if we want to utilize all of our database connections and worker threads simultaneously. This was a very intuitive result to us, and was exactly what we expected to see.\\
         \\
-        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections.\\
+        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. TODO: insert analysis on number of worker threads and database connections.\\
         \\
-        In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the IPersistence class or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset and the type of queries our system has and performs.\\
+        In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the IPersistence class or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
         If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database.
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
     \clearpage
