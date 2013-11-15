@@ -460,14 +460,10 @@ public class PostgresPersistence implements IPersistence {
 					"ON asl.messages "+
 					" USING btree "+
 					" (receiver_id, queue_id,priority);" +
-				"CREATE INDEX sender_toa "+
+				"CREATE INDEX sender "+
 					"ON asl.messages "+
 					" USING btree "+
-					" (receiver_id, queue_id,sender_id, time_of_arrival);" +
-				"CREATE INDEX sender_prio "+
-					"ON asl.messages "+
-					" USING btree "+
-					" (receiver_id, queue_id,sender_id, priority);";
+					" (sender_id);";
 		try {
 			executeStatement(sql, logger);
 		} catch (SQLException e) {
