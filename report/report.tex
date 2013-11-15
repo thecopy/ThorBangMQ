@@ -685,7 +685,20 @@
             
  
         \subsection{Neightbour Nouise} 
-        % there is a plot for this. use to show that unconsistent or result anomaly could perhaps be explained by noise neighbours
+        As discussed in Section \ref{sec:tests_and_results}, all our deployments live on a cloud hosting platform and thus are subject to neighbour noise. To demonstrate that the difference in computing power avaiable to our system varies over time an identical test were run on the evening (~20:00) on day, and once again in the morning the next day (~10:00). The difference in throughput and response time is presented in Figure \ref{fig:same_test_different_time_of_day} and \ref{fig:same_test_different_time_of_day_resp_time_over_time}.
+
+    
+        \begin{figure}[H]
+                \centerline{\includegraphics[scale=0.50]{same_test_different_time_of_day}}
+                \caption{The mean think time and mean throughput for the same test run at two different times under the day using exactly the same configuration. Run 1 was run at the evening around 20:00 and Run 2 was run in the morning around 10:00.}
+                \label{fig:same_test_different_time_of_day}
+        \end{figure}
+    
+        \begin{figure}[H]
+                \centerline{\includegraphics[scale=0.50]{same_test_different_time_of_day_resp_time_over_time}}
+                \caption{The response time over time for the same test run at two different times under the day using exactly the same configuration. The left figure shows the test that was run at the evening around 20:00 and the right was run in the morning around 10:00.}
+                \label{fig:same_test_different_time_of_day_resp_time_over_time}
+        \end{figure}
 
     \section{Analysis}
         \label{sec:analysis}
