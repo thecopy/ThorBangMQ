@@ -628,6 +628,65 @@
                 \label{fig:throughout_middleware_clients_thinkTime_wo_db}
             \end{figure}
 
+
+\begin{table}[H]
+                    \centering
+                    \begin{tabular}{|c|c|c|}
+                        \hline 
+                        \textbf{Clients} & \textbf{Mean Throughput} (messages per second)\\ 
+                        \hline 
+                        1 & $343.1 \pm  [-48.7,   52.4]$\\ 
+                        \hline 
+                        2 & $693.0 \pm [-88.4,   68.1]$\\ 
+                        \hline 
+                        3 & $961.0 \pm [-176.4,  172.4]$\\ 
+                        \hline 
+                        4 & $1260.3 \pm  [-314.3,    223.1]$\\ 
+                        \hline 
+                        5 & $1330.4 \pm  [-214.4,    249.6]$\\ 
+                        \hline 
+                        6 & $1250.2 \pm  [-162.2,    249.8]$\\ 
+                        \hline 
+                        7 & $1280.8 \pm  [-194.8,   306.0]$\\ 
+                        \hline 
+                        8 & $1636.2 \pm  [-239.6,  195.8]$\\ 
+                        \hline 
+                        10 & $1338.1  \pm [-267.5,    179.4]$\\ 
+                        \hline 
+                        16 & $2009.1 \pm  [-260.6,    166.9]$\\ 
+                        \hline 
+                        20 & $1820.6 \pm  [-542.8,    261.4$]\\ 
+                        \hline 
+                        30 & $2324.8 \pm  [-270.2,    247.2]$\\ 
+                        \hline 
+                        40 & $2010.3 \pm  [-576.7,    226.4]$\\ 
+                        \hline 
+                    \end{tabular}
+                    \caption{Mean Throughput when using 1 middleware with 50 worker threads and 50 database connections with the clients using the \textit{Send And Pop Same Client} configuration.}
+                    \label{table:throughput_1_middleware}
+                \end{table} 
+
+                \begin{table}[H]
+                    \centering
+                    \begin{tabular}{|c|c|c|}
+                        \hline 
+                        \textbf{Clients} & \textbf{Mean Throughput} (messages per second)\\ 
+                        \hline 
+                        2 & $727.6 \pm [-203.6,  196.3]$\\                         \hline 
+                        4 & $12780 \pm  [-310.0,    230.0$]\\                         \hline 
+                        6 & $12682  \pm [-228.2,    155.8]$\\                         \hline 
+                        8 & $13605 \pm  [-116.5,    115.5]$\\                         \hline 
+                        10 & $18108  \pm [-172.8,    165.2]$\\                        \hline 
+                        16 & $19544 \pm  [-490.8,    231.8]$\\                        \hline 
+                        20 & $20772 \pm  [-212.5,    180.8]$\\                        \hline 
+                        30 & $24324 \pm  [-542.4,    409.6]$\\                        \hline 
+                        50 & $23862  \pm [-237.0,    183.8]$\\                        \hline 
+                    \end{tabular}
+                    \caption{Mean Throughput when using 2 middleware with 50 worker threads and 50 database connections with the clients using the \textit{Send And Pop Same Client} configuration.}
+                    \label{table:throughput_2_middleware}
+                \end{table} 
+
+
         The logs for this test can be found in \textit{middleware-scaleout}
 
         \subsection{1 vs 10 middlewares}    
@@ -843,7 +902,7 @@
         In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the persistence component or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
         If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database. This is also further confirmed by the scaling up test (see Section \ref{sec:diff_middleware}) where increasing the number of middlewares did not increase the throughput. This is expected when the database is the bottleneck since this is a shared resource between the middlewares, and when this is the limiting device for throughput then it does not matter how many middlewares are used.\\
         \\
-        The maximum throughput is around $2500 \pm 300$ requests per second for the \textit{Standard Test}, and around $2000 \pm 210$ requests per second for \textit{Send and Pop Same Client}.\\
+        The maximum throughput is around $2500 \pm 300$ requests per second for the \textit{Standard Test} (see Table \ref{table:2k2-threads-clients}, and around $2000 \pm 210$ requests per second for \textit{Send and Pop Same Client} (see Table \ref{table:throughput_1_middleware} and Table \ref{table:throughput_2_middleware}).\\
         We found that we got the best performance with the \textit{Send and Pop Same client} test when there are around 1500 requests per second, since this is where the throughput is the highest while the response time is still as low as 15 milliseconds (See Figure \ref{fig:sleep_time_between_requests_100clients_30_30} and \ref{fig:sleep_time_between_requests_100clients_30_30}).
         % TODO: 
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
