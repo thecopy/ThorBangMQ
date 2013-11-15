@@ -600,29 +600,27 @@
             5 Threads & $8538.7 \pm 72.6$ & $8538.7 \pm 72.6$ & $1.24 \pm 0.01$ \\ 
             \hline 
             \end{tabular} 
-                \caption{The throughput and responsetime data and confidence interval when running \textit{SendAndPopSameClient} without any persistence and varying number of worker threads. Using 50 clients.}
+                \caption{The throughput and response time data and confidence interval when running \textit{SendAndPopSameClient} without any persistence and varying number of worker threads. Using 50 clients.}
                 \label{tbl:throughput_i-fooled-you_50-5-threads-50-clients-1kB-msg.eps}
             \end{table}
 
         The logs for this test can be found in \textit{no-persistence}.
             
         \subsection{Difference in number of middlewares}
+        \label{sec:diff_middleware}
             \begin{figure}[H]
-                \hspace{-2.5cm}
                 \centerline{\includegraphics[scale=0.60]{throughout_middleware_clients}}
                 \caption{The throughput when running \textit{SendAndPopSameClient} varying number of clients and number of middlewares.}
                 \label{fig:throughput_middleware_clients}
             \end{figure}
             
             \begin{figure}[H]
-                \hspace{-1.5cm}
                 \centerline{\includegraphics[scale=0.60]{throughout_middleware_clients_respTime}}
                 \caption{The response time when running \textit{SendAndPopSameClient} varying number of clients and number of middlewares. The figure show response time increasing asymptotically after certain threshold.}
                 \label{fig:throughout_middleware_clients_respTime}
             \end{figure}
             
             \begin{figure}[H]
-                \hspace{-1.5cm}
                 \centerline{\includegraphics[scale=0.40]{throughout_middleware_clients_thinkTime_wo_db}}
                 \caption{The mean think time excluding the persisting component for a request when varying number of clients and middleware.}
                 \label{fig:throughout_middleware_clients_thinkTime_wo_db}
@@ -747,7 +745,7 @@
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textit{includes the network delay} between the middleware and the database, in both directions.\\
             The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation. Assuming that the VisualVM tool is correct this confirms that our measuring techniques employed are valid.\\
             \\
-            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5 from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher troughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a thoughput of around 17k messages per second and a response time of around 1.3 ms.
+            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5ms from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher troughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a thoughput of around 17k messages per second and a response time of around 1.3 ms.
 
             % DONE!!!!! ?
 
@@ -787,10 +785,10 @@
             % SHOW:
             %   1 & 2 -> throughput increases with the number of clients
             %   1 & 2 -> response time decreases with the number of middleware. This is because of #worker-threads which limits the amount of simultaneous requests.
-		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db} that while the troughput is the same for the system and the responsetime is increasing with the same amount (Figure \ref{fig:throughout_middleware_clients_respTime}) the responsetime excluding the persistence component is increasing more for each additional client when running 1 middleware relative to distributing the clients to 2 middlewares. This shows that while the system on the middleware is less stressed, the think time in the database, which is the bottleneck in the whole system, is increasing for both configurations (1 vs 2 middleware). One can also see a tendency to the system with two middlewares having a slightly shorter response time overall -- which is expected (Figure \ref{fig:throughout_middleware_clients_respTime}). We can also see that the throughput will flatten out after a certain threshold, and that this threshold is the same as for when the response time start to behave asymptotically.
+		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db} that while the throughput is the same for the system and the response time is increasing with the same amount (Figure \ref{fig:throughout_middleware_clients_respTime}) the response time excluding the persistence component is increasing more for each additional client when running 1 middleware relative to distributing the clients to 2 middlewares. This shows that while the system on the middleware is less stressed, the think time in the database, which is the bottleneck in the whole system, is increasing for both configurations (1 vs 2 middleware). One can also see a tendency to the system with two middlewares having a slightly shorter response time overall -- which is expected (Figure \ref{fig:throughout_middleware_clients_respTime}). We can also see that the throughput will flatten out after a certain threshold, and that this threshold is the same as for when the response time start to behave asymptotically.
 
         \subsection{Number of clients}
-        When increasing the number of clients (which perform the \textid{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behaviour, as is the observation that we hit a maximum quantity of these interacting clients connected to the middleware when increasing clients isnt going to increase throughput, just increase response time.
+        When increasing the number of clients (which perform the \textit{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behavior, as is the observation that the system has an upper limit on the throughput and thus the number of clients connected the middleware. When this limit is hit, adding more clients to the middleware will not lead to an increased throughput, just increase response time.
 
 
         \subsection{Stability of the system}
@@ -810,13 +808,13 @@
             %   We've shown that the system didn't reach its' limit yet, but the big deviation we get with many requests (many clients) shows that we might reach that point
             As noted in Section \ref{sec:difference_in_frequency_of_requests} we see on Figure \ref{fig:sleep_time_between_requests_100clients_30_30} that the throughput of our system goes up when the frequency of requests increases. This seems reasonable, and points to the fact that our system can handle more load than the test produces when the wait time is relatively high. What seemed to be counter-intuitive to us in the beginning was that the average response time (as shown on Figure \ref{fig:sleep_time_between_requests_respTime_100clients_30_30}) is much higher when the wait time is lower, even though the throughput is much higher at the same time. After plotting the top right part of Figure \ref{fig:sleep_time_between_requests_100clients_30_30}, we realized that this must be because there are many requests queued, waiting to be served. This gives a higher throughput since the server always has a new request to process and at the same time gives a higher average response time since there are requests waiting to be served in the queue.\\
             \\
-            As we also noted in Section \ref{sec:difference_in_frequency_of_requests} the standard deviation of response time becomes higher as the average response becomes lower, and the frequency of messages decreases. What's happening at this point is that the requests are so infrequent that there is (almost) no queuing in the middleware, causing requests to be processed immediately. When the average response time becomes as low as 10 milliseconds, it is seems very reasonable to us that the standard deviation increases, since things such as network i/o will play a big part in the result.\\
+            As we also noted in Section \ref{sec:difference_in_frequency_of_requests} the standard deviation of response time becomes higher as the average response time becomes lower, and the frequency of messages decreases. What's believed to be happening at this point is that the requests are so infrequent that there is (almost) no queuing in the middleware, causing requests to be processed immediately. When the average response time becomes as low as 10 milliseconds, it is seems very reasonable to us that the standard deviation increases, since things such as network i/o will play a big part in the result.\\
             \\
             Finally we note that our system seems to be performing best (in this particular setup) when the wait time between requests is around 50-60 milliseconds, an average of 1500-1600 requests per second (when the distribution of requests is half \textit{Pop message} and half \textit{Send message}), since this is the point where the throughput is relatively high while the average response time hasn't begun increasing drastically yet.
 
-        \subsection{Bound on throughput of middleware}
+        \subsection{Bounded throughput caused by middleware configuration}
             \label{sec:analysis_bound_on_throughput}
-            On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a high enough frequency of requests) is bounded by the minimum of the number of database connections and the number of worker threads. This is a very intuitive result since each worker thread will use exactly one database connection per (well formed) request. This means that if we want to keep the utilization of both worker threads and database connections high, we should keep the ratio between them 1, as other ratios would leave one of the resources idle.\\
+            On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a high enough frequency of requests) is bounded by the minimum of the number of database connections and the number of worker threads. This is a very intuitive result since each worker thread will use exactly one database connection per (well-formed\footnote{I.e. not an invalid request or a request that is not a handshake request.}) request. This means that if we want to keep the utilization of both worker threads and database connections high, we should keep the ratio between them 1, as other ratios would leave one of the resources idle.\\
             This result is backed up by the results of our long traces where, in Table \ref{table:2k2-threads-clients} and \ref{table:2k2-threads-clients}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
             \\
             In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.\\
@@ -825,9 +823,12 @@
 
         \subsection{Micro benchmarks}
             \label{sec:analysis_micro_benchmarks}
-            TODO: Pop message: It seems that some external factor might be causing this, for instance we have Postgres' automatic VACUUM activated. It could be that the trend we see decreases with time because the number of messages in the database decrease and that the VACUUM operation therefore takes less time\\
+            The response time patterns for the pop request showed in Figure \ref{fig:responsetime_500k_pop} is a strange pattern that seems to be caused by the decreasing of the number of messages in the database cause by the pop calls them selves. This is concluded since the pattern does now show up when only peeking and not thus now varying the number of messages in the database. It seems that some external factor might be causing this, for instance we have Postgres' automatic VACUUM activated. It could be that the trend we see decreases because the number of messages in the database decrease and that the VACUUM operation therefore takes less time\\
             \\
-            In section \ref{sec:micro_send_message} we see that the average response time of \textit{Pop message} is around twice that of \textit{Peek message}. This is explained by the fact that we, as described in \ref{sec:description_middleware}, in our implementation of \textit{Pop message} in the middleware, we make a call to \textit{Peek message}. This means that we send two requests to the database for all \textit{Pop message} requests that finds a message requested by the client. 
+
+            In section \ref{sec:micro_send_message} we see that the average response time of \textit{Pop message} is around twice that of \textit{Peek message}. This is explained by the fact that we, as described in \ref{sec:description_middleware}, in our implementation of \textit{Pop message} in the middleware, we make a call to \textit{Peek message} and if a message is returned we make a call to delete the this message from the database. This means that we send two requests to the database for all \textit{Pop message} requests that finds a message requested by the client. \\
+
+            We also see that the response time for popping is decreasing when the number of messages in the database is decreasing (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_pop}), and we see the inverted pattern when pushing messages, i.e. the response time for pushing is increasing when the number of messages in the database is increasing (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_push}). When peeking the response time stays constant withing the standard deviation (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_peek}).
 
     \section{Conclusion}
         % More middleware does not increase throughput because the database is the bottle neck, and is shared among all middleware.
@@ -837,8 +838,8 @@
         \\
         Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. TODO: insert analysis on number of worker threads and database connections.\\
         \\
-        In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the IPersistence class or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
-        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database.\\
+        In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the persistence component or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
+        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database. This is also further confirmed by the scaling up test (see Section \ref{sec:diff_middleware}) where increasing number of middleware did not increase the throughput. This is expected if the database would be the bottleneck since this is a shared resource between the middlewares and if this is the limiting device for throughput then it does not matter how many middlewares are used.\\
         \\
         % TODO: 
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
