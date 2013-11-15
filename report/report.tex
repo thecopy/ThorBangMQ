@@ -653,6 +653,7 @@
     	\subsection{Worker-threads vs Clients}
             In this test the Standard Test was run for 10 minutes with the purpose of finding the limit on where contention in the middleware would appear. The configuration that was used in this test was 1 middleware, varying the number of clients and the number of worker threads and database connections. This can be seen as a $2^k$ test even though number of clients, number of database connections and number of worker threads are both varied due to the result which was that the ratio should be 1:1 between the number of worker threads and number of database connections in the system for best performance. The results are presented in Table \ref{table:2k2-threads-clients}.
     		\begin{table}[H]
+            \centerline{
     			\begin{tabular}{|c|c|c|c|}
     			\hline 
     			Configuration & Mean Push Throughput & Mean Pop Throughput & Mean Response Time \\ 
@@ -669,8 +670,8 @@
     			\hline 
     			30/30 + 100/50 & $160.36 \pm [-12.36 , 2.83]$ & $638.58 \pm [-26.58, 19.12]$ & $5.40 \pm [-2.63, 2.83]$ \\ 
     			\hline 
-    			\end{tabular} 
-                \caption{$2^k$ testing for number of clients and number of database connections and worker threads. The configuration that was used in this test was 1 middleware and the test was Standard Test. The notation in the configuration-columns is so that 1/2 + 3/4 means 1 database connection, 2 worker threads, 3 one-way clients and 4 two-way clients.}
+    			\end{tabular}}
+                \caption{Testing for number of clients and number of database connections and worker threads. The configuration that was used in this test was 1 middleware and the test was Standard Test. The notation in the configuration-columns is so that 1/2 + 3/4 means 1 database connection, 2 worker threads, 3 one-way clients and 4 two-way clients.} 
                 \label{table:2k2-threads-clients}
             \end{table}
         The logs for this test can be found in \textit{threads-vs-clients}.
@@ -837,11 +838,12 @@
 
         In Section \ref{sec:difference_in_dbcons_and_worker_threads} we found that the performance of our middleware depends, among other things, on the ratio between the amount of worker threads and database connections. In this section we found that the ratio should be 1 if we want to utilize all of our database connections and worker threads simultaneously. This was a very intuitive result to us, and was exactly what we expected to see.\\
         \\
-        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. TODO: insert analysis on number of worker threads and database connections.\\
+        Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. We can see this when having a saturated system with 30 worker threads and 30 db connections, and then increasing number of worker threads to 100 and db connections to 100 also. Here we can see (Table \ref{table:2k2-threads-clients}) that the throughput increase is not statistically significant (stays within standard deviation) but the response time is decreased.\\
         \\
         In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the persistence component or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
-        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database. This is also further confirmed by the scaling up test (see Section \ref{sec:diff_middleware}) where increasing number of middleware did not increase the throughput. This is expected if the database would be the bottleneck since this is a shared resource between the middlewares and if this is the limiting device for throughput then it does not matter how many middlewares are used.\\
+        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database. This is also further confirmed by the scaling up test (see Section \ref{sec:diff_middleware}) where increasing number of middleware did not increase the throughput. This is expected if the database would be the bottleneck since this is a shared resource between the middlewares, and if this is the limiting device for throughput then it does not matter how many middlewares are used.\\
         \\
+        The maximum throughput is around $2500 \pm 300$ requests per second for the \textit{Standard Test}, and around $2000 \pm 210$ requests per second.
         % TODO: 
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
     \clearpage
