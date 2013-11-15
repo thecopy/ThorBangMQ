@@ -276,11 +276,11 @@
             % Bottlenecks
             % Most expensive operations that determine the overall performance
 
-        \subsection{Long traces}
-            The figures in this section show the overall stability of the system while under moderate to high system load for 4 hours. The following test are of the type \textit{Standard test}. In this test we expect to see that the system behaves in a somewhat stable manner meaning that we have a low standard deviation of our measurements. We expect that the system will have queued jobs at all times and that the throughput will be stable and that the response times may vary since we are doing different types of calls: Send Message and Pop Message. Clients and worker-threads and database connections increases since, as described in Section \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware. We don't think that this will scaling though, since increasing the number of database connections gives the opportunity to put more load on the database which, at some point, will not be able to cope with the increased load.\\
+        \subsection{Long trace}
+            The figures in this section show the overall stability of the system while under moderate to high system load for 4 hours. The following test are of the type \textit{Standard test}. In this test we expect to see that the system behaves in a somewhat stable manner meaning that we have a low standard deviation of our measurements. We expect that the system will have queued jobs at all times and that the throughput will be stable and that the response times may vary since we are doing different types of calls: \textit{Send Message} and \textit{Pop Message}. Clients and worker-threads and database connections increases since, as described in Section \ref{sec:description_middleware}, the number of database connections and worker-threads bounds the amount of requests that will be handled simultaneously by our middleware. We don't think that this will keep scaling though, since increasing the number of database connections gives the opportunity to put more load on the database which, at some point, will not be able to cope with the increased load.\\
             \\
             The following figure have been plotted with the throughput of reads and writes individually, and have more reads than writes in the system for the reasons described in Section \ref{sec:standard_test}.\\
-
+            \\
             On the longest running trace we have, running a total of 4 hours, we had a total of 300 clients and 50 worker threads and database connections in the middleware. The results of this test is shown on Figure \ref{fig:4h_throughput_respTime}. Here we see that the system behaves in a very stable manner throughout the test.
 
             \begin{figure}[H]
@@ -291,7 +291,7 @@
             \end{figure}
             ~\\
             ~\\
-            Table \ref{table:throughput_4h_test} and Table \ref{table:thinktimes_4h_test_components} give a summary of the results of our long traces. In these summaries we see that the standard deviation of both types of requests increases as the number of clients increases. We also see that the throughput goes up as the number of clients increases.
+            Table \ref{table:throughput_4h_test} and Table \ref{table:thinktimes_4h_test_components} show the results from our long trace in numbers. We see that the confidence intervals are low, which means that the system behaves very stable. This is also evident when we look at Figure \ref{fig:4h_throughput_respTime}.\\
 
             \begin{table}[H]
                 \centering
@@ -306,7 +306,7 @@
                         Total & $1625.63 \pm [-77.48 , 59.37]$\\ 
                         \hline 
                     \end{tabular}
-                    \caption{Breakdown of the think times in the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
+                    \caption{Breakdown of the think times in the system while under load from \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
                     \label{table:throughput_4h_test}
                 \end{table} 
 
@@ -326,7 +326,7 @@
                         Total & $10.66 \pm [-4.54 , 7.06]$\\ 
                         \hline 
                     \end{tabular}
-                    \caption{Breakdown of the think times in the system while under load from the \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
+                    \caption{Breakdown of the think times in the system while under load from \textit{Standard Test} with 200 one-way clients and 100 two-way clients. Using 1 middleware with 50 worker threads and 50 database connections.}
                     \label{table:thinktimes_4h_test_components}
                 \end{table} 
 
@@ -617,7 +617,7 @@
                 \end{table}
     	\subsection{Worker-threads vs Clients}
             In this test the Standard Test was run for 10 minutes with the purpose of finding the limit on where contention in the middleware would appear. The configuration that was used in this test was 1 middleware, varying the number of clients and the number of worker threads and database connections. This can be seen as a $2^k$ test even though number of clients, number of database connections and number of worker threads are both varied due to the result which was that the ratio should be 1:1 between the number of worker threads and number of database connections in the system for best performance. The results are presented in Table \ref{table:2k2-threads-clients}.
-    		\begin{table}
+    		\begin{table}[H]
     			\begin{tabular}{|c|c|c|c|}
     			\hline 
     			Configuration & Mean Push Throughput & Mean Pop Throughput & Mean Response Time \\ 
@@ -751,12 +751,9 @@
 
 
         \subsection{Stability of the system}
-            In our long trace tests we saw that our system behaved in a reasonably stable manner over both two and four hour tests.\\
+            In our long trace we saw that our system behaved in a stable manner over four hours. With this result we allowed ourselves to assume that some 10-minute tests which we performed with similar parameters will behave in a stable manner as well.\\
             \\
-            When comparing the throughput and the response time of Figure \ref{fig:2h_30threads_standardTest_500_250} (750 clients, 100 worker threads) and \ref{fig:2h_100threads_standardTest_500_250} (750 clients, 30 worker threads), we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
-            \\
-            When we compare the throughput of Figure \ref{fig:2h_100threads_standardTest_100_50} and \ref{fig:2h_100threads_standardTest_500_250} we see that the throughput increases when the number of clients increases. We see that the standard deviation (see numbers in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}) increases 5 fold. This increase in standard variation shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The low standard deviation we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients.\\
-            \\
+            When comparing the throughput and the response time of Figure \ref{table:2k2-threads-clients} for 750 clients and 100 worker threads with the results for 750 clients and 30 worker threads, we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Seeing that the confidence interval stays low for both 750 clients and 425 clients, we see that the system stays stable also for these configurations, which means that we aren't putting enough load on the system to make it unstable. We note that the confidence interval for 750 clients is much bigger than it is for 425 and 150 clients, which shows that the amount of load we can put on the system without making it unstable is around 425 clients running \textit{Standard test}.
 
         \subsection{Frequency of requests}
             \label{sec:frequency_of_requests}
@@ -774,7 +771,7 @@
         \subsection{Bound on throughput of middleware}
             \label{sec:analysis_bound_on_throughput}
             On Figure \ref{fig:throughput_vs_dbconns} we saw that, as per our expectations, the throughput of the middleware (assuming a high enough frequency of requests) is bounded by the minimum of the number of database connections and the number of worker threads. This is a very intuitive result since each worker thread will use exactly one database connection per (well formed) request. This means that if we want to keep the utilization of both worker threads and database connections high, we should keep the ratio between them 1, as other ratios would leave one of the resources idle.\\
-            This result is backed up by the results of our long traces where, in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
+            This result is backed up by the results of our long traces where, in Table \ref{table:2k2-threads-clients} and \ref{table:2k2-threads-clients}, we saw that increasing the amount of database connections and worker threads also resulted in a higher standard deviation in throughput.\\
             \\
             In both of the mentioned tests we also see that the standard deviation of the results seems to be increasing when the amount of worker threads and database connections is increased. We attribute this to the fact that we give the database more work to do simultaneously, causing a higher response time for the database.\\
             \\
