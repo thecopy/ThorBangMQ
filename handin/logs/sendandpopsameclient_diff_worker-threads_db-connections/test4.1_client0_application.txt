@@ -1,0 +1,11 @@
+1384374462312	numberOfClients: 50
+1384374462312	lengthOfExperiment: 600000
+1384374462313	msgSize: 1024
+1384374462313	numQueues: 5
+1384374462314	sleepBetweenRequests: 0
+1384374462314	Connecting 50 clients to 10.128.6.212:8123...
+1384374462424	OK Done! Sending messages...
+1384375063260	OK Done!
+1384375063260	-------------------------------------------
+1384375063261	Number of Clients:	50
+1384375063262	Total Time:		600784.0ms
