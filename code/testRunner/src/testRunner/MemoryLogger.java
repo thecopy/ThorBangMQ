@@ -9,7 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MemoryLogger extends Logger {
-	String format = "%d\t%s";
+	String format = "%d%s";
+	private long startTime;
 	
 	List<String> entries;
 
@@ -19,6 +20,8 @@ public class MemoryLogger extends Logger {
 		super("MemoryLogger",null);
 		this.outputToConsole = outputToConsole;
 		entries = new ArrayList<String>(1024);
+		this.startTime = System.currentTimeMillis();
+		this.setLevel(Level.ALL);
 	}
 
 	@Override
@@ -28,6 +31,7 @@ public class MemoryLogger extends Logger {
 
 	@Override
 	public void info(String msg) {
+		
 		this.log(Level.INFO, msg);
 	}
 	
@@ -42,7 +46,13 @@ public class MemoryLogger extends Logger {
 	
 	@Override
 	public void log(Level level, String msg) {
-		String dataToPost = String.format(format, System.currentTimeMillis(), msg);
+		if(level.intValue() < super.getLevel().intValue()) return;
+		if(msg.length() > 512){
+			msg = msg.substring(0,511);
+			entries.add("NEXT ENTRY TRUNCATED TO 512 CHARACTERS");
+		}
+		
+		String dataToPost = String.format(format, System.currentTimeMillis() - this.startTime, msg);
 		entries.add(dataToPost);
 		if(outputToConsole)
 			System.out.println(dataToPost);
@@ -55,8 +65,8 @@ public class MemoryLogger extends Logger {
 		out.close();
 
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		entries.clear();
 	}
 }

@@ -133,7 +133,7 @@ public class SendMessages extends testRunner.Test {
 					client.SendMessage(userId, queue, 1, 0, "message no #" + i + " from " + userId + " to " + userId);
 				}
 				applicationLogger.log("#" + id + " : Finished");
-			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();

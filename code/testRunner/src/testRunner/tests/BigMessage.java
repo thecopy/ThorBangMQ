@@ -41,7 +41,7 @@ public class BigMessage extends testRunner.Test {
 			sb.append("<END>");
 			
 			client.SendMessage(1, queue, 1, 1, sb.toString());
-		} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

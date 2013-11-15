@@ -4,10 +4,12 @@ import infrastructure.exceptions.InvalidClientException;
 import infrastructure.exceptions.InvalidQueueException;
 import infrastructure.exceptions.ServerException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -45,7 +47,7 @@ public class StandardTest extends testRunner.Test {
 		clients = new ArrayList<Long>();
 
 		ThorBangMQ api = ThorBangMQ.build(this.host, this.port, 1);		
-		for(int i = 0; i < (numberOfOneWayClients+numberOfTwoWayClients); i += 1) {
+		for(int i = 0; i < (numberOfOneWayClients+numberOfTwoWayClients); i++) {
 			clients.add(api.createClient("client_" + i));
 		}
 		
@@ -64,11 +66,11 @@ public class StandardTest extends testRunner.Test {
 			
 			for(int i = 0; i < numberOfOneWayClients; i++){
 				oneWayClients.add(new clientRunner(host,port,clients.get(i) ,
-						oneWayQueueId, numberOfOneWayClients, true, i == 0));
+						oneWayQueueId, numberOfOneWayClients, true, i == 0, clients.get(0)));
 			}
 			for(int i = numberOfOneWayClients; i < (numberOfOneWayClients+numberOfTwoWayClients); i++){
 				twoWayClients.add(new clientRunner(host,port,clients.get(i), 
-						twoWayQueueId, numberOfTwoWayClients, false, false));
+						twoWayQueueId, numberOfTwoWayClients, false, false, -1));
 			}
 			
 			applicationLogger.log("Starting all clients...");
@@ -87,9 +89,9 @@ public class StandardTest extends testRunner.Test {
 			Thread.sleep(lengthOfExperiment);
 			applicationLogger.log("OK DONE:) Shutting down all clients...");
 			
-			for(Thread t : threads){
-				t.interrupt();
-			}
+			for(int i = 0;i<threads.size();i++)
+				threads.get(i).interrupt();
+			
 			applicationLogger.log("OK");
 		}catch(Exception ignore){
 			ignore.printStackTrace();
@@ -111,6 +113,9 @@ public class StandardTest extends testRunner.Test {
 		ThorBangMQ client;
 		private long queue;
 		private long userId;
+
+		public volatile long popcount = 0;
+		public volatile long pushcount = 0;
 		
 		public volatile long messageCounter = 0;
 		
@@ -118,13 +123,21 @@ public class StandardTest extends testRunner.Test {
 		private boolean oneWay;
 		private int numOfOneWayers;
 		private boolean sendTheFirst;
+		final MemoryLogger l = new MemoryLogger(false);
+		private long firstOneWayer;
 		
-		public clientRunner(String hostname, int port, long userId, long queue, int numOfOneWayers, boolean oneWay, boolean sendTheFirst){
+		public void dumpLog() throws FileNotFoundException{
+			l.dumpToFile("log_client" + userId + ".log");
+		}
+		
+		public clientRunner(String hostname, int port, long userId, long queue, int numOfOneWayers, boolean oneWay, 
+				boolean sendTheFirst, long firstOneWayer){
 			this.queue = queue;
 			this.userId = userId;
 			this.oneWay = oneWay;
 			this.numOfOneWayers = numOfOneWayers;
 			this.sendTheFirst = sendTheFirst;
+			this.firstOneWayer = firstOneWayer;
 			try {
 				
 				client = ThorBangMQ.build(hostname, port, userId);
@@ -137,69 +150,86 @@ public class StandardTest extends testRunner.Test {
 
 		@Override
 		public void run() {
-			MemoryLogger l = new MemoryLogger(false);
+			Thread t = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					while(true){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						l.log("," + pushcount + "," + popcount);
+						pushcount = 0;
+						popcount = 0;
+					}
+				}
+			});
+			t.start();
 			Random r = new Random();
 			try {
 				if(sendTheFirst){
-					int target = r.nextInt(numOfOneWayers)+1;
+					long target = (firstOneWayer + r.nextInt(numOfOneWayers));
 					client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
+					pushcount++;
 				}
-				long pop = 0;
-				long push = 0;
+				
 				while (keepRunning) {
-					l.log(","+push+","+pop);
 					if(oneWay){
 						Message msg = null;
 						do{
 							Thread.sleep(200);
-							pop = System.nanoTime();
-								msg = client.PopMessage(queue, true);
-							pop = System.nanoTime() - pop;
+							msg = client.PopMessage(queue, true);
+							popcount++;
 							
 						}while(msg == null);
 						messageCounter = Long.parseLong(msg.content);
 
-						int target = -1;
+						long target = -1;
 						do{
-							target = r.nextInt(numOfOneWayers)+1;
+							target = (firstOneWayer + r.nextInt(numOfOneWayers));
 						}while(target == userId);
-						push = System.nanoTime();
 							client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
-						push = push - System.nanoTime();
+							pushcount++;
 					}else{ // Two-Way
 						if(userId%2 == 1){ // Sender
 							long context = r.nextLong();
-							push = System.nanoTime();
-								client.SendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
-							push = push - System.nanoTime();
+							client.SendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
+							pushcount++;
 							Message msg = null;
 							do{
 								Thread.sleep(200);
-								pop = System.nanoTime();
-									msg = client.PopMessage(queue, true);
-								pop = System.nanoTime() - pop;
+								msg = client.PopMessage(queue, true);
+								popcount++;
 							}while(msg == null || msg.context != context);
 							
 						}else{ // Receiver
 							Message msg = null;
 							do{
 								Thread.sleep(300);
-								pop = System.nanoTime();
-									msg = client.PopMessage(queue, true);
-								pop = System.nanoTime() - pop;
+								msg = client.PopMessage(queue, true);
+								popcount++;
 							}while(msg == null);
 							messageCounter = Long.parseLong(msg.content);
-							push = System.nanoTime();
-								client.SendMessage(msg.sender, queue, 1, msg.context, String.valueOf(++messageCounter));
-							push = push - System.nanoTime();
+							client.SendMessage(msg.sender, queue, 1, msg.context, String.valueOf(++messageCounter));
+							pushcount++;
 						}
 					}
 				}
-			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException | InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();
-				l.log("log_client" + userId + ".log");
+				try {
+					l.dumpToFile("log_client" + userId + ".log");
+					t.interrupt();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 

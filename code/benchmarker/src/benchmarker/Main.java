@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.ClientRequestWorker;
-import asl.Persistence.DbPersistence;
+import asl.Persistence.PostgresPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.LyingPersistence;
 import asl.infrastructure.MemoryLogger;
@@ -98,7 +98,7 @@ public class Main {
 		RunnableWithStop test = new RunnableWithStop() {
 			@Override
 			public void run() {
-				DbPersistence p = new DbPersistence(fakeSource, new FakeLogger());
+				PostgresPersistence p = new PostgresPersistence(fakeSource, new FakeLogger());
 				try {
 					while(stop == false){
 							p.getMessageById(10);

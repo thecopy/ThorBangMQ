@@ -2,6 +2,7 @@ package asl;
 
 import infrastructure.exceptions.InvalidClientException;
 import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.InvalidRequestException;
 import infrastructure.exceptions.ServerException;
 
 import java.io.IOException;
@@ -69,7 +70,7 @@ public class ThorBangMQ {
 	}
 	
 	public void SendMessage(long recieverId, long queueId, long priority, long context, String content)
-				throws IOException, InvalidQueueException, InvalidClientException, ServerException
+				throws IOException, InvalidQueueException, InvalidClientException, ServerException, InvalidRequestException
 	{
 		long[] queues = new long[1];
 		queues[0] = queueId;
@@ -77,7 +78,7 @@ public class ThorBangMQ {
 	}
 	
 	public void SendMessage(long recieverId, long priority, long context, String content, long... queueIds)
-			throws IOException, InvalidQueueException, InvalidClientException, ServerException
+			throws IOException, InvalidQueueException, InvalidClientException, ServerException, InvalidRequestException
 		{
 		String queues = "";
 		for(long queueId : queueIds){
@@ -96,19 +97,21 @@ public class ThorBangMQ {
 												   content));
 	if (this.responseIsError(response)) {
 		String resp[] = response.split(" ");
-		if (resp[1] == "UNKNOWN") {
+		if (resp[1].equals("UNKNOWN")) {
 			throw new ServerException();
-		} else if (resp[1] == "QUEUE") {
+		} else if (resp[1].equals("QUEUE")) {
 			throw new InvalidQueueException(Long.parseLong(resp[2]));
-		} else if (resp[1] == "CLIENT") {
+		} else if (resp[1].equals("CLIENT")) {
 			throw new InvalidClientException(Long.parseLong(resp[2]));
 		}
+	}else if(response.equals("BAD REQUEST")){
+		throw new InvalidRequestException();
 	}
 	messagesPushed++;
 }
 	
 	public void BroadcastMessage(long priority, long context, String content, long... queues)
-			throws IOException, InvalidQueueException, InvalidClientException, ServerException
+			throws IOException, InvalidQueueException, InvalidClientException, ServerException, InvalidRequestException
 	{
 		SendMessage(-1, priority, context, content, queues);
 	}

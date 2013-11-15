@@ -129,7 +129,7 @@ public class SendMessagesTime extends testRunner.Test {
 					client.SendMessage(userId, queue, 1, 0, "message");
 					numberOfMessagesSent++;
 				}
-			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();
