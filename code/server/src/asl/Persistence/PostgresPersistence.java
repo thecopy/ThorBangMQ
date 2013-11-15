@@ -91,7 +91,7 @@ public class PostgresPersistence implements IPersistence {
 				"where receiver_id = ?  and queue_id = ? order by priority DESC limit 1) "
 			   +"union all "
 			   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
-			   	+ "where receiver_id = -1 and queue_id = ? order by priority DESC limit 1) order by priority DESC limit 1;";
+			   	+ "where receiver_id = null and queue_id = ? order by priority DESC limit 1) order by priority DESC limit 1;";
 		long started = System.nanoTime();
 		
 		ArrayList<Object[]> s;
@@ -151,7 +151,7 @@ public class PostgresPersistence implements IPersistence {
 				" where receiver_id = ?  and queue_id = ? and sender_id = ? order by %s limit 1) "
 				   +"union all "
 				   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
-				   	+ " where receiver_id = -1 and queue_id = ? and sender_id = ? order by %s limit 1) order by %s limit 1;",
+				   	+ " where receiver_id = null and queue_id = ? and sender_id = ? order by %s limit 1) order by %s limit 1;",
 				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC",
 				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC",
 				getByTimestampInsteadOfPriority ? "time_of_arrival ASC" : "priority DESC");
