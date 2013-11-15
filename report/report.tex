@@ -114,7 +114,15 @@
                 \end{itemize}
             \end{itemize}
             ~\\
-            It should be noted that in our implementation of \textit{Pop message} we are using 'Peek message'. This causes two accesses to the database whenever a client performs a \textit{Pop message}-request that returns a message. We only realized this after doing our tests, which is why we kept the implementation as described.
+            It should be noted that in our implementation of \textit{Pop message} we are using 'Peek message'. This causes two accesses to the database whenever a client performs a \textit{Pop message}-request that returns a message. We only realized this after doing our tests, which is why we kept the implementation as described.\\
+
+            The flow of an individual request can be seen in Figure \ref{fig:middleware_flow}. Some things to note about Figure \ref{fig:middleware_flow}:
+
+            \begin{itemize}
+                \item The last step in the ClientRequestWorker, \textit{Add To Response Queue}, does this by using the interface \textit{asl.network.ITransport} which is passed to the ClientRequestWorker by the Socket I/O component. The ITransport-inferface declares just one function \textit{void Send(String s)}. The production implementation of this interface, \textit{SocketTransport}, keeps a reference to the response-queue which is continuously polled by the non blocking socket I/O. This way the Client Request Worker and the underlying networking implementation is decoupled.
+
+                \item The Socket I/O and Job Creation component does more in one iteration than just check the response and requests queues. It also accepts client connections though this was omitted in the figure for clarity.
+            \end{itemize}
 
    \begin{figure}[H]
                 \centering
@@ -751,11 +759,11 @@
 
 
         \subsection{Stability of the system}
-            In our long trace tests we saw that our system behaved in a reasonably stable manner over both two and four hour tests.\\
+            In our long trace test we saw that our system behaved in a reasonably stable manner over the four hour test.\\
             \\
-            When comparing the throughput and the response time of Figure \ref{fig:2h_30threads_standardTest_500_250} (750 clients, 100 worker threads) and \ref{fig:2h_100threads_standardTest_500_250} (750 clients, 30 worker threads), we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
+            When comparing the throughput and the response times in Table \ref{table:2k2-threads-clients} for 750 clients, 100 worker threads and 750 clients, 30 worker threads, we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
             \\
-            When we compare the throughput of Figure \ref{fig:2h_100threads_standardTest_100_50} and \ref{fig:2h_100threads_standardTest_500_250} we see that the throughput increases when the number of clients increases. We see that the standard deviation (see numbers in Table \ref{table:long_trace_test_summary_sendmessage} and \ref{table:long_trace_test_summary_popmessage}) increases 5 fold. This increase in standard variation shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The low standard deviation we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients.\\
+            When we compare the throughput from when 150 client and 100 worker threads where used, and 750 clients and 100 worker threads we see that the throughput seems is increasing when the number of clients increases. We see that the confidence interval (again, see numbers in Table \ref{table:2k2-threads-clients}) increases heavily. This increase in the CI shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The narrow confidence interval we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients. \\
             \\
 
         \subsection{Frequency of requests}
