@@ -95,7 +95,7 @@ try{
 	}
 	}
 	
-	public void storeMessage(String args) {
+	public void storeMessage(String args) throws Exception {
 		String[] msgArgs = args.split(",", 6);
 		
 		long reciever = Long.parseLong(msgArgs[0]);
@@ -117,15 +117,18 @@ try{
 
 			} catch (PersistenceException e) {
 					transport.Send(persistenceFailMessage);
+					throw e;
 			} catch (InvalidQueueException e) {
 					transport.Send(String.format(this.queueFailMessage, e.id));
+					throw e;
 			} catch (InvalidClientException e) {
 					transport.Send(String.format(this.clientFailMessage, e.id));
+					throw e;
 		}
 	}
 
 	// PEEKQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
-	public void peekQueue(String argsConcat) {
+	public void peekQueue(String argsConcat)  throws Exception{
 		try{
 			String[] args = argsConcat.split(",", 3);
 
@@ -140,15 +143,18 @@ try{
 			
 		}  catch (InvalidQueueException e) {
 			transport.Send(String.format(this.queueFailMessage, e.id));
+			throw e;
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
+			throw e;
 		} catch (InvalidMessageException e) {
 			transport.Send(String.format(this.messageFailMessage, e.id));
+			throw e;
 		}
 	}
 
 	// PEEKS,ReceiverId,QueueId,SenderId,OrderByTimestampInsteadPriority
-	public void peekQueueWithSender(String argsConcat) {
+	public void peekQueueWithSender(String argsConcat) throws Exception {
 		String[] args = argsConcat.split(",", 4);
 
 		long receiver = Long.parseLong(args[0]);
@@ -163,15 +169,18 @@ try{
 			
 		} catch (InvalidClientException e) {
 			transport.Send( String.format(this.clientFailMessage, e.id));
+			throw e;
 		} catch (InvalidQueueException e) {
 			transport.Send(String.format(this.queueFailMessage, e.id));
+			throw e;
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
+			throw e;
 		}
 	}
 
 	// POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
-	public void popQueue(String argsConcat) {
+	public void popQueue(String argsConcat) throws Exception {
 		String[] args = argsConcat.split(",", 3);
 
 		long receiverId = Long.parseLong(args[0]);
@@ -193,15 +202,18 @@ try{
 			
 		} catch (InvalidMessageException e) {
 			transport.Send(String.format(this.messageFailMessage, e.id));
+			throw e;
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
+			throw e;
 		} catch (InvalidQueueException e) {
 			transport.Send( String.format(this.queueFailMessage, e.id));
+			throw e;
 		}
 	}
 
 	// POPQ,ReceiverId,QueueId,OrderByTimestampInsteadPriority
-	public void popQueueWithSender(String argsConcat) {	
+	public void popQueueWithSender(String argsConcat) throws Exception {	
 		String[] args = argsConcat.split(",", 4);
 
 		long receiverId = Long.parseLong(args[0]);
@@ -219,59 +231,69 @@ try{
 			
 		} catch (InvalidMessageException e) {
 			transport.Send(String.format(this.messageFailMessage, e.id));
+			throw e;
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
+			throw e;
 		} catch (InvalidClientException e) {
 			transport.Send(String.format(this.clientFailMessage, e.id));
+			throw e;
 		} catch (InvalidQueueException e) {
 			transport.Send(String.format(this.queueFailMessage, e.id));
+			throw e;
 		}
 	}
 
 	// CREATEQUEUE,NameOfQueue
-	public void createQueue(String args) {
+	public void createQueue(String args) throws Exception {
 		// TODO: unspecified that this will return -1.
 		try {
 			long queueId = persistence.createQueue(args);
 			transport.Send(String.valueOf(queueId));
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
+			throw e;
 		}
 	}
 
 	// REMOVEQUEUE,QueueId
-	public void removeQueue(String args) {
+	public void removeQueue(String args)  throws Exception{
 		try {
 			persistence.removeQueue(Long.parseLong(args));
 			transport.Send(okMessage);
 		} catch (InvalidQueueException e) {
 			transport.Send(String.format(this.queueFailMessage, e.id));
+			throw e;
 		} catch (PersistenceException e) {
 			transport.Send(String.format(this.persistenceFailMessage));
+			throw e;
 		}
 	}
 	
 	// CREATECLIENT,NameOfClient
-	public void createClient(String arg) {
+	public void createClient(String arg) throws Exception {
 		// TODO: Unspecified that this could return -1.
 		try {
 			Long clientId = persistence.createClient(arg);
 			transport.Send(clientId.toString());
 		} catch (PersistenceException e) {
 			transport.Send(this.persistenceFailMessage);
+			throw e;
 		}
 	}
 	
 	//REMOVECLIENT,id
-	public void removeClient(String arg) {
+	public void removeClient(String arg) throws Exception {
 		
 		try {
 			persistence.removeClient(Long.parseLong(arg));
 			transport.Send(okMessage);
 		} catch (PersistenceException e) {
 			transport.Send(this.persistenceFailMessage);
+			throw e;
 		} catch (InvalidClientException e) {
 			transport.Send(String.format(this.clientFailMessage, e.id));
+			throw e;
 		}
 	}
 	
