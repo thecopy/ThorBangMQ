@@ -12,10 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.logging.Level;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.StopWatch;
-
 public class Main {
 
 	/**
@@ -44,8 +40,7 @@ public class Main {
 		
 		try {
 			client.SendMessage(1, 1, 1, 0, "HEJ");
-		} catch (NumberFormatException | InvalidQueueException
-				| InvalidClientException | ServerException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
@@ -91,11 +86,10 @@ public class Main {
 				mlogger.setLevel(Level.ALL);
 				System.out.println(command);
 				for(int i = 0;i<repeats;i++){
-					StopWatch w = new StopWatch();
-					w.start();
+					Thread.sleep(5);
+					long now = System.nanoTime();
 					client.getTransport().SendAndGetResponse(command);
-					w.stop();
-					times[i] = w.getNanoTime() / 1000 / (double)1000;
+					times[i] = (System.nanoTime()-now) / 1000 / (double)1000;
 					avg += times[i];
 					if(log)
 						mlogger.log("," + times[i]);
@@ -107,18 +101,15 @@ public class Main {
 				}
 				System.out.println("\nRepeated command " + repeats + " times.");
 				System.out.println("Average: " + avg/(double)repeats + " ms");
-				System.out.println("Max: " + Collections.max(Arrays.asList(ArrayUtils.toObject(times))) + " ms");
-				System.out.println("Min: " + Collections.min(Arrays.asList(ArrayUtils.toObject(times))) + " ms");
 				continue; 
 			}else{
 				input = transformCommand(input);
 			}
 			
-			StopWatch w = new StopWatch();
-			w.start();
+			long now = System.nanoTime();
 			String response = client.getTransport().SendAndGetResponse(input);
-			w.stop();
-			System.out.println("Operation duration: " + w.getNanoTime() / 1000f / 1000 + " ms");
+			long diff = System.nanoTime()-now;
+			System.out.println("Operation duration: " + diff / 1000f / 1000 + " ms");
 			System.out.println(String.format("[%d] %s", 
 					response.length(), 
 					response.substring(0, response.length() > 100 ? 100 : response.length())));
@@ -133,7 +124,7 @@ public class Main {
 				//     MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
 				int length = Integer.parseInt(params[1]);
 				int prio = Integer.parseInt(params[2]);
-				String content = StringUtils.leftPad("", length, 'M');
+				String content = fixedLenthString("M", length);
 				input = String.format("MSG,%d,%d,1,%d,0,%s", 1,1,prio,content);
 			}else{
 				input = String.format("MSG,%d,%d,1,1,0,%s", 1,1,"Standard Message");
@@ -145,5 +136,8 @@ public class Main {
 		return input;
 	}
 		
+	public static String fixedLenthString(String string, int length) {
+	    return String.format("%1$"+length+ "s", string);
+	}
 
 }

@@ -214,7 +214,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 						client.SendMessage(userId, queueId, 1, 0, msg);
 						w.stop();
 						this.sendTime.add(w.getNanoTime());
-					} catch (InvalidQueueException | InvalidClientException | ServerException | IOException e) {
+					} catch (Exception e) {
 						this.numberOfFails += 1;
 						w.stop();
 					}
@@ -227,7 +227,7 @@ public class SendAndPopSameClient extends testRunner.Test {
 						client.PopMessage(queueId, true);
 						w.stop();
 						this.popTime.add(w.getNanoTime());
-					} catch (InvalidQueueException | ServerException | IOException e) {
+					} catch (Exception e) {
 						this.numberOfFails += 1;
 						w.stop();
 					}
