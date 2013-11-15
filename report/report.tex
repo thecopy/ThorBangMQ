@@ -769,7 +769,7 @@
 
 
         \subsection{Size of messages}
-            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message only affects the time to perform \textit{Send message}. \textit{Pop message} and \textit{Peek message} seem unaffected by the size of the message. This is attributed to the implementation of the database and the conclusion can be drawn to say that the system handles big payloads well.
+            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message only affects the time to perform \textit{Send message}. \textit{Pop message} and \textit{Peek message} seem unaffected by the size of the message. This is attributed to the fact that the database has to push data to disk (whether it's the write-ahead-log or the actual data) in order to promise durability, whereas it's possible not to hit disk when reading data from memory. We draw the conclusion that our system handles big payloads well.
 
 
             % USE: 
@@ -792,7 +792,7 @@
 		   In Figure \ref{fig:throughput_middleware_clients} it is shown that when we increase the number of clients across one and two middleware, they hit the throughput threshold at the number of clients. We can also see in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db} that while the troughput is the same for the system and the responsetime is increasing with the same amount (Figure \ref{fig:throughout_middleware_clients_respTime}) the responsetime excluding the persistence component is increasing more for each additional client when running 1 middleware relative to distributing the clients to 2 middlewares. This shows that while the system on the middleware is less stressed, the think time in the database, which is the bottleneck in the whole system, is increasing for both configurations (1 vs 2 middleware). One can also see a tendency to the system with two middlewares having a slightly shorter response time overall -- which is expected (Figure \ref{fig:throughout_middleware_clients_respTime}). We can also see that the throughput will flatten out after a certain threshold, and that this threshold is the same as for when the response time start to behave asymptotically.
 
         \subsection{Number of clients}
-        When increasing the number of clients (which perform the \textit{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behaviour, as is the observation that we hit a maximum quantity of these interacting clients connected to the middleware when increasing clients isnt going to increase throughput, just increase response time.
+            When increasing the number of clients (which perform the \textit{Standard Test}, i.e. is interacting with the system) to a middleware we see that the throughput increases, see Figure \ref{table:2k2-threads-clients}. This is expected behavior, as is the observation that the system has an upper limit on the throughput and thus the number of clients connected the middleware. When this limit is hit, adding more client to the middleware will not lead to an increased throughput, just increase response time.
 
 
         \subsection{Stability of the system}
@@ -800,7 +800,7 @@
             \\
             When comparing the throughput and the response times in Table \ref{table:2k2-threads-clients} for 750 clients, 100 worker threads and 750 clients, 30 worker threads, we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
             \\
-            When we compare the throughput from when 150 client and 100 worker threads where used, and 750 clients and 100 worker threads we see that the throughput seems is increasing when the number of clients increases. We see that the confidence interval (again, see numbers in Table \ref{table:2k2-threads-clients}) increases heavily. This increase in the CI shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The narrow confidence interval we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients. \\
+            When we compare the throughput from when 150 client and 100 worker threads were used, and 750 clients and 100 worker threads we see that the throughput is increasing when the number of clients increases. We see that the confidence interval (again, see numbers in Table \ref{table:2k2-threads-clients}) increases heavily. This increase in the confidence interval shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The narrow confidence interval we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients. \\
             \\
 
         \subsection{Frequency of requests}
