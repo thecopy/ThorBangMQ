@@ -991,7 +991,7 @@
             \begin{lstlisting}[breaklines]
             [milliseconds since middleware start], [count of push requests], [count of pop/peek requests], [total number of requests received], [total time in Socket IO], [total time in CRW], [total time in persistence]
             \end{lstlisting}
-            Note: All logged data except the first column is reset for each logging event. So the count of push requests is the count of push requests since $t-\Delta t$ where $\Delta t$ is the logging interval. Also note that Socket IO includes the amout of time the request spends in waiting in for a free worker thread.
+            Note: All logged data except the first column is reset for each logging event. So the count of push requests is the count of push requests since $t-\Delta t$ where $\Delta t$ is the logging interval. Also note that Socket IO includes the amount of time the request spends in waiting in for a free worker thread.
 
 
             \subsection{Client Logs}
@@ -1001,7 +1001,7 @@
             \end{lstlisting}
 
         \section{Sample Distributions}
-        Here are some figures over the distributions of some of the samples collected during this project. Not all of these have a normal distribution and those that doesn't have the corresponding notation in the report is not assumed to be normally distributied, they are  in the appendix because it is also interesting to see the distribution of the asymmetrical distributions.
+        Here are some figures over the distributions of some of the samples collected during this project. Not all of these have a normal distribution and those that doesn't have the corresponding notation in the report is not assumed to be normally distributed, they are  in the appendix because it is also interesting to see the distribution of the asymmetrical distributions. The confidence interval for the (assumed) normally distributed samples is done with the MATLAB function \texttt{normfit} which returns the confidence interval. For the asymmetrical / non-normally distributed samples the MATLAB function \texttt{quantile} is used to calculate the 5th and 95th quantile, then the mean of the samples is subtracted.
         \begin{figure}[hbtp]
         \centering
         \centerline{\includegraphics[scale=0.5]{img/histfit_1middleware_push_rop_total_resptime.eps}}
