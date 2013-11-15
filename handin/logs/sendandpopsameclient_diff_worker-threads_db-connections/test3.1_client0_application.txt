@@ -1,0 +1,11 @@
+1384373792020	numberOfClients: 50
+1384373792020	lengthOfExperiment: 600000
+1384373792021	msgSize: 1024
+1384373792021	numQueues: 5
+1384373792022	sleepBetweenRequests: 0
+1384373792022	Connecting 50 clients to 10.128.6.212:8123...
+1384373792141	OK Done! Sending messages...
+1384374393107	OK Done!
+1384374393108	-------------------------------------------
+1384374393108	Number of Clients:	50
+1384374393110	Total Time:		600915.0ms
