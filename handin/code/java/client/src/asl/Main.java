@@ -12,10 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.logging.Level;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.StopWatch;
-
 public class Main {
 
 	/**
@@ -39,30 +35,7 @@ public class Main {
 		}
 		
 		System.out.println("Init successfull!");
-
-		System.out.println("Sending msg to self...");
-		
-		try {
-			client.SendMessage(1, 1, 1, 0, "HEJ");
-		} catch (NumberFormatException | InvalidQueueException
-				| InvalidClientException | ServerException e1) {
-			e1.printStackTrace();
-		}
-		
-		System.out.println("OK! Peeking...");
-		Message msg = null;
-		try {
-			msg = client.PopMessage(1, true);
-		} catch (NumberFormatException | InvalidQueueException
-				| ServerException e) {
-			e.printStackTrace();
-		}
-		
-		if (msg != null) {
-			System.out.println("OK! Got message: " + msg.content);
-		} else{
-			System.out.println("Did not get msg :(");
-		}	        
+		System.out.println("Enter 'help' for help.");
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while(true){
@@ -91,11 +64,10 @@ public class Main {
 				mlogger.setLevel(Level.ALL);
 				System.out.println(command);
 				for(int i = 0;i<repeats;i++){
-					StopWatch w = new StopWatch();
-					w.start();
+					Thread.sleep(5);
+					long now = System.nanoTime();
 					client.getTransport().SendAndGetResponse(command);
-					w.stop();
-					times[i] = w.getNanoTime() / 1000 / (double)1000;
+					times[i] = (System.nanoTime()-now) / 1000 / (double)1000;
 					avg += times[i];
 					if(log)
 						mlogger.log("," + times[i]);
@@ -107,18 +79,15 @@ public class Main {
 				}
 				System.out.println("\nRepeated command " + repeats + " times.");
 				System.out.println("Average: " + avg/(double)repeats + " ms");
-				System.out.println("Max: " + Collections.max(Arrays.asList(ArrayUtils.toObject(times))) + " ms");
-				System.out.println("Min: " + Collections.min(Arrays.asList(ArrayUtils.toObject(times))) + " ms");
 				continue; 
 			}else{
 				input = transformCommand(input);
 			}
 			
-			StopWatch w = new StopWatch();
-			w.start();
+			long now = System.nanoTime();
 			String response = client.getTransport().SendAndGetResponse(input);
-			w.stop();
-			System.out.println("Operation duration: " + w.getNanoTime() / 1000f / 1000 + " ms");
+			long diff = System.nanoTime()-now;
+			System.out.println("Operation duration: " + diff / 1000f / 1000 + " ms");
 			System.out.println(String.format("[%d] %s", 
 					response.length(), 
 					response.substring(0, response.length() > 100 ? 100 : response.length())));
@@ -133,17 +102,22 @@ public class Main {
 				//     MSG,ReceiverId,SenderId,QueueId,Priority,Context,Content
 				int length = Integer.parseInt(params[1]);
 				int prio = Integer.parseInt(params[2]);
-				String content = StringUtils.leftPad("", length, 'M');
+				String content = fixedLenthString("M", length);
 				input = String.format("MSG,%d,%d,1,%d,0,%s", 1,1,prio,content);
 			}else{
 				input = String.format("MSG,%d,%d,1,1,0,%s", 1,1,"Standard Message");
 			}
 		}else if(input.equals("pop")){
 			input = "POPQ,1,1,1";
+		}else if(input.equals("bc")){
+			input = "MSG,-1,1,5,5,0,STANDARD BC";
 		}
 		
 		return input;
 	}
 		
+	public static String fixedLenthString(String string, int length) {
+	    return String.format("%1$"+length+ "s", string);
+	}
 
 }

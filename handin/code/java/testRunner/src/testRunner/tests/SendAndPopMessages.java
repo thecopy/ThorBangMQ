@@ -147,7 +147,7 @@ public class SendAndPopMessages extends testRunner.Test {
 						numberOfMessagesSent++;
 					}
 				}
-			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();

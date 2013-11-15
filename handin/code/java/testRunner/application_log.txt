@@ -1,4 +1,11 @@
-1384191920782	numberOfClients: 100
-1384191920782	lengthOfExperiment: 50000
-1384191920783	Connecting 100 clients to localhost:8123...
-1384191920888	OK Done! Sending messages...
+178numberOfClients: 50
+178lengthOfExperiment: 10000
+178msgSize: 1024
+179numQueues: 1
+179sleepBetweenRequests: 0
+179Connecting 50 clients to localhost:8123...
+227OK Done! Sending messages...
+12177OK Done!
+12177-------------------------------------------
+12177Number of Clients:	50
+12178Total Time:		11940.0ms

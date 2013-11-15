@@ -136,7 +136,7 @@ public class PushPeekPop extends testRunner.Test {
 				logger.dumpToFile("pop.log");
 				logger.clear();
 				
-			} catch (IOException | InvalidQueueException | InvalidClientException | ServerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				client.stop();
