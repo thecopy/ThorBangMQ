@@ -510,6 +510,7 @@
 
 
         \subsection{Difference in size of dataset}
+            \label{sec:difference_in_size_of_dataset}
             In this test we want to see what the difference of the size of the dataset matters to our system's performance. In this test we're using \textit{Send and Pop Same Client}, varying the number of messages initially stored in the database. From this test we expect that an increase in the size of the data set will increase the think-time of the database, resulting in a lower throughput.
             \begin{figure}[H]
                 \centerline{\includegraphics[scale=0.55]{msg_db_clients}}
@@ -544,10 +545,11 @@
                 \label{fig:resptime_as_function_of_msgs_in_db_push}
             \end{figure}
         The logs for this test can be found in \textit{micro-benchmarks/sequential\_requests}.
-        \subsection{Difference in number of clients}
-            On Figure \ref{fig:msg_db_clients}, looking at tests with the same initial size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests. 
 
-        The logs for this test can be found in \textit{dataset-clients}.
+        \subsection{Difference in number of clients}
+            The data needed for this test was gathered during the test described in Section \ref{sec:difference_in_size_of_dataset}. On Figure \ref{fig:msg_db_clients}, looking at tests with the same initial size of the dataset, we see that an increase in clients gives an increase in throughput in all of the tests.\\
+            \\
+            The logs for this test can be found in \textit{dataset-clients}.
 
         \subsection{Difference in frequency of requests}
             \label{sec:difference_in_frequency_of_requests}
@@ -746,7 +748,7 @@
             The results of our code profiling show that 83-87\% of our codes' execution time is spent waiting for replies from the database. It is important to note that this time \textit{includes the network delay} between the middleware and the database, in both directions.\\
             The results from the code profiling are backed up with our own logging data, where we have also measured how much time is spent in different parts of our system. On Figure \ref{fig:throughput_middleware_clients} we also have evidence that the server spends most of its time waiting for a response from the database, waiting in the IPersistence class of our implementation. Assuming that the VisualVM tool is correct this confirms that our measuring techniques employed are valid.\\
             \\
-            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5ms from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher troughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a thoughput of around 17k messages per second and a response time of around 1.3 ms.
+            This data all points to the database or the network being the bottleneck in these particular tests. We contribute this to choosing bad indexes for our data, having a poorly configured database, or having a slow network. The slow network is though very unlikely, since from what we can deduce from Section \ref{sec:network_latency} the network latency is very small (around 0.5ms) and we observe think times in the persistence component bounded by around 1.5 from below, see Figure \ref{fig:thinktime_push_peek_pop}. We also get a much higher throughput when not storing any messages at all (i.e. the \textit{I Fooled You} persistence implementation), as seen in Figure \ref{fig:throughout_middleware_clients_thinkTime_wo_db}, where we have a throughput of around 17k messages per second and a response time of around 1.3 ms.
 
             % DONE!!!!! ?
 
@@ -766,7 +768,7 @@
 
 
         \subsection{Size of messages}
-            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message onyl affects the push time, pop and peek seem unaffected by this. This is attributed to the implementation of the database and the conclusion can be drawn to say that the system handles big payloads well.
+            We can see from Figure \ref{fig:responsetime_msgsize} that the size of a message only affects the time to perform \textit{Send message}. \textit{Pop message} and \textit{Peek message} seem unaffected by the size of the message. This is attributed to the fact that the database has to push data to disk (whether it's the write-ahead-log or the actual data) in order to promise durability, whereas it's possible not to hit disk when reading data from memory. We draw the conclusion that our system handles big payloads well.
 
 
             % USE: 
@@ -797,7 +799,7 @@
             \\
             When comparing the throughput and the response times in Table \ref{table:2k2-threads-clients} for 750 clients, 100 worker threads and 750 clients, 30 worker threads, we see that the throughput stays about the same and that the response time goes up. From this we can see that the increase in clients means that queues are building up in the middleware. Even when we have queues in the middleware, we see that the system behaves in a stable manner.\\
             \\
-            When we compare the throughput from when 150 client and 100 worker threads where used, and 750 clients and 100 worker threads we see that the throughput seems is increasing when the number of clients increases. We see that the confidence interval (again, see numbers in Table \ref{table:2k2-threads-clients}) increases heavily. This increase in the CI shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The narrow confidence interval we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients. \\
+            When we compare the throughput from when 150 client and 100 worker threads were used, and 750 clients and 100 worker threads we see that the throughput is increasing when the number of clients increases. We see that the confidence interval (again, see numbers in Table \ref{table:2k2-threads-clients}) increases heavily. This increase in the confidence interval shows that we are pushing the system a lot more with 750 clients than we do with 150 clients. The narrow confidence interval we have with 150 clients shows that we aren't pushing the system to the point of making it unstable, but that we are on our way to this point when we use 750 clients. \\
             \\
 
         \subsection{Frequency of requests}
@@ -824,12 +826,11 @@
 
         \subsection{Micro benchmarks}
             \label{sec:analysis_micro_benchmarks}
-            The response time patterns for the pop request showed in Figure \ref{fig:responsetime_500k_pop} is a strange pattern that seems to be caused by the decreasing of the number of messages in the database cause by the pop calls them selves. This is concluded since the pattern does now show up when only peeking and not thus now varying the number of messages in the database. It seems that some external factor might be causing this, for instance we have Postgres' automatic VACUUM activated. It could be that the trend we see decreases because the number of messages in the database decrease and that the VACUUM operation therefore takes less time\\
+            The response time patterns for the pop request showed in Figure \ref{fig:responsetime_500k_pop} is a strange pattern that seems to be caused by the decreasing the number of messages in the database cause by the pop calls themselves. This is concluded since the pattern does now show up when only peeking and not thus now varying the number of messages in the database. It seems that some external factor might be causing this, for instance we have Postgres' automatic VACUUM activated. It could be that the trend we see decreases because the number of messages in the database decrease and that the VACUUM operation therefore takes less time.\\
             \\
-
-            In section \ref{sec:micro_send_message} we see that the average response time of \textit{Pop message} is around twice that of \textit{Peek message}. This is explained by the fact that we, as described in \ref{sec:description_middleware}, in our implementation of \textit{Pop message} in the middleware, we make a call to \textit{Peek message} and if a message is returned we make a call to delete the this message from the database. This means that we send two requests to the database for all \textit{Pop message} requests that finds a message requested by the client. \\
-
-            We also see that the response time for popping is decreasing when the number of messages in the database is decreasing (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_pop}), and we see the inverted pattern when pushing messages, i.e. the response time for pushing is increasing when the number of messages in the database is increasing (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_push}). When peeking the response time stays constant withing the standard deviation (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_peek}).
+            In section \ref{sec:micro_send_message} we see that the average response time of \textit{Pop message} is around twice that of \textit{Peek message}. This is explained by the fact that we, as described in \ref{sec:description_middleware}, in our implementation of \textit{Pop message} in the middleware, make a call to \textit{Peek message} and if a message is returned we make a call to delete the this message from the database. This means that we send two requests to the database for all \textit{Pop message} requests that finds a message requested by the client.\\
+            \\
+            We also see that the response time for popping is decreasing when the number of messages in the database is decreasing (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_pop}), and we see the inverted pattern when pushing messages, i.e. the response time for pushing is increasing when the number of messages in the database is increasing (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_push}). When peeking, the response time stays constant withing the standard deviation (see Figure \ref{fig:resptime_as_function_of_msgs_in_db_peek}).
 
     \section{Conclusion}
         % More middleware does not increase throughput because the database is the bottle neck, and is shared among all middleware.
@@ -840,9 +841,10 @@
         Not only does the ratio between worker threads and database connections matter, so does the \textit{number} of worker threads and database connections. We can see this when having a saturated system with 30 worker threads and 30 db connections, and then increasing number of worker threads to 100 and db connections to 100 also. Here we can see (Table \ref{table:2k2-threads-clients}) that the throughput increase is not statistically significant (stays within standard deviation) but the response time is decreased.\\
         \\
         In our analysis in Section \ref{sec:time_spent_in_each_part_of_the_system} we found that found that during execution of our middleware, most of the time is spent waiting in the persistence component or, more specifically, waiting for responses from the database. This result is consistent with the test results from the other tests we made that put a significant load on the system. This implies that, in our current setup, the database is the bottleneck. We do not blame this on the database implementation, but rather on ourselves, for choosing bad indexes and/or configuring the database poorly w.r.t. the dataset we have and the type of queries our middleware performs.\\
-        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database. This is also further confirmed by the scaling up test (see Section \ref{sec:diff_middleware}) where increasing number of middleware did not increase the throughput. This is expected if the database would be the bottleneck since this is a shared resource between the middlewares, and if this is the limiting device for throughput then it does not matter how many middlewares are used.\\
+        If we had had more time to test our system we would try to change the indexes and rerun our tests to see how much performance we could gain from a more appropriate configuration of the database. This is also further confirmed by the scaling up test (see Section \ref{sec:diff_middleware}) where increasing the number of middlewares did not increase the throughput. This is expected when the database is the bottleneck since this is a shared resource between the middlewares, and when this is the limiting device for throughput then it does not matter how many middlewares are used.\\
         \\
-        The maximum throughput is around $2500 \pm 300$ requests per second for the \textit{Standard Test}, and around $2000 \pm 210$ requests per second.
+        The maximum throughput is around $2500 \pm 300$ requests per second for the \textit{Standard Test}, and around $2000 \pm 210$ requests per second for \textit{Send and Pop Same Client}.\\
+        We found that we got the best performance with the \textit{Send and Pop Same client} test when there are around 1500 requests per second, since this is where the throughput is the highest while the response time is still as low as 15 milliseconds (See Figure \ref{fig:sleep_time_between_requests_100clients_30_30} and \ref{fig:sleep_time_between_requests_100clients_30_30}).
         % TODO: 
         % TODO: It's better to have more worker threads, but only up to a certain point. We have data that shows that it's better to have 30 worker threads than 100 in some situations
     \clearpage
