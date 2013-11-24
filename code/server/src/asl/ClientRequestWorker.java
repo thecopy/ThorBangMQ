@@ -51,7 +51,7 @@ public class ClientRequestWorker implements Runnable{
 
 	// TODO handle exceptions
 	private void interpreter(String msg) throws IOException {
-		logger.info(String.format("Interpreting message: \"%s\"", msg));
+		logger.fine(String.format("Interpreting message: \"%s\"", msg));
 		String[] methodWithArgs = msg.split(",", 2);
 try{
 		switch (methodWithArgs[0]) {
@@ -85,7 +85,7 @@ try{
 		case "REMOVECLIENT":
 			removeClient(methodWithArgs[1]);
 		default:
-			logger.log(Level.WARNING,"Failed to interpert client message: " + msg);
+			logger.log(Level.WARNING,"Failed to interpert client request method: " + msg);
 			transport.Send("BAD REQUEST");
 			break;
 		}
@@ -187,7 +187,7 @@ try{
 		long queueId = Long.parseLong(args[1]);
 		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[2]) == 1;
 
-		logger.info(String.format("Popping queue %d for user %d ordered by %s", queueId, receiverId, getByTimestampInsteadOfPriority ? "time" : "prio"));
+		logger.finer(String.format("Popping queue %d for user %d ordered by %s", queueId, receiverId, getByTimestampInsteadOfPriority ? "time" : "prio"));
 		Message m;
 		try {
 			m = peekQueue(receiverId, queueId, getByTimestampInsteadOfPriority);
@@ -196,7 +196,7 @@ try{
 
 			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 
-			logger.info(String.format("Sending popped message"));
+			logger.finer(String.format("Sending popped message"));
 
 			transport.Send(this.formatMessage(m));
 			

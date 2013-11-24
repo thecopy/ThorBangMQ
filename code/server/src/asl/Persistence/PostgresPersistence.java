@@ -44,7 +44,7 @@ public class PostgresPersistence implements IPersistence {
 		long started = System.nanoTime();
 		
 		final String query = "DELETE FROM messages WHERE id = ?";
-		logger.info(String.format("Deleting message %d", messageId));
+		logger.fine(String.format("Deleting message %d", messageId));
 
 		try {
 			executeStatement(query, logger, messageId);
@@ -122,7 +122,7 @@ public class PostgresPersistence implements IPersistence {
 				   +"union all "
 				   	+"(select receiver_id, sender_id, time_of_arrival, queue_id, id, priority, context_id, message from asl.messages "
 				   	+ "where receiver_id is null and queue_id = ? order by time_of_arrival limit 1) order by time_of_arrival limit 1;";
-		logger.info(String.format("SELECT message where queue %d for user %d by time", queueId, recieverId));
+		logger.finer(String.format("SELECT message where queue %d for user %d by time", queueId, recieverId));
 		long started = System.nanoTime();
 
 		ArrayList<Object[]> s;

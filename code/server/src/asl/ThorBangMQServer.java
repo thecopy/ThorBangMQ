@@ -146,7 +146,7 @@ public class ThorBangMQServer {
 			// Connection wasn't made. Skip!
 			return;
 		}
-		logger.info(String.format("Accepted connection from %s", clientAddress));
+		logger.fine(String.format("Accepted connection from %s", clientAddress));
 	}
 
 	/**

@@ -45,6 +45,7 @@ public class Main {
 		addShutdownHookForSavingLog((MemoryLogger)applicationLogger, settings.APPLICATION_LOG_PATH);
 		addShutdownHookForSavingLog((MemoryLogger)testLogger, settings.TEST_LOG_PATH);
 		r.runTest(input, settings, applicationLogger, testLogger);
+		
 	}
 	
 	private static void addShutdownHookForSavingLog(final MemoryLogger logger, final String pathToStoreLog){
@@ -54,6 +55,7 @@ public class Main {
             public void run()
             {
                 try {
+                	logger.info("Dumping file due to interrupt signal!");
 					logger.dumpToFile(pathToStoreLog);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();

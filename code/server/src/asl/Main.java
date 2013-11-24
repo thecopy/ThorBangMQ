@@ -21,7 +21,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {		
 		testLogger.setLevel(Level.ALL);
-		applicationLogger.setLevel(Level.WARNING);
+		applicationLogger.setLevel(Level.INFO); // server logs down to level "Level.FINER"
 
 		// Read configuration file
 		ServerSettings settings = Bootstrapper2.StrapTheBoot(applicationLogger);
