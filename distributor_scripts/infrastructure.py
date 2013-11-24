@@ -225,9 +225,11 @@ def fetchlog((remoteip, localip), machinetype, testnum, logdir):
         scpdownloadfile(remoteip, '/root/*.log', logdir)
 
 
-def starttest(testname, testid=None):
+def starttest(testname, testid=None, testRunName=None):
     if testid is None:
         testid = getnewtestid()
+    if testRunName is None:
+        testRunName = datetime.strftime(datetime.now(), "%Y-%m-%d__%H_%M_%S")
 
     testdir = path.join(ROOT, 'test-definitions', testname)
     if not path.isdir(testdir):
@@ -248,17 +250,16 @@ def starttest(testname, testid=None):
 
     distributejavafiles(clients=clients, servers=servers)
 
-    performtests(clients, servers, databaseip, testname, testdesc, testdir)
+    performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName)
     logger.info("Test done!")
     if testdesc.get('destroydroplets', False):
         destroyalldroplets(testid)
 
 
-def performtests(clients, servers, databaseip, testname, testdesc, testdir):
+def performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName):
     assert(isinstance(clients, list))
     assert(isinstance(servers, list))
-    timestamp = datetime.strftime(datetime.now(), "%Y-%m-%d__%H_%M_%S")
-    logdir = path.join(testdir, 'logs', timestamp)
+    logdir = path.join(testdir, 'logs', testRunName)
     base_serverconfigfile = path.join(testdir, SERVER_CONFIG_FILE)
     test_serverconfigfile = path.join(logdir, SERVER_CONFIG_FILE)
     mkdir_p(logdir)
@@ -281,8 +282,17 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir):
 
             # start test on server
             serversstarttest(servers=servers, cleardatabase=cleardatabase, databasemessages=databasemessages)
+            logger.info("+ Sleeping 10 seconds...")
             sleep(10)
             # start test on client
+            for i,arg in enumerate(clientarg):
+                logger.info("+ Checking argument " + arg)
+                if arg == "s*":
+                    # concat all servers with ;
+                    logger.info("+ It was s*: joining all servers...")
+                    clientarg[i] = '\\;'.join(tuple(x[1] for x in servers))
+                    logger.info("+ New argument = " + arg)
+
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
             # wait until test is done

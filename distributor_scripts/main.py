@@ -16,7 +16,7 @@ def main():
         print "2) create server"
         print "3) build jars"
         print "4) upload jars <testid>"
-        print "5) start test <testname> [<testid>]"
+        print "5) start test <testname> <testid> [<testRunName>]"
         print "6) list available tests"
         print "7) list running droplets"
         print "8) kill screens <testid>"
@@ -41,6 +41,8 @@ def main():
                 testname = args[1]
             if len(args) >= 3:
                 testid = args[2]
+            if len(args) >= 4:
+                testRunName = args[3]
 
             if testname not in gettests():
                 print "Invalid test name '{}'".format(testname)
@@ -48,7 +50,7 @@ def main():
                 for i, testname in enumerate(gettests()):
                     print "{}: {}".format(i + 1, testname)
                 continue
-            starttest(testname, testid)
+            starttest(testname, testid, testRunName)
         elif choice == "6":
             for testname in gettests():
                 print testname
