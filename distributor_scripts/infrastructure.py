@@ -6,6 +6,7 @@ from os import path, chdir
 import shutil
 import os
 import errno
+import sys
 from subprocess import call, PIPE, Popen
 from time import sleep
 import logging
@@ -308,7 +309,8 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir, test
 def wait(waittime):
     logger.info("Waiting for {secs} seconds".format(secs=waittime))
     for i in range(0, waittime, WAIT_INTERVAL):
-        logger.debug("Waited {} out of {}".format(i, waittime))
+        sys.stdout.write("\rWaited {} out of {}".format(i, waittime))
+        sys.stdout.flush()
         sleep(WAIT_INTERVAL)
 
 
