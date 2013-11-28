@@ -32,8 +32,7 @@ public class IntervalLogger implements Runnable {
 			
 			// the first comma (,) is to make the file a CSV file.
 			logger.log(this.level, ","
-					+ Counters.MessagesSent.getAndSet(0) + ","
-					+ Counters.MessageRecieved.getAndSet(0));
+					+ Counters.RequestsPerformed.getAndSet(0));
 		}
 	}
 

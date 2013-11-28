@@ -2,6 +2,7 @@ package testRunner.tests;
 
 import infrastructure.exceptions.InvalidClientException;
 import infrastructure.exceptions.InvalidQueueException;
+import infrastructure.exceptions.InvalidRequestException;
 import infrastructure.exceptions.ServerException;
 
 import java.io.FileNotFoundException;
@@ -122,15 +123,11 @@ public class DistributedStandardTest extends testRunner.Test {
 		for(int i = 0; i < numberOfOneWayClients; i++)
 		{
 			oneWayClients[i].keepRunning = false;
-			oneWayClientThreads[i].join(200);
-			if(oneWayClientThreads[i].isAlive())
 				oneWayClientThreads[i].interrupt();
 		}
 		for(int i = 0; i < numberOfTwoWayClients; i++)
 		{
 			twoWayClients[i].keepRunning = false;
-			twoWayClientThreads[i].join(200);
-			if(twoWayClientThreads[i].isAlive())
 				twoWayClientThreads[i].interrupt();
 		}
 		
@@ -190,8 +187,8 @@ public class DistributedStandardTest extends testRunner.Test {
 			try {
 				if(sendTheFirst){
 					long target = (firstOneWayer + r.nextInt(numOfOneWayers));
-					client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
-					Counters.MessagesSent.incrementAndGet();
+					sendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
+					Counters.RequestsPerformed.incrementAndGet();
 				}
 				
 				while (keepRunning) {
@@ -199,8 +196,8 @@ public class DistributedStandardTest extends testRunner.Test {
 						Message msg = null;
 						do{
 							Thread.sleep(200);
-							msg = client.PopMessage(queue, true);
-							Counters.MessageRecieved.incrementAndGet();
+							msg = popMessage(queue, true);
+							Counters.RequestsPerformed.incrementAndGet();
 						}while(msg == null);
 						messageCounter = Long.parseLong(msg.content);
 
@@ -209,38 +206,57 @@ public class DistributedStandardTest extends testRunner.Test {
 							target = (firstOneWayer + r.nextInt(numOfOneWayers));
 						}while(target == userId);
 						
-						client.SendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
-						Counters.MessagesSent.incrementAndGet();
+						sendMessage(target, queue, 1, 0, String.valueOf(++messageCounter));
+						Counters.RequestsPerformed.incrementAndGet();
 					}else{ // Two-Way
 						if(userId%2 == 1){ // Sender
 							long context = r.nextLong();
-							client.SendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
-							Counters.MessagesSent.incrementAndGet();
+							sendMessage(userId+1, queue, 1, context, String.valueOf(++messageCounter));
+							Counters.RequestsPerformed.incrementAndGet();
 							Message msg = null;
 							do{
 								Thread.sleep(200);
-								msg = client.PopMessage(queue, true);
-								Counters.MessageRecieved.incrementAndGet();
+								msg = popMessage(queue, true);
+								Counters.RequestsPerformed.incrementAndGet();
 							}while(msg == null || msg.context != context);
 							
 						}else{ // Receiver
 							Message msg = null;
 							do{
 								Thread.sleep(300);
-								msg = client.PopMessage(queue, true);
-								Counters.MessageRecieved.incrementAndGet();
+								msg = popMessage(queue, true);
+								Counters.RequestsPerformed.incrementAndGet();
 							}while(msg == null);
 							messageCounter = Long.parseLong(msg.content);
-							client.SendMessage(msg.sender, queue, 1, msg.context, String.valueOf(++messageCounter));
-							Counters.MessagesSent.incrementAndGet();
+							sendMessage(msg.sender, queue, 1, msg.context, String.valueOf(++messageCounter));
+							Counters.RequestsPerformed.incrementAndGet();
 						}
 					}
 				}
 			} catch (Exception e) {
-				applicationLogger.info("Error in client " + userId + ": " + e.getMessage());
+				e.printStackTrace();
+				applicationLogger.info("Error in client " + userId + ": " + e.getClass() + " " + e.getMessage());
 			} finally {
 				client.stop();
 			}
+		}
+		
+		private StopWatch w = new StopWatch();
+		private Message popMessage(long queue, boolean timestamp) throws IOException, InvalidQueueException, ServerException{
+			w.reset();
+			w.start();
+			Message m = client.PopMessage(queue, true);
+			w.stop();
+			Counters.ResponseTimeLogger.log("," + w.getNanoTime());
+			return m;
+		}
+		private void sendMessage(long receiver, long queue, int prio, long context, String content) throws IOException, InvalidQueueException, InvalidClientException, ServerException, InvalidRequestException
+		{
+			w.reset();
+			w.start();
+			client.SendMessage(receiver, queue, prio, context, content);
+			w.stop();
+			Counters.ResponseTimeLogger.log("," + w.getNanoTime());
 		}
 
 	}
