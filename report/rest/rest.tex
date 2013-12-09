@@ -1,0 +1,57 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[pdftex]{hyperref}
+\usepackage{placeins}
+
+% Lengths and indenting
+\setlength{\textwidth}{16.5cm}
+\setlength{\marginparwidth}{1.5cm}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.15cm}
+\setlength{\textheight}{22cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{0cm}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\TODO}[1]{\textbf{TODO:} #1}
+
+\title{Advanced Systems Lab - Complementary Report}
+\author{jerik\\mbang\\}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{1 vs. 10 middleware}
+In the original project report the experiment concerning the difference in performance when using 10 middlewares vs. 1 middleware was errornous. In this report the experiment has been re-done correctly.
+
+\subsection{Cause}
+The cause why the experiment was a failure was due to the middlewares each using 50 database connections (effictively 500 connections). 
+This would cause problems due to the database (Postgres) connection limit, which is 100 connections. 
+This led to only 2 middlewares being functional and 8 infunctional. This in turn led to that the system only had 20\% of the workload, that is the system only had 300 (of 1500) clients putting on workload.. This is what caused the responsetime to be so low and the throughput still high.\\
+
+\subsection{Changes}
+In this experiment we've made sure to stay within the limits of Postgres and also to log on the client-side and not on the middleware side (as suggested by a TA). We also run the test more times to calculate the confidence interval for the mean response time. The database connections per middleware has been set to 10.
+
+\subsection{Results}
+In the experiment 10 database connections per middleware were used to make sure the same problem as earlier didn't occur. We used 50 worker-threads per middleware as the original experiment also had.
+\begin{table}[!htbp]
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Configuration & Mean Response Time & Mean Throughput \\ \hline
+    1 Middleware  & $383.6 \pm 42.3$       	&   $2656.2 \pm 201.0 $  \\ \hline
+    10 Middleware & $345.9 \pm 26.9$       	&   $2748.4 \pm 131.1 $  \\ \hline
+    \end{tabular}
+    \label{table}
+    \caption{The results from the re-done experiment. We see that the throughput and the response times are roughly the same when using either 1 or 10 middleware. This is what would be expected if a shared device would be shared in a system, which is the case for our system where the database is the bottleneck.}
+\end{table}
+\FloatBarrier % stupid table, dont move away from the results-subsection
+\subsection{Analysis}
+Keeping in mind the conclusion from the main report in which the database was the bottleneck, there results makes sense. We see that we get a relativaly small (~3\%) increase in throughput when increasing the number of middlewares. This could be a sign that the optimal number of total database connections is greater than 10.\\
+The higher throughput and lower response time in the 10 middleware case is attributed to the fact that the effective number of database connections is 100, in contrast to the 1 middleware case where the effective database connections were 10. This suggests that the optimal number of database connections is above 10.
+\end{document} 
