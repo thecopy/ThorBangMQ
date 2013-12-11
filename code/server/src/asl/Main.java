@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +55,9 @@ public class Main {
 			Thread intervalLoggerThread = new Thread(intervalLogger);
 			addShutdownHookForSavingLog((MemoryLogger) testLogger, settings.TEST_LOG_PATH);
 			addShutdownHookForSavingLog((MemoryLogger) applicationLogger, settings.APPLICATION_LOG_PATH);
-			
+			addShutdownHookForSavingLog((MemoryLogger) GlobalCounters.crwServiceTime, "resp_times_test_log_crw.txt.log");
+			addShutdownHookForSavingLog((MemoryLogger) GlobalCounters.dbServiceTime, "resp_times_test_log_db.txt.log");
+
 			t.start();
 			intervalLoggerThread.start();
 			
@@ -113,7 +116,7 @@ public class Main {
 			System.out.println("Optional argument: cleardb=true logpath=path");
 			return settings;
 		}
-
+		
 		for(String arg : args)
 			parseArgument(arg, settings);
 		
@@ -126,6 +129,8 @@ public class Main {
 			System.out.println("Clearing db...");
 			clearDb(s, false);
 			System.out.println("Db clean!");
+		}else if (arg.toLowerCase().startsWith("port=")){
+			s.LISTENING_PORT = Integer.parseInt(arg.substring(5));
 		}
 		else if (arg.toLowerCase().startsWith("nummsgs")){
 			String[] tmp = arg.split("=");
@@ -202,10 +207,20 @@ public class Main {
             public void run()
             {
                 try {
-					logger.dumpToFile(pathToStoreLog);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.dumpToFileThreadSafe(pathToStoreLog);
+				} catch (FileNotFoundException | InterruptedException e) {
+					PrintWriter out;
+					try {
+						out = new PrintWriter(pathToStoreLog);
+						out.println("Could not write log: " + e.getClass());
+						out.println("Could not write log: " + e.getMessage());
+						out.println("Could not write log: " + e.toString());
+						out.close();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				}
             }
         });

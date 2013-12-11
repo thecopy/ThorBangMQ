@@ -45,7 +45,7 @@ public class ClientRequestWorker implements Runnable{
 		} catch (IOException e) {
 			logger.severe("Error while writing to client: " + e);
 		}finally{
-			GlobalCounters.totalThinkTimeInClientRequestWorker.addAndGet(System.nanoTime()-start);
+			GlobalCounters.crwServiceTime.info("," + (System.nanoTime()-start));
 		}
 	}
 
@@ -107,9 +107,10 @@ try{
 		try{
 			for(String queueStr : msgArgs[2].split(";")){
 				long queue = Long.parseLong(queueStr);
-
+				long dbStart = System.nanoTime();
 				persistence.storeMessage(sender, reciever, queue, context, prio, content);
-				
+				logDbTime(System.nanoTime() - dbStart);
+
 				GlobalCounters.numberOfMessagesPersisted.incrementAndGet();
 			}
 			
@@ -190,10 +191,12 @@ try{
 		logger.finer(String.format("Popping queue %d for user %d ordered by %s", queueId, receiverId, getByTimestampInsteadOfPriority ? "time" : "prio"));
 		Message m;
 		try {
+			long dbStart = System.nanoTime();
 			m = peekQueue(receiverId, queueId, getByTimestampInsteadOfPriority);
 			if(m != null)
 				persistence.deleteMessage(m.id);
-
+			logDbTime(System.nanoTime() - dbStart);
+			
 			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
 
 			logger.finer(String.format("Sending popped message"));
@@ -222,9 +225,11 @@ try{
 		Boolean getByTimestampInsteadOfPriority = Integer.parseInt(args[3]) == 1;
 
 		try {
+			long dbStart = System.nanoTime();
 			Message m = persistence.getMessageBySender(queueId, receiverId, senderId,getByTimestampInsteadOfPriority);
 			if(m != null)
 				persistence.deleteMessage(m.id);
+			logDbTime(System.nanoTime() - dbStart);
 			
 			transport.Send(this.formatMessage(m));
 			GlobalCounters.numberOfMessagesReturned.incrementAndGet();
@@ -314,5 +319,9 @@ try{
 		}
 		
 		return m;
+	}
+	
+	private void logDbTime(long time){
+		GlobalCounters.dbServiceTime.info("," + time);
 	}
 }
