@@ -1,8 +1,5 @@
 numclients=2
 numservers=1
-serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:20,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:5,workerthreads:50,cleardatabase:true
-clientargs=100,7200000,2
-clientargs=50,3600000,2
-testtime=3600
+serverargs=databaseconnections:50,workerthreads:30,cleardatabase:true
+clientargs=100,600000,2
+testtime=600

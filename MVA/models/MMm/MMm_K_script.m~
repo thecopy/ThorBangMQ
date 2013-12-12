@@ -1,0 +1,25 @@
+arrivalRates = linspace(10,2000);
+clients = 1:100;
+%arrivalRates = 1310 .* atan(0.2141.*clients) + 40.8;
+
+E_r = zeros(1,length(arrivalRates));
+E_n = zeros(1,length(arrivalRates));
+E_q = zeros(1,length(arrivalRates));
+
+m = 10;
+K = 100;
+for i=1:length(arrivalRates)
+    [E_r(i), E_n(i), E_q(i)] = MMm_K(arrivalRates(i),m , K);
+end
+close all
+subplot(2,1,1)
+plot(arrivalRates, E_r.*1000);
+ylabel 'Response Time [ms]'
+xlabel 'Arrival Rate'
+
+subplot(2,1,2)
+plot(arrivalRates, (E_r));
+ylabel 'Number'
+xlabel 'Arrival Rate'
+legend 'Throughput'
+

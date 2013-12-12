@@ -34,6 +34,9 @@ TEST_CONFIG_FILE = "test.txt"
 
 REMOTE_TEST_LOG_FILE_PATH = "/root/test_log.txt"
 REMOTE_APPLICATION_LOG_FILE_PATH = "/root/application_log.txt"
+REMOTE_RESPTIMES_LOG_FILE_PATH = "/root/resp_times_test_log.txt.log"
+REMOTE_SERVICETIME_CRW_FILE_PATH = "/root/resp_times_test_log_crw.txt.log"
+REMOTE_SERVICETIME_DB_FILE_PATH = "/root/resp_times_test_log_db.txt.log"
 
 
 SSH_COMMAND = "ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@{ip}"
@@ -55,11 +58,9 @@ def _antmake(f):
     chdir(path.dirname(f))
     proc = Popen(['ant'], stdout=PIPE)
     out = " ".join(line for line in proc.stdout)
-    logger.debug("_antmake: {}".format(out))
     if not "build successful" in out.lower():
         logger.info("Building {file} FAILED!".format(file=path.basename(f)))
         exit(-1)
-    logger.info("Building {file} SUCCEEDED!".format(file=path.basename(f)))
     chdir(ROOT)
     return True
 
@@ -74,42 +75,38 @@ def distributejavafiles(clients, servers):
 def scpuploadfile(machines, localfile, remotefile):
     scpcmd = "scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null {} root@{}:{}"
     for globalip, localip in machines:
-        logger.info('Uploading {localfile} to {ip}:{serverfile}'.format(localfile=path.basename(localfile),
-                                                                        ip=globalip,
-                                                                        serverfile=remotefile))
-        call(scpcmd.format(localfile, globalip, remotefile).split(' '))
+        logger.info('Uploading {localfile} to {ip}'.format(localfile=path.basename(localfile),
+                                                                        ip=globalip))
+        call(scpcmd.format(localfile, globalip, remotefile).split(' '), stdout=None)
 
 
 def killallscreens(ip):
     cmd = "{ssh} killall screen".format(ssh=SSH_COMMAND.format(ip=ip))
-    logger.info("Destroying all screens on {ip}".format(ip=ip))
-    call(cmd.split(' '))
+    logger.info("Destroying all screens on {ip}...".format(ip=ip))
+    call(cmd.split(' '), stdout=None)
 
 
 def scpdownloadfile(ip, remotefile, localfile):
     scpcmd = ("scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "
               "root@{ip}:{remotefile} {localfile}".format(remotefile=remotefile, ip=ip,
                                                           localfile=localfile))
-    call(scpcmd.split(' '), stdout=PIPE)
+    call(scpcmd.split(' '), stdout=None)
 
 
 def startmissingmachines(numclients, numservers, testid, numdatabases=1,
                          size=DEFAULT_DROPLET_SIZE):
     clientsstarted = startmissingmachine(machines=getclients(testid), nummachines=numclients,
                                          createfun=functools.partial(createclient, size, testid))
-    logger.info("Started {} client machines.".format(clientsstarted))
+    logger.info("+ Started {} client machines.".format(clientsstarted))
     serversstarted = startmissingmachine(machines=getservers(testid), nummachines=numservers,
                                          createfun=functools.partial(createserver, size, testid))
-    logger.info("Started {} server machines.".format(serversstarted))
+    logger.info("+ Started {} server machines.".format(serversstarted))
     databasestarted = startmissingmachine(machines=getdatabase(testid), nummachines=1,
                                           createfun=functools.partial(createdatabase, size, testid))
-    logger.info("Started {} database machines.".format(databasestarted))
+    logger.info("+ Started {} database machines.".format(databasestarted))
 
     started = clientsstarted + serversstarted + databasestarted
-    if started > 0:
-        logger.info("Waiting {secs} seconds for {num} machines to boot..".format(secs=DROPLET_CREATION_TIME,
-                                                                                 num=started))
-        sleep(DROPLET_CREATION_TIME)
+    return started
 
 
 def startmissingmachine(machines, nummachines, createfun):
@@ -146,17 +143,23 @@ def parsetestfile(testfile):
     return testdesc
 
 
-def serversstarttest(servers, cleardatabase=False, databasemessages=20000):
-    logger.info("Starting test on {numservers} servers".format(numservers=len(servers)))
+def serversstarttest(servers, numPerServer, cleardatabase=False, databasemessages=20000):
+    logger.info("Starting test on {numservers} servers".format(numservers=numPerServer))
     for globalip, localip in servers:
         killallscreens(globalip)
         cmd = SSH_COMMAND.format(ip=globalip).split(' ')
-        cmd += ["{screen} java -jar {file} nummsgs={nummsgs} cleardb={cleardb}".format(screen=SCREEN_COMMAND.format(name="server"),
+        port = 8123;
+        for x in range(0,numPerServer):
+            cmd = SSH_COMMAND.format(ip=globalip).split(' ')
+            cmd += ["{screen} java -jar {file} nummsgs={nummsgs} cleardb={cleardb} port={port}".format(screen=SCREEN_COMMAND.format(name="server"),
                                                                                        file=REMOTE_SERVER_FILE,
                                                                                        nummsgs=databasemessages,
-                                                                                       cleardb='true' if cleardatabase else 'false')]
-        logger.debug("Start servers call: {}".format(cmd))
-        call(cmd)
+                                                                                       cleardb='true' if cleardatabase else 'false',
+                                                                                       port=port)]
+            logger.debug("+ Starting server {} ({})...".format(globalip, localip))
+            logger.debug("+ + Call:'{}'".format(cmd))
+            call(cmd, stdout=None);
+            port += 1;
 
 
 def clientsstarttest(clients, servers, testname, args):
@@ -175,8 +178,8 @@ def clientsstarttest(clients, servers, testname, args):
                                            file=REMOTE_CLIENT_FILE,
                                            serverip=serverip,
                                            testname=testname, args=" ".join(args))]
-        logger.debug("Start clients call: {}".format(cmd))
-        call(cmd)
+        logger.debug("+ Starting client {}...".format(i, cmd))
+        call(cmd, stdout=None);
 
 
 def stoptest(*args):
@@ -196,7 +199,7 @@ def updateserverconfigfile(configfile, databaseip, databasecons, workerthreads):
                  "\\1\t{}\n".format(databasecons), res)
     res = re.sub("(NUM_CLIENTREQUESTWORKER_THREADS).*?\n",
                  "\\1\t{}\n".format(workerthreads), res)
-    logger.debug("new settings file: {}".format(res))
+
     with open(configfile, 'w') as f:
         f.write(res)
 
@@ -204,11 +207,13 @@ def updateserverconfigfile(configfile, databaseip, databasecons, workerthreads):
 def fetchlogs(clients, servers, logdir, testnum=0):
     assert(isinstance(clients, list))
     assert(isinstance(servers, list))
-    for i, client in enumerate(clients):
-        fetchlog(client, "client{}".format(i), testnum, logdir)
 
     for i, server in enumerate(servers):
         fetchlog(server, "server{}".format(i), testnum, logdir)
+
+    for i, client in enumerate(clients):
+        fetchlog(client, "client{}".format(i), testnum, logdir)
+
 
 
 def fetchlog((remoteip, localip), machinetype, testnum, logdir):
@@ -216,7 +221,11 @@ def fetchlog((remoteip, localip), machinetype, testnum, logdir):
         mkdir_p(logdir)
     logstr = "test{testnum}_{machinetype}_{logtype}.txt"
     logs = [('test', REMOTE_TEST_LOG_FILE_PATH),
-            ('application', REMOTE_APPLICATION_LOG_FILE_PATH)]
+            ('application', REMOTE_APPLICATION_LOG_FILE_PATH),
+            ('resp_times', REMOTE_RESPTIMES_LOG_FILE_PATH),
+            ('service_crw', REMOTE_SERVICETIME_CRW_FILE_PATH),
+            ('service_db', REMOTE_SERVICETIME_DB_FILE_PATH)]
+            
     for logtype, remotelogpath in logs:
         logname = logstr.format(logtype=logtype, machinetype=machinetype,
                                 testnum=testnum)
@@ -227,6 +236,7 @@ def fetchlog((remoteip, localip), machinetype, testnum, logdir):
 
 
 def starttest(testname, testid=None, testRunName=None):
+    logger.info("Starting test " + testname)
     if testid is None:
         testid = getnewtestid()
     if testRunName is None:
@@ -237,27 +247,40 @@ def starttest(testname, testid=None, testRunName=None):
         logger.critical("No such test directory: {dir}".format(dir=testdir))
         return
 
+    logger.info("Building jars...")
     buildjavafiles()
 
     testfile = path.join(testdir, TEST_CONFIG_FILE)
     testdesc = parsetestfile(testfile)
 
-    numclients, numservers = testdesc.get('numclients'), testdesc.get('numservers')
-    startmissingmachines(testid=testid, numclients=numclients, numservers=numservers)
+    logger.info("Starting droplets...")
+    numclients, numservers, nummw = testdesc.get('numclients'), testdesc.get('numservers'), testdesc.get('nummw')
+    numDropletsStarted = startmissingmachines(testid=testid, numclients=numclients, numservers=numservers)
+
+    if numDropletsStarted > 0:
+        while True:
+            logger.info("Sleeping {} secs to wait for {} to boot".format(DROPLET_CREATION_TIME, numDropletsStarted))
+            wait(DROPLET_CREATION_TIME)
+            if(getdatabase(testid)[0] is not None):
+                break
 
     clients = getclients(testid)
     servers = getservers(testid)
     __, databaseip = getdatabase(testid)[0]
 
+    logger.info("Uploading jars...")
     distributejavafiles(clients=clients, servers=servers)
 
-    performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName)
-    logger.info("Test done!")
+    logger.info("Executing tests...")
+    performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName, nummw)
+    logger.info("Destroing droplets...")
     if testdesc.get('destroydroplets', False):
         destroyalldroplets(testid)
 
+    logger.info("Test " + testname + " done. Logs stored in " + testRunName);
 
-def performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName):
+
+def performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName,numPerServer):
     assert(isinstance(clients, list))
     assert(isinstance(servers, list))
     logdir = path.join(testdir, 'logs', testRunName)
@@ -282,17 +305,23 @@ def performtests(clients, servers, databaseip, testname, testdesc, testdir, test
             databasemessages = serverarg.get('nummsgs', 20000)
 
             # start test on server
-            serversstarttest(servers=servers, cleardatabase=cleardatabase, databasemessages=databasemessages)
+            serversstarttest(servers=servers, numPerServer=numPerServer, cleardatabase=cleardatabase, databasemessages=databasemessages)
             logger.info("+ Sleeping 10 seconds...")
             sleep(10)
             # start test on client
+            port = 8123;
             for i,arg in enumerate(clientarg):
                 logger.info("+ Checking argument " + arg)
                 if arg == "s*":
                     # concat all servers with ;
                     logger.info("+ It was s*: joining all servers...")
-                    clientarg[i] = '\\;'.join(tuple(x[1] for x in servers))
-                    logger.info("+ New argument = " + arg)
+                    newArg = '';
+                    for s in servers:
+                        for c in range(0,numPerServer):
+                            newArg = newArg + s[1] + ':' + str(port + c) + '\\;';
+                    newArg = newArg[:-2];
+                    clientarg[i] = newArg;
+                    logger.info("+ New argument = " + clientarg[i])
 
             clientsstarttest(clients=clients, servers=servers, testname=testname,
                              args=clientarg)
@@ -312,6 +341,8 @@ def wait(waittime):
         sys.stdout.write("\rWaited {} out of {}".format(i, waittime))
         sys.stdout.flush()
         sleep(WAIT_INTERVAL)
+    sys.stdout.write("\n")
+    sys.stdout.flush()
 
 
 def mkdir_p(path):

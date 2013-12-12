@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +38,7 @@ public class DistributedStandardTest extends testRunner.Test {
 		String[] descriptors = new String[3];
 		descriptors[0] = "Number of clients";
 		descriptors[1] = "Length of experiment";
-		descriptors[2] = "Hosts seperated by a semicolon, e.g. host1;host2";
+		descriptors[2] = "Hosts seperated by a semicolon, e.g. host1:port;host2:port";
 		
 		return descriptors;
 	}
@@ -55,7 +58,9 @@ public class DistributedStandardTest extends testRunner.Test {
 		applicationLogger.info("Number of 1-way clients: "+ numberOfOneWayClients);
 		applicationLogger.info("Number of 2-way clients: "+ numberOfTwoWayClients);
 		
-		ThorBangMQ setupClient = ThorBangMQ.build(hosts[0], this.port, 1);
+		String[] h = hosts[0].split(":");
+		int port = h.length == 1 ? this.port : Integer.parseInt(h[1]);
+		ThorBangMQ setupClient = ThorBangMQ.build(h[0], port, 1);
 		
 		long queue1 = setupClient.createQueue("oneWayQueue");
 		long queue2 = setupClient.createQueue("twoWayQueue");
@@ -69,16 +74,20 @@ public class DistributedStandardTest extends testRunner.Test {
 		IntervalLogger intervalLogger = new IntervalLogger(250, testLogger, Level.INFO);
 		Thread intervalLoggingThread = new Thread(intervalLogger);
 		intervalLoggingThread.start();
+		
+		ExecutorService parallelInitiator = Executors.newFixedThreadPool(50); // assume 50 worker threads on server
+		
 		for(int i = 0; i < numberOfOneWayClients; i++)
 		{
 			int hostIndex = i % hosts.length;
-			String host = hosts[hostIndex];
+			h = hosts[hostIndex].split(":");
+			port = h.length == 1 ? this.port : Integer.parseInt(h[1]);
 			long userId = setupClient.createClient("onewayclient" + i);
 			if(firstOneWayClientUserId == -1)
 				firstOneWayClientUserId = userId;
 			
 			oneWayClients[i] = new clientRunner
-					(host, 
+					(h[0], 
 					port, 
 					userId, 
 					queue1, 
@@ -88,18 +97,18 @@ public class DistributedStandardTest extends testRunner.Test {
 					firstOneWayClientUserId,
 					applicationLogger);
 			
-			oneWayClientThreads[i] = new Thread(oneWayClients[i]);
-			oneWayClientThreads[i].start();
+			parallelInitiator.submit(new clientInitiator(oneWayClients[i],i));
 		}
 		
 		// Create Two Way and start clients
 		for(int i = 0; i < numberOfTwoWayClients; i++)
 		{
 			int hostIndex = i % hosts.length;
-			String host = hosts[hostIndex];
+			h = hosts[hostIndex].split(":");
+			port = h.length == 1 ? this.port : Integer.parseInt(h[1]);
 			long userId = setupClient.createClient("twowayclient" + i);
 			twoWayClients[i] = new clientRunner
-					(host, 
+					(h[0], 
 					port, 
 					userId, 
 					queue1, 
@@ -110,11 +119,24 @@ public class DistributedStandardTest extends testRunner.Test {
 					applicationLogger);
 			
 
+			parallelInitiator.submit(new clientInitiator(twoWayClients[i], i+numberOfOneWayClients));
+		}
+		parallelInitiator.shutdown();
+		parallelInitiator.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
+		
+		applicationLogger.info("Initiated  all clients!");
+		for(int i = 0; i < numberOfOneWayClients; i++){
+			oneWayClientThreads[i] = new Thread(oneWayClients[i]);
+			oneWayClientThreads[i].start();
+		}
+
+		for(int i = 0; i < numberOfTwoWayClients; i++){
 			twoWayClientThreads[i] = new Thread(twoWayClients[i]);
 			twoWayClientThreads[i].start();
 		}
 		
-		applicationLogger.info("Created and started all clients!");
+		applicationLogger.info("Started all clients!");
+		
 		applicationLogger.info("Waiting " + lengthOfExperiment + "ms");
 		Thread.sleep(lengthOfExperiment);
 
@@ -158,26 +180,39 @@ public class DistributedStandardTest extends testRunner.Test {
 		private boolean sendTheFirst;
 		private long firstOneWayer;
 		private Logger applicationLogger;
+		private String hostname;
+		private int port;
 		
 		
 		public clientRunner(String hostname, int port, long userId, long queue, int numOfOneWayers, boolean oneWay, 
 				boolean sendTheFirst, long firstOneWayer, Logger applicationLogger){
 			this.queue = queue;
 			this.userId = userId;
+			this.hostname = hostname;
+			this.port = port;
 			this.oneWay = oneWay;
 			this.numOfOneWayers = numOfOneWayers;
 			this.sendTheFirst = sendTheFirst;
 			this.firstOneWayer = firstOneWayer;
+			this.applicationLogger = applicationLogger;
+			
 			try {
 				
 				client = ThorBangMQ.build(hostname, port, userId);
-				client.init();
 				
 			} catch (Exception e) {
 				applicationLogger.severe(e.getMessage());
 			}
-			this.applicationLogger = applicationLogger;
-			applicationLogger.info("Built client runner with host "  + hostname + ":" + port);
+		}
+		
+		public void init(){
+			try {
+				client.init();
+			} catch (Exception e) {
+				applicationLogger.severe(e.getMessage());
+			}
+			applicationLogger.info("Built client with host "  + this.hostname + ":" + this.port);
+
 		}
 
 		@Override
@@ -257,6 +292,21 @@ public class DistributedStandardTest extends testRunner.Test {
 			client.SendMessage(receiver, queue, prio, context, content);
 			w.stop();
 			Counters.ResponseTimeLogger.log("," + w.getNanoTime());
+		}
+
+	}
+	
+	public class clientInitiator implements Runnable {
+		private clientRunner client;
+		private int i;
+		public clientInitiator(clientRunner client, int i){
+			this.client = client;
+			this.i = i;
+		}
+		@Override
+		public void run() {
+			client.init();			
+			System.out.println("Inited client " + i);
 		}
 
 	}

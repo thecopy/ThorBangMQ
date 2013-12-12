@@ -15,7 +15,7 @@ public class MemoryLogger extends Logger {
 	private long startTime;
 	
 	List<String> entries;
-
+	public boolean disabled = false;
 	private Boolean outputToConsole;
 	public MemoryLogger(Boolean outputToConsole) {
 		super("MemoryLogger",null);
@@ -47,6 +47,7 @@ public class MemoryLogger extends Logger {
 	
 	@Override
 	public void log(Level level, String msg) {
+		if(disabled) return;
 		if(level.intValue() < super.getLevel().intValue()) return;
 		if(msg.length() > 512){
 			msg = msg.substring(0,511);
@@ -76,14 +77,17 @@ public class MemoryLogger extends Logger {
 		entries.clear();
 	}
 
-	public void dumpToFileThreadSafe(String pathToStoreLog) throws FileNotFoundException {
+	public void dumpToFileThreadSafe(String pathToStoreLog) throws FileNotFoundException, InterruptedException {
+		disabled = true;
+		Thread.sleep(1000);
 		synchronized(entries){
 			PrintWriter out = new PrintWriter(pathToStoreLog);
 			
 			for(String entry : entries)
-				out.println(entry);
+				if(entry != null && !entry.equals("null"))
+					out.println(entry);
 			out.close();
 		}
-		
+		disabled = false;
 	}
 }

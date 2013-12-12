@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import testRunner.tests.BigMessage;
 import testRunner.tests.DistributedStandardTest;
+import testRunner.tests.DistributedStressTest;
 import testRunner.tests.DummyTest;
 import testRunner.tests.PushPeekPop;
 import testRunner.tests.SendAndPopMessages;
@@ -33,6 +34,7 @@ public class Runner {
 		tests.add(SendAndPopSameClient.class);
 		tests.add(PushPeekPop.class);
 		tests.add(DistributedStandardTest.class);
+		tests.add(DistributedStressTest.class);
 	}
 	
 	public List<Class> getTests(){

@@ -30,14 +30,15 @@ public class DistributedStressTest extends testRunner.Test {
 	private String[] hosts;
 	private long lengthOfExperiment;
 	private int numberOfClients;
-	
+	private long sleep;
 	
 	@Override
 	public String[] getArgsDescriptors() {
 		String[] descriptors = new String[3];
 		descriptors[0] = "Number of clients";
-		descriptors[1] = "Length of experiment";
-		descriptors[2] = "Hosts seperated by a semicolon, e.g. host1:port;host2:port";
+		descriptors[1] = "Sleep in ms";
+		descriptors[2] = "Length of experiment";
+		descriptors[3] = "Hosts seperated by a semicolon, e.g. host1:port;host2:port";
 		
 		return descriptors;
 	}
@@ -45,14 +46,16 @@ public class DistributedStressTest extends testRunner.Test {
 	@Override
 	public void init(String[] args) throws Exception {
 		this.numberOfClients = Integer.parseInt(args[0]);
-		this.lengthOfExperiment = Long.parseLong(args[1]);
-		this.hosts = args[2].split(";");
+		this.sleep = Long.parseLong(args[1]);
+		this.lengthOfExperiment = Long.parseLong(args[2]);
+		this.hosts = args[3].split(";");
 	}
 
 	@Override
 	public void run(MemoryLogger applicationLogger, MemoryLogger testLogger) throws Exception {
 		applicationLogger.info("Number of clients: "+ numberOfClients);
-		
+		applicationLogger.info("Sleeping: "+ sleep);
+
 		String[] h = hosts[0].split(":");
 		int port = h.length == 1 ? this.port : Integer.parseInt(h[1]);
 		ThorBangMQ setupClient = ThorBangMQ.build(h[0], port, 1);
@@ -143,7 +146,8 @@ public class DistributedStressTest extends testRunner.Test {
 			try {
 				
 				client = ThorBangMQ.build(hostname, port, userId);
-				
+				applicationLogger.info("Constructed client with host "  + this.hostname + ":" + this.port);
+
 			} catch (Exception e) {
 				applicationLogger.severe(e.getMessage());
 			}
@@ -165,7 +169,9 @@ public class DistributedStressTest extends testRunner.Test {
 				applicationLogger.info("Client Id " + this.userId + " started (" + this.hostname + ":" +
 			this.port + ")!");
 				while (keepRunning) {
+					Thread.sleep(sleep);
 					sendMessage(this.userId, this.queue, 2, 0, "some message 123");
+					Thread.sleep(sleep);
 					popMessage(this.queue, true /* get by time */);
 				}
 			} catch (Exception e) {

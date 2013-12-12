@@ -44,6 +44,8 @@ public class Main {
 		Counters.ResponseTimeLogger.setLevel(Level.ALL);
 		MemoryLogger applicationLogger = new MemoryLogger(true);
 		MemoryLogger testLogger = new MemoryLogger(false);
+		testLogger.setLevel(Level.ALL);
+		testLogger.setLevel(Level.ALL);
 		addShutdownHookForSavingLog(Counters.ResponseTimeLogger, "resp_times_" + settings.TEST_LOG_PATH + ".log");
 		addShutdownHookForSavingLog((MemoryLogger)applicationLogger, settings.APPLICATION_LOG_PATH);
 		addShutdownHookForSavingLog((MemoryLogger)testLogger, settings.TEST_LOG_PATH);
@@ -59,7 +61,7 @@ public class Main {
             {
                 try {
                 	logger.info("Dumping file due to interrupt signal!");
-					logger.dumpToFile(pathToStoreLog);
+					logger.dumpToFileThreadSafe(pathToStoreLog);
 				} catch (Exception e) {
 					PrintWriter out;
 					try {

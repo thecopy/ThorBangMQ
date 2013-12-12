@@ -1,6 +1,12 @@
 numclients=1
-numservers=1
-serverargs=databaseconnections:100,workerthreads:100,cleardatabase:false
-clientargs=1500,820000,s*
-testtime=820
+numservers=2
+serverargs=databaseconnections:10,workerthreads:50,cleardatabase:false
+clientargs=20,600000,s*  
+clientargs=40,600000,s*  
+clientargs=80,600000,s*  
+clientargs=160,600000,s*  
+clientargs=320,600000,s*  
+clientargs=640,600000,s*  
+clientargs=1280,600000,s*  
+testtime=600
 destroydroplets=false

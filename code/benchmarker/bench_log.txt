@@ -1,12 +1,30 @@
-30ClientRequestWorker:	0.00 requests (PEEKQ,1,1,1) per second
-31				Infinity µs per request (PEEKQ,1,1,1)
-32
-34ClientRequestWorker:	1000.00 requests (POPQ,1,1,1) per second
-34				1000.00 µs per request (POPQ,1,1,1)
-34
-36ClientRequestWorker:	9000.00 requests (MSG,1,1,1,1,1,content) per second
-36				111.11 µs per request (MSG,1,1,1,1,1,content)
-36
-2394DbPersistence:	52000.00 requests (getMessageById) per second
-2394			19.01 µs per request (getMessageById)
-2394
+01 Client
+5003DbPersistence:	2798 requests 
+5005DbPersistence:	559.59998 requests (getMessageByTimestamp) per second
+5005			1.79 ms per request (getMessageByTimestamp)
+5005
+5005------------------------------------------
+50052 Client
+10007DbPersistence:	6326 requests 
+10008DbPersistence:	1265.20007 requests (getMessageByTimestamp) per second
+10008			0.79 ms per request (getMessageByTimestamp)
+10008
+10008------------------------------------------
+100085 Client
+15012DbPersistence:	10249 requests 
+15013DbPersistence:	2049.79980 requests (getMessageByTimestamp) per second
+15013			0.49 ms per request (getMessageByTimestamp)
+15013
+15013------------------------------------------
+1501410 Client
+20036DbPersistence:	10032 requests 
+20036DbPersistence:	2006.40015 requests (getMessageByTimestamp) per second
+20036			0.50 ms per request (getMessageByTimestamp)
+20036
+20036------------------------------------------
+2003650 Client
+25053DbPersistence:	10424 requests 
+25055DbPersistence:	2084.80005 requests (getMessageByTimestamp) per second
+25055			0.48 ms per request (getMessageByTimestamp)
+25055
+25055------------------------------------------

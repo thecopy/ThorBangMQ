@@ -4,6 +4,8 @@ import static org.mockito.Mockito.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,27 +13,54 @@ import java.util.logging.Logger;
 import org.postgresql.jdbc2.optional.PoolingDataSource;
 
 import asl.ClientRequestWorker;
+import asl.ServerSettings;
 import asl.Persistence.PostgresPersistence;
 import asl.Persistence.IPersistence;
 import asl.Persistence.LyingPersistence;
 import asl.infrastructure.MemoryLogger;
 import asl.infrastructure.exceptions.InvalidMessageException;
+import asl.infrastructure.exceptions.InvalidQueueException;
 import asl.infrastructure.exceptions.PersistenceException;
 import asl.network.ITransport;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		long duration = 10000L;
+		final PoolingDataSource connectionPool = new PoolingDataSource();
+		ServerSettings settings = new ServerSettings();
+		connectionPool.setDatabaseName(settings.DB_DATABASE_NAME);
+		connectionPool.setDataSourceName(settings.DB_DATA_SOURCE_NAME);
+		connectionPool.setUser(settings.DB_USERNAME);
+		connectionPool.setServerName(settings.DB_SERVER_NAME);
+		connectionPool.setPassword(settings.DB_PASSWORD);
+		connectionPool.setMaxConnections(90+10); // NEVER queue in here. measuring service time!!
+		
+		PostgresPersistence p = new PostgresPersistence(connectionPool, new FakeLogger());
+
+		final long q = p.createQueue("queue");
+		final long c = p.createClient("user");
+		p.storeMessage(c, c, q, 0, 0, "hej message abc :C");
+		
+		long duration = 5000L;
 		if(args.length > 0)
 			duration = Long.parseLong(args[0]);
 		MemoryLogger logger = new MemoryLogger(true);
 		logger.setLevel(Level.INFO);
-		benchmarkClientRequestWorker(duration,"PEEKQ,1,1,1", logger);
-		benchmarkClientRequestWorker(duration,"POPQ,1,1,1", logger);
-		benchmarkClientRequestWorker(duration,"MSG,1,1,1,1,1,content", logger);
-		System.out.println();
-		benchmarkDbPersistence(duration,  logger);
+		logger.info("1 Client");
+		benchmarkDbPersistenceWithRealDb(connectionPool,duration, 1, logger,c,q);
+		logger.info("------------------------------------------");
+		logger.info("2 Client");
+		benchmarkDbPersistenceWithRealDb(connectionPool,duration, 2, logger,c,q);
+		logger.info("------------------------------------------");
+		logger.info("5 Client");
+		benchmarkDbPersistenceWithRealDb(connectionPool,duration, 5, logger,c,q);
+		logger.info("------------------------------------------");
+		logger.info("10 Client");
+		benchmarkDbPersistenceWithRealDb(connectionPool,duration, 10, logger,c,q);
+		logger.info("------------------------------------------");
+		logger.info("50 Client");
+		benchmarkDbPersistenceWithRealDb(connectionPool,duration, 50, logger,c,q);
+		logger.info("------------------------------------------");
 		
 		logger.dumpToFile("bench_log.txt");
 	}
@@ -129,4 +158,61 @@ public class Main {
 		logger.info("");
 	}
 
+
+	private static void benchmarkDbPersistenceWithRealDb(
+			final PoolingDataSource connectionPool, 
+			long duration, int clients, final Logger logger,
+			final long c, final long q) throws Exception{
+		
+		final AtomicLong counter = new AtomicLong(0);
+	
+		final PostgresPersistence p = new PostgresPersistence(connectionPool, new FakeLogger());
+		
+		RunnableWithStop test = new RunnableWithStop() {
+			@Override
+			public void run() {
+				try {
+					while(stop == false){
+							try {
+								p.getMessageByTimestamp(q,c);
+								counter.incrementAndGet();
+
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		Thread[] threads = new Thread[clients];
+		for(int i = 0;i < clients; i ++){
+			threads[i] = new Thread(test);
+			threads[i].start();
+		}
+		
+		try {
+			Thread.sleep(duration);
+			for(Thread t : threads)
+				t.stop();
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		logger.info(String.format(
+				"DbPersistence:\t%d requests ",
+				counter.get()));
+		logger.info(String.format(
+				"DbPersistence:\t%.5f requests (getMessageByTimestamp) per second",
+				counter.get()/(duration*(float)1) * (float)1000));
+		logger.info(String.format(
+				"\t\t\t%.2f ms per request (getMessageByTimestamp)", 
+				(float)duration/counter.get()));
+		logger.info("");
+	}
+	
 }
