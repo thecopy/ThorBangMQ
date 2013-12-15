@@ -1,0 +1,8 @@
+numclients=1
+numservers=1
+nummw=1
+serverargs=databaseconnections:15,workerthreads:15,cleardatabase:false
+clientargs=500,100,360000,s* 
+
+testtime=360
+destroydroplets=false
