@@ -273,10 +273,7 @@ def starttest(testname, testid=None, testRunName=None):
 
     logger.info("Executing tests...")
     performtests(clients, servers, databaseip, testname, testdesc, testdir, testRunName, nummw)
-    logger.info("Destroing droplets...")
-    if testdesc.get('destroydroplets', False):
-        destroyalldroplets(testid)
-
+    
     logger.info("Test " + testname + " done. Logs stored in " + testRunName);
 
 
