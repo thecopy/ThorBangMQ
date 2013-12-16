@@ -36,22 +36,22 @@ This would cause problems due to the database (Postgres) connection limit, which
 This led to only 2 middlewares being functional and 8 infunctional. This in turn led to that the system only had 20\% of the workload, that is the system only had 300 (of 1500) clients putting on workload.. This is what caused the responsetime to be so low and the throughput still high.\\
 
 \subsection{Changes}
-In this experiment we've made sure to stay within the limits of Postgres and also to log on the client-side and not on the middleware side (as suggested by a TA). We also run the test more times to calculate the confidence interval for the mean response time. The database connections per middleware has been set to 10.
+In this experiment we've made sure to stay within the limits of Postgres and also to log on the client-side and not on the middleware side.
 
 \subsection{Results}
-In the experiment 10 database connections per middleware were used to make sure the same problem as earlier didn't occur. We used 50 worker-threads per middleware as the original experiment also had.
+In the experiment 10 database connections per middleware were used to make sure the same problem as earlier didn't occur. We used 50 worker-threads per middleware as the original experiment also had. We used 400 clients in both experiments and they were running for 10 minutes each. The think time were 100ms.
 \begin{table}[!htbp]
-    \begin{tabular}{|l|l|l|}
+\centering
+    \begin{tabular}{|l|l|l|l|}
     \hline
-    Configuration & Mean Response Time & Mean Throughput \\ \hline
-    1 Middleware  & $383.6 \pm 42.3$       	&   $2656.2 \pm 201.0 $  \\ \hline
-    10 Middleware & $345.9 \pm 26.9$       	&   $2748.4 \pm 131.1 $  \\ \hline
+    Configuration & Mean Response Time & Mean Throughput\\ \hline
+    1 Middleware  & $100.50$ ms       	&   $1989.1$ req/s  \\ \hline
+    10 Middleware & $93.88$  ms       	&   $2055.3$ req/s  \\ \hline
     \end{tabular}
     \label{table}
     \caption{The results from the re-done experiment. We see that the throughput and the response times are roughly the same when using either 1 or 10 middleware. This is what would be expected if a shared device would be shared in a system, which is the case for our system where the database is the bottleneck.}
 \end{table}
 \FloatBarrier % stupid table, dont move away from the results-subsection
 \subsection{Analysis}
-Keeping in mind the conclusion from the main report in which the database was the bottleneck, there results makes sense. We see that we get a relativaly small (~3\%) increase in throughput when increasing the number of middlewares. This could be a sign that the optimal number of total database connections is greater than 10.\\
-The higher throughput and lower response time in the 10 middleware case is attributed to the fact that the effective number of database connections is 100, in contrast to the 1 middleware case where the effective database connections were 10. This suggests that the optimal number of database connections is above 10.
+Keeping in mind the conclusion from the main report in which the database was the bottleneck, the results makes sense. We see that we get a relativaly small increase in throughput when increasing the number of middlewares. This could be a sign that the optimal number of total database connections is greater than 10 and that there may be some congestion when using 400 clients on 1 middleware.\\
 \end{document} 
