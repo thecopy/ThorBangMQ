@@ -30,7 +30,8 @@
 
 \newcommand{\TODO}[1]{\textbf{TODO:} #1}
 
-\title{Advanced Systems Lab - Milestone \#2}
+\title{Advanced Systems Lab - Milestone \#2\\
+\small{ETH Zürich}}
 \author{Erik Jonsson Thoren - jerik\\}
 \date{\today}
 
@@ -43,16 +44,19 @@
 \tableofcontents
 \newpage
 
-\TODO{1. Update graphs with 10 threads with the new data}
-\TODO{2. Update graphs for 2:nd model with the new service times approximations}
+\TODO{1. Update graphs with 10 threads with the new data (MODEL2 DONE!)}
+\TODO{2. Update graphs for 2:nd model with the new service times approximations (10TH DONE)}
+
 
 \section{Introduction}
 This report covers the approach taken to model the system from the first model to the final model. Some changes in regards to how the logging has been done in this milestone versus the first milestone is that in this milestone, the response-time logging has been moved to the client side which logs every individual response time for the requests made to the middleware. To measure the service-time, the time spent in each component in the middleware is measured for every individual request and logged. The experiment throughput is calculated by dividing the amount of requests made during an experiment (excluding warm-up and cool-down) divided by the time between the first request (after warm-up) to the last request (before cool-down).
 
+\paragraph{Note} When in this report the system parameter configuration excludes the number of database connections but specifies the number of worker threads, it means that the worker threads and the database connections are equal.
+
 \section{Experiments Measurement's Validity}
 	To confirm the experiment log validity, the relationship $X=\frac{N}{R+Z}$ was applied to the experiment data. It showed that the measured response time and the measured throughput were valid. As can be seen in Table \ref{tbl:interaction-law} the relative difference is never over 0.96\%, which indicates that the measurements are valid. The difference could be caused by timing imprecisions and/or that the actual think time is larger than the programmatically specified think-time due due to the overhead, of for example logging.
 
-\begin{table}[ch!]
+\begin{table}[cht!]
 	\centering
     \begin{tabularx}{\textwidth}{|E|R|R|R|l|}
     \hline
@@ -60,11 +64,8 @@ This report covers the approach taken to model the system from the first model t
     1  & 3.05  & 325.77  & 327.87   & 100.64\% \\ \hline
     2  & 3.43  & 580.1   & 583.09   & 100.52\% \\ \hline
     4  & 4.2   & 943.3   & 952.38   & 100.96\% \\ \hline
-    6  & 4.47  & 1336.25 & 1,342.28 & 100.45\% \\ \hline
     8  & 6.7   & 1192.9  & 1,194.03 & 100.09\% \\ \hline
-    16 & 7.9   & 2020.33 & 2,025.32 & 100.25\% \\ \hline
     25 & 12.89 & 1935.16 & 1,939.49 & 100.22\% \\ \hline
-    32 & 17.8  & 1797.6  & 1,797.75 & 100.01\% \\ \hline
     64 & 32.83 & 1947.43 & 1,949.44 & 100.10\% \\ \hline
     \end{tabularx}
     \label{tbl:interaction-law}
@@ -80,40 +81,22 @@ This report covers the approach taken to model the system from the first model t
 	\end{itemize}
 
 	After this step, a simple model (Section \ref{sec:first-model}) were created. The model was evaluated for the different parameters measured in the first step and if inconsitencies were found, an analysis were done and a new iteration of modelling were done. The system is modelled as a closed product form network, and the models response time and throughput were calculated using Mean Value Analysis (MVA).
-
-	\subsection{Load Dependent Centers in MVA}
+	\paragraph{Note} Tests were rerun to take advantage of the new logging measurements, the system itself has \textit{not been altered in any way}.
+	\subsection{M/M/m and Load Dependent Centers in MVA}
 		In the MVA algorithm it is never specified which type of queue is used. To simulate an M/M/m station, is it was replaced by a load dependent FEC (\textbf{Flow-Equivalent Center}) and the algorith demonstrated in \textbf{Box 36.1} (Rai Jain, 1991, p. 610) was used. So to simulate a M/M/m queue where each server has a mean service time $s_{M/M/m}$ ms, the service time for the FEC is set to (unit is ms):
 		\[
 		E[s] =
 			\begin{cases}
-				\frac{s_{M/M/m}}{n} 		& 1 \leq n \leq m \\
-				\frac{s_{M/M/m}}{m} 		& n > m
+				\frac{s_{M/M/m}}{n} 		&, 1 \leq n \leq m \\
+				\frac{s_{M/M/m}}{m} 		&, n > m
 			\end{cases}
 		\]
 		where n is the number of clients currently in the center.
 
-	\subsection{Service Times}
-		Several tests with different parameters were made to make sure that the service times were correctly defined in the models. 
-
-	\subsubsection{Client Request Worker}
-		The client request worker (CRW) is the component of the middleware which parses a request and also builds a response. This part of the middleware were measured to be load-independent with a mean service time of 0.1 ms.
-
-	\subsubsection{Database}\label{sec:database-service-time}
-		The database, or rather the persistence component in the middleware make up the bulk of the response time for the system. It was measured to be load dependent with respect to the number of concurrent requests. Data from tests where the number of database connections were varied, a linear relationship were measured (the queue in these test were always full, so it can be certain that all the connections always were utilized). The relationship was measured to $E[s](n_q) = 0.3598n_q + 1.554$ milliseconds, where $n_q$ is the number of concurrent requests being processed
-
-		\begin{figure}[ch!]
-			\centering
-				\includegraphics[width=\linewidth]{dbServiceTime}
-				\rule{35em}{0.5pt}
-			\caption{The service time for the database component as a function of the number of concurrent requests being processed.}
-			\label{fig:db-service-time}
-		\end{figure}
-		\FloatBarrier
-
 \section{First Model}\label{sec:first-model}
 The first model that was designed was a closed product form network with limited population, see figure \ref{fig:firstmodel}.
 
-\begin{figure}[ch!]
+\begin{figure}[cht!]
 	\centering
 		\includegraphics[width=0.8\linewidth]{firstmodel}
 		\rule{35em}{0.5pt}
@@ -121,43 +104,44 @@ The first model that was designed was a closed product form network with limited
 	\label{fig:firstmodel}
 \end{figure}
 
-\subsection{Stations}
-\subsubsection{Network Latency}
-The network latency in this model includes actual real network latency but also includes the time it takes for the real middleware to create a new job and insert it into the worker-threadpool queue and also to send back a response to the client. This service time was measured to be on average 1ms.
+	\subsection{Stations}
+		\subsubsection{Network Latency}
+		The network latency in this model includes actual real network latency but also includes the time it takes for the real middleware to create a new job and insert it into the worker-threadpool queue and also to send back a response to the client. This service time was measured to be on average 0.4 ms.
 
-\subsubsection{Middleware}
-This load dependent service center has m servers where m represents the number of worker threads. The service time for the middleware in this first attempt model is 4ms (measured from experiment using 10 worker threads) and it is load independent.
+		\subsubsection{Middleware}
+		This load independent service center has m servers where m represents the number of worker threads. The service time for the middleware in this first attempt model is 5 ms (measured from experiment using 10 worker threads).
 
-\subsubsection{Client Think Time}
-This is modeled as delay center and the service time here represents the think time for the clients.
+		\subsubsection{Client Think Time}
+		This is modeled as delay center and the service time here represents the think time for the clients.
 
-\subsection{Results}
-\begin{figure}[ch!]
-	\centering
-		\includegraphics[width=1\linewidth,keepaspectratio]{firstRealAndModelRespAndThroughput}
-	\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 10 middleware servers and think time of 100ms.}
-	\label{fig:firstmodelResults}
-\end{figure}
-\FloatBarrier
-
-\subsection{Limitations Analysis}
-	The model introduced work only when using 10 middleware servers, highering the number of middleware servers will make it inconsistent with the experiment. See Figure \ref{fig:firstmodelResultsFail} for an example where this model fails. The reason for this is that in this model the middleware is modeled as a load independent station (think time 5ms) while in reality the service time is depentent on the number of concurrent requests being processed. This is caused by contention in the database. To solve this problem, a new model in created with the persitence component modelled as a load dependent station with service times as displayed in Figure \ref{fig:db-service-time} (see Section \ref{sec:database-service-time} for more information).
-
-	\begin{figure}[ch!]
+	\subsection{Results}
+	\begin{figure}[cht!]
 		\centering
-			\includegraphics[width=1\linewidth,keepaspectratio]{firstRealAndModelFail}
-		\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 80 middleware servers and think time of 100ms. The model fails to predict the actual performance of the system since in reality the middleware is load dependent.}
-		\label{fig:firstmodelResultsFail}
+			\includegraphics[width=1\linewidth,keepaspectratio]{firstRealAndModelRespAndThroughput}
+		\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 10 middleware servers and think time of 100ms.}
+		\label{fig:firstmodelResults}
 	\end{figure}
 	\FloatBarrier
 
+	\subsection{Limitations Analysis}
+		The real system behaves sub-linear until it reaches saturation. The model behaves linearly. The sub-linearity depends on the increasing service time for the middleware when the number of concurrent requests increases. 
+		The model introduced fairly work only when using 10 worker threads, highering the number of worker threads will make it inconsistent with the experiment. See Figure \ref{fig:firstmodelResultsFail} for an example where this model fails when using 80 working threads. The reason for this is that in this model the middleware is modeled as a load independent station while in reality the service time is depentent on the number of concurrent requests being processed. This is caused by contention in the database. To solve this problem, a new model is created with the persitence component modelled as a load dependent station.
 
-\section{Introducing Load Dependency}
+		\begin{figure}[cht!]
+			\centering
+				\includegraphics[width=1\linewidth,keepaspectratio]{firstRealAndModelFail}
+			\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 80 middleware servers and think time of 100ms. The model fails to predict the actual performance of the system since in reality the middleware's service time is load dependent.}
+			\label{fig:firstmodelResultsFail}
+		\end{figure}
+		\FloatBarrier
+
+
+\section{Introducing Load Dependent Persistence}\label{sec:second-model}
 
 	The second attempt involved increasing the resolution and more importantly introducing load dependancy into the model. A diagram of the topology can be seen in Figure \ref{fig:second-model}.
 
 	\FloatBarrier
-	\begin{figure}[ch!]
+	\begin{figure}[cht!]
 		\centering
 			\includegraphics[width=0.8\linewidth]{secondmodel}
 			\rule{35em}{0.5pt}
@@ -174,10 +158,19 @@ This is modeled as delay center and the service time here represents the think t
 		This station have had it's service time halved but the number of visists have been doubled, so the total network latency is the same as the first model but is it more realistically inserted into the request flow. Modelled as a delay center.
 
 	\subsubsection{CRW}
-		The CRW is the part of the system which parses requests and build responses. This is modelled as a load independent station with service time 0.1ms.
+		The CRW is the part of the system which parses requests and build responses. This is modelled as a load independent station with service time 0.2 ms.
 
 	\subsubsection{Persistence}
-		This is the most crucial change in this new attempt. The service time for this is modelled to be load dependent on the number of jobs \textit{currently being processed}; it does not depend in queue length. The service times this is modelled from can be seen in Figure \ref{fig:db-service-time}.
+		This is the most crucial change in this new attempt. The service time for this is modelled to be load dependent on the number of jobs \textit{currently being processed}; it does not depend in queue length. The service times this is modell from can be seen in Figure \ref{fig:db-service-time}.
+
+		\begin{figure}[cht!]
+			\centering
+				\includegraphics[width=\linewidth]{dbServiceTime}
+				\rule{35em}{0.5pt}
+			\caption{The service time for the database component as a function of the number of concurrent requests being processed.}
+			\label{fig:db-service-time}
+		\end{figure}
+		\FloatBarrier
 	
 	\subsubsection{Client Think Time}
 		Modelled as a delay center with constant service time that of the think time of the clients.
@@ -185,21 +178,21 @@ This is modeled as delay center and the service time here represents the think t
 \subsection{Results}
 	This model predicts the performance of the system much better than the first model did, this is thanks to the load dependency in the persistence component.
 	\FloatBarrier
-	\begin{figure}[ch!]
+	\begin{figure}[cht!]
 		\centering
 			\includegraphics[width=1\linewidth,keepaspectratio]{secondRealAndModel}
 		\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 80 CRW servers and 80 Persistence servers and think time of 100ms. This model calculates better results than the first attempt, since this model takes congestion in the database into account.}
 		\label{fig:secondmodelResults}
 	\end{figure}
 	\FloatBarrier 
-	\begin{figure}[ch!]
+	\begin{figure}[cht!]
 		\centering
 			\includegraphics[width=1\linewidth,keepaspectratio]{secondRealAndModel10Threads}
 		\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 10 CRW servers and 10 Persistence servers and think time of 100ms. Corresponds with the first model when using the same parameters.}
 		\label{fig:secondmodelResults-10-th}
 	\end{figure}
 	\FloatBarrier
-	\begin{figure}[ch!]
+	\begin{figure}[cht!]
 		\centering
 			\includegraphics[width=1\linewidth,keepaspectratio]{secondRealAndModel1Thread}
 		\caption{Diagram over the second model's response time and throughput compared with the experiment data of the system, using 1 CRW servers and 1 Persistence servers and think time of 100ms. Good fit with the experiment data.}
@@ -208,22 +201,24 @@ This is modeled as delay center and the service time here represents the think t
 	\FloatBarrier
 
 	\subsection{Limitations Analysis}
-	The model corresponds generally well with the true performance with regards to the asymptots of response time and troughput. But before the system reaches saturation the model does not predict well when 10 worker theads, see Figure \ref{fig:secondmodelResults-error}. To get to the bottom of this discrepancy, tests were re-run for these paramaters to make sure 
+	The model corresponds generally well with the true performance with regards to the asymptots of response time and troughput. But before the system reaches saturation the model does not predict well when using a high number of worker theads, see Figure \ref{fig:secondmodelResults-error}. 
 
 	\FloatBarrier
-	\begin{figure}[ch!]
+	\begin{figure}[cht!]
 		\centering
-			\includegraphics[width=0.8\linewidth,keepaspectratio]{secondRealAndModelError}
+			\includegraphics[width=1\linewidth,keepaspectratio]{secondRealAndModelError}
 		\caption{Misprediction of the second model before the system reaches saturation.}
 		\label{fig:secondmodelResults-error}
 	\end{figure}
 	\FloatBarrier
 
+	
+	
 \section{Scaling}
-	So one question one can ask is how does the model differentiate between scaling out and scaling up (essentially more threads vs more middleware). The answer is that since the bottle-neck is neither the working threads nor the middleware it makes no difference if the system is using 10 threads in each 8 middlewares or if it is using 80 threads in one middleware since the limiting factor is the database, given that increasing the number of threads to 80 does make the middleware the bottleneck (which is not the case in this system, but may hold in another system). This is  supported by experiments, see Figure \ref{fig:1mw80th-vs-8mw10th}. So to model a setup which corresponds to using 3 middleware with 10 threads each, set the number of CRW and Persistence servers each to 30.
+	One question one can ask is how does the model differentiate between scaling out and scaling up (essentially more threads vs more middleware). The answer is that since the bottle-neck is neither the working threads nor the middleware it makes no difference if the system is using 10 threads in each 8 middlewares or if it is using 80 threads in one middleware since the limiting factor is the database, given that increasing the number of threads to 80 does make the middleware the bottleneck (which is not the case in this system, but may hold in another system). This is  supported by experiments, see Figure \ref{fig:1mw80th-vs-8mw10th}. So to model a setup which corresponds to using 3 middleware with 10 threads each, set the number of CRW and Persistence servers each to 30.
 
 	\FloatBarrier
-	\begin{figure}[ch!]
+	\begin{figure}[cht!]
 		\centering
 			\includegraphics[width=1\linewidth,keepaspectratio]{1mw80th-vs-8mw10th}
 		\caption{The througput and response time of the system while using 1 middleware and 80 worker threads (and 80 db-connections) versus using 8 middleware and 10 workers threads (and 10 db-connections) per middleware.}
@@ -241,5 +236,30 @@ The final model will predict the actual performance of the real system along the
 	\item No. of Middleware
 	\item Duration of Think-Time
 \end{itemize}
+
+\section{Things Learned}
+This milestone provided much more insight and confidence in the system's performance and the effects of the paramaters than the first milestone. It is also very important to have a stable testing setup. If I would have redone this milestone i would have made sure to never destroy and create new servers in the cloud for different tests\footnote{Tests were re-run to take advantage from the better measurement implementations, the system has not been changed at all apart from the service-time logging} as new servers are not necessarily placed in the same host so the available computing power varies.\\
+
+The system behaves sub-linearly when the number of effective worker threads is increased which is due to the service time increases when many concurrent requests are being processed simultaneously, which is caused by contention in the database.
+
+\section{General Limitations}
+
+\subsection{Service Time Distributions}
+The models assume exponentially distributed service times, but the measuremens show that this is not the case and it is also in it self unrelistic since the mode of the exponential distribution is 0, while in fact a service time of 0 never happens. A fitted probability density curve of a exponential distribution to the service time of the persistence component service times can be seen in Figure \ref{fig:serviceTimeDbHistogram10Threads} together with a PDF for a log normal distribution. It appears that the service time for the persistence component is log normally distributed and not exponential.
+
+	\FloatBarrier
+	\begin{figure}[cht!]
+		\centering
+			\includegraphics[width=1\linewidth,keepaspectratio]{serviceTimeDbHistogram10Threads}
+		\caption{The distribution of the persistence component service time along with a fitted exponential distribution probability density curve (PDF) and a log normal PDF.}
+		\label{fig:serviceTimeDbHistogram10Threads}
+	\end{figure}
+	\FloatBarrier
+
+	\subsubsection{Implication}
+	According to Rai Jain, 1991, p. 620-621, the distribution of the services times mostly affect the predicted device utilization and the error in the prediction for the response times and queue length is much less compared. According to Suri (1983, Robustness of Queueing Network Formulas) the difference is not significant.
+
+
+
 
 \end{document} 
