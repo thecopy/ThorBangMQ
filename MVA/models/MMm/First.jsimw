@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<archive xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="First.jsimw" timestamp="Wed Dec 11 23:55:48 CET 2013" xsi:noNamespaceSchemaLocation="Archive.xsd">
+<archive xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="First.jsimw" timestamp="Wed Dec 18 17:21:38 CET 2013" xsi:noNamespaceSchemaLocation="Archive.xsd">
 <sim disableStatisticStop="false" logDecimalSeparator="." logDelimiter=";" logPath="/Users/thecopy/JMT/" logReplaceMode="0" maxSamples="1000000" name="First.jsimw" polling="1.0" xsi:noNamespaceSchemaLocation="SIMmodeldefinition.xsd">
-<userClass customers="100" name="Class1" priority="0" referenceSource="Middleware" type="closed"/>
+<userClass customers="10" name="Class1" priority="0" referenceSource="Middleware" type="closed"/>
 <node name="Middleware">
 <section className="Queue">
 <parameter classPath="java.lang.Integer" name="size">
@@ -21,7 +21,7 @@
 </section>
 <section className="Server">
 <parameter classPath="java.lang.Integer" name="maxJobs">
-<value>1</value>
+<value>10</value>
 </parameter>
 <parameter array="true" classPath="java.lang.Integer" name="numberOfVisits">
 <refClass>Class1</refClass>
@@ -35,7 +35,7 @@
 <subParameter classPath="jmt.engine.random.Exponential" name="Exponential"/>
 <subParameter classPath="jmt.engine.random.ExponentialPar" name="distrPar">
 <subParameter classPath="java.lang.Double" name="lambda">
-<value>200.0</value>
+<value>243.90243902439022</value>
 </subParameter>
 </subParameter>
 </subParameter>
@@ -134,27 +134,75 @@
 <connection source="Network" target="Middleware"/>
 <preload>
 <stationPopulations stationName="Middleware">
-<classPopulation population="100" refClass="Class1"/>
+<classPopulation population="10" refClass="Class1"/>
 </stationPopulations>
 </preload>
 </sim>
-<jmodel xsi:noNamespaceSchemaLocation="JModelGUI.xsd"/>
-<results pollingInterval="1.0" xsi:noNamespaceSchemaLocation="Results.xsd">
-<measure alpha="0.999" analyzedSamples="92160" finalValue="0.49779522527986875" name="System Response Time" nodeType="station" precision="0.03" referenceClass="" referenceStation="" state="1" type="8">
-<sample lastIntervalAvgValue="0.5002889573027617" meanValue="0.5002889573027617" simulationTime="89.33145488331894"/>
-<sample lastIntervalAvgValue="0.49906625822536754" lowerBound="0.48684777793408546" meanValue="0.49779522527986875" simulationTime="497.9308047347245" upperBound="0.508742672625652"/>
+<jmodel xsi:noNamespaceSchemaLocation="JModelGUI.xsd">
+<parametric classPath="jmt.gui.common.definitions.parametric.NumberOfCustomerParametricAnalysis" enabled="true">
+<field name="Class" value="Class1"/>
+<field name="Is single class" value="true"/>
+<field name="Steps" value="12"/>
+<field name="To" value="600.0"/>
+<field name="Type" value="Number of customers"/>
+</parametric>
+</jmodel>
+<results pollingInterval="0.0" xsi:noNamespaceSchemaLocation="Results.xsd">
+<measure alpha="0.999" analyzedSamples="12" name="Network_All classes_System Response Time" nodeType="station" precision="0.03" referenceClass="All classes" referenceStation="Network" type="8">
+<sample lowerBound="0.10260933542326804" meanValue="0.10438909408275211" upperBound="0.10616885274223618" validity="true"/>
+<sample lowerBound="0.10263154982444962" meanValue="0.10443074434036785" upperBound="0.10622993885628608" validity="true"/>
+<sample lowerBound="0.10260174824146047" meanValue="0.10439004487425016" upperBound="0.10617834150703985" validity="true"/>
+<sample lowerBound="0.10272735553052592" meanValue="0.10451799218022582" upperBound="0.10630862882992573" validity="true"/>
+<sample lowerBound="0.10364503478410551" meanValue="0.10553115293939973" upperBound="0.10741727109469394" validity="true"/>
+<sample lowerBound="0.10984392650011585" meanValue="0.11192569863991814" upperBound="0.11400747077972043" validity="true"/>
+<sample lowerBound="0.12904839346856317" meanValue="0.13151343381461894" upperBound="0.1339784741606747" validity="true"/>
+<sample lowerBound="0.151683664360776" meanValue="0.15473475421247895" upperBound="0.15778584406418192" validity="true"/>
+<sample lowerBound="0.17234856214777902" meanValue="0.17563569571706886" upperBound="0.1789228292863587" validity="true"/>
+<sample lowerBound="0.19207192836331577" meanValue="0.1969314093632257" upperBound="0.20179089036313563" validity="true"/>
+<sample lowerBound="0.21343524077416443" meanValue="0.2185136474965827" upperBound="0.22359205421900097" validity="true"/>
+<sample lowerBound="0.23183835494154667" meanValue="0.23881542872972222" upperBound="0.24579250251789778" validity="true"/>
 </measure>
-<measure alpha="0.999" analyzedSamples="81920" finalValue="200.09946852569323" name="Middleware_Throughput" nodeType="station" precision="0.03" referenceClass="" referenceStation="Middleware" state="1" type="3">
-<sample lastIntervalAvgValue="199.5456991300253" lowerBound="185.95441711807788" meanValue="200.06850768335494" simulationTime="89.3279087332527" upperBound="216.5011174982289"/>
-<sample lastIntervalAvgValue="199.81869321353568" lowerBound="196.19751173602728" meanValue="200.09946852569323" simulationTime="410.0936938017451" upperBound="204.1597780842796"/>
+<measure alpha="0.999" analyzedSamples="12" name="Middleware_All classes_Throughput" nodeType="station" precision="0.03" referenceClass="All classes" referenceStation="Middleware" type="3">
+<sample lowerBound="94.19295445578801" meanValue="95.79821732317107" upperBound="97.45914350452581" validity="true"/>
+<sample lowerBound="592.9567363238906" meanValue="603.2724996052187" upperBound="613.9535477772426" validity="true"/>
+<sample lowerBound="1101.7184627630804" meanValue="1120.6735760050542" upperBound="1140.2923547066594" validity="true"/>
+<sample lowerBound="1601.0208054873544" meanValue="1626.451949225344" upperBound="1652.7040466513697" validity="true"/>
+<sample lowerBound="2086.186970695809" meanValue="2123.8117000636585" upperBound="2162.818491671497" validity="true"/>
+<sample lowerBound="2434.2248340878627" meanValue="2476.7213350937245" upperBound="2520.728001424604" validity="true"/>
+<sample lowerBound="2456.8472506969833" meanValue="2511.953265274305" upperBound="2569.5880059249675" validity="true"/>
+<sample lowerBound="2406.2234902015325" meanValue="2475.9254233972893" upperBound="2549.7859824586267" validity="true"/>
+<sample lowerBound="2452.7733319489403" meanValue="2498.5869079450376" upperBound="2546.1444962706805" validity="true"/>
+<sample lowerBound="2434.1668015276414" meanValue="2494.5506750147747" upperBound="2558.006617252794" validity="true"/>
+<sample lowerBound="2453.0224390025714" meanValue="2505.973369513821" upperBound="2561.260731278963" validity="true"/>
+<sample lowerBound="2448.69925335806" meanValue="2504.679507003387" upperBound="2563.2791980323523" validity="true"/>
 </measure>
-<measure alpha="0.99" analyzedSamples="51200" finalValue="0.39928055455603406" name="Middleware_Response Time" nodeType="station" precision="0.03" referenceClass="" referenceStation="Middleware" state="1" type="4">
-<sample lastIntervalAvgValue="0.3999426351001487" meanValue="0.3999426351001487" simulationTime="89.3279087332527"/>
-<sample lastIntervalAvgValue="0.4005901282179351" lowerBound="0.39241698798310887" meanValue="0.39928055455603406" simulationTime="319.43670196690715" upperBound="0.40614412112895926"/>
+<measure alpha="0.99" analyzedSamples="12" name="Middleware_All classes_Response Time" nodeType="station" precision="0.03" referenceClass="All classes" referenceStation="Middleware" type="4">
+<sample lowerBound="0.00393695897981704" meanValue="0.003993968945364658" upperBound="0.0040509789109122755" validity="true"/>
+<sample lowerBound="0.003946073700375445" meanValue="0.00402198927818564" upperBound="0.004097904855995834" validity="true"/>
+<sample lowerBound="0.003946591810649625" meanValue="0.004002955120093104" upperBound="0.004059318429536583" validity="true"/>
+<sample lowerBound="0.0040464014869650905" meanValue="0.0041071257510681605" upperBound="0.0041678500151712304" validity="true"/>
+<sample lowerBound="0.005014165052483708" meanValue="0.005113549786031133" upperBound="0.005212934519578558" validity="true"/>
+<sample lowerBound="0.01158412997191727" meanValue="0.011917600149181347" upperBound="0.012251070326445424" validity="true"/>
+<sample lowerBound="0.030586043450689784" meanValue="0.031504849901841624" upperBound="0.03242365635299346" validity="true"/>
+<sample lowerBound="0.05282132950629248" meanValue="0.05422269031064371" upperBound="0.05562405111499494" validity="true"/>
+<sample lowerBound="0.07357822777186077" meanValue="0.07537685255343882" upperBound="0.07717547733501687" validity="true"/>
+<sample lowerBound="0.09444793149694074" meanValue="0.09637629265564034" upperBound="0.09830465381433993" validity="true"/>
+<sample lowerBound="0.1163622480591595" meanValue="0.11846327181382695" upperBound="0.12056429556849439" validity="true"/>
+<sample lowerBound="0.13468675748792708" meanValue="0.1388328106042425" upperBound="0.1429788637205579" validity="true"/>
 </measure>
-<measure alpha="0.99" analyzedSamples="51200" finalValue="0.39975653721012494" name="Middleware_Residence Time" nodeType="station" precision="0.03" referenceClass="" referenceStation="Middleware" state="1" type="5">
-<sample lastIntervalAvgValue="0.3999426351001487" meanValue="0.4017151718840428" simulationTime="89.3279087332527"/>
-<sample lastIntervalAvgValue="0.4005901282179351" lowerBound="0.3928847885742452" meanValue="0.39975653721012494" simulationTime="319.43670196690715" upperBound="0.4066282858460047"/>
+<measure alpha="0.99" analyzedSamples="12" name="Middleware_All classes_Residence Time" nodeType="station" precision="0.03" referenceClass="All classes" referenceStation="Middleware" type="5">
+<sample lowerBound="0.00393695897981704" meanValue="0.003993968945364658" upperBound="0.0040509789109122755" validity="true"/>
+<sample lowerBound="0.003946379722105247" meanValue="0.004022301187239959" upperBound="0.00409822265237467" validity="true"/>
+<sample lowerBound="0.003946864997359945" meanValue="0.004003232208323477" upperBound="0.004059599419287009" validity="true"/>
+<sample lowerBound="0.00404674662159023" meanValue="0.004107476065121539" upperBound="0.0041682055086528485" validity="true"/>
+<sample lowerBound="0.005014239917138309" meanValue="0.005113626134562645" upperBound="0.005213012351986982" validity="true"/>
+<sample lowerBound="0.011584644434703306" meanValue="0.011918129421711134" upperBound="0.012251614408718962" validity="true"/>
+<sample lowerBound="0.030597911795565882" meanValue="0.03151707477245974" upperBound="0.0324362377493536" validity="true"/>
+<sample lowerBound="0.05289630235235613" meanValue="0.05429965220183072" upperBound="0.05570300205130532" validity="true"/>
+<sample lowerBound="0.07374329205105418" meanValue="0.07554595184016233" upperBound="0.07734861162927047" validity="true"/>
+<sample lowerBound="0.09457480238609003" meanValue="0.09650575389156513" upperBound="0.09843670539704022" validity="true"/>
+<sample lowerBound="0.11664697839318838" meanValue="0.11875314320696605" upperBound="0.1208593080207437" validity="true"/>
+<sample lowerBound="0.13538733392947927" meanValue="0.13955495284181568" upperBound="0.1437225717541521" validity="true"/>
 </measure>
 </results>
 </archive>

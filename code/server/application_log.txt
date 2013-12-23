@@ -1,56 +1,82 @@
-67LISTENING_PORT	8123
+92LISTENING_PORT	8123
 
-77PERSISTENCE_TYPE	POSTGRES
+99PERSISTENCE_TYPE	POSTGRES
 
-78MESSAGE_MAX_LENGTH	4096
+99MESSAGE_MAX_LENGTH	4096
 
-78NUM_CLIENTREQUESTWORKER_THREADS	10
+99NUM_CLIENTREQUESTWORKER_THREADS	10
 
-78DB_SERVER_NAME	localhost
+99DB_SERVER_NAME	localhost
 
-78DB_DATABASE_NAME	asl
+99DB_DATABASE_NAME	asl
 
-78DB_DATA_SOURCE_NAME	asl
+100DB_DATA_SOURCE_NAME	asl
 
-78DB_PORT_NUMBER	5432
+100DB_PORT_NUMBER	5432
 
-78DB_USERNAME	asl
+100DB_USERNAME	asl
 
-78DB_PASSWORD	asl2013
+100DB_PASSWORD	asl2013
 
-78DB_MAX_CONNECTIONS	5
+100DB_MAX_CONNECTIONS	5
 
-79DB_DEFAULT_AUTO_COMMIT	false
+100DB_DEFAULT_AUTO_COMMIT	false
 
-79APPLICATION_LOG_PATH	application_log.txt
+101APPLICATION_LOG_PATH	application_log.txt
 
-79TEST_LOG_PATH	test_log.txt
+101TEST_LOG_PATH	test_log.txt
 
-79LOG_INTERVAL	10000
+101LOG_INTERVAL	10000
 
-11781Client connect. There are now 1 clients connected.
-12069Client connect. There are now 2 clients connected.
-12074Client connect. There are now 3 clients connected.
-12077Client connect. There are now 4 clients connected.
-12081Client connect. There are now 5 clients connected.
-12084Client connect. There are now 6 clients connected.
-12089Client connect. There are now 7 clients connected.
-12093Client connect. There are now 8 clients connected.
-12096Client connect. There are now 9 clients connected.
-12100Client connect. There are now 10 clients connected.
-12103Client connect. There are now 11 clients connected.
-12106Client connect. There are now 12 clients connected.
-12109Client connect. There are now 13 clients connected.
-22766Client disconnect. There are now 12 clients connected.
-22766Client disconnect. There are now 11 clients connected.
-22767Client disconnect. There are now 10 clients connected.
-22767Client disconnect. There are now 9 clients connected.
-22767Client disconnect. There are now 8 clients connected.
-22767Client disconnect. There are now 7 clients connected.
-22767Client disconnect. There are now 6 clients connected.
-22767Client disconnect. There are now 5 clients connected.
-22767Client disconnect. There are now 4 clients connected.
-22767Client disconnect. There are now 3 clients connected.
-22768Client disconnect. There are now 2 clients connected.
-22768Client disconnect. There are now 1 clients connected.
-22768Client disconnect. There are now 0 clients connected.
+9213Client connect. There are now 1 clients connected.
+9517Client connect. There are now 2 clients connected.
+9523Client connect. There are now 3 clients connected.
+9526Client connect. There are now 4 clients connected.
+9529Client connect. There are now 5 clients connected.
+9533Client connect. There are now 6 clients connected.
+9536Client connect. There are now 7 clients connected.
+9539Client connect. There are now 8 clients connected.
+9542Client connect. There are now 9 clients connected.
+9545Client connect. There are now 10 clients connected.
+9548Client connect. There are now 11 clients connected.
+9551Client connect. There are now 12 clients connected.
+9554Client connect. There are now 13 clients connected.
+18877Client disconnect. There are now 12 clients connected.
+18878Client disconnect. There are now 11 clients connected.
+18878Client disconnect. There are now 10 clients connected.
+18878Client disconnect. There are now 9 clients connected.
+18878Client disconnect. There are now 8 clients connected.
+18879Client disconnect. There are now 7 clients connected.
+18879Client disconnect. There are now 6 clients connected.
+18879Client disconnect. There are now 5 clients connected.
+18879Client disconnect. There are now 4 clients connected.
+18880Client disconnect. There are now 3 clients connected.
+18880Client disconnect. There are now 2 clients connected.
+18880Client disconnect. There are now 1 clients connected.
+18881Client disconnect. There are now 0 clients connected.
+35269Client connect. There are now 1 clients connected.
+35281Client connect. There are now 2 clients connected.
+35285Client connect. There are now 3 clients connected.
+35288Client connect. There are now 4 clients connected.
+35292Client connect. There are now 5 clients connected.
+35294Client connect. There are now 6 clients connected.
+35297Client connect. There are now 7 clients connected.
+35300Client connect. There are now 8 clients connected.
+35303Client connect. There are now 9 clients connected.
+35305Client connect. There are now 10 clients connected.
+35308Client connect. There are now 11 clients connected.
+35311Client connect. There are now 12 clients connected.
+35313Client connect. There are now 13 clients connected.
+41907Client disconnect. There are now 12 clients connected.
+41908Client disconnect. There are now 11 clients connected.
+41908Client disconnect. There are now 10 clients connected.
+41908Client disconnect. There are now 9 clients connected.
+41908Client disconnect. There are now 8 clients connected.
+41908Client disconnect. There are now 7 clients connected.
+41908Client disconnect. There are now 6 clients connected.
+41908Client disconnect. There are now 5 clients connected.
+41908Client disconnect. There are now 4 clients connected.
+41908Client disconnect. There are now 3 clients connected.
+41908Client disconnect. There are now 2 clients connected.
+41908Client disconnect. There are now 1 clients connected.
+41908Client disconnect. There are now 0 clients connected.

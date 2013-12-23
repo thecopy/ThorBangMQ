@@ -20,7 +20,8 @@ public class ClientRequestWorker implements Runnable{
 	private final String clientFailMessage = "FAIL CLIENT %d";
 	private final String messageFailMessage = "FAIL MESSAGE %d";
 	private final String persistenceFailMessage = "FAIL UNKNOWN -1";
-
+	
+	private long dbTime;
 	private String requestString = null;
 	private Logger logger;
 	private ITransport transport;
@@ -39,13 +40,14 @@ public class ClientRequestWorker implements Runnable{
 
 	@Override
 	public void run() {
+		dbTime = 0;
 		long start = System.nanoTime();
 		try {
 			interpreter(requestString);
 		} catch (IOException e) {
 			logger.severe("Error while writing to client: " + e);
 		}finally{
-			GlobalCounters.crwServiceTime.info("," + (System.nanoTime()-start));
+			GlobalCounters.crwServiceTime.info("," + ((System.nanoTime()-start) - dbTime));
 		}
 	}
 
@@ -323,5 +325,6 @@ try{
 	
 	private void logDbTime(long time){
 		GlobalCounters.dbServiceTime.info("," + time);
+		dbTime = time;
 	}
 }

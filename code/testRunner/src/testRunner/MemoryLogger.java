@@ -82,10 +82,14 @@ public class MemoryLogger extends Logger {
 		Thread.sleep(1000);
 		synchronized(entries){
 			PrintWriter out = new PrintWriter(pathToStoreLog);
-			
+			int skipped = 0;
 			for(String entry : entries)
 				if(entry != null && !entry.equals("null"))
 					out.println(entry);
+				else
+					skipped++;
+			
+			
 			out.close();
 		}
 		disabled = false;
