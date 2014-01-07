@@ -1,9 +1,0 @@
-USE TO SHOW THAT PERFORMANCE IS BOUNDED BY MIN(#WORKER_THREADS, #DB_CONS)
-numclients=1
-numservers=1
-serverargs=databaseconnections:50,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:5,workerthreads:50,cleardatabase:true
-serverargs=databaseconnections:5,workerthreads:5,cleardatabase:true
-serverargs=databaseconnections:50,workerthreads:5,cleardatabase:true
-clientargs=50,600000,1024,5,0
-testtime=605

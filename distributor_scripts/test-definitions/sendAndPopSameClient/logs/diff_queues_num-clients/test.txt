@@ -1,9 +1,0 @@
-USE THIS TEST TO SHOW WHAT DIFFERENCE IT MAKES TO USE MULTIPLE QUEUES
-numclients=1
-numservers=1
-serverargs=databaseconnections:30,workerthreads:30,cleardatabase:true
-clientargs=100,600000,1024,30,0
-clientargs=100,600000,1024,1,0
-clientargs=10,600000,1024,30,0
-clientargs=10,600000,1024,1,0
-testtime=605

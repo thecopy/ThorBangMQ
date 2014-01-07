@@ -1,8 +1,0 @@
-numclients=2
-numservers=1
-testtime=600
-clientargs=10,50000
-clientargs=20,25000
-clientargs=30,16666
-clientargs=40,12500
-clientargs=50,10000

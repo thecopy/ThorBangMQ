@@ -1,9 +1,0 @@
-testdata = csvread('test2_log.txt',0,3);
-testdata = sum(testdata,1);
-ops=testdata(1);
-total=testdata(2);
-crw=testdata(3);
-db=testdata(4);
-
-avgTot = total/ops;
-avtCrw = 

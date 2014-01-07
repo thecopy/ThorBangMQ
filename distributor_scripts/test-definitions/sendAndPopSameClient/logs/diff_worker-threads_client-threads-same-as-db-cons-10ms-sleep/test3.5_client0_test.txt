@@ -1,3 +1,0 @@
-1384191159323	Client: Thread-3, #send: 73406, total time: 231036.593750, avg: 3.147380, min: 1.820882, max: 32.103821
-1384191159323	Client: Thread-3, #pop: 73406, total time: 368593.750000, avg: 5.021303, min: 2.860584, max: 26.435696
-1384191159323	Client: Thread-3, #fails: 0
